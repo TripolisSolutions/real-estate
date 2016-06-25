@@ -12,13 +12,6 @@ export class Store {
 
   @observable text: string
 
-  constructor(store?: IStore) {
-    if (!store) { return }
-    if (store.ssrLocation) {
-      this.ssrLocation = store.ssrLocation
-    }
-  }
-
   static fromJSON(json: IStore) {
     const store = new Store()
 
@@ -26,6 +19,13 @@ export class Store {
     store.text = json.text
 
     return store
+  }
+
+  constructor(store?: IStore) {
+    if (!store) { return }
+    if (store.ssrLocation) {
+      this.ssrLocation = store.ssrLocation
+    }
   }
 
   @action changeText(newText: string) {
