@@ -39,3 +39,5 @@ NODE_ENV=production node build/server.js
  - [ ] RxJS for search (kill pending request)
  - [x] setMatchMediaConfig
  - [ ] eslint, tslint
+ - [ ] chrome audit - cache resources
+ - [ ] best practices on deployment <http://expressjs.com/en/advanced/best-practice-performance.html>

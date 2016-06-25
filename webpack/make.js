@@ -75,6 +75,13 @@ module.exports = function make(options) {
     },
 
     module: {
+      preLoaders: [
+        {
+          test: /\.tsx?$/,
+          loader: "tslint",
+          exclude: /node_modules/
+        }
+      ],
       loaders: [{
         test: /\.js/,
         loader: loader.babel,
