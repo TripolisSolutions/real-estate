@@ -1,7 +1,7 @@
 {
   "host": "realestate-backend-app.feathersjs.com",
-  "port": 80,
-  "mongodb": "DATABASE_URL",
+  "port": 8999,
+  "mongodb": "mongodb://localhost:27017/realestateBackend",
   "public": "../public/",
   "auth": {
     "token": {

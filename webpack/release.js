@@ -32,4 +32,10 @@ client.plugins.push(new webpack.optimize.DedupePlugin());
 // Remove source maps
 server.plugins = server.plugins.filter(p => !(p instanceof webpack.BannerPlugin));
 
+client.plugins.push(new webpack.DefinePlugin({
+  "process.env": { 
+     NODE_ENV: JSON.stringify("production") 
+   }
+}))
+
 module.exports = [server, client];
