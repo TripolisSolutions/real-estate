@@ -1,3 +1,5 @@
+import 'source-map-support/register'
+
 // native packages
 import path from 'path'
 import http from 'http'
@@ -64,7 +66,6 @@ const isomorphic = (req, res) => {
     })
 
     fetchData(store, props.components, props.params, props.location.query)
-      // .then(() => setMatchMediaConfig(req))
       .then(() => {
         const renderedRoot = ReactDOMServer.renderToString((
           <ContextProvider context={{ store }}>

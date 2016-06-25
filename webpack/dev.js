@@ -76,6 +76,19 @@ compiler.watch({
   aggregateTimeout: 300,
   poll: true,
 }, function (err, stats) {
+  if(err) {
+    return console.error('error compiling server: ', err)
+  }
+
+  const jsonStats = stats.toJson();
+  if(jsonStats.errors.length > 0) {
+    return console.error('errors compiling server: ', jsonStats.errors)
+  }
+      
+  if(jsonStats.warnings.length > 0) {
+    console.warn('warning compiling server: ', jsonStats.warnings)
+  }
+
   if (running) {
     running.kill();
   }
