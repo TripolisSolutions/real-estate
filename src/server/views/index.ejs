@@ -1,0 +1,17 @@
+<html <%- head.htmlAttributes.toString() %> >
+  <head>
+    <%- head.title.toString() %>
+    <%- head.meta.toString() %>
+    <%- head.link.toString() %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/styles.css"/>
+  </head>
+  <body>
+    <div id="root"><%- renderedRoot %></div>
+    <script type="text/javascript">
+      var __STORE__ = <%- JSON.stringify(store) %>
+    </script>
+    <script src="/vendor.js"></script>
+    <script src="/client.js"></script>
+  </body>
+</html>
