@@ -38,3 +38,4 @@ NODE_ENV=production node build/server.js
  - [ ] client logger (log level) because winston demand nodejs
  - [ ] RxJS for search (kill pending request)
  - [x] setMatchMediaConfig
+ - [ ] eslint, tslint

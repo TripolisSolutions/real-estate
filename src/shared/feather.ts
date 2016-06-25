@@ -10,7 +10,7 @@ interface IFeather {
 
 let instance: IFeather = undefined
 // const storage: any = window ? window.localStorage : false;
-const uri = 'http://localhost:9000';
+const uri = 'http://localhost:8999';
 
 export function feather(): IFeather {
   if (instance) { return instance }
