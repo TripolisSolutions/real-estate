@@ -7,7 +7,6 @@ import { ContextProvider } from './shared/context'
 
 import { Store, fetchDataOnLocationMatch } from './shared/store'
 
-console.log('__STORE__', __STORE__)
 const store = Store.fromJSON(__STORE__)
 fetchDataOnLocationMatch(browserHistory, routes, match, store)
 

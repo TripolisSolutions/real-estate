@@ -14,7 +14,6 @@ class About extends React.Component<{}, {}> {
   }
 
   render() {
-    console.log('this.context', this.context)
     return (
       <div>
         <p>I'm about { this.context.store.text } foos!</p>
