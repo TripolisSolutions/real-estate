@@ -1,8 +1,6 @@
 import path from 'path';
 import React from 'react';
-import ItemList from '../components/ItemList/ItemList'
-import Border from '../components/Border/Border'
-import Button from '../components/Button/Button'
+import PropertyItem from '../components/PropertyItem/PropertyItem'
 
 const s = require('./home.less');
 
@@ -10,7 +8,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className={s.homeas}>
-        <ItemList />
+        <PropertyItem title="nice modern villa"/>
       </div>
     );
   }
