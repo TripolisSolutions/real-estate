@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Border } from '../Border/Border';
 
 class Input extends Component {
 
@@ -10,10 +11,7 @@ class Input extends Component {
   }
 
   render() {
-    return <input
-      value={this.state.value}
-      onChange={e => this.setState({ value: e.target.value })}
-    />;
+    return <FormControl></FormControl>
   }
 }
 

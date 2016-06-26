@@ -1,16 +1,17 @@
 import * as React from 'react'
+import * as classnames from 'classnames'
 import { Button as BBUtton } from 'react-bootstrap'
 
 const s = require('./Button.less')
 
-class Button extends React.Component<any, any> {
-  render() {
-    return (
-      <BBUtton bsSize='large' className={ s.host } >
-        {this.props.children}
-      </BBUtton>
-    )
-  }
+interface IButtonProps extends React.Props<any> {
+  txt: string
 }
 
-export default Button
+export const Button = (props: IButtonProps) => {
+  return (
+    <BBUtton bsSize='large' className={ s.container } >
+      { props.txt }
+    </BBUtton>
+  )
+}

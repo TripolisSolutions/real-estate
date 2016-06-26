@@ -3,6 +3,7 @@
   "version": false,
   "dependencies": {},
   "globalDependencies": {
+    "classnames": "registry:dt/classnames#0.0.0+20160316155526",
     "react": "registry:dt/react#0.14.0+20160621225615",
     "react-bootstrap": "registry:dt/react-bootstrap#0.0.0+20160624185819",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
