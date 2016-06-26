@@ -74,10 +74,13 @@ const isomorphic = (req, res) => {
         ))
 
         const storeAsJSON = store.toJSON()
+        const config = {
+          env: process.env.NODE_ENV ? NODE_ENV : 'development'
+        }
         
         const head = Helmet.rewind();
 
-        res.status(200).render('index', {head, renderedRoot, store: storeAsJSON})
+        res.status(200).render('index', {head, renderedRoot, store: storeAsJSON, config})
       })
       .catch((err) => {
         log.error('error while handling routing', {'error': err})
