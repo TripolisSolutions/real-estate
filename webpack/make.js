@@ -96,7 +96,7 @@ module.exports = function make(options) {
         exclude: /node_modules/,
       }, {
         test: /\.tsx?$/,
-        loader: `${loader.babel}!ts-loader?silent=true`,
+        loader: `${loader.babel}!ts-loader`,
         exclude: /node_modules/,
       }]
     }
