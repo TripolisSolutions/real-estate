@@ -1,8 +1,13 @@
-@brand-color: #aaa;
+@import '../styles/variables';
 
-.homeas {
+.container {
+  color: @color-main;
   font-size: 32px;
-  color: red;
-  background-color: @brand-color;
   padding: 15px;
+}
+
+@media (min-width: 1200px){
+  .container {
+      width: 1170px;
+  }
 }

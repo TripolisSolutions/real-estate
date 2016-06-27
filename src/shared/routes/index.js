@@ -4,8 +4,10 @@ import App from '../containers/app';
 import Home from './home';
 import About from './about';
 
+const s = require('./index.less');
+
 const routes = (
-  <Route path="/" component={App}>
+  <Route path="/" component={App} >
     <IndexRoute component={Home} />
     <Route path="about" component={About} />
   </Route>

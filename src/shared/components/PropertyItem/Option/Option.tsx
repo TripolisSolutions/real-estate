@@ -12,7 +12,9 @@ interface IOptionProps extends React.Props<any> {
 export const Option = (props: IOptionProps) => {
   return (
     <div className={ s.container} >
-      <Icon icon={ props.icon } />
+      <div className={ s.icon }>
+        <Icon icon={ props.icon } />
+      </div>
       <span>{ props.text }: </span>
       <span>{ props.value } </span>
     </div>

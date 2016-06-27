@@ -13,8 +13,17 @@ export const PropertyItem = (props: IPropertyItemProps) => {
   return (
     <div className={ s.container} >
       <h2>{ props.title }</h2> 
-      <Option icon='glyphicon-repeat' text='Bed' value='4'/>
-      <Button text='More Info' />
+      <div className={ s.options }>
+        <Option icon='glyphicon-bed' text='Beds' value='4'/>
+        <Option icon='glyphicon-fullscreen' text='Square' value='4'/>
+        <Option icon='glyphicon-map-marker' text='District' value='4'/>
+        <Option icon='glyphicon-usd' text='Bed' value='4'/>
+        <Option icon='glyphicon-time' text='Aviable' value='4'/>
+        <Option icon='glyphicon-hourglass' text='Day for rent' value='4'/>
+      </div>
+      <div className={ s.button }>
+        <Button text='More Info' />
+      </div>
     </div>
   )
 }
