@@ -18,3 +18,7 @@ declare module 'feathers-authentication/client' {
 declare module 'socket.io-client' {
   export = generic
 }
+
+declare module 'react-fontawesome' {
+  export = generic
+}
