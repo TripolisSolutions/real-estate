@@ -36,7 +36,6 @@ module.exports = {
     libraryTarget: 'var',
   },
   resolve: {
-    modulesDirectories: ['./node_modules'],
     extensions: ['', '.js', '.css', '.less']
   },
   module: {
@@ -50,16 +49,28 @@ module.exports = {
     }, {
       test: /\.css$/,
       loader: `style-loader!${loader.css}`,
-      exclude: /node_modules/,
+      include: /src/,
     }, {
       test: /\.less$/,
       loader: `style-loader!${loader.css}!less-loader?sourceMap`,
-      exclude: /node_modules/,
-    }, {
-      test: /\.tsx?$/,
-      loader: `${loader.babel}!ts-loader`,
-      exclude: /node_modules/,
-    }]
+      include: /src/,
+    },
+    {
+      test: /\.css$/,
+      exclude: /src/,
+      loaders: [
+        'style',
+        'css?sourceMap'
+      ]
+    },
+    { test: /\.woff(\?.*)?$/,  loader: 'url?prefix=fonts/&name=[name].[ext]&limit=10000&mimetype=application/font-woff' },
+    { test: /\.woff2(\?.*)?$/, loader: 'url?prefix=fonts/&name=[name].[ext]&limit=10000&mimetype=application/font-woff2' },
+    { test: /\.otf(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[name].[ext]&limit=10000&mimetype=font/opentype' },
+    { test: /\.ttf(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[name].[ext]&limit=10000&mimetype=application/octet-stream' },
+    { test: /\.eot(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[name].[ext]' },
+    { test: /\.svg(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[name].[ext]&limit=10000&mimetype=image/svg+xml' },
+    { test: /\.(png|jpg)$/,    loader: 'url?limit=8192' }
+    ]
   }
 }
 
