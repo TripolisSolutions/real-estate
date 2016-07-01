@@ -2,7 +2,6 @@ import 'source-map-support/register'
 
 // native packages
 import path from 'path'
-import http from 'http'
 
 // external packages
 import helmet from 'helmet'
@@ -11,15 +10,15 @@ import bodyParser from 'body-parser'
 import favicon from 'serve-favicon'
 
 // feathersjs
-import feathers from 'feathers'
+import feathers, { static as serveStatic } from 'feathers'
 import configuration from 'feathers-configuration'
 import hooks from 'feathers-hooks'
 import rest from 'feathers-rest'
 import socketio from 'feathers-socketio'
-import { static as serveStatic} from 'feathers'
+import errors from 'feathers-errors'
 
 // internal packages
-import middleware from './middleware'
+import middlewares from './middlewares'
 import services from './services'
 
 // react external packages (universal rendering)
@@ -43,7 +42,7 @@ const configPath = path.join(path.resolve('.'))
 app.configure(configuration(configPath))
 
 // // Route handler that rules them all!
-const isomorphic = (req, res) => {
+const isomorphic = (req, res, next) => {
 
   // Do a router match
   match({
@@ -58,7 +57,8 @@ const isomorphic = (req, res) => {
     } else if (redirect) {
       return res.redirect(302, redirect.pathname + redirect.search);
     } else if (!props) {
-      return res.status(404).send('not found');
+      // return res.status(404).send('not found');
+      return new errors.NotFound('Page not found')
     }
 
     const store = new Store({
@@ -105,6 +105,7 @@ app.use(compress())
   .configure(rest())
   .configure(socketio())
   .configure(services)
+  .configure(middlewares)
   .get('*', isomorphic);
 
 const port = app.get('port')

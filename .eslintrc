@@ -1,6 +1,12 @@
 {
   "extends": "airbnb",
   "rules": {
-    "semi": [0]
-  }
+    "semi": [2, "never"],
+    "react/jsx-curly-spacing": [1, "always", {"spacing": {
+      "objectLiterals": "never"
+    }}],
+    "jsx-quotes": [1, "prefer-single"],
+    "func-names": [0]
+  },
+  "parser": "babel-eslint"
 }

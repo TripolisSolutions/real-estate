@@ -5,7 +5,7 @@ const s = require('./Option.less')
 
 function Option(props) {
   return (
-    <div className={ s.container} >
+    <div className={ s.container } >
       <div className={ s.icon }>
         <Icon icon={ props.icon } />
       </div>

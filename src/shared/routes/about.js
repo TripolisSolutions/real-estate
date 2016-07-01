@@ -1,16 +1,15 @@
 import React from 'react'
 
 import { observer, IContext } from '../context'
-import { Store } from '../store'
 
 @observer
 class About extends React.Component {
 
-  context: IContext
-
   static fetchData(store) {
     return store.fetchAboutData();
   }
+
+  context: IContext
 
   render() {
     return (
@@ -25,7 +24,3 @@ class About extends React.Component {
 }
 
 export default About
-
-
-
-
