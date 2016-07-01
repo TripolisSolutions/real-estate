@@ -66,7 +66,7 @@ module.exports = function make(options) {
       path: path.join(__dirname, '..', 'build'),
       filename: outputFilename,
       publicPath: '/',
-      libraryTarget: (isClient ? 'var' : 'commonjs2'),
+      libraryTarget: 'var',
     },
 
     resolve: {
@@ -93,10 +93,6 @@ module.exports = function make(options) {
       }, {
         test: /\.less$/,
         loader: (isClient ? `style-loader!${loader.css}!less-loader?sourceMap` : ExtractTextPlugin.extract('style-loader', `${loader.css}!less-loader?sourceMap`)),
-        exclude: /node_modules/,
-      }, {
-        test: /\.tsx?$/,
-        loader: `${loader.babel}!ts-loader`,
         exclude: /node_modules/,
       }]
     }

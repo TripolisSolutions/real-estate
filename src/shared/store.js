@@ -1,14 +1,9 @@
 import { action, observable } from 'mobx'
 import { feather } from './feather'
 
-export interface IStore {
-  ssrLocation: string
-  text: string
-}
-
 export class Store {
 
-  ssrLocation: string = undefined
+  ssrLocation = undefined
 
   @observable text: string
 
@@ -21,14 +16,14 @@ export class Store {
     return store
   }
 
-  constructor(store?: IStore) {
+  constructor(store) {
     if (!store) { return }
     if (store.ssrLocation) {
       this.ssrLocation = store.ssrLocation
     }
   }
 
-  @action changeText(newText: string) {
+  @action changeText(newText) {
     this.fetchAboutData()
   }
 
@@ -41,7 +36,7 @@ export class Store {
     })
   }
 
-  toJSON(): IStore {
+  toJSON() {
     return {
       text: this.text,
       ssrLocation: this.ssrLocation,
@@ -66,7 +61,7 @@ export function fetchData(store, components, params, query) {
  * It also prevent the first page to re-fetch data already fetched from the server.
  * Used on the client-side.
  */
-export function fetchDataOnLocationMatch(history, routes, match, store: Store) {
+export function fetchDataOnLocationMatch(history, routes, match, store) {
   let ssrLocation = store.ssrLocation;
   history.listen((e) => {
     if (e.pathname !== ssrLocation) {

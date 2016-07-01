@@ -1,15 +1,10 @@
-import * as React from 'react'
-import { Option } from './Option/Option'
-import { Button } from '../Button/Button'
+import React from 'react'
+import Option from './Option/Option'
+import Button from '../Button/Button'
 
 const s = require('./PropertyItem.less')
 
-interface IPropertyItemProps extends React.Props<any> {
-  title: string
-  img?: string
-}
-
-export const PropertyItem = (props: IPropertyItemProps) => {
+function PropertyItem(props) {
   return (
     <div className={ s.container} >
       <h2>{ props.title }</h2> 
@@ -31,3 +26,9 @@ export const PropertyItem = (props: IPropertyItemProps) => {
   )
 }
 
+PropertyItem.propTypes = {
+  title: React.PropTypes.string.isRequired,
+  img: React.PropTypes.string,
+}
+
+export default PropertyItem

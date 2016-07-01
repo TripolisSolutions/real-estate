@@ -1,14 +1,14 @@
-import * as React from 'react'
+import React from 'react'
 
 import { observer, IContext } from '../context'
 import { Store } from '../store'
 
 @observer
-class About extends React.Component<{}, {}> {
+class About extends React.Component {
 
   context: IContext
 
-  static fetchData(store: Store) {
+  static fetchData(store) {
     return store.fetchAboutData();
   }
 

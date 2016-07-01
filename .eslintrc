@@ -1,4 +1,6 @@
 {
   "extends": "airbnb",
-  "semi": [0]
+  "rules": {
+    "semi": [0]
+  }
 }

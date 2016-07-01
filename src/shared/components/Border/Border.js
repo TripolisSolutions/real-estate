@@ -1,14 +1,9 @@
-import * as React from 'react'
-import * as classnames from 'classnames'
+import React from 'react'
+import classnames from 'classnames'
 
 const s = require('./Border.less')
 
-interface IBorderProps extends React.Props<any> {
-  hover?: boolean
-  active?: boolean
-}
-
-export const Border = (props: IBorderProps) => {
+function Border(props) {
   return (
     <div className={ classnames(
     s.container,
@@ -18,3 +13,10 @@ export const Border = (props: IBorderProps) => {
     </div>
   )
 }
+
+Border.propTypes = {
+  hover: React.PropTypes.boolean,
+  active: React.PropTypes.boolean,
+}
+
+export default Border

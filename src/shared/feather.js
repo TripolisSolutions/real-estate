@@ -1,10 +1,8 @@
-import * as feathers from 'feathers/client'
-import * as feathersHooks from 'feathers-hooks'
-import * as feathersSocketClient from 'feathers-socketio/client'
+import feathers from 'feathers/client'
+import feathersHooks from 'feathers-hooks'
+import feathersSocketClient from 'feathers-socketio/client'
 // import * as feathersAuth from 'feathers-authentication/client'
-import * as socketIOClient from 'socket.io-client'
-
-declare const __CONFIG__: any
+import socketIOClient from 'socket.io-client'
 
 interface IFeather {
   service: (name: string) => any

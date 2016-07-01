@@ -1,6 +1,6 @@
 import path from 'path';
 import React from 'react';
-import {PropertyItem} from '../components/PropertyItem/PropertyItem'
+import PropertyItem from '../components/PropertyItem/PropertyItem'
 
 const s = require('./home.less');
 
@@ -14,9 +14,4 @@ class Home extends React.Component {
   }
 }
 
-export const homeUtils = {
-  one: 1,
-  two: 2
-}; 
-
-export default Home;s
+export default Home

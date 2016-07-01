@@ -1,20 +1,7 @@
-import * as React from 'react'
-import { observer } from 'mobx-react'
+import React from 'react'
+import { observer as mobxObserver } from 'mobx-react'
 
 import { Store } from './store'
-
-interface IProps extends React.Props<ContextProvider> {
-  children?: React.ReactElement<any>
-  location?: Object
-  context: IContext
-}
-
-export interface IContext {
-  store: Store
-  router?: Object
-  location?: Object
-  history?: Object
-}
 
 const contextTypes = {
   store:  React.PropTypes.object.isRequired,
@@ -23,7 +10,7 @@ const contextTypes = {
   history: React.PropTypes.object,
 }
 
-export class ContextProvider extends React.Component<IProps, {}> {
+export class ContextProvider extends React.Component {
 
   static childContextTypes= contextTypes
 
@@ -45,5 +32,5 @@ export class ContextProvider extends React.Component<IProps, {}> {
  */
 export function observer(target: any) {
     target.contextTypes = contextTypes
-    return observer(target)
+    return mobxObserver(target)
 }

@@ -67,11 +67,12 @@ const isomorphic = (req, res) => {
 
     fetchData(store, props.components, props.params, props.location.query)
       .then(() => {
-        const renderedRoot = ReactDOMServer.renderToString((
-          <ContextProvider context={{ store }}>
-            <RouterContext {...props} />
-          </ContextProvider>
-        ))
+        // const renderedRoot = ReactDOMServer.renderToString((
+        //   <ContextProvider context={{ store }}>
+        //     <RouterContext {...props} />
+        //   </ContextProvider>
+        // ))
+        const renderedRoot = ''
 
         const storeAsJSON = store.toJSON()
         const config = {
