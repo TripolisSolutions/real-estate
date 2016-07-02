@@ -6,6 +6,6 @@ import * as log from 'logstar'
 
 exports.myHook = function myHook(options) {
   return function handle(hook) {
-    log.info('My custom global hook ran. Feathers is awesome! ', options, hook);
-  };
-};
+    log.info('My custom global hook ran. Feathers is awesome! ', options, hook)
+  }
+}

@@ -7,7 +7,7 @@ export class Store {
 
   @observable text: string
 
-  static fromJSON(json: IStore) {
+  static fromJSON(json) {
     const store = new Store()
 
     store.ssrLocation = json.ssrLocation
@@ -23,16 +23,17 @@ export class Store {
     }
   }
 
-  @action changeText(newText) {
+  @action changeText() {
     this.fetchAboutData()
   }
 
   @action fetchAboutData() {
     return new Promise((resolve) => {
-      feather().service('contact_requests').get(1).then( (res) => {
-        this.text = res
-        resolve()
-      })
+      feather().service('contact_requests').get(1)
+        .then((res) => {
+          this.text = res
+          resolve()
+        })
     })
   }
 
@@ -53,7 +54,7 @@ export function fetchData(store, components, params, query) {
   return Promise.all(components
     .map((component) => component.fetchData
       ? component.fetchData(store, params, query)
-      : false));
+      : false))
 }
 
 /**
@@ -69,9 +70,9 @@ export function fetchDataOnLocationMatch(history, routes, match, store) {
         if (props) {
           fetchData(store, props.components, props.params, props.location.query);
         }
-      });
+      })
     }
     // enable subsequent fetches
-    ssrLocation = undefined;
+    ssrLocation = undefined
   });
 }

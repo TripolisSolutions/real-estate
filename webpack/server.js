@@ -26,7 +26,7 @@ module.exports = {
       __CLIENT__: false,
     }),
     new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin('styles.css')
+    // new ExtractTextPlugin('styles.css')
   ],
   output: {
     path: path.join(__dirname, '..', 'build'),
@@ -41,23 +41,23 @@ module.exports = {
   },
   module: {
     preLoaders: [
-      {
-        test: /\.js$/,
-        loader: "eslint-loader",
-        exclude: /node_modules/
-      }
+      // {
+      //   test: /\.js$/,
+      //   loader: "eslint-loader",
+      //   exclude: /node_modules/
+      // }
     ],
     loaders: [{
       test: /\.js/,
       loader: 'babel-loader?presets[]=react&presets[]=es2015&presets[]=stage-0&plugins[]=transform-decorators-legacy',
       exclude: /node_modules/,
-    }, {
+    },  {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract('style-loader', loader.css),
+      loader: `style-loader!${loader.css}`,
       include: /src/,
     }, {
       test: /\.less$/,
-      loader: ExtractTextPlugin.extract('style-loader', `${loader.css}!less-loader?sourceMap`),
+      loader: `style-loader!${loader.css}!less-loader?sourceMap`,
       include: /src/,
     },
     {

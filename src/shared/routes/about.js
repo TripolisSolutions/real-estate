@@ -6,7 +6,7 @@ import { observer, IContext } from '../context'
 class About extends React.Component {
 
   static fetchData(store) {
-    return store.fetchAboutData();
+    return store.fetchAboutData()
   }
 
   context: IContext

@@ -1,12 +1,18 @@
 {
   "extends": "airbnb",
   "rules": {
-    "semi": [2, "never"],
+    "semi": [1, "never"],
     "react/jsx-curly-spacing": [1, "always", {"spacing": {
       "objectLiterals": "never"
     }}],
     "jsx-quotes": [1, "prefer-single"],
-    "func-names": [0]
+    "func-names": [0],
+    "no-trailing-spaces": [1],
+    "no-underscore-dangle": [0, { "allow": [] }],
+    "template-curly-spacing": [1, "always"],
+    "react/prefer-stateless-function": [1],
+    "comma-dangle": 1,
+    "no-confusing-arrow": 1,
   },
   "parser": "babel-eslint"
 }
