@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 /**
  * App container component
  */
-function App() {
+function App(props) {
   return (
     <div>
       <Helmet
@@ -25,7 +25,7 @@ function App() {
         <Link to='/about'>About</Link>
       </div>
       <div>
-        { this.props.children }
+        { props.children }
       </div>
     </div>
   )

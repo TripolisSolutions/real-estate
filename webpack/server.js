@@ -26,7 +26,7 @@ module.exports = {
       __CLIENT__: false,
     }),
     new webpack.NoErrorsPlugin(),
-    // new ExtractTextPlugin('styles.css')
+    new ExtractTextPlugin('styles.css')
   ],
   output: {
     path: path.join(__dirname, '..', 'build'),
@@ -51,22 +51,22 @@ module.exports = {
       test: /\.js/,
       loader: 'babel-loader?presets[]=react&presets[]=es2015&presets[]=stage-0&plugins[]=transform-decorators-legacy',
       exclude: /node_modules/,
-    },  {
+    }, {
       test: /\.css$/,
-      loader: `style-loader!${loader.css}`,
+      loader: ExtractTextPlugin.extract('style-loader', loader.css),
       include: /src/,
     }, {
       test: /\.less$/,
-      loader: `style-loader!${loader.css}!less-loader?sourceMap`,
+      loader: ExtractTextPlugin.extract('style-loader', `${loader.css}!less-loader?sourceMap`),
       include: /src/,
     },
     {
       test: /\.css$/,
       exclude: /src/,
-      loaders: [
+      loaders: ExtractTextPlugin.extract(
         'style',
         'css?sourceMap'
-      ]
+      ),
     },
     { test: /\.woff(\?.*)?$/,  loader: 'url?prefix=fonts/&name=[name].[ext]&limit=10000&mimetype=application/font-woff' },
     { test: /\.woff2(\?.*)?$/, loader: 'url?prefix=fonts/&name=[name].[ext]&limit=10000&mimetype=application/font-woff2' },

@@ -8,10 +8,11 @@ import helmet from 'helmet'
 import compress from 'compression'
 import bodyParser from 'body-parser'
 import favicon from 'serve-favicon'
+import nconf from 'nconf'
+import _ from 'lodash'
 
 // feathersjs
 import feathers, { static as serveStatic } from 'feathers'
-import configuration from 'feathers-configuration'
 import hooks from 'feathers-hooks'
 import rest from 'feathers-rest'
 import socketio from 'feathers-socketio'
@@ -39,10 +40,16 @@ import { Store, fetchData } from './shared/store'
 // const app = express();
 const app = feathers()
 
-const configPath = path.join(path.resolve('.'))
-app.configure(configuration(configPath))
+// Setup nconf to use (in-order):
+// 1. Environment variables
+// 2. A file located at '../config/default.json'
+const configPath = path.join(path.resolve('.'), 'config/default.json')
+nconf.env().file({file: configPath})
 
-// // Route handler that rules them all!
+// do not log secrects
+console.log('environment settings are: ', _.pickBy(nconf.get(), (value, key) => _.startsWith(key, 'SETTINGS_') && key.indexOf('SECRET') === -1 ))
+
+// Route handler that rules them all!
 const isomorphic = (req, res, next) => {
   // Do a router match
   match({
@@ -70,6 +77,7 @@ const isomorphic = (req, res, next) => {
             <RouterContext { ...props } />
           </ContextProvider>
         ))
+        // const renderedRoot = ''
 
         const storeAsJSON = store.toJSON()
         const config = {
@@ -82,16 +90,16 @@ const isomorphic = (req, res, next) => {
           head, renderedRoot, store: storeAsJSON, config,
         })
       })
-      .catch((routingError) => {
-        log.error('error while handling routing', { error: routingError })
+      .catch((err1, err2) => {
+        log.error('error while handling routing', { error: [err1, err2] })
         res.status(500).send('Internal error')
       })
   })
 }
 
 app.use(compress())
-  .use(favicon(path.join(app.get('public'), 'favicon.ico')))
-  .use('/public', serveStatic(app.get('public')))
+  .use(favicon(path.join(nconf.get('SETTINGS_PUBLIC'), 'favicon.ico')))
+  .use('/public', serveStatic(nconf.get('SETTINGS_PUBLIC')))
   .use('/vendor.js', serveStatic('./build/vendor.js'))
   .use('/client.js', serveStatic('./build/client.js'))
   .use('/styles.css', serveStatic('./build/styles.css'))
@@ -107,8 +115,8 @@ app.use(compress())
   .configure(middleware)
   .get('*', isomorphic)
 
-const port = app.get('port')
+const port = nconf.get('SETTINGS_PORT')
 const server = app.listen(port)
 server.on('listening', () =>
-  log.info(`[🚀 ] Server started on port ${ app.get('host') }:${ port }`)
+  log.info(`[🚀 ] Server started on port ${ port }`)
 )
