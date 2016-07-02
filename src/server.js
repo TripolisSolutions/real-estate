@@ -50,7 +50,7 @@ nconf.env().file({file: configPath})
 console.log('environment settings are: ', _.pickBy(nconf.get(), (value, key) => _.startsWith(key, 'SETTINGS_') && key.indexOf('SECRET') === -1 ))
 
 // Route handler that rules them all!
-const isomorphic = (req, res, next) => {
+const isomorphic = (req, res) => {
   // Do a router match
   match({
     routes,
@@ -62,8 +62,7 @@ const isomorphic = (req, res, next) => {
     } else if (redirect) {
       return res.redirect(302, redirect.pathname + redirect.search)
     } else if (!props) {
-      // return res.status(404).send('not found');
-      return next(new errors.NotFound('Page not found'))
+      return res.status(404).send('not found');
     }
 
     const store = new Store({
