@@ -4,7 +4,7 @@ import App from '../containers/app'
 import Home from './home'
 import About from './about'
 
-// require('font-awesome/css/font-awesome.css')
+require('font-awesome/css/font-awesome.css')
 
 const routes = (
   <Route path='/' component={ App } >
