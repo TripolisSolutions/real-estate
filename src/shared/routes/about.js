@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { observer, IContext } from '../context'
+import { observer } from '../context'
 
 @observer
 class About extends React.Component {
@@ -8,8 +8,6 @@ class About extends React.Component {
   static fetchData(store) {
     return store.fetchAboutData()
   }
-
-  context: IContext
 
   render() {
     return (

@@ -1,7 +1,8 @@
-const contactRequests = require('./contact_requests')
+// const contactRequests = require('./contact_requests')
 const article = require('./article')
 const authentication = require('./authentication')
 const user = require('./user')
+const properties = require('./properties')
 // const mongoose = require('mongoose')
 
 module.exports = function () {
@@ -13,5 +14,5 @@ module.exports = function () {
   app.configure(authentication)
   app.configure(user)
   app.configure(article)
-  app.configure(contactRequests)
+  app.configure(properties)
 }
