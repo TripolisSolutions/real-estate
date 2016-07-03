@@ -1,5 +1,6 @@
 import React from 'react'
 import Block from '../Block/Block'
+import Dropdown from '../Dropdown/Dropdown'
 
 const s = require('./SearchBar.less')
 

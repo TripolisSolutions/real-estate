@@ -51,6 +51,19 @@ console.log('environment settings are: ', _.pickBy(nconf.get(), (value, key) => 
 
 // Route handler that rules them all!
 const isomorphic = (req, res) => {
+
+  // turn of server rendering on development for easier debugging
+  if (process.env.NODE_ENV !== 'production') {
+    return res.status(200).render('index', {
+      head: {
+        title: '',
+        meta: '',
+        link: '',
+        htmlAttributes: ''
+      }, renderedRoot: '', store: {}, config: {},
+    })
+  } 
+
   // Do a router match
   match({
     routes,
