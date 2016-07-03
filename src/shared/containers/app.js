@@ -1,7 +1,8 @@
 import React from 'react'
 import Helmet from 'react-helmet'
-import { Link } from 'react-router'
 
+import Header from '../components/Header/Header'
+const s = require('./app.less')
 /**
  * App container component
  */
@@ -19,11 +20,7 @@ function App(props) {
             { property: 'og:type', content: 'article' },
         ] }
       />
-      <div>
-        <Link to='/'>Home</Link>
-        -
-        <Link to='/about'>About</Link>
-      </div>
+      <Header />
       <div>
         { props.children }
       </div>
