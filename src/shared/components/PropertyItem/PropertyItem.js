@@ -13,11 +13,11 @@ function PropertyItem(props) {
       </div>
       <div className={ s.options }>
         <Option icon='bed' text='Beds' value='4' />
-        <Option icon='glyphicon-fullscreen' text='Square' value='4' />
-        <Option icon='glyphicon-map-marker' text='District' value='4' />
-        <Option icon='glyphicon-usd' text='Bed' value='4' />
-        <Option icon='glyphicon-time' text='Aviable' value='4' />
-        <Option icon='hourglass' text='Day for rent' value='4' />
+        <Option icon='arrows-alt' text='Square' value='4' />
+        <Option icon='map-marker' text='District' value='4' />
+        <Option icon='usd' text='Bed' value='4' />
+        <Option icon='clock-o' text='Aviable' value='4' />
+        <Option icon='hourglass-start' text='Day for rent' value='4' />
       </div>
       <div className={ s.button }>
         <Button text='More Info' />
