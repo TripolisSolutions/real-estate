@@ -13,11 +13,20 @@ class PropertyDetail extends React.Component {
   }
 
   render() {
+    const property = this.context.store.propertiesStore.propertyDetail
+
     return (
       <div>
-        {
-          JSON.stringify(this.context.store.propertiesStore.propertyDetail)
-        }
+        <div>
+          <div>Vietnamese</div>
+          <div>English</div>
+        </div>
+        <div>
+          { JSON.stringify(property) }
+        </div>
+        <div>
+          
+        </div>
       </div>
     );
   }

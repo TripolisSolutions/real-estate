@@ -54,13 +54,22 @@ const isomorphic = (req, res) => {
 
   // turn of server rendering on development for easier debugging
   if (process.env.NODE_ENV !== 'production') {
+    const store = new Store({
+      ssrLocation: req.url,
+    })
+    
+    const storeAsJSON = store.toJSON()
+    const config = {
+      env: process.env.NODE_ENV ? process.env.NODE_ENV : 'development',
+    }
+
     return res.status(200).render('index', {
       head: {
         title: '',
         meta: '',
         link: '',
         htmlAttributes: ''
-      }, renderedRoot: '', store: {}, config: {},
+      }, renderedRoot: '', store: storeAsJSON, config: {},
     })
   } 
 
