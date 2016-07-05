@@ -1,10 +1,35 @@
 import { action, observable } from 'mobx'
+import _ from 'lodash'
 import { feather } from '../feather'
+
+class Property {
+  @observable id = ''
+  @observable name = ''
+  @observable thumbnail = null
+  @observable galleryImages = []
+  @observable desc = ''
+
+  constructor(json) {
+    if (!json) return
+
+    const fields = _.pick(json, 'id', 'name', 'desc', 'thumbnail')
+    _.assign(this, fields)
+
+    this.galleryImages = json.gallery_images
+  }
+}
+
+class AdminState {
+  @observable selectedLanguage = 'vietnamese' // or english
+  
+}
 
 export default class PropertiesStore {
   @observable properties = []
   @observable propertyDetail = undefined
   @observable isFetching = false
+
+  @observable adminState = new AdminState()
 
   static fromJSON(json) {
     const store = new PropertiesStore()
@@ -24,14 +49,7 @@ export default class PropertiesStore {
 
   @action prepareNewProperty() {
     return new Promise((resolve) => {
-      this.propertyDetail = {
-        name: [
-          {
-            language: 'english',
-            text: 'hello',
-          }
-        ]
-      }
+      this.propertyDetail = new Property()
       resolve(this.propertyDetail)
     })
   }
