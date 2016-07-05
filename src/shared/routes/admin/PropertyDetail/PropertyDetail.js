@@ -1,6 +1,21 @@
 import React from 'react'
+import FRC from 'formsy-react-components'
+import {Decorator as FormsyElement} from 'formsy-react'
+
+const { Checkbox, CheckboxGroup, Input, RadioGroup, Row, Select, File, Textarea } = FRC
 
 import { observer } from '../../../context'
+
+@FormsyElement()
+class MyInput extends React.Component {
+  render() {
+    return (
+      <div>
+        <input value={this.props.getValue()} onChange={(e) => this.props.setValue(e.target.value)}/>
+      </div>
+    )
+  }
+}
 
 @observer
 class PropertyDetail extends React.Component {
@@ -10,6 +25,10 @@ class PropertyDetail extends React.Component {
       return store.propertiesStore.prepareNewProperty()
     }
     return store.propertiesStore.get(params.id)
+  }
+
+  submit(model) {
+    console.log('model', model)
   }
 
   render() {
@@ -25,7 +44,11 @@ class PropertyDetail extends React.Component {
           { JSON.stringify(property) }
         </div>
         <div>
-          
+          <Formsy.Form onSubmit={ this.submit }>
+            <MyInput name="name" value="abc"/>
+            <MyInput name="desc" value="123"/>
+            <button>Save</button>
+          </Formsy.Form>
         </div>
       </div>
     );
