@@ -1,5 +1,8 @@
 import React from 'react'
+import classnames from 'classnames'
+
 import Block from '../Block/Block'
+import Button from '../Button/Button'
 import Dropdown from '../Dropdown/Dropdown'
 
 const s = require('./SearchBar.less')
@@ -17,7 +20,7 @@ class SearchBar extends React.Component {
               <Dropdown title='Buy'/>
             </div>
           </div>
-          <div className={'row'}>
+          <div className={classnames('row', s.second)}>
             <div className={'col-md-2'} >
               <Dropdown title='Buy'/>
             </div>
@@ -39,6 +42,9 @@ class SearchBar extends React.Component {
             <div className={'col-md-1'} >
               <Dropdown title='Buy'/>
             </div>
+          </div>
+          <div className={ s.button }>
+            <Button text='More Info' />
           </div>
         </div>
       </Block>
