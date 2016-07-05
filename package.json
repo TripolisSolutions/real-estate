@@ -42,6 +42,7 @@
     "font-awesome": "^4.6.3",
     "formsy-react": "^0.18.1",
     "formsy-react-components": "^0.8.0",
+    "google-map-react": "^0.15.1",
     "helmet": "^2.1.1",
     "jest-cli": "^0.10.0",
     "jest-css-modules": "^1.0.0",

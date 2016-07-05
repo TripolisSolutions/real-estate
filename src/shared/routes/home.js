@@ -1,6 +1,7 @@
 import React from 'react'
 import PropertyList from '../components/PropertyList/PropertyList'
 import SearchBar from '../components/SearchBar/SearchBar'
+import Map from '../components/Map/Map'
 
 class Home extends React.Component {
   render() {
@@ -8,6 +9,7 @@ class Home extends React.Component {
       <div className={ 'container' }>
         <SearchBar></SearchBar>
         <PropertyList></PropertyList>
+        <Map />
       </div>
     )
   }
