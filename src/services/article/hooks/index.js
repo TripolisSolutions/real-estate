@@ -1,7 +1,5 @@
-'use strict';
-
-const globalHooks = require('../../../hooks');
-const hooks = require('feathers-hooks');
+// const globalHooks = require('../../../hooks')
+// const hooks = require('feathers-hooks')
 
 
 exports.before = {
@@ -11,8 +9,8 @@ exports.before = {
   create: [],
   update: [],
   patch: [],
-  remove: []
-};
+  remove: [],
+}
 
 exports.after = {
   all: [],
@@ -21,5 +19,5 @@ exports.after = {
   create: [],
   update: [],
   patch: [],
-  remove: []
-};
+  remove: [],
+}

@@ -29,16 +29,17 @@ function start() {
     running.stdout.on('data', data => {
       var msg = data.toString().replace(/\n$/,'');
       if (msg.match(/Server started/)) {
-        resolve();
         if (!initial) {
           console.log(msg);
           initial = true;
         } else {
-          console.log('[🌀 ] Reloaded server');
+          console.log('server reloaded');
         }
       } else {
         console.log(msg);
       }
+
+      resolve();
     });
 
     running.stderr.on('data', data => 
@@ -60,6 +61,14 @@ bs.init({
       webpackDevMiddleware(bundler, {
         publicPath: '/',
         noInfo: true,
+        stats: {
+          colors: true,
+          version: false,
+          hash: false,
+          timings: false,
+          chunks: false,
+          chunkModules: false
+        }
       }),
       webpackHotMiddleware(bundler),
       proxyMiddleware(filter, {
@@ -75,22 +84,23 @@ bs.init({
 compiler.watch({
   aggregateTimeout: 300,
   poll: true,
+  stats: {
+    colors: true,
+    version: false,
+    hash: false,
+    timings: false,
+    chunks: false,
+    chunkModules: false
+  }
 }, function (err, stats) {
-  if(err) {
-    return console.error('error compiling server: ', err)
-  }
-
-  const jsonStats = stats.toJson();
-  if(jsonStats.errors.length > 0) {
-    return console.error('errors compiling server: ', jsonStats.errors)
-  }
-      
-  if(jsonStats.warnings.length > 0) {
-    console.warn('warning compiling server: ', jsonStats.warnings)
-  }
+  console.log(stats.toString({colors: true}))
 
   if (running) {
+    console.log('killing running server')
     running.kill();
   }
-  setTimeout(() => start(), 10);
+  setTimeout(() => {
+    console.log('starting server')
+    start()
+  }, 10);
 });

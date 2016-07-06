@@ -1,17 +1,18 @@
-'use strict';
-const contactRequests = require('./contact_requests');
-const article = require('./article');
-const authentication = require('./authentication');
-const user = require('./user');
-const mongoose = require('mongoose');
-module.exports = function() {
-  const app = this;
+// const contactRequests = require('./contact_requests')
+const article = require('./article')
+const authentication = require('./authentication')
+const user = require('./user')
+const properties = require('./properties')
+// const mongoose = require('mongoose')
 
-  mongoose.connect(app.get('mongodb'));
-  mongoose.Promise = global.Promise;
+module.exports = function () {
+  const app = this
 
-  app.configure(authentication);
-  app.configure(user);
-  app.configure(article);
-  app.configure(contactRequests);
-};
+  // mongoose.connect(app.get('mongodb'))
+  // mongoose.Promise = global.Promise
+
+  app.configure(authentication)
+  app.configure(user)
+  app.configure(article)
+  app.configure(properties)
+}

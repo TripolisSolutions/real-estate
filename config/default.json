@@ -1,8 +1,8 @@
 {
-  "host": "localhost",
-  "port": 8999,
-  "mongodb": "mongodb://localhost:27017/realestateBackend",
-  "public": "../public/",
+  "SETTINGS_PORT": 8999,
+  "SETTINGS_MONGODB_HOST": "mongodb://localhost:27017/realestateBackend",
+  "SETTINGS_PUBLIC": "public/",
+  "SETTINGS_REAL_ESTATE_API": "http://localhost:9001",
   "auth": {
     "token": {
       "secret": "LMhc0cAKu/HLoO8TZOUNif+qxXdYWZBVAL8lU16XJ54/iiGiXITalTjSCcuPKsdUWxQNyEIX5OyzOi25n6MFKw=="

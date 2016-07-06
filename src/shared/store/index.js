@@ -1,50 +1,57 @@
 import { action, observable } from 'mobx'
-import { feather } from './feather'
+import { feather } from '../feather'
 
-export interface IStore {
-  ssrLocation: string
-  text: string
-}
+import PropertiesStore from './properties'
 
 export class Store {
 
-  ssrLocation: string = undefined
+  ssrLocation = undefined
 
-  @observable text: string
+  @observable text = ''
 
-  static fromJSON(json: IStore) {
+  @observable propertiesStore
+
+  static fromJSON(json) {
     const store = new Store()
 
     store.ssrLocation = json.ssrLocation
     store.text = json.text
 
+    if (json.propertiesStore) {
+      store.propertiesStore = PropertiesStore.fromJSON(json.propertiesStore)
+    } 
+
     return store
   }
 
-  constructor(store?: IStore) {
+  constructor(store) {
     if (!store) { return }
     if (store.ssrLocation) {
       this.ssrLocation = store.ssrLocation
     }
+
+    this.propertiesStore = new PropertiesStore()
   }
 
-  @action changeText(newText: string) {
+  @action changeText() {
     this.fetchAboutData()
   }
 
   @action fetchAboutData() {
     return new Promise((resolve) => {
-      feather().service('contact_requests').get(1).then( (res) => {
-        this.text = res
-        resolve()
-      })
+      feather().service('contact_requests').get(1)
+        .then((res) => {
+          this.text = res
+          resolve()
+        })
     })
   }
 
-  toJSON(): IStore {
+  toJSON() {
     return {
       text: this.text,
       ssrLocation: this.ssrLocation,
+      propertiesStore: this.propertiesStore.toJSON(),
     }
   }
 }
@@ -58,7 +65,7 @@ export function fetchData(store, components, params, query) {
   return Promise.all(components
     .map((component) => component.fetchData
       ? component.fetchData(store, params, query)
-      : false));
+      : false))
 }
 
 /**
@@ -66,7 +73,7 @@ export function fetchData(store, components, params, query) {
  * It also prevent the first page to re-fetch data already fetched from the server.
  * Used on the client-side.
  */
-export function fetchDataOnLocationMatch(history, routes, match, store: Store) {
+export function fetchDataOnLocationMatch(history, routes, match, store) {
   let ssrLocation = store.ssrLocation;
   history.listen((e) => {
     if (e.pathname !== ssrLocation) {
@@ -74,9 +81,9 @@ export function fetchDataOnLocationMatch(history, routes, match, store: Store) {
         if (props) {
           fetchData(store, props.components, props.params, props.location.query);
         }
-      });
+      })
     }
     // enable subsequent fetches
-    ssrLocation = undefined;
+    ssrLocation = undefined
   });
 }

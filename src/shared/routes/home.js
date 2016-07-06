@@ -1,21 +1,18 @@
-import path from 'path';
-import React from 'react';
-
-const s = require('./home.less');
+import React from 'react'
+import PropertyList from '../components/PropertyList/PropertyList'
+import SearchBar from '../components/SearchBar/SearchBar'
+import Map from '../components/Map/Map'
 
 class Home extends React.Component {
   render() {
     return (
-      <div className={s.homeas}>
-        <p>I'm at home YEAH YEAH!</p>
+      <div className={ 'container' }>
+        <SearchBar></SearchBar>
+        <PropertyList></PropertyList>
+        <Map />
       </div>
-    );
+    )
   }
 }
 
-export const homeUtils = {
-  one: 1,
-  two: 2
-}; 
-
-export default Home;
+export default Home

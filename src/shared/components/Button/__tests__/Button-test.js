@@ -1,12 +1,12 @@
 'use strict';
 
-jest.unmock('../Button.tsx');
+jest.unmock('../Button.js');
 
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import * as TestUtils from 'react-addons-test-utils';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-addons-test-utils';
 
-import Button from '../Button.tsx';
+import Button from '../Button.js';
 
 describe('Button', () => {
 
