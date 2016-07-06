@@ -1,5 +1,9 @@
 ## Installing
 
+## prerequisite
+
+NoteJS >= 6.2.x
+
 ```bash
 npm install
 ```
@@ -10,20 +14,19 @@ npm install
 npm run dev
 ```
 
- - build webpack/server
- - run build/server
- - browsersync builds webpack/client
- - client hot module replacement
-
 ## Run production release
+
+Build the projects into the `/build` folder 
+
+```bash
+npm run release
+```
+
+Run the server (at port 8999)
 
 ```bash
 NODE_ENV=production node build/server.js
 ```
-
- - NODE_ENV=production
- - build webpack/server
- - build webpack/client
 
  ## TODO
  - [x] bootstrap

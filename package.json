@@ -8,7 +8,7 @@
     "jest": "./node_modules/.bin/jest --no-cache --verbose",
     "test": "npm run eshint && npm run mocha",
     "mocha": "mocha test/ --recursive",
-    "postinstall": "webpack --config ./webpack/release.js"
+    "release": "webpack --config ./webpack/release.js"
   },
   "jest": {
     "scriptPreprocessor": "./webpack/tests.js",
