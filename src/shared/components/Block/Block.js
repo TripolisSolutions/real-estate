@@ -8,17 +8,15 @@ function Block(props) {
     <div className={ classnames(s.container, props.noBorder ? s.no_border : undefined ) }>
       <div className={ s.title }>
         <h1> { props.title } </h1>
-      </div>
-      <div>
-        { props.children }
-      </div>
+      </div>      
+      { props.children }      
     </div>
   )
 }
 
 Block.propTypes = {
   children: React.PropTypes.any.isRequired,
-  title: React.PropTypes.string.isRequired,
+  title: React.PropTypes.string,
   noBorder: React.PropTypes.string
 }
 

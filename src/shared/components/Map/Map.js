@@ -7,11 +7,13 @@ const s = require('./Map.less')
 
 function Map(props) {
   return (
-    <Block title='We are here'  noBorder={ true }>      
-      <GoogleMap
-        defaultCenter={ props.center }
-        defaultZoom={ props.zoom }>
-      </GoogleMap>      
+    <Block title='We are here'  noBorder={ true }>
+      <div className={ s.container }>
+        <GoogleMap
+          defaultCenter={ props.center }
+          defaultZoom={ props.zoom }>
+        </GoogleMap>
+      </div>
     </Block>
   )
 }
