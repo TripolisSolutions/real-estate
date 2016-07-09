@@ -1,8 +1,12 @@
 @import '../../styles/variables';
 
 .container {
-  border-bottom: 1px solid @color-main;
-  margin-top: @margin*5;
+  border-bottom: 1px solid @color-main;  
+  padding: @margin*5 0 @margin*6;
+
+  &.no_border {
+    border-bottom: none;
+  }
 }
 
 .title {

@@ -1,16 +1,20 @@
 import React from 'react'
 import GoogleMap from 'google-map-react'
 
+import Block from '../Block/Block'
+
 const s = require('./Map.less')
 
 function Map(props) {
   return (
-    <div className={ s.container }>
-      <GoogleMap
-        defaultCenter={ props.center }
-        defaultZoom={ props.zoom }>
-      </GoogleMap>
-    </div>
+    <Block title='We are here'  noBorder={ true }>
+      <div className={ s.container }>
+        <GoogleMap
+          defaultCenter={ props.center }
+          defaultZoom={ props.zoom }>
+        </GoogleMap>
+      </div>
+    </Block>
   )
 }
 

@@ -28,13 +28,19 @@
   :global .row {
     display: flex;
     flex-direction: row;
+
+    margin-left: 0;
+  }
+
+  > p {
+    margin: @margin 0 0 0;
   }
 }
 
-@size: 80px;
+@size: 50px;
 
 .button {
-  width: @size;
+  width: @size*2;
   height: @size;
   margin-right: 15px;
 }

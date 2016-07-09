@@ -6,6 +6,7 @@ import About from './about'
 import PropertyDetail from './admin/PropertyDetail/PropertyDetail'
 
 require('font-awesome/css/font-awesome.css')
+require('../styles/index.less')
 
 const routes = (
   <Route path='/' component={ App } >

@@ -10,44 +10,46 @@ const s = require('./SearchBar.less')
 class SearchBar extends React.Component {
   render() {
     return (
-      <Block title='I want to'>
-        <div className={ s.container } >
-          <div className={'row'}>
-            <div className={'col-md-2'} >
-              <Dropdown title='Buy'/>
+      <div className={'container'}>
+        <Block title='I want to'>
+          <div className={ s.container } >
+            <div className={'row'}>
+              <div className={'col-md-2'} >
+                <Dropdown title='Buy'/>
+              </div>
+              <div className={'col-md-8'} >
+                <Dropdown title='Buy'/>
+              </div>
             </div>
-            <div className={'col-md-8'} >
-              <Dropdown title='Buy'/>
+            <div className={classnames('row', s.second)}>
+              <div className={'col-md-2'} >
+                <Dropdown title='Buy'/>
+              </div>
+              <div className={'col-md-1'} >
+                <Dropdown title='Buy'/>
+              </div>
+              <div className={'col-md-1'} >
+                <Dropdown title='Buy'/>
+              </div>
+              <div className={'col-md-1'} >
+                <Dropdown title='Buy'/>
+              </div>
+              <div className={'col-md-1'} >
+                <Dropdown title='Buy'/>
+              </div>
+              <div className={'col-md-1'} >
+                <Dropdown title='Buy'/>
+              </div>
+              <div className={'col-md-1'} >
+                <Dropdown title='Buy'/>
+              </div>
+            </div>
+            <div className={ s.button }>
+              <Button text='More Info' />
             </div>
           </div>
-          <div className={classnames('row', s.second)}>
-            <div className={'col-md-2'} >
-              <Dropdown title='Buy'/>
-            </div>
-            <div className={'col-md-1'} >
-              <Dropdown title='Buy'/>
-            </div>
-            <div className={'col-md-1'} >
-              <Dropdown title='Buy'/>
-            </div>
-            <div className={'col-md-1'} >
-              <Dropdown title='Buy'/>
-            </div>
-            <div className={'col-md-1'} >
-              <Dropdown title='Buy'/>
-            </div>
-            <div className={'col-md-1'} >
-              <Dropdown title='Buy'/>
-            </div>
-            <div className={'col-md-1'} >
-              <Dropdown title='Buy'/>
-            </div>
-          </div>
-          <div className={ s.button }>
-            <Button text='More Info' />
-          </div>
-        </div>
-      </Block>
+        </Block>
+      </div> 
     )
   }
 }

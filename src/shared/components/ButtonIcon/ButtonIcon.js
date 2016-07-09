@@ -9,7 +9,7 @@ function ButtonIcon(props) {
   return (
     <ButtonWrapper>
       <div className={ s.container }>
-      <Icon icon={ props.icon} />
+      <Icon icon={ props.icon} color={ '#fff' } />
       </div>
     </ButtonWrapper>
   )
