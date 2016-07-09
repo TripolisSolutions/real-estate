@@ -5,12 +5,15 @@ const s = require('./Icon.less')
 
 function Icon(props) {
   return (
-    <FontAwesome className={ s.container } name={ props.icon } />
+    <div className={ props.color ? props.color : ''}>
+      <FontAwesome  name={ props.icon } />
+    </div>
   )
 }
 
 Icon.propTypes = {
   icon: React.PropTypes.string.isRequired,
+  color: React.PropTypes.string,
 }
 
 export default Icon

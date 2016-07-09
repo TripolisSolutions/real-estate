@@ -2,6 +2,7 @@ import React from 'react'
 import Helmet from 'react-helmet'
 
 import Header from '../components/Header/Header'
+import Footer from '../components/Footer/Footer'
 const s = require('./app.less')
 /**
  * App container component
@@ -24,6 +25,7 @@ function App(props) {
       <div>
         { props.children }
       </div>
+      <Footer />
     </div>
   )
 }
