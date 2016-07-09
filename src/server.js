@@ -17,7 +17,7 @@ import hooks from 'feathers-hooks'
 import rest from 'feathers-rest'
 import socketio from 'feathers-socketio'
 import errors from 'feathers-errors'
-import log from 'logstar'
+import log from 'loglevel'
 
 // internal packages
 import middleware from './middleware'
@@ -28,11 +28,13 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { RouterContext, match } from 'react-router'
 import Helmet from 'react-helmet'
+import { toJS } from 'mobx'
 
 // react internal packages
 import routes from './shared/routes'
 import { ContextProvider } from './shared/context'
-import { Store, fetchData } from './shared/store'
+import { fetchData } from './shared/store/helpers'
+import { NewStore } from './shared/store'
 
 // const release = (process.env.NODE_ENV === 'production')
 // const port = (parseInt(process.env.PORT, 10) || 9000) - !release;
@@ -47,18 +49,20 @@ const configPath = path.join(path.resolve('.'), 'config/default.json')
 nconf.env().file({file: configPath})
 
 // do not log secrects
-console.log('environment settings are: ', _.pickBy(nconf.get(), (value, key) => _.startsWith(key, 'SETTINGS_') && key.indexOf('SECRET') === -1 ))
+log.info('environment settings are: ', _.pickBy(nconf.get(), (value, key) => _.startsWith(key, 'SETTINGS_') && key.indexOf('SECRET') === -1 ))
 
 // Route handler that rules them all!
 const isomorphic = (req, res) => {
 
   // turn of server rendering on development for easier debugging
   if (process.env.NODE_ENV !== 'production') {
-    const store = new Store({
+    const store = NewStore({
       ssrLocation: req.url,
     })
-    
-    const storeAsJSON = store.toJSON()
+
+    const state = toJS(store)
+    log.debug('state')
+
     const config = {
       env: process.env.NODE_ENV ? process.env.NODE_ENV : 'development',
     }
@@ -69,9 +73,9 @@ const isomorphic = (req, res) => {
         meta: '',
         link: '',
         htmlAttributes: ''
-      }, renderedRoot: '', store: storeAsJSON, config: {},
+      }, renderedRoot: '', store: state, config: config,
     })
-  } 
+  }
 
   // Do a router match
   match({
@@ -87,7 +91,7 @@ const isomorphic = (req, res) => {
       return res.status(404).send('not found');
     }
 
-    const store = new Store({
+    const store = NewStore({
       ssrLocation: req.url,
     })
 
@@ -100,7 +104,7 @@ const isomorphic = (req, res) => {
         ))
         // const renderedRoot = ''
 
-        const storeAsJSON = store.toJSON()
+        const state = toJS(store)
         const config = {
           env: process.env.NODE_ENV ? process.env.NODE_ENV : 'development',
         }
@@ -108,7 +112,7 @@ const isomorphic = (req, res) => {
         const head = Helmet.rewind()
 
         res.status(200).render('index', {
-          head, renderedRoot, store: storeAsJSON, config,
+          head, renderedRoot, store: state, config,
         })
       })
       .catch((err1, err2) => {
