@@ -4,14 +4,11 @@ import {Decorator as FormsyElement} from 'formsy-react'
 import find from 'lodash/fp/find'
 import log from 'loglevel'
 
-import MyInput from 'components/FormElements/Input/Input'
-import Textarea from 'components/FormElements/Textarea/Textarea'
-import LanguageSelector from 'components/FormElements/LanguageSelector/LanguageSelector'
+import PropertyEdit from 'components/Admin/PropertyForm/PropertyForm'
 
 const { Checkbox, CheckboxGroup, Input, RadioGroup, Row, Select, File } = FRC
 
 import { observer } from 'shared/context'
-
 
 @observer
 class PropertyDetail extends React.Component {
@@ -24,32 +21,13 @@ class PropertyDetail extends React.Component {
     return store.propertiesStore.get(params.id)
   }
 
-  submit(model) {
-    console.log('model', model)
-  }
-
   render() {
     const store = this.context.store
-    const property = store.adminPages.create.data
-    const language = store.adminPages.selectedLanguage
-
-    log.debug('language', language)
-    log.debug('property.name', property.name)
-    log.debug('find({language: store.language})(property.name)', find({language: language})(property.name))
-    const name = find({language: language})(property.name).text
+    const formData = store.adminFormCreateProperty
 
     return (
-      <div>
-        <div>
-          <Formsy.Form onSubmit={ this.submit }>
-            <LanguageSelector name="language" value={ language } />
-            <MyInput name="name" value={ name }/>
-            <Textarea name="desc" value="123"/>
-            <button>Save</button>
-          </Formsy.Form>
-        </div>
-      </div>
-    );
+      <PropertyEdit formData={ formData } />
+    )
   }
 }
 

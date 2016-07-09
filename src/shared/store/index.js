@@ -1,8 +1,9 @@
-import mobx, { action, observable, extendObservable } from 'mobx'
+import mobx, { action, observable, extendObservable, computed } from 'mobx'
 import log from 'loglevel'
 
 import extend from 'lodash/fp/extend'
 import cloneDeep from 'lodash/fp/cloneDeep'
+import find from 'lodash/fp/find'
 
 mobx.useStrict(true)
 
@@ -38,6 +39,38 @@ class Store {
 
   @action resetAdminCreatePropertyPage() {
     this.adminPages.create.data = cloneDeep(initState.adminPages.create.data)
+  }
+
+  @action changeAdminLanguage(newLanguage) {
+    log.debug('store.changeAdminLanguage', newLanguage)
+    this.adminPages.selectedLanguage = newLanguage
+  }
+
+  @action updateAdminPropertyValue(name, value) {
+    log.debug('updateAdminPropertyValue', name, value)
+    const data = this.adminPages.create.data
+    const language = this.adminPages.selectedLanguage
+
+    switch (name) {
+      case 'name':
+        find({language: language})(data.name).text = value
+        return
+      default:
+    }
+  }
+
+  @computed get adminFormCreateProperty() {
+    const language = this.adminPages.selectedLanguage
+    const data = this.adminPages.create.data
+
+    const formData = {
+      language: language,
+      name: find({language: language})(data.name).text
+    }
+
+    log.debug('adminFormCreateProperty', formData)
+
+    return formData
   }
 }
 
