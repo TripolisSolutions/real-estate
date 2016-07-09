@@ -1,0 +1,40 @@
+@import '../../styles/variables';
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.items {
+  list-style: none;
+  padding: 0;
+
+  li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  span {
+    width: @margin*3;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+.right {
+  :global .row {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+@size: 80px;
+
+.button {
+  width: @size;
+  height: @size;
+  margin-right: 15px;
+}

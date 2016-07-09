@@ -1,13 +1,12 @@
 import React from 'react'
-import { Button as BootstrapButton } from 'react-bootstrap'
 
-const s = require('./Button.less')
+import ButtonWrapper from '../ButtonWrapper/ButtonWrapper'
 
 function Button(props) {
   return (
-    <BootstrapButton bsSize='large' className={ s.container } >
+    <ButtonWrapper>
       { props.text }
-    </BootstrapButton>
+    </ButtonWrapper>
   )
 }
 
