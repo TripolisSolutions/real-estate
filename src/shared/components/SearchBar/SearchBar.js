@@ -1,5 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
+import { Col as BootstrapCol} from 'react-bootstrap'
 
 import Block from '../Block/Block'
 import Button from '../Button/Button'
@@ -14,35 +15,35 @@ class SearchBar extends React.Component {
         <Block title='I want to'>
           <div className={ s.container } >
             <div className={'row'}>
-              <div className={'col-md-2'} >
+              <BootstrapCol md={ 2 }>
                 <Dropdown title='Buy'/>
-              </div>
-              <div className={'col-md-8'} >
+              </BootstrapCol>
+              <BootstrapCol md={ 8 }>
                 <Dropdown title='Buy'/>
-              </div>
+              </BootstrapCol>
             </div>
             <div className={classnames('row', s.second)}>
-              <div className={'col-md-2'} >
+              <BootstrapCol md={ 2 }>
                 <Dropdown title='Buy'/>
-              </div>
-              <div className={'col-md-1'} >
+              </BootstrapCol>
+              <BootstrapCol md={ 1 }>
                 <Dropdown title='Buy'/>
-              </div>
-              <div className={'col-md-1'} >
+              </BootstrapCol>
+              <BootstrapCol md={ 1 }>
                 <Dropdown title='Buy'/>
-              </div>
-              <div className={'col-md-1'} >
+              </BootstrapCol>
+              <BootstrapCol md={ 1 }>
                 <Dropdown title='Buy'/>
-              </div>
-              <div className={'col-md-1'} >
+              </BootstrapCol>
+              <BootstrapCol md={ 1 }>
                 <Dropdown title='Buy'/>
-              </div>
-              <div className={'col-md-1'} >
+              </BootstrapCol>
+              <BootstrapCol md={ 1 }>
                 <Dropdown title='Buy'/>
-              </div>
-              <div className={'col-md-1'} >
+              </BootstrapCol>
+              <BootstrapCol md={ 1 }>
                 <Dropdown title='Buy'/>
-              </div>
+              </BootstrapCol>
             </div>
             <div className={ s.button }>
               <Button text='More Info' />

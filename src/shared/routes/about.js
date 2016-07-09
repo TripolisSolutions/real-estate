@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { observer } from '../context'
+import Map from '../components/Map/Map'
 
 @observer
 class About extends React.Component {
@@ -12,10 +13,7 @@ class About extends React.Component {
   render() {
     return (
       <div>
-        <p>I'm about { this.context.store.text } foos!</p>
-        <button onClick={ () => this.context.store.fetchAboutData() }>
-          Update
-        </button>
+        <Map />
       </div>
     );
   }

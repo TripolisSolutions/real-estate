@@ -1,4 +1,6 @@
 import React from 'react'
+import { Col as BootstrapCol} from 'react-bootstrap'
+
 import Block from '../Block/Block'
 import PropertyItem from '../PropertyItem/PropertyItem'
 
@@ -8,18 +10,24 @@ class PropertyList extends React.Component {
       <div className={'container'}>
         <Block title='Recently properties'>
           <div className={'row'}>
-            <div className={'col-md-4'} >
+            <BootstrapCol md={4}>
               <PropertyItem title='nice modern villa' />
-            </div>
-            <div className={'col-md-4'} >
+            </BootstrapCol>
+            <BootstrapCol md={4}>
               <PropertyItem title='nice modern villa' />
-            </div>
-            <div className={'col-md-4'} >
+            </BootstrapCol>
+            <BootstrapCol md={4}>
               <PropertyItem title='nice modern villa' />
-            </div>
-            <div className={'col-md-4'} >
+            </BootstrapCol>
+            <BootstrapCol md={4}>
               <PropertyItem title='nice modern villa' />
-            </div>
+            </BootstrapCol>
+            <BootstrapCol md={4}>
+              <PropertyItem title='nice modern villa' />
+            </BootstrapCol>
+            <BootstrapCol md={4}>
+              <PropertyItem title='nice modern villa' />
+            </BootstrapCol>
           </div>
         </Block>
       </div>
