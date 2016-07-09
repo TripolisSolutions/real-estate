@@ -6,15 +6,21 @@ import { observer } from 'shared/context'
 const s = require('./LanguageSelector.less')
 
 function LanguageSelector(props) {
+
+  function onChange(value) {
+    props.setValue(value)
+    props.onChange(value)
+  }
+
   return (
     <div>
       <div
         className={ props.getValue() === 'vietnamese' ? s.selected : undefined }
-        onClick={ (e) => props.setValue('vietnamese')}
+        onClick={ () => onChange('vietnamese') }
         >Vietnamese</div>
       <div
         className={ props.getValue() === 'english' ? s.selected : undefined }
-        onClick={ (e) => props.setValue('english')}
+        onClick={ () => onChange('english') }
         >English</div>
     </div>
   )
