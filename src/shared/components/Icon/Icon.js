@@ -5,7 +5,7 @@ const s = require('./Icon.less')
 
 function Icon(props) {
   return (
-    <div className={ props.color ? props.color : ''}>
+    <div className={ props.color ? props.color : s.container}>
       <FontAwesome  name={ props.icon } />
     </div>
   )

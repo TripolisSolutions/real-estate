@@ -19,11 +19,11 @@ function Footer(props) {
             </li>
             <li>
               <Icon icon='phone' />
-              <p>215F3 Nguyen Van Huong st. Thao Dien, District 2, HCMC, Vietnam</p>
+              <p>(84) 1231549)</p>
             </li>
             <li>
               <Icon icon='envelope' />
-              <p>215F3 Nguyen Van Huong st. Thao Dien, District 2, HCMC, Vietnam</p>
+              <p>myemail@gmail.com</p>
             </li>
           </ul>
         </div>
@@ -36,6 +36,7 @@ function Footer(props) {
               <ButtonIcon icon='facebook'/>
             </div>
           </div>
+          <p>Copy &copy; 2016 by YOUR SIDE</p>
         </div>
       </div>
     </div>

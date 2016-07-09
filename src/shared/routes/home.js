@@ -6,7 +6,7 @@ import Map from '../components/Map/Map'
 class Home extends React.Component {
   render() {
     return (
-      <div className={ 'container' }>
+      <div>
         <SearchBar></SearchBar>
         <PropertyList></PropertyList>
         <Map />
