@@ -37,7 +37,11 @@ module.exports = {
     libraryTarget: 'commonjs2',
   },
   resolve: {
-    extensions: ['', '.js', '.css', '.less']
+    extensions: ['', '.js', '.css', '.less'],
+    alias: {
+      components: path.resolve('./src/shared/components'),
+      shared: path.resolve('./src/shared')
+    }
   },
   module: {
     preLoaders: [

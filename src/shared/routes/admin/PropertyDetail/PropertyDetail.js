@@ -2,20 +2,14 @@ import React from 'react'
 import FRC from 'formsy-react-components'
 import {Decorator as FormsyElement} from 'formsy-react'
 
-const { Checkbox, CheckboxGroup, Input, RadioGroup, Row, Select, File, Textarea } = FRC
+import MyInput from 'components/FormElements/Input/Input'
+import Textarea from 'components/FormElements/Textarea/Textarea'
+import LanguageSelector from 'components/FormElements/LanguageSelector/LanguageSelector'
 
-import { observer } from '../../../context'
+const { Checkbox, CheckboxGroup, Input, RadioGroup, Row, Select, File } = FRC
 
-@FormsyElement()
-class MyInput extends React.Component {
-  render() {
-    return (
-      <div>
-        <input value={this.props.getValue()} onChange={(e) => this.props.setValue(e.target.value)}/>
-      </div>
-    )
-  }
-}
+import { observer } from 'shared/context'
+
 
 @observer
 class PropertyDetail extends React.Component {
@@ -37,16 +31,10 @@ class PropertyDetail extends React.Component {
     return (
       <div>
         <div>
-          <div>Vietnamese</div>
-          <div>English</div>
-        </div>
-        <div>
-          { JSON.stringify(property) }
-        </div>
-        <div>
           <Formsy.Form onSubmit={ this.submit }>
+            <LanguageSelector name="language" value="vietnamese" />
             <MyInput name="name" value="abc"/>
-            <MyInput name="desc" value="123"/>
+            <Textarea name="desc" value="123"/>
             <button>Save</button>
           </Formsy.Form>
         </div>
