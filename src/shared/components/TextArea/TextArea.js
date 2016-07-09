@@ -6,8 +6,8 @@ const s = require('./TextArea.less')
 
 function TextArea(props) {
   return (
-    <BootstrapFormGroup>
-      <BootstrapControl  className={ s.container } componentClass="textarea" placeholder={ props.placeholder } />
+    <BootstrapFormGroup className={ s.container }>
+      <BootstrapControl  className={ s.control } componentClass="textarea" placeholder={ props.placeholder } />
     </BootstrapFormGroup>
   )
 }

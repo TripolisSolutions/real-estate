@@ -1,22 +1,24 @@
 @import '../../styles/variables';
 
-@height: 60px;
-@font-size: 16px;
-
 .container {
-  height: @height;
-  border-radius: 0;
-  border-color: @color-main;
-  font-size: @font-size;
+  :global textarea.form-control {
+    height: 100%;
+  }
 }
 
-.container::-moz-placeholder {
+.control {
+  border-radius: 0;
+  border-color: @color-main;
+  font-size: @font-size;  
+}
+
+.control::-moz-placeholder {
   color: @color-main;
   opacity: 1;
 }
-.container:-ms-input-placeholder {
+.control:-ms-input-placeholder {
   color: @color-main;
 }
-.container::-webkit-input-placeholder {
+.control::-webkit-input-placeholder {
   color: @color-main;
 }
