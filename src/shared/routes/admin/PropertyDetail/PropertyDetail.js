@@ -1,6 +1,8 @@
 import React from 'react'
 import FRC from 'formsy-react-components'
 import {Decorator as FormsyElement} from 'formsy-react'
+import find from 'lodash/fp/find'
+import log from 'loglevel'
 
 import MyInput from 'components/FormElements/Input/Input'
 import Textarea from 'components/FormElements/Textarea/Textarea'
@@ -15,8 +17,9 @@ import { observer } from 'shared/context'
 class PropertyDetail extends React.Component {
 
   static fetchData(store, params) {
+    log.debug('PropertyDetail.fetchData store: ', store)
     if (params.id === 'new') {
-      return store.propertiesStore.prepareNewProperty()
+      return store.resetAdminCreatePropertyPage()
     }
     return store.propertiesStore.get(params.id)
   }
@@ -26,14 +29,21 @@ class PropertyDetail extends React.Component {
   }
 
   render() {
-    const property = this.context.store.propertiesStore.propertyDetail
+    const store = this.context.store
+    const property = store.adminPages.create.data
+    const language = store.adminPages.selectedLanguage
+
+    log.debug('language', language)
+    log.debug('property.name', property.name)
+    log.debug('find({language: store.language})(property.name)', find({language: language})(property.name))
+    const name = find({language: language})(property.name).text
 
     return (
       <div>
         <div>
           <Formsy.Form onSubmit={ this.submit }>
-            <LanguageSelector name="language" value="vietnamese" />
-            <MyInput name="name" value="abc"/>
+            <LanguageSelector name="language" value={ language } />
+            <MyInput name="name" value={ name }/>
             <Textarea name="desc" value="123"/>
             <button>Save</button>
           </Formsy.Form>

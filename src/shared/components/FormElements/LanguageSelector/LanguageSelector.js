@@ -9,34 +9,16 @@ function LanguageSelector(props) {
   return (
     <div>
       <div
-        className={ props.getValue() === 'vietnamese' ? 'selected' : undefined }
+        className={ props.getValue() === 'vietnamese' ? s.selected : undefined }
         onClick={ (e) => props.setValue('vietnamese')}
         >Vietnamese</div>
       <div
-        className={ props.getValue() === 'english' ? 'selected' : undefined }
+        className={ props.getValue() === 'english' ? s.selected : undefined }
         onClick={ (e) => props.setValue('english')}
         >English</div>
     </div>
   )
 }
-
-// @FormsyElement()
-// export default class LanguageSelector extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <div
-//           className={ this.props.getValue() === 'vietnamese' ? 'selected' : undefined }
-//           onClick={ (e) => this.props.setValue('vietnamese')}
-//           >Vietnamese</div>
-//         <div
-//           className={ this.props.getValue() === 'english' ? 'selected' : undefined }
-//           onClick={ (e) => this.props.setValue('english')}
-//           >English</div>
-//       </div>
-//     )
-//   }
-// }
 
 LanguageSelector.propTypes = {
   selected: React.PropTypes.string,
