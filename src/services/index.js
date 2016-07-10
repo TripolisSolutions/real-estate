@@ -3,6 +3,7 @@ const article = require('./article')
 const authentication = require('./authentication')
 const user = require('./user')
 const properties = require('./properties')
+const categories = require('./categories')
 // const mongoose = require('mongoose')
 
 module.exports = function () {
@@ -15,4 +16,5 @@ module.exports = function () {
   app.configure(user)
   app.configure(article)
   app.configure(properties)
+  app.configure(categories)
 }

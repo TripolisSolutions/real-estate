@@ -6,6 +6,7 @@ import log from 'loglevel'
 
 import Input from 'components/FormElements/Input/Input'
 import Textarea from 'components/FormElements/Textarea/Textarea'
+import Dropdown from 'components/FormElements/Dropdown/Dropdown'
 import LanguageSelector from 'components/FormElements/LanguageSelector/LanguageSelector'
 
 const { Checkbox, CheckboxGroup, RadioGroup, Row, Select, File } = FRC
@@ -33,6 +34,11 @@ function PropertyEdit(props) {
             onChange={ (value) => store.updateAdminPropertyValue('name', value) }/>
           <Textarea name="desc" value={ formData.desc }
             onChange={ (value) => store.updateAdminPropertyValue('desc', value) }/>
+          <Dropdown name='category_id' title='Category'
+            options={ formData.categories }
+            value={ formData.categoryID }
+            onChange={ (value) => store.updateAdminPropertyValue('category_id', value) }
+            />
           <button>Save</button>
         </Formsy.Form>
       </div>

@@ -51,31 +51,34 @@ nconf.env().file({file: configPath})
 // do not log secrects
 log.info('environment settings are: ', _.pickBy(nconf.get(), (value, key) => _.startsWith(key, 'SETTINGS_') && key.indexOf('SECRET') === -1 ))
 
+log.setLevel(nconf.get('SETTINGS_LOG_LEVEL'))
+
 // Route handler that rules them all!
 const isomorphic = (req, res) => {
 
   // turn of server rendering on development for easier debugging
-  if (process.env.NODE_ENV !== 'production') {
-    const store = NewStore({
-      ssrLocation: req.url,
-    })
+  // if (process.env.NODE_ENV !== 'production') {
+  //   const store = NewStore({
+  //     ssrLocation: req.url,
+  //   })
 
-    const state = toJS(store)
-    log.debug('state')
+  //   const state = toJS(store)
+  //   log.debug('state')
 
-    const config = {
-      env: process.env.NODE_ENV ? process.env.NODE_ENV : 'development',
-    }
+  //   const config = {
+  //     env: process.env.NODE_ENV ? process.env.NODE_ENV : 'development',
+  //     logLevel: nconf.get('SETTINGS_LOG_LEVEL'),
+  //   }
 
-    return res.status(200).render('index', {
-      head: {
-        title: '',
-        meta: '',
-        link: '',
-        htmlAttributes: ''
-      }, renderedRoot: '', store: state, config: config,
-    })
-  }
+  //   return res.status(200).render('index', {
+  //     head: {
+  //       title: '',
+  //       meta: '',
+  //       link: '',
+  //       htmlAttributes: ''
+  //     }, renderedRoot: '', store: state, config: config,
+  //   })
+  // }
 
   // Do a router match
   match({
@@ -88,7 +91,7 @@ const isomorphic = (req, res) => {
     } else if (redirect) {
       return res.redirect(302, redirect.pathname + redirect.search)
     } else if (!props) {
-      return res.status(404).send('not found');
+      return res.status(404).send('not found')
     }
 
     const store = NewStore({
@@ -97,16 +100,21 @@ const isomorphic = (req, res) => {
 
     return fetchData(store, props.components, props.params, props.location.query)
       .then(() => {
-        const renderedRoot = ReactDOMServer.renderToString((
-          <ContextProvider context={{ store }}>
-            <RouterContext { ...props } />
-          </ContextProvider>
-        ))
-        // const renderedRoot = ''
+        let renderedRoot
+        if (process.env.NODE_ENV !== 'production') {
+          renderedRoot = ''
+        } else {
+          renderedRoot = ReactDOMServer.renderToString((
+            <ContextProvider context={{ store }}>
+              <RouterContext { ...props } />
+            </ContextProvider>
+          ))
+        }
 
         const state = toJS(store)
         const config = {
           env: process.env.NODE_ENV ? process.env.NODE_ENV : 'development',
+          logLevel: nconf.get('SETTINGS_LOG_LEVEL'),
         }
 
         const head = Helmet.rewind()

@@ -4,11 +4,16 @@ import log from 'loglevel'
 import extend from 'lodash/fp/extend'
 import cloneDeep from 'lodash/fp/cloneDeep'
 import find from 'lodash/fp/find'
-import isNull from 'lodash/fp/isNull'
+import isEmpty from 'lodash/fp/isEmpty'
+import first from 'lodash/fp/first'
 
 import { feather } from '../feather'
 
 mobx.useStrict(true)
+
+function translate(field, language) {
+  return find({language: language})(field).text
+}
 
 const initState = {
   ssrLocation: null,
@@ -41,7 +46,7 @@ const initState = {
             text: 'Desc EN'
           },
         ],
-        category_id: '5781215ace0450e84687b49e'
+        category_id: ''
       }
     },
     edit: {
@@ -55,10 +60,11 @@ class Store {
     extendObservable(this, extend(cloneDeep(initState), state))
   }
 
-  @action loadCategories() {
-    feather().service('/api/categories').find().then(
+  loadCategories() {
+    return feather().service('/api/categories').find().then(
       (response) => {
-        this.categories.data = response
+        log.debug('loadCategories response:', response)
+        this.setCategories(JSON.parse(response).docs)
       },
       (error) => {
         log.info('error: ', error)
@@ -66,12 +72,27 @@ class Store {
     )
   }
 
+  @action setCategories(categories) {
+    log.debug('setCategories: ', categories)
+    this.categories.data = categories
+  }
+
   @action loadAdminPropertyCreate() {
+    log.debug('loadAdminPropertyCreate')
     this.adminPages.create.data = cloneDeep(initState.adminPages.create.data)
 
-    if (isNull(this.categories.data.length)) {
-      this.loadCategories()
+    if (this.categories.data.length === 0) {
+      log.debug('loadCategories triggering')
+      return this.loadCategories().then(
+        () => {
+          if (isEmpty(this.adminPages.create.data.category_id)) {
+            this.updateAdminPropertyValue('category_id', first(this.categories.data).id)
+          }
+        }
+      )
     }
+
+    return null
   }
 
   @action changeAdminLanguage(newLanguage) {
@@ -90,6 +111,9 @@ class Store {
         return
       case 'desc':
         find({language: language})(data.desc).text = value
+        return
+      case 'category_id':
+        data.category_id = value
         return
       default:
     }
@@ -117,22 +141,14 @@ class Store {
       language: language,
       name: find({language: language})(data.name).text,
       desc: find({language: language})(data.desc).text,
+      categories: this.categories.data.map( (cat) => ({ value: cat.id, label: translate(cat.name, language) })),
+      categoryID: data.category_id,
     }
 
     log.debug('adminFormCreateProperty', formData)
 
     return formData
   }
-}
-
-const actions = {
-  adminPages: {
-    create: {
-      init: action('adminPages.create.init', function() {
-        this.adminPages.create.data = cloneDeep(initState.adminPages.create.data)
-      })
-    },
-  },
 }
 
 export function NewStore(state) {
