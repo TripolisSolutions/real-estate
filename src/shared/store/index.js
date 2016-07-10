@@ -4,11 +4,18 @@ import log from 'loglevel'
 import extend from 'lodash/fp/extend'
 import cloneDeep from 'lodash/fp/cloneDeep'
 import find from 'lodash/fp/find'
+import isNull from 'lodash/fp/isNull'
+
+import { feather } from '../feather'
 
 mobx.useStrict(true)
 
 const initState = {
   ssrLocation: null,
+
+  categories: {
+    data: []
+  },
 
   adminPages: {
     selectedLanguage: 'vietnamese',
@@ -23,7 +30,18 @@ const initState = {
             language: 'english',
             text: 'Default EN'
           },
-        ]
+        ],
+        desc: [
+          {
+            language: 'vietnamese',
+            text: 'Desc VN'
+          },
+          {
+            language: 'english',
+            text: 'Desc EN'
+          },
+        ],
+        category_id: '5781215ace0450e84687b49e'
       }
     },
     edit: {
@@ -37,8 +55,23 @@ class Store {
     extendObservable(this, extend(cloneDeep(initState), state))
   }
 
-  @action resetAdminCreatePropertyPage() {
+  @action loadCategories() {
+    feather().service('/api/categories').find().then(
+      (response) => {
+        this.categories.data = response
+      },
+      (error) => {
+        log.info('error: ', error)
+      }
+    )
+  }
+
+  @action loadAdminPropertyCreate() {
     this.adminPages.create.data = cloneDeep(initState.adminPages.create.data)
+
+    if (isNull(this.categories.data.length)) {
+      this.loadCategories()
+    }
   }
 
   @action changeAdminLanguage(newLanguage) {
@@ -55,8 +88,25 @@ class Store {
       case 'name':
         find({language: language})(data.name).text = value
         return
+      case 'desc':
+        find({language: language})(data.desc).text = value
+        return
       default:
     }
+  }
+
+  @action saveProperty() {
+    const data = this.adminPages.create.data
+    log.info('saving property data: ', data)
+
+    feather().service('/api/properties').create(data).then(
+      (response) => {
+        log.info('success: ', response)
+      },
+      (error) => {
+        log.info('error: ', error)
+      }
+    )
   }
 
   @computed get adminFormCreateProperty() {
@@ -65,7 +115,8 @@ class Store {
 
     const formData = {
       language: language,
-      name: find({language: language})(data.name).text
+      name: find({language: language})(data.name).text,
+      desc: find({language: language})(data.desc).text,
     }
 
     log.debug('adminFormCreateProperty', formData)

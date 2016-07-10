@@ -1,18 +1,29 @@
 import React from 'react'
-import FRC from 'formsy-react-components'
 import {Decorator as FormsyElement} from 'formsy-react'
-
-// const { Checkbox, CheckboxGroup, Input, RadioGroup, Row, Select, File, Textarea } = FRC
+import { FormGroup as BootstrapFormGroup} from 'react-bootstrap'
+import { FormControl as BootstrapControl} from 'react-bootstrap'
 
 import { observer } from 'shared/context'
 
-@FormsyElement()
-export default class Textarea extends React.Component {
-  render() {
-    return (
-      <div>
-        <textarea value={this.props.getValue()} onChange={(e) => this.props.setValue(e.target.value)}/>
-      </div>
-    )
+const s = require('./Textarea.less')
+
+function TextArea(props) {
+  function onChange(e) {
+    props.setValue(e.target.value)
+    props.onChange(e.target.value)
   }
+
+  return (
+    <BootstrapFormGroup className={ s.container }>
+      <BootstrapControl className={ s.control } componentClass="textarea" placeholder={ props.placeholder }
+        value={ this.props.getValue() } onChange={ onChange }/>
+    </BootstrapFormGroup>
+  )
 }
+
+TextArea.propTypes = {
+  value: React.PropTypes.string,
+  placeholder: React.PropTypes.string.isRequired
+}
+
+export default FormsyElement()(observer(TextArea))
