@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { browserHistory, match, Router } from 'react-router'
 import routes from './shared/routes'
 import log from 'loglevel'
+import mobx from 'mobx'
 
 import { ContextProvider } from './shared/context'
 
@@ -13,6 +14,10 @@ log.setLevel(0)
 
 const store = NewStore(__STORE__)
 fetchDataOnLocationMatch(browserHistory, routes, match, store)
+
+// for dev
+window.store = store
+window.mobx = mobx
 
 // Render the application
 ReactDOM.render(

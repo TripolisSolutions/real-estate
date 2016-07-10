@@ -4,7 +4,7 @@ import feathersSocketClient from 'feathers-socketio/client'
 // import * as feathersAuth from 'feathers-authentication/client'
 import socketIOClient from 'socket.io-client'
 
-let instance = undefined
+let instance
 let uri = 'http://localhost:8999'
 
 if (typeof window !== 'undefined' && window.__CONFIG__.env === 'production') {
