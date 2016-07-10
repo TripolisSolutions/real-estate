@@ -16,7 +16,7 @@ class PropertyDetail extends React.Component {
   static fetchData(store, params) {
     log.debug('PropertyDetail.fetchData store: ', store)
     if (params.id === 'new') {
-      return store.resetAdminCreatePropertyPage()
+      return store.loadAdminPropertyCreate()
     }
     return store.propertiesStore.get(params.id)
   }

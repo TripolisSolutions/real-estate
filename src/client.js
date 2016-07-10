@@ -10,7 +10,7 @@ import { ContextProvider } from './shared/context'
 import { NewStore } from './shared/store'
 import { fetchDataOnLocationMatch } from './shared/store/helpers'
 
-log.setLevel(0)
+log.setLevel(__CONFIG__.logLevel)
 
 const store = NewStore(__STORE__)
 fetchDataOnLocationMatch(browserHistory, routes, match, store)

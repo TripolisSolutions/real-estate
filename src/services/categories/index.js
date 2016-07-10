@@ -1,12 +1,16 @@
 import request from 'request-promise'
 import nconf from 'nconf'
+import urljoin from 'url-join'
+import log from 'loglevel'
 
 class Service {
   constructor() {
   }
 
   find(params) {
-    return request(`${ nconf.get('SETTINGS_REAL_ESTATE_API') }/categories`)
+    const url = urljoin(nconf.get('SETTINGS_REAL_ESTATE_API'), '/categories')
+    log.debug('categories.find url', url)
+    return request(url)
   }
 
   get(id, params) {
