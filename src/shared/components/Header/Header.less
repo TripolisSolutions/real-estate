@@ -6,6 +6,16 @@
   border-color: @color-main;
   display: flex;
   min-height: 80px;
+
+ :global .navbar-brand, :global .navbar-brand:hover {
+   color: @color-main; 
+ }
+}
+
+.logo {
+  font-family: 'SFUGillSansBold';
+  font-size: @font-size-logo;
+  text-transform: uppercase;
 }
 
 .link {
