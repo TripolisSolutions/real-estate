@@ -18,7 +18,7 @@ Block.propTypes = {
   children: React.PropTypes.any.isRequired,
   title: React.PropTypes.string,
   noBorder: React.PropTypes.string,
-  bigger: React.PropTypes.string
+  bigger: React.PropTypes.boolean,
 }
 
 export default Block

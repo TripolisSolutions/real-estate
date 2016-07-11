@@ -11,7 +11,7 @@ function Header(props) {
     <BootstrapNavbar className={ s.container }  inverse fixedTop>
       <BootstrapNavbar.Header>
         <BootstrapNavbar.Brand>
-          <a href="#">Real estate</a>
+          <span className= { s.logo }>Real estate</span>
         </BootstrapNavbar.Brand>
       </BootstrapNavbar.Header>
     <BootstrapNavbar.Collapse>
