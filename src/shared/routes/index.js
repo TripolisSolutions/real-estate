@@ -4,7 +4,8 @@ import App from '../containers/app'
 import Home from './home'
 import About from './about'
 import Contact from './contact'
-import PropertyDetail from './admin/PropertyDetail/PropertyDetail'
+// import PropertyDetail from './admin/PropertyDetail/PropertyDetail'
+import PropertyForm from './admin/PropertyForm/PropertyForm'
 
 import 'font-awesome/css/font-awesome.css'
 import 'react-select/dist/react-select.css'
@@ -15,8 +16,8 @@ const routes = (
     <IndexRoute component={ Home } />
     <Route path='about' component={ About } />
     <Route path='contact' component={ Contact } />
-    <Route path='admin/properties/:id' component={ PropertyDetail } />
+    <Route path='admin/properties/:id' component={ PropertyForm } />
   </Route>
-);
+)
 
 export default routes
