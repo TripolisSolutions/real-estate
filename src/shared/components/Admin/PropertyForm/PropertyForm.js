@@ -1,6 +1,5 @@
 import React from 'react'
 import FRC from 'formsy-react-components'
-import {Decorator as FormsyElement} from 'formsy-react'
 import find from 'lodash/fp/find'
 import log from 'loglevel'
 
@@ -8,6 +7,7 @@ import Input from 'components/FormElements/Input/Input'
 import Textarea from 'components/FormElements/Textarea/Textarea'
 import Dropdown from 'components/FormElements/Dropdown/Dropdown'
 import LanguageSelector from 'components/FormElements/LanguageSelector/LanguageSelector'
+import DatePicker from 'components/FormElements/DatePicker/DatePicker'
 
 const { Checkbox, CheckboxGroup, RadioGroup, Row, Select, File } = FRC
 
@@ -39,6 +39,7 @@ function PropertyEdit(props) {
             value={ formData.categoryID }
             onChange={ (value) => store.updateAdminPropertyValue('category_id', value) }
             />
+          <DatePicker name='available_until'/>
           <button>Save</button>
         </Formsy.Form>
       </div>

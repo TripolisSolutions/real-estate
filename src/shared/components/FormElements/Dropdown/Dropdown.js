@@ -13,13 +13,15 @@ function Dropdown(props) {
   }
 
   return (
-    <Select
-      className={ s.container }
-      name={ `dropdown-${ props.name }` }
-      value={ props.value }
-      options={ props.options }
-      onChange={ onChange }
-    />
+    <div className={ s.container }>
+      <Select
+        className={ s.dropdown }
+        name={ `dropdown-${ props.name }` }
+        value={ props.value }
+        options={ props.options }
+        onChange={ onChange }
+      />
+    </div>
   )
 }
 
