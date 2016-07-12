@@ -9,11 +9,14 @@ import Dropdown from 'components/FormElements/Dropdown/Dropdown'
 import LanguageSelector from 'components/FormElements/LanguageSelector/LanguageSelector'
 import DatePicker from 'components/FormElements/DatePicker/DatePicker'
 
+<<<<<<< HEAD
 import {
   Grid, Row, Col,
   FormGroup, ControlLabel, FormControl,
 } from 'react-bootstrap'
 
+=======
+>>>>>>> e601b06e8d04824489a0fbbc93f7da7696b565ad
 const { Checkbox, CheckboxGroup, RadioGroup, Row, Select, File } = FRC
 
 import { observer } from 'shared/context'
