@@ -9,15 +9,10 @@ import Dropdown from 'components/FormElements/Dropdown/Dropdown'
 import LanguageSelector from 'components/FormElements/LanguageSelector/LanguageSelector'
 import DatePicker from 'components/FormElements/DatePicker/DatePicker'
 
-<<<<<<< HEAD
 import {
   Grid, Row, Col,
-  FormGroup, ControlLabel, FormControl,
+  FormGroup, ControlLabel, FormControl, HelpBlock,
 } from 'react-bootstrap'
-
-=======
->>>>>>> e601b06e8d04824489a0fbbc93f7da7696b565ad
-const { Checkbox, CheckboxGroup, RadioGroup, Row, Select, File } = FRC
 
 import { observer } from 'shared/context'
 
@@ -38,33 +33,32 @@ function PropertyEdit(props) {
         <Grid>
           <Row>
             <Col xs={6}>
-              <FormGroup
-                controlId="formBasicText"
-              >
-                <ControlLabel>Working example with validation</ControlLabel>
-                <FormControl
-                  type="text"
-                  value={this.state.value}
-                  placeholder="Enter text"
-                  onChange={this.handleChange}
-                />
+              <FormGroup>
+                <ControlLabel>Name</ControlLabel>
+                <Input name="name" value={ formData.name }
+          onChange={ (value) => store.updateAdminPropertyValue('name', value) }/>
                 <FormControl.Feedback />
-                <HelpBlock>Validation is based on string length.</HelpBlock>
+                <HelpBlock>This field is required</HelpBlock>
               </FormGroup>
             </Col>
             <Col xs={6}>
               <FormGroup
                 controlId="formBasicText"
               >
-                <ControlLabel>Working example with validation</ControlLabel>
-                <FormControl
-                  type="text"
-                  value={this.state.value}
-                  placeholder="Enter text"
-                  onChange={this.handleChange}
-                />
+                <ControlLabel>Tieu De</ControlLabel>
+                <Input name="name" value={ formData.name }
+          onChange={ (value) => store.updateAdminPropertyValue('name', value) }/>
                 <FormControl.Feedback />
-                <HelpBlock>Validation is based on string length.</HelpBlock>
+                <HelpBlock>Bat buoc phai nhap</HelpBlock>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <FormGroup>
+                <ControlLabel>Description</ControlLabel>
+                <Textarea name="desc" value={ formData.desc }
+                  onChange={ (value) => store.updateAdminPropertyValue('desc', value) }/>
               </FormGroup>
             </Col>
           </Row>

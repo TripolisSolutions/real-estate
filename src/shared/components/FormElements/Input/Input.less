@@ -1,0 +1,19 @@
+@import '../../../styles/variables';
+
+.container {
+  height: @input-height;
+  border-radius: 0;
+  border-color: @color-main;
+  font-size: @font-size;
+}
+
+.container::-moz-placeholder {
+  color: @color-main;
+  opacity: 1;
+}
+.container:-ms-input-placeholder {
+  color: @color-main;
+}
+.container::-webkit-input-placeholder {
+  color: @color-main;
+}

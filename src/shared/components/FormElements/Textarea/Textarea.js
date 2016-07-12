@@ -1,6 +1,5 @@
 import React from 'react'
 import {Decorator as FormsyElement} from 'formsy-react'
-import { FormGroup as BootstrapFormGroup} from 'react-bootstrap'
 import { FormControl as BootstrapControl} from 'react-bootstrap'
 
 import { observer } from 'shared/context'
@@ -14,10 +13,8 @@ function TextArea(props) {
   }
 
   return (
-    <BootstrapFormGroup className={ s.container }>
-      <BootstrapControl className={ s.control } componentClass="textarea" placeholder={ props.placeholder }
-        value={ this.props.getValue() } onChange={ onChange }/>
-    </BootstrapFormGroup>
+    <BootstrapControl className={ s.control } componentClass="textarea" placeholder={ props.placeholder }
+      value={ this.props.getValue() } onChange={ onChange }/>
   )
 }
 

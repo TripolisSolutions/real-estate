@@ -1,26 +1,20 @@
 import React from 'react'
-import FRC from 'formsy-react-components'
 import {Decorator as FormsyElement} from 'formsy-react'
-
-const { Checkbox, CheckboxGroup, RadioGroup, Row, Select, File, Textarea } = FRC
-
 import { observer } from 'shared/context'
+import { FormControl as BootstrapControl} from 'react-bootstrap'
 
+const s = require('./Input.less')
 
 function Input(props) {
-  function onChange(e) {
-    props.setValue(e.target.value)
-    props.onChange(e.target.value)
-  }
-
   return (
-    <div>
-      <input value={props.getValue()} onChange={ onChange }/>
-    </div>
+    <BootstrapControl className={ s.container } type="text" placeholder={ props.placeholder } />
   )
 }
 
 Input.propTypes = {
+  value: React.PropTypes.string,
+  placeholder: React.PropTypes.string.isRequired
 }
+
 
 export default FormsyElement()(observer(Input))
