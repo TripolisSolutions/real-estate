@@ -6,7 +6,6 @@ import log from 'loglevel'
 import Input from 'components/FormElements/Input/Input'
 import Textarea from 'components/FormElements/Textarea/Textarea'
 import Dropdown from 'components/FormElements/Dropdown/Dropdown'
-import LanguageSelector from 'components/FormElements/LanguageSelector/LanguageSelector'
 import DatePicker from 'components/FormElements/DatePicker/DatePicker'
 
 import {
@@ -35,9 +34,8 @@ function PropertyEdit(props) {
           <Row>
             <Col xs={6}>
               <FormGroup>
-                <ControlLabel>Name</ControlLabel>
-                <Input name="name" value={ formData.name }
-          onChange={ (value) => store.updateAdminPropertyValue('name', value) }/>
+                <ControlLabel>Name (in Vietnamese)</ControlLabel>
+                <Input name="nameVN" value={ formData.nameVN }/>
                 <FormControl.Feedback />
                 <HelpBlock>This field is required</HelpBlock>
               </FormGroup>
@@ -46,27 +44,24 @@ function PropertyEdit(props) {
               <FormGroup
                 controlId="formBasicText"
               >
-                <ControlLabel>Tieu De</ControlLabel>
-                <Input name="name" value={ formData.name }
-          onChange={ (value) => store.updateAdminPropertyValue('name', value) }/>
+                <ControlLabel>Name (in English)</ControlLabel>
+                <Input name="name" value={ formData.nameEN }/>
                 <FormControl.Feedback />
-                <HelpBlock>Bat buoc phai nhap</HelpBlock>
+                <HelpBlock>This field is required</HelpBlock>
               </FormGroup>
             </Col>
           </Row>
           <Row>
             <Col xs={6}>
               <FormGroup>
-                <ControlLabel>Description</ControlLabel>
-                <Textarea name="desc" value={ formData.desc }
-                  onChange={ (value) => store.updateAdminPropertyValue('desc', value) }/>
+                <ControlLabel>Description (in Vietnamese)</ControlLabel>
+                <Textarea name="desc" value={ formData.descVN }/>
               </FormGroup>
             </Col>
             <Col xs={6}>
               <FormGroup>
-                <ControlLabel>Mieu ta</ControlLabel>
-                <Textarea name="desc" value={ formData.desc }
-                  onChange={ (value) => store.updateAdminPropertyValue('desc', value) }/>
+                <ControlLabel>Description (in English)</ControlLabel>
+                <Textarea name="desc" value={ formData.descEN }/>
               </FormGroup>
             </Col>
           </Row>
@@ -75,22 +70,18 @@ function PropertyEdit(props) {
               <FormGroup>
                 <ControlLabel>Category</ControlLabel>
                 <Dropdown name='categoryID' title='Category'
-                  options={ formData.categories }
-                  value={ formData.categoryID }
-                  onChange={ (value) => store.updateAdminPropertyValue('category_id', value) }
-                />
+                  options={ categories }
+                  value={ formData.categoryID } />
               </FormGroup>
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
               <FormGroup>
-                <ControlLabel>Sale type</ControlLabel>
-                <Dropdown name='categoryID' title='Category'
-                  options={ formData.categories }
-                  value={ formData.categoryID }
-                  onChange={ (value) => store.updateAdminPropertyValue('category_id', value) }
-                />
+                <ControlLabel>Sales type</ControlLabel>
+                <Dropdown name='salesType' title='Sales type'
+                  options={ salesTypes }
+                  value={ formData.salesType } />
               </FormGroup>
             </Col>
           </Row>
@@ -98,7 +89,8 @@ function PropertyEdit(props) {
             <Col xs={12}>
               <FormGroup>
                 <ControlLabel>Available Until</ControlLabel>
-                <DatePicker name='available_until'/>
+                <DatePicker name='availableUntil'
+                  value={formData.availableUntil} />
               </FormGroup>
             </Col>
           </Row>
@@ -106,11 +98,9 @@ function PropertyEdit(props) {
             <Col xs={12}>
               <FormGroup>
                 <ControlLabel>Facing direction</ControlLabel>
-                <Dropdown name='facingDirection' title='Direction'
-                  options={ formData.categories }
-                  value={ formData.categoryID }
-                  onChange={ (value) => store.updateAdminPropertyValue('category_id', value) }
-                />
+                <Dropdown name='facingDirection' title='Facing direction'
+                  options={ directions }
+                  value={ formData.facingDirection } />
               </FormGroup>
             </Col>
           </Row>
@@ -118,11 +108,8 @@ function PropertyEdit(props) {
             <Col xs={12}>
               <FormGroup>
                 <ControlLabel>Number of bed rooms</ControlLabel>
-                <Dropdown name='facingDirection' title='Direction'
-                  options={ formData.categories }
-                  value={ formData.categoryID }
-                  onChange={ (value) => store.updateAdminPropertyValue('category_id', value) }
-                />
+                <Input name="bedRoomCount"
+                  value={ formData.bedRoomCount }/>
               </FormGroup>
             </Col>
           </Row>
