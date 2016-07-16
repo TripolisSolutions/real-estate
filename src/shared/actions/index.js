@@ -1,9 +1,11 @@
 import service from '../helpers/service'
 import properties from './properties'
+import categories from './categories'
 
 // All our actions are listed here
 const actions = {
     properties,
+    categories,
 }
 
 export default function(state) {

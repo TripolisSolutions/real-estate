@@ -17,8 +17,8 @@ import {
 
 function PropertyEdit(props) {
 
-  const { formData } = props
-  const { categories } = formData
+  const { state: { salesTypes, directions } } = this.context
+  const { formData, categories } = props
 
   function submit(model) {
     log.debug('submit model', model)
@@ -207,6 +207,7 @@ function PropertyEdit(props) {
 
 PropertyEdit.propTypes = {
   formData: React.PropTypes.object.isRequired,
+  categories: React.PropTypes.object.isRequired,
 }
 
 export default connect(PropertyEdit)

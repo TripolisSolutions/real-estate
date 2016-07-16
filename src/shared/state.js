@@ -8,6 +8,27 @@ let defaultState = observable({
         statusCode: 200,
         ssrLocation: null,
     },
+    language: 'vietnamese',
+    salesTypes: asFlat([
+      {
+        value: 'buy',
+        translationKey: 'saleTypes.buy'
+      },
+      {
+        value: 'rent',
+        translationKey: 'saleTypes.rent'
+      },
+    ]),
+    directions: asFlat([
+      {
+        value: 'west',
+        translationKey: 'directions.west'
+      },
+      {
+        value: 'east',
+        translationKey: 'directions.east'
+      },
+    ]),
     account: {
         username: null
     },

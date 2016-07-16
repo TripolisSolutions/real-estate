@@ -9,6 +9,12 @@ import PropertyForm from 'components/Admin/PropertyForm/PropertyForm'
 
 const { Checkbox, CheckboxGroup, Input, RadioGroup, Row, Select, File } = FRC
 
+function locale(language) {
+  return function(field) {
+    return find({language})(field).text
+  }
+}
+
 @connect
 class PropertyDetail extends React.Component {
 
@@ -19,14 +25,17 @@ class PropertyDetail extends React.Component {
 
   render() {
     const { state } = this.context
+    const { language } = state
+
+    const localize = locale(language)
 
     const formData = {
-      categories: state.categories.items
-      
-    } 
+    }
+
+    const categories = state.categories.items.map( (item) => ({value: item.id, label: localize(item.name)}))
 
     return (
-      <PropertyForm formData={ formData } />
+      <PropertyForm formData={ formData } categories={ categories }/>
     )
   }
 }

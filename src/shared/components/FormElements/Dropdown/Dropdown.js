@@ -1,8 +1,9 @@
 import React from 'react'
 import Select from 'react-select'
 import {Decorator as FormsyElement} from 'formsy-react'
-
-import { observer } from 'shared/context'
+import { connect } from 'mobx-connect'
+import { toJS } from 'mobx'
+import log from 'loglevel'
 
 const s = require('./Dropdown.less')
 
@@ -18,7 +19,7 @@ function Dropdown(props) {
         className={ s.dropdown }
         name={ `dropdown-${ props.name }` }
         value={ props.value }
-        options={ props.options }
+        options={ toJS(props.options) }
         onChange={ onChange }
       />
     </div>
@@ -30,5 +31,5 @@ Dropdown.propTypes = {
   options: React.PropTypes.object.isRequired,
 }
 
-export default FormsyElement()(observer(Dropdown))
+export default FormsyElement()(connect(Dropdown))
 

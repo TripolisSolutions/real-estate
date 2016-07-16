@@ -10,16 +10,8 @@ export default (state, store) => {
      */
     return class properties {
 
-        setCategories(data) {
-            state.categories.items.replace(data)
-        }
-
         prepareForm() {
-            return this.service('/api/categories').find().then((response) => {
-                const data = JSON.parse(response).docs
-                log.debug('categories data: ', data)
-                this.setCategories = data
-            })
+            return store.categories.fetchData()
         }
 
         find() {
