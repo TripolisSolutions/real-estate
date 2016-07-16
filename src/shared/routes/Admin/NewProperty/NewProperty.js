@@ -24,7 +24,7 @@ class PropertyDetail extends React.Component {
   }
 
   render() {
-    const { state } = this.context
+    const { state, store } = this.context
     const { language } = state
 
     const localize = locale(language)
@@ -32,7 +32,8 @@ class PropertyDetail extends React.Component {
     const formData = {
     }
 
-    const categories = state.categories.items.map( (item) => ({value: item.id, label: localize(item.name)}))
+    // const categories = state.categories.items.map( (item) => ({value: item.id, label: localize(item.name)}))
+    const categories = store.categories.options
 
     return (
       <PropertyForm formData={ formData } categories={ categories }/>

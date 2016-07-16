@@ -1,7 +1,6 @@
-import mobx, { action } from 'mobx'
+import mobx, { action, computed } from 'mobx'
 import log from 'loglevel'
-
-// mobx.useStrict(true)
+import find from 'lodash/fp/find'
 
 export default (state, store) => {
     /**
@@ -20,6 +19,10 @@ export default (state, store) => {
                 log.debug('categories data: ', data)
                 this.setItems(data)
             })
+        }
+
+         @computed get options() {
+          return state.categories.items.map( (item) => ({value: item.id, label: store.locale.localize(item.name)}))
         }
     }
 }
