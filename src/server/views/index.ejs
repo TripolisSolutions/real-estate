@@ -14,8 +14,8 @@
   <body>
     <div id="root"><%- renderedRoot %></div>
     <script type="text/javascript">
-      var __STORE__ = <%- JSON.stringify(store) %>;
-      var __CONFIG__ = <%- JSON.stringify(config) %>;
+      var STATE = <%- JSON.stringify(state) %>;
+      var CONFIG = <%- JSON.stringify(config) %>;
     </script>
     <script src="/client.js"></script>
   </body>

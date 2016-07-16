@@ -24,6 +24,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       __CLIENT__: false,
+      'global.isClient': false,
     }),
     new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin('styles.css')

@@ -16,7 +16,6 @@ class PropertyList extends React.Component {
           this.context.store.propertiesStore.properties.map((property) => {
             return (
               <div>
-                {{ JSON.stringify(property) }}
               </div>
             )
           })

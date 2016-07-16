@@ -9,7 +9,9 @@ import compress from 'compression'
 import bodyParser from 'body-parser'
 import favicon from 'serve-favicon'
 import nconf from 'nconf'
+
 import _ from 'lodash'
+import cloneDeep from 'lodash/fp/cloneDeep'
 
 // feathersjs
 import feathers, { static as serveStatic } from 'feathers'
@@ -32,14 +34,13 @@ import { toJS } from 'mobx'
 
 // react internal packages
 import routes from './shared/routes'
-import { ContextProvider } from './shared/context'
+import Context from './shared/components/Common/Context'
 import { fetchData } from './shared/store/helpers'
-import { NewStore } from './shared/store'
+import defaultState from './shared/state'
+import actions from './shared/actions'
 
-// const release = (process.env.NODE_ENV === 'production')
-// const port = (parseInt(process.env.PORT, 10) || 9000) - !release;
+log.setLevel(0)
 
-// const app = express();
 const app = feathers()
 
 // Setup nconf to use (in-order):
@@ -55,36 +56,24 @@ log.setLevel(nconf.get('SETTINGS_LOG_LEVEL'))
 
 // Route handler that rules them all!
 const isomorphic = (req, res) => {
+  const state = cloneDeep(defaultState)
 
-  // turn of server rendering on development for easier debugging
-  // if (process.env.NODE_ENV !== 'production') {
-  //   const store = NewStore({
-  //     ssrLocation: req.url,
-  //   })
+  state.app.hostname = req.headers.host
+  state.app.ssrLocation = req.url
 
-  //   const state = toJS(store)
-  //   log.debug('state')
+  const context = {
+      state: state,
+      store: actions(state)
+  }
 
-  //   const config = {
-  //     env: process.env.NODE_ENV ? process.env.NODE_ENV : 'development',
-  //     logLevel: nconf.get('SETTINGS_LOG_LEVEL'),
-  //   }
-
-  //   return res.status(200).render('index', {
-  //     head: {
-  //       title: '',
-  //       meta: '',
-  //       link: '',
-  //       htmlAttributes: ''
-  //     }, renderedRoot: '', store: state, config: config,
-  //   })
-  // }
+  // Create routing
+  const matchRoutes = {
+      routes: routes(context),
+      location: req.url,
+  }
 
   // Do a router match
-  match({
-    routes,
-    location: req.url,
-  }, (err, redirect, props) => {
+  match(matchRoutes, (err, redirect, props) => {
     // Some sanity checks
     if (err) {
       return res.status(500).send(err.message)
@@ -94,24 +83,20 @@ const isomorphic = (req, res) => {
       return res.status(404).send('not found')
     }
 
-    const store = NewStore({
-      ssrLocation: req.url,
-    })
-
-    return fetchData(store, props.components, props.params, props.location.query)
+    fetchData(props, context.state, context.store)
       .then(() => {
         let renderedRoot
         if (process.env.NODE_ENV !== 'production') {
           renderedRoot = ''
         } else {
           renderedRoot = ReactDOMServer.renderToString((
-            <ContextProvider context={{ store }}>
+            <Context context={context}>
               <RouterContext { ...props } />
-            </ContextProvider>
+            </Context>
           ))
         }
 
-        const state = toJS(store)
+        // const state = toJS(store)
         const config = {
           env: process.env.NODE_ENV ? process.env.NODE_ENV : 'development',
           logLevel: nconf.get('SETTINGS_LOG_LEVEL'),
@@ -120,11 +105,11 @@ const isomorphic = (req, res) => {
         const head = Helmet.rewind()
 
         res.status(200).render('index', {
-          head, renderedRoot, store: state, config,
+          head, renderedRoot, state: context.state, config,
         })
       })
-      .catch((err1, err2) => {
-        log.error('error while handling routing', { error: [err1, err2] })
+      .catch((error) => {
+        log.error('error while handling routing', error)
         res.status(500).send('Internal error')
       })
   })

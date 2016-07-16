@@ -2,6 +2,7 @@ import React from 'react'
 import FRC from 'formsy-react-components'
 import find from 'lodash/fp/find'
 import log from 'loglevel'
+import { connect } from 'mobx-connect'
 
 import Input from 'components/FormElements/Input/Input'
 import Textarea from 'components/FormElements/Textarea/Textarea'
@@ -14,17 +15,13 @@ import {
   Checkbox, Button,
 } from 'react-bootstrap'
 
-import { observer } from 'shared/context'
-
 function PropertyEdit(props) {
 
-  const { store } = this.context
   const { formData } = props
+  const { categories } = formData
 
   function submit(model) {
     log.debug('submit model', model)
-
-    store.saveProperty()
   }
 
   return (
@@ -212,5 +209,5 @@ PropertyEdit.propTypes = {
   formData: React.PropTypes.object.isRequired,
 }
 
-export default observer(PropertyEdit)
+export default connect(PropertyEdit)
 

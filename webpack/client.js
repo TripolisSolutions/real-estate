@@ -23,6 +23,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       __CLIENT__: true,
+      'global.isClient': true,
     }),
     new webpack.NoErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin()

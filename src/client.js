@@ -1,32 +1,59 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { browserHistory, match, Router } from 'react-router'
-import routes from './shared/routes'
+import { browserHistory, match, Router, RouterContext } from 'react-router'
+
 import log from 'loglevel'
-import mobx from 'mobx'
+import mobx, { extendObservable } from 'mobx'
 
-import { ContextProvider } from './shared/context'
-
-import { NewStore } from './shared/store'
+import routes from './shared/routes'
+import defaultState from './shared/state'
+import actions from './shared/actions'
+import Context from './shared/components/Common/Context'
+// import { NewStore } from './shared/store'
 import { fetchDataOnLocationMatch } from './shared/store/helpers'
 
-log.setLevel(__CONFIG__.logLevel)
+log.setLevel(window.CONFIG.logLevel)
 
-const store = NewStore(__STORE__)
-fetchDataOnLocationMatch(browserHistory, routes, match, store)
+window.STATE = extendObservable(defaultState, window.STATE)
+
+// Initialize stores & inject server-side state into front-end
+const context = {
+    state: window.STATE,
+    store: actions(window.STATE)
+}
+
+fetchDataOnLocationMatch(browserHistory, routes, match, context.state, context.store)
+
+function createElement(props) {
+    return (
+      <Context context={context}>
+        <RouterContext {...props} />
+      </Context>
+    )
+}
+
+// Render HTML on the browser
+ReactDOM.render(<Router history={browserHistory}
+                render={createElement}
+                routes={routes(context)}/>,
+document.getElementById('root'))
+
+if (module.hot) module.hot.accept()
+
+// const store = NewStore(__STATE__)
 
 // for dev
-window.store = store
+window.context = context
 window.mobx = mobx
 
 // Render the application
-ReactDOM.render(
-  (
-    <ContextProvider context={{ store }}>
-      <Router history={browserHistory}>
-        { routes }
-      </Router>
-    </ContextProvider>
-  ),
-  document.getElementById('root')
-)
+// ReactDOM.render(
+//   (
+//     <Context context={{ store }}>
+//       <Router history={browserHistory}>
+//         { routes }
+//       </Router>
+//     </Context>
+//   ),
+//   document.getElementById('root')
+// )
