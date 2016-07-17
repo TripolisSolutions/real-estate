@@ -2,12 +2,6 @@
 
 .container {
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 0;
-  border-color: @color-main-fade;
-  height: 60px;
 
   &:hover {
     background: none;
@@ -25,6 +19,14 @@
   }
 }
 
-.dropdown {
+.dropdown :global .Select-control {
   width: 100%;
+  border-radius: 0;
+  border-color: @color-main;
+  height: @input-height;
+  font-size: @font-size;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

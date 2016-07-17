@@ -1,10 +1,10 @@
 import React from 'react'
-import FRC from 'formsy-react-components'
-import find from 'lodash/fp/find'
 import log from 'loglevel'
 import { connect } from 'mobx-connect'
 
 import Input from 'components/FormElements/Input/Input'
+import IntegerInput from 'components/FormElements/IntegerInput/IntegerInput'
+import FloatInput from 'components/FormElements/FloatInput/FloatInput'
 import Textarea from 'components/FormElements/Textarea/Textarea'
 import Dropdown from 'components/FormElements/Dropdown/Dropdown'
 import DatePicker from 'components/FormElements/DatePicker/DatePicker'
@@ -107,7 +107,7 @@ function PropertyEdit(props) {
             <Col xs={12}>
               <FormGroup>
                 <ControlLabel>Number of bed rooms</ControlLabel>
-                <Input name="bedRoomCount"
+                <IntegerInput name="bedRoomCount"
                   value={ formData.bedRoomCount }/>
               </FormGroup>
             </Col>
@@ -115,16 +115,14 @@ function PropertyEdit(props) {
           <Row>
             <Col xs={12}>
               <FormGroup>
-                <ControlLabel>Size (length x width)</ControlLabel>
+                <ControlLabel>Size (width x length)</ControlLabel>
                 <Row>
                   <Col xs={2}>
-                    <Input name="name" value={ formData.name }
-                      onChange={ (value) => store.updateAdminPropertyValue('name', value) }
+                    <IntegerInput name="sizeWidth" value={ formData.sizeWidth }
                     />
                   </Col>
                   <Col xs={2}>
-                    <Input name="name" value={ formData.name }
-                      onChange={ (value) => store.updateAdminPropertyValue('name', value) }
+                    <IntegerInput name="sizeLength" value={ formData.sizeLength }
                     />
                   </Col>
                 </Row>
@@ -137,15 +135,13 @@ function PropertyEdit(props) {
                 <ControlLabel>Rental Period</ControlLabel>
                 <Row>
                   <Col xs={2}>
-                    <Input name="name" value={ formData.name }
-                      onChange={ (value) => store.updateAdminPropertyValue('name', value) }
+                    <IntegerInput name="rentalPeriodValue" value={ formData.rentalPeriodValue }
                     />
                   </Col>
                   <Col xs={2}>
                     <Dropdown name='rentalPeriodUnit' title='Rental period unit'
                       options={ formData.categories }
                       value={ formData.categoryID }
-                      onChange={ (value) => store.updateAdminPropertyValue('category_id', value) }
                     />
                   </Col>
                 </Row>
@@ -156,16 +152,14 @@ function PropertyEdit(props) {
             <Col xs={4}>
               <FormGroup>
                 <ControlLabel>Price (VND)</ControlLabel>
-                <Input name="name" value={ formData.name }
-                  onChange={ (value) => store.updateAdminPropertyValue('name', value) }
+                <FloatInput name="priceVN" value={ formData.priceVN }
                 />
               </FormGroup>
             </Col>
             <Col xs={4}>
               <FormGroup>
                 <ControlLabel>Price (USD)</ControlLabel>
-                <Input name="name" value={ formData.name }
-                  onChange={ (value) => store.updateAdminPropertyValue('name', value) }
+                <FloatInput name="priceEN" value={ formData.priceEN }
                 />
               </FormGroup>
             </Col>

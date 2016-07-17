@@ -9,7 +9,9 @@ const s = require('./Textarea.less')
 function TextArea(props) {
   function onChange(e) {
     props.setValue(e.target.value)
-    props.onChange(e.target.value)
+    if (props.onChange) {
+      props.onChange(e.target.value)
+    }
   }
 
   return (

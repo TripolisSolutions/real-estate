@@ -9,8 +9,15 @@ const s = require('./Dropdown.less')
 
 function Dropdown(props) {
   function onChange(selected) {
-    props.setValue(selected.value)
-    props.onChange(selected.value)
+    let value
+    if (selected) {
+      value = selected.value
+    }
+
+    props.setValue(value)
+    if (props.onChange) {
+      props.onChange(value)
+    }
   }
 
   return (
@@ -18,7 +25,7 @@ function Dropdown(props) {
       <Select
         className={ s.dropdown }
         name={ `dropdown-${ props.name }` }
-        value={ props.value }
+        value={ props.getValue() }
         options={ toJS(props.options) }
         onChange={ onChange }
       />
