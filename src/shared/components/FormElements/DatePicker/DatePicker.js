@@ -1,8 +1,7 @@
 import React from 'react'
 import Picker from 'react-datepicker'
 import {Decorator as FormsyElement} from 'formsy-react'
-
-import { observer } from 'shared/context'
+import { connect } from 'mobx-connect'
 
 const s = require('./DatePicker.less')
 
@@ -32,5 +31,5 @@ function DatePicker(props) {
 DatePicker.propTypes = {
 }
 
-export default FormsyElement()(observer(DatePicker))
+export default FormsyElement()(connect(DatePicker))
 

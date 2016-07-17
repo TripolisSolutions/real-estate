@@ -1,6 +1,6 @@
 import React from 'react'
 import {Decorator as FormsyElement} from 'formsy-react'
-import { observer } from 'shared/context'
+import { connect } from 'mobx-connect'
 import { FormControl as BootstrapControl} from 'react-bootstrap'
 
 const s = require('./Input.less')
@@ -25,4 +25,4 @@ Input.propTypes = {
 }
 
 
-export default FormsyElement()(observer(Input))
+export default FormsyElement()(connect(Input))

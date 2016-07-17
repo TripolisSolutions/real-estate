@@ -5,7 +5,7 @@ import log from 'loglevel'
 import PropertyForm from 'components/Admin/PropertyForm/PropertyForm'
 
 @connect
-class PropertyDetail extends React.Component {
+class PropertyNew extends React.Component {
 
   static fetchData({ state, store }) {
     log.debug('PropertyDetail.fetchData state: ', state)
@@ -16,6 +16,9 @@ class PropertyDetail extends React.Component {
     const { store } = this.context
 
     const formData = {
+      address: {
+        visible: true,
+      }
     }
 
     // const categories = state.categories.items.map( (item) => ({value: item.id, label: localize(item.name)}))
@@ -27,4 +30,4 @@ class PropertyDetail extends React.Component {
   }
 }
 
-export default PropertyDetail
+export default PropertyNew

@@ -1,7 +1,7 @@
 import React from 'react'
 import log from 'loglevel'
 import { connect } from 'mobx-connect'
-import { observable, extendObservable } from 'mobx'
+import { observable } from 'mobx'
 import request from 'axios'
 import { fitBounds } from 'google-map-react/utils'
 
@@ -12,21 +12,95 @@ import AddressInput from 'components/FormElements/AddressInput/AddressInput'
 import RichEditor from 'components/FormElements/RichEditor/RichEditor'
 import Dropdown from 'components/FormElements/Dropdown/Dropdown'
 import DatePicker from 'components/FormElements/DatePicker/DatePicker'
+import Checkbox from 'components/FormElements/Checkbox/Checkbox'
 import LocationMap from 'components/LocationMap/LocationMap'
 import Button from 'components/Button/Button'
 
 import {
   Grid, Row, Col,
   FormGroup, ControlLabel, FormControl, HelpBlock,
-  Checkbox
 } from 'react-bootstrap'
 
 function formDataToProperty(form) {
+  const property = {
+    name: [
+      {
+        language: 'vietnamese',
+        text: form.nameVN,
+      },
+      {
+        language: 'english',
+        text: form.nameEN,
+      },
+    ],
+    desc: [
+      {
+        language: 'vietnamese',
+        text: form.descVN,
+      },
+      {
+        language: 'english',
+        text: form.descEN,
+      },
+    ],
+    categoryID: form.categoryID,
+    salesType: form.salesType,
+    availableUntil: form.availableUntil,
+    size: {
+      width: form.sizeWidth,
+      length: form.sizeLength,
+    },
+    address: {
+      name: [
+        {
+          language: 'vietnamese',
+          text: form.addressVN,
+        },
+        {
+          language: 'english',
+          text: form.addressEN,
+        },
+      ],
+      visible: form.addressVisible,
+    },
+    bedRoomCount: form.bedRoomCount,
+    facingDirection: form.facingDirection,
+    rentalPeriod: {
+      digits: form.rentalPeriodValue,
+      unit: form.rentalPeriodUnit,
+    },
+    price: [
+      {
+        currency: 'VND',
+        value: form.priceVN,
+      },
+      {
+        currency: 'USD',
+        value: form.priceEN,
+      },
+    ],
+    visible: form.visible
+  }
 
+  if (this.mapCenter) {
+    property.address.viewport = {
+      lat: this.mapCenter.lat,
+      lng: this.mapCenter.lng,
+      zoom: this.mapZoom,
+    }
+  }
+
+  if (this.mapCircleMarker) {
+    property.address.circleMarker = {
+      lat: this.mapCircleMarker.lat,
+      lng: this.mapCircleMarker.lng,
+      radius: this.mapCircleMarker.radius,
+    }
+  }
 }
 
 @connect
-class PropertyEdit extends React.Component {
+class PropertyForm extends React.Component {
 
   @observable mapCenter // {lat: 10.7859378, lng: 106.5255811}
   @observable mapZoom // 10
@@ -209,7 +283,7 @@ class PropertyEdit extends React.Component {
                     <Col xs={2}>
                       <Dropdown name='rentalPeriodUnit' title='Rental period unit'
                         options={ rentalPeriods }
-                        value={ formData.categoryID }
+                        value={ formData.rentalPeriodUnit }
                       />
                     </Col>
                   </Row>
@@ -246,7 +320,7 @@ class PropertyEdit extends React.Component {
                         onMarkerClicked={ this.trackLocationOnMap }/>
                     </Col>
                     <Col xs={2}>
-                      <Checkbox>Hide this information from visistors</Checkbox>
+                      <Checkbox name='addressVisible' value={ formData.address.visible }>Hide this information from visistors</Checkbox>
                     </Col>
                   </Row>
                 </FormGroup>
@@ -262,7 +336,7 @@ class PropertyEdit extends React.Component {
             <Row>
               <Col xs={12}>
                 <FormGroup>
-                  <Checkbox>Display this property to the visistors</Checkbox>
+                  <Checkbox name='visible' value={ formData.visible }>Display this property to the visistors</Checkbox>
                 </FormGroup>
               </Col>
             </Row>
@@ -281,10 +355,10 @@ class PropertyEdit extends React.Component {
   }
 }
 
-PropertyEdit.propTypes = {
+PropertyForm.propTypes = {
   formData: React.PropTypes.object.isRequired,
   categories: React.PropTypes.object.isRequired,
 }
 
-export default PropertyEdit
+export default PropertyForm
 
