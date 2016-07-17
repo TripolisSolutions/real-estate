@@ -9,7 +9,7 @@ import routes from './shared/routes'
 import defaultState from './shared/state'
 import actions from './shared/actions'
 import Context from './shared/components/Common/Context'
-import { fetchDataOnLocationMatch } from './shared/store/helpers'
+import { fetchDataOnLocationMatch } from './shared/helpers/fetchData'
 
 log.setLevel(window.CONFIG.logLevel)
 

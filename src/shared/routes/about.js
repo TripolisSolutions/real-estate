@@ -3,8 +3,8 @@ import { Col as BootstrapCol} from 'react-bootstrap'
 import { connect } from 'mobx-connect'
 import classnames from 'classnames'
 
-import Map from '../components/Map/Map'
-import Block from '../components/Block/Block'
+import LocationMap from 'components/LocationMap/LocationMap'
+import Block from 'components/Block/Block'
 
 const s = require('./about.less')
 
@@ -36,7 +36,7 @@ class About extends React.Component {
             </div>
           </Block>
         </div>
-        <Map />
+        <LocationMap />
       </div>
     );
   }

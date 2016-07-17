@@ -30,12 +30,11 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { RouterContext, match } from 'react-router'
 import Helmet from 'react-helmet'
-import { toJS } from 'mobx'
 
 // react internal packages
 import routes from './shared/routes'
 import Context from './shared/components/Common/Context'
-import { fetchData } from './shared/store/helpers'
+import { fetchData } from './shared/helpers/fetchData'
 import defaultState from './shared/state'
 import actions from './shared/actions'
 

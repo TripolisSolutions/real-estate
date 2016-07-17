@@ -2,7 +2,7 @@ import React from 'react'
 import { Col as BootstrapCol} from 'react-bootstrap'
 
 import Block from '../components/Block/Block'
-import Map from '../components/Map/Map'
+import LocationMap from '../components/LocationMap/LocationMap'
 import Input from '../components/Input/Input'
 import TextArea from '../components/TextArea/TextArea'
 
@@ -23,10 +23,10 @@ class Contact extends React.Component {
                 <BootstrapCol md={8} className={ s.textarea  }>
                   <TextArea placeholder={ 'your name' } />
                 </BootstrapCol>
-              </div>           
+              </div>
           </Block>
         </div>
-        <Map />
+        <LocationMap />
       </div>
     )
   }
