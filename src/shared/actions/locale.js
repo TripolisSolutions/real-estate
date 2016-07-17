@@ -24,5 +24,13 @@ export default (state, store) => {
             return translate[translationKey]
           }
         }
+
+        @computed get languageCode() {
+          switch (state.language) {
+            case 'vietnamese': return 'vi'
+            case 'english': return 'en'
+            default: return 'en'
+          }
+        }
     }
 }

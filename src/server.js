@@ -100,6 +100,7 @@ const isomorphic = (req, res) => {
         const config = {
           env: process.env.NODE_ENV ? process.env.NODE_ENV : 'development',
           logLevel: nconf.get('SETTINGS_LOG_LEVEL'),
+          googleMapAPIKey: nconf.get('SETTINGS_GOOGLE_MAP_API_KEY'),
         }
 
         const head = Helmet.rewind()
