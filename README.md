@@ -19,21 +19,18 @@ npm run dev
 Build the projects into the `/build` folder 
 
 ```bash
-npm run release
+NODE_ENV=production npm run release
 ```
 
 Run the server (at port 8999)
 
 ```bash
-NODE_ENV=production node build/server.js
+NODE_ENV=production npm start
 ```
 
  ## TODO
- - [x] bootstrap
- - [x] integrate featherjs
  - [ ] i18n
  - [ ] server build with hash asset name
- - [ ] production serve compressed assets
  - [ ] add react hot (and hot module replacement)
  - [ ] try awesome typescript loader
  - [ ] typescript server side
