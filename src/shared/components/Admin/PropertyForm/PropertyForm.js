@@ -45,7 +45,7 @@ function PropertyEdit(props) {
                 controlId="formBasicText"
               >
                 <ControlLabel>Name (in English)</ControlLabel>
-                <Input name="name" value={ formData.nameEN }/>
+                <Input name="nameEN" value={ formData.nameEN }/>
                 <FormControl.Feedback />
                 <HelpBlock>This field is required</HelpBlock>
               </FormGroup>
@@ -55,13 +55,13 @@ function PropertyEdit(props) {
             <Col xs={6}>
               <FormGroup>
                 <ControlLabel>Description (in Vietnamese)</ControlLabel>
-                <RichEditor name="desc" value={ formData.descVN }/>
+                <RichEditor name="descVN" value={ formData.descVN }/>
               </FormGroup>
             </Col>
             <Col xs={6}>
               <FormGroup>
                 <ControlLabel>Description (in English)</ControlLabel>
-                <RichEditor name="desc" value={ formData.descEN }/>
+                <RichEditor name="descEN" value={ formData.descEN }/>
               </FormGroup>
             </Col>
           </Row>
