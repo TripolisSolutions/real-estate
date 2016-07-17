@@ -1,12 +1,16 @@
 import service from '../helpers/service'
 import properties from './properties'
 import categories from './categories'
+import salesTypes from './salesTypes'
+import directions from './directions'
 import locale from './locale'
 
 // All our actions are listed here
 const actions = {
     properties,
     categories,
+    salesTypes,
+    directions,
     locale,
 }
 

@@ -17,7 +17,9 @@ import {
 
 function PropertyEdit(props) {
 
-  const { state: { salesTypes, directions } } = this.context
+  const { store } = this.context
+  const salesTypes = store.salesTypes.options
+  const directions = store.directions.options
   const { formData, categories } = props
 
   function submit(model) {
