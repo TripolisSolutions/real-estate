@@ -36,7 +36,7 @@ module.exports = {
     filename: '[name].js',
     sourceMapFilename: '[name].js.map',
     chunkFilename: '[name].js',
-    publicPath: '/',
+    publicPath: '/assets/',
     libraryTarget: 'commonjs2',
   },
   resolve: {
