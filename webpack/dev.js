@@ -1,19 +1,19 @@
-var webpack = require("webpack");
-var spawn = require('child_process').spawn;
-var bs = require("browser-sync").create();
+var webpack = require('webpack')
+var spawn = require('child_process').spawn
+var bs = require('browser-sync').create()
 
-var proxyMiddleware = require('http-proxy-middleware');
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require('webpack-hot-middleware');
+var proxyMiddleware = require('http-proxy-middleware')
+var webpackDevMiddleware = require('webpack-dev-middleware')
+var webpackHotMiddleware = require('webpack-hot-middleware')
 
 // Get server config
-var config = require('./server');
-var client = require('./client');
-client.context = undefined;
+var config = require('./server')
+var client = require('./client')
+client.context = undefined
 
 // Setup webpack compiler
-var compiler = webpack(config);
-var bundler = webpack(client);
+var compiler = webpack(config)
+var bundler = webpack(client)
 
 // Other stuff
 var spawnArgs = ['build/server.js']
@@ -51,6 +51,7 @@ function filter(path, req) {
   return !path.match('^/browser-sync')
 }
 
+console.log('starting browserSync at ', proxyPort)
 bs.init({
   port: proxyPort,
   open: false,
@@ -59,7 +60,7 @@ bs.init({
     baseDir: './',
     middleware: [
       webpackDevMiddleware(bundler, {
-        publicPath: '/',
+        publicPath: '/assets',
         noInfo: true,
         stats: {
           colors: true,

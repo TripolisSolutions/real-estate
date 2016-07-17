@@ -9,7 +9,6 @@ import routes from './shared/routes'
 import defaultState from './shared/state'
 import actions from './shared/actions'
 import Context from './shared/components/Common/Context'
-// import { NewStore } from './shared/store'
 import { fetchDataOnLocationMatch } from './shared/store/helpers'
 
 log.setLevel(window.CONFIG.logLevel)
@@ -40,20 +39,6 @@ document.getElementById('root'))
 
 if (module.hot) module.hot.accept()
 
-// const store = NewStore(__STATE__)
-
 // for dev
 window.context = context
 window.mobx = mobx
-
-// Render the application
-// ReactDOM.render(
-//   (
-//     <Context context={{ store }}>
-//       <Router history={browserHistory}>
-//         { routes }
-//       </Router>
-//     </Context>
-//   ),
-//   document.getElementById('root')
-// )

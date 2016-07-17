@@ -7,7 +7,7 @@ import socketIOClient from 'socket.io-client'
 let instance
 let uri = 'http://localhost:8999'
 
-if (typeof window !== 'undefined' && window.__CONFIG__.env === 'production') {
+if (global.isClient && window.CONFIG.env === 'production') {
   uri = `${ location.protocol }//${ location.host }`
 }
 

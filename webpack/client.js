@@ -4,7 +4,7 @@ const webpack = require('webpack')
 // Styles loader
 const loader = {
   css: 'css-loader?modules&importLoaders=1&localIdentName=[path]scope__[name]__[local]&sourceMap',
-};
+}
 
 module.exports = {
   context: path.join(__dirname, '../'),
@@ -20,8 +20,6 @@ module.exports = {
   plugins: [
     new webpack.ProvidePlugin({
       React: 'react',
-      $: 'jquery',
-      jQuery: 'jquery',
     }),
     new webpack.DefinePlugin({
       __CLIENT__: true,

@@ -56,6 +56,7 @@ log.setLevel(nconf.get('SETTINGS_LOG_LEVEL'))
 
 // Route handler that rules them all!
 const isomorphic = (req, res) => {
+  log.debug('isomorphic handling ', req.url)
   const state = cloneDeep(defaultState)
 
   state.app.hostname = req.headers.host

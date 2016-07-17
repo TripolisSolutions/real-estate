@@ -21,8 +21,6 @@ module.exports = {
   plugins: [
     new webpack.ProvidePlugin({
       React: 'react',
-      $: 'jquery',
-      jQuery: 'jquery',
     }),
     new webpack.DefinePlugin({
       __CLIENT__: false,
