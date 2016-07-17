@@ -17,8 +17,8 @@ function LocationMap(props) {
             key: window.CONFIG.googleMapAPIKey,
             language: languageCode,
           }}
-          defaultCenter={ props.center }
-          defaultZoom={ props.zoom }>
+          center={ props.center }
+          zoom={ props.zoom }>
         </GoogleMap>
       </div>
     </Block>
@@ -28,7 +28,6 @@ function LocationMap(props) {
 LocationMap.propTypes = {
   center: React.PropTypes.object,
   zoom: React.PropTypes.integer,
-  coords: React.PropTypes.object,
 }
 // 10.7859378,106.5255811
 LocationMap.defaultProps = {

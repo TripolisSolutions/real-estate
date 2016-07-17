@@ -28,6 +28,7 @@
   "license": "ISC",
   "dependencies": {
     "alloyeditor": "^1.2.3",
+    "axios": "^0.13.1",
     "body-parser": "^1.15.2",
     "classnames": "^2.2.5",
     "compression": "^1.6.2",
