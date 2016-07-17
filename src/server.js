@@ -9,7 +9,9 @@ import compress from 'compression'
 import bodyParser from 'body-parser'
 import favicon from 'serve-favicon'
 import nconf from 'nconf'
+
 import _ from 'lodash'
+import cloneDeep from 'lodash/fp/cloneDeep'
 
 // feathersjs
 import feathers, { static as serveStatic } from 'feathers'
@@ -17,7 +19,7 @@ import hooks from 'feathers-hooks'
 import rest from 'feathers-rest'
 import socketio from 'feathers-socketio'
 import errors from 'feathers-errors'
-import log from 'logstar'
+import log from 'loglevel'
 
 // internal packages
 import middleware from './middleware'
@@ -28,16 +30,17 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { RouterContext, match } from 'react-router'
 import Helmet from 'react-helmet'
+import { toJS } from 'mobx'
 
 // react internal packages
 import routes from './shared/routes'
-import { ContextProvider } from './shared/context'
-import { Store, fetchData } from './shared/store'
+import Context from './shared/components/Common/Context'
+import { fetchData } from './shared/store/helpers'
+import defaultState from './shared/state'
+import actions from './shared/actions'
 
-// const release = (process.env.NODE_ENV === 'production')
-// const port = (parseInt(process.env.PORT, 10) || 9000) - !release;
+log.setLevel(0)
 
-// const app = express();
 const app = feathers()
 
 // Setup nconf to use (in-order):
@@ -47,72 +50,67 @@ const configPath = path.join(path.resolve('.'), 'config/default.json')
 nconf.env().file({file: configPath})
 
 // do not log secrects
-console.log('environment settings are: ', _.pickBy(nconf.get(), (value, key) => _.startsWith(key, 'SETTINGS_') && key.indexOf('SECRET') === -1 ))
+log.info('environment settings are: ', _.pickBy(nconf.get(), (value, key) => _.startsWith(key, 'SETTINGS_') && key.indexOf('SECRET') === -1 ))
+
+log.setLevel(nconf.get('SETTINGS_LOG_LEVEL'))
 
 // Route handler that rules them all!
 const isomorphic = (req, res) => {
+  log.debug('isomorphic handling ', req.url)
+  const state = cloneDeep(defaultState)
 
-  // turn of server rendering on development for easier debugging
-  if (process.env.NODE_ENV !== 'production') {
-    const store = new Store({
-      ssrLocation: req.url,
-    })
-    
-    const storeAsJSON = store.toJSON()
-    const config = {
-      env: process.env.NODE_ENV ? process.env.NODE_ENV : 'development',
-    }
+  state.app.hostname = req.headers.host
+  state.app.ssrLocation = req.url
 
-    return res.status(200).render('index', {
-      head: {
-        title: '',
-        meta: '',
-        link: '',
-        htmlAttributes: ''
-      }, renderedRoot: '', store: storeAsJSON, config: {},
-    })
-  } 
+  const context = {
+      state: state,
+      store: actions(state)
+  }
+
+  // Create routing
+  const matchRoutes = {
+      routes: routes(context),
+      location: req.url,
+  }
 
   // Do a router match
-  match({
-    routes,
-    location: req.url,
-  }, (err, redirect, props) => {
+  match(matchRoutes, (err, redirect, props) => {
     // Some sanity checks
     if (err) {
       return res.status(500).send(err.message)
     } else if (redirect) {
       return res.redirect(302, redirect.pathname + redirect.search)
     } else if (!props) {
-      return res.status(404).send('not found');
+      return res.status(404).send('not found')
     }
 
-    const store = new Store({
-      ssrLocation: req.url,
-    })
-
-    return fetchData(store, props.components, props.params, props.location.query)
+    fetchData(props, context.state, context.store)
       .then(() => {
-        const renderedRoot = ReactDOMServer.renderToString((
-          <ContextProvider context={{ store }}>
-            <RouterContext { ...props } />
-          </ContextProvider>
-        ))
-        // const renderedRoot = ''
+        let renderedRoot
+        if (process.env.NODE_ENV !== 'production') {
+          renderedRoot = ''
+        } else {
+          renderedRoot = ReactDOMServer.renderToString((
+            <Context context={context}>
+              <RouterContext { ...props } />
+            </Context>
+          ))
+        }
 
-        const storeAsJSON = store.toJSON()
+        // const state = toJS(store)
         const config = {
           env: process.env.NODE_ENV ? process.env.NODE_ENV : 'development',
+          logLevel: nconf.get('SETTINGS_LOG_LEVEL'),
         }
 
         const head = Helmet.rewind()
 
         res.status(200).render('index', {
-          head, renderedRoot, store: storeAsJSON, config,
+          head, renderedRoot, state: context.state, config,
         })
       })
-      .catch((err1, err2) => {
-        log.error('error while handling routing', { error: [err1, err2] })
+      .catch((error) => {
+        log.error('error while handling routing', error)
         res.status(500).send('Internal error')
       })
   })
@@ -122,6 +120,7 @@ app.use(compress())
   .use(favicon(path.join(nconf.get('SETTINGS_PUBLIC'), 'favicon.ico')))
   .use('/public', serveStatic(nconf.get('SETTINGS_PUBLIC')))
   .use('/assets', serveStatic('./build'))
+  .use('/node_modules', serveStatic('./node_modules'))
   .set('views', './src/server/views')
   .set('view engine', 'ejs')
   .use(helmet())

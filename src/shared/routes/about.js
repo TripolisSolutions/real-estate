@@ -1,5 +1,6 @@
 import React from 'react'
 import { Col as BootstrapCol} from 'react-bootstrap'
+import { connect } from 'mobx-connect'
 import classnames from 'classnames'
 
 import Map from '../components/Map/Map'
@@ -7,10 +8,10 @@ import Block from '../components/Block/Block'
 
 const s = require('./about.less')
 
+@connect
 class About extends React.Component {
 
-  static fetchData(store) {
-    return store.fetchAboutData()
+  static fetchData(state, store) {
   }
 
   render() {

@@ -17,6 +17,13 @@ class Property {
 
     this.galleryImages = json.gallery_images
   }
+
+  toJSON() {
+    return {
+      name: this.name,
+      desc: this.desc,
+    }
+  }
 }
 
 class AdminState {
@@ -28,6 +35,7 @@ export default class PropertiesStore {
   @observable properties = []
   @observable propertyDetail = undefined
   @observable isFetching = false
+  @observable language = 'vietnamese'
 
   @observable adminState = new AdminState()
 
@@ -43,13 +51,37 @@ export default class PropertiesStore {
   toJSON() {
     return {
       properties: this.properties,
-      propertyDetail: this.propertyDetail,
+      propertyDetail: this.propertyDetail.toJSON(),
     }
   }
 
   @action prepareNewProperty() {
     return new Promise((resolve) => {
-      this.propertyDetail = new Property()
+      const prop = new Property()
+
+      prop.name = [
+        {
+          language: 'vietnamese',
+          text: 'Default VN'
+        },
+        {
+          language: 'english',
+          text: 'Default EN'
+        },
+      ]
+
+      props.desc = [
+        {
+          language: 'vietnamese',
+          text: ''
+        },
+        {
+          language: 'english',
+          text: ''
+        },
+      ]
+
+      this.propertyDetail = prop
       resolve(this.propertyDetail)
     })
   }

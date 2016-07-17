@@ -1,0 +1,32 @@
+@import '../../../styles/variables';
+
+.container {
+  width: 100%;
+
+  &:hover {
+    background: none;
+    border-color: @color-main;
+  }
+
+  span {
+    border: none;
+  }
+
+  > span:after{
+    content: '^';
+    transform: rotateX(180deg);
+    display: inline-block;
+  }
+}
+
+.dropdown :global .Select-control {
+  width: 100%;
+  border-radius: 0;
+  border-color: @color-main;
+  height: @input-height;
+  font-size: @font-size;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

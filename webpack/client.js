@@ -4,7 +4,7 @@ const webpack = require('webpack')
 // Styles loader
 const loader = {
   css: 'css-loader?modules&importLoaders=1&localIdentName=[path]scope__[name]__[local]&sourceMap',
-};
+}
 
 module.exports = {
   context: path.join(__dirname, '../'),
@@ -19,10 +19,11 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({
-      React: 'react'
+      React: 'react',
     }),
     new webpack.DefinePlugin({
       __CLIENT__: true,
+      'global.isClient': true,
     }),
     new webpack.NoErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin()
@@ -36,7 +37,11 @@ module.exports = {
     libraryTarget: 'var',
   },
   resolve: {
-    extensions: ['', '.js', '.css', '.less']
+    extensions: ['', '.js', '.css', '.less'],
+    alias: {
+      components: path.resolve('./src/shared/components'),
+      shared: path.resolve('./src/shared')
+    }
   },
   module: {
     preLoaders: [

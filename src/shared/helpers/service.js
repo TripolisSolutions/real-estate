@@ -11,7 +11,7 @@ if (global.isClient && window.CONFIG.env === 'production') {
   uri = `${ location.protocol }//${ location.host }`
 }
 
-export function feather() {
+function feather() {
   if (instance) { return instance }
 
   instance = feathers()
@@ -19,4 +19,8 @@ export function feather() {
     .configure(feathersSocketClient(socketIOClient(uri)))
 
   return instance
+}
+
+export default function service(name) {
+  return feather().service(name)
 }

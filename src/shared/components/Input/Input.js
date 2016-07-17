@@ -7,7 +7,7 @@ const s = require('./Input.less')
 function Input(props) {
   return (
     <BootstrapFormGroup>
-      <BootstrapControl  className={ s.container } type="text" placeholder={ props.placeholder } />
+      <BootstrapControl className={ s.container } type="text" placeholder={ props.placeholder } />
     </BootstrapFormGroup>
   )
 }
@@ -18,4 +18,4 @@ Input.propTypes = {
 }
 
 
-export default Input;
+export default Input

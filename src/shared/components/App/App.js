@@ -1,9 +1,10 @@
 import React from 'react'
 import Helmet from 'react-helmet'
+import { connect } from 'mobx-connect'
 
-import Header from '../components/Header/Header'
-import Footer from '../components/Footer/Footer'
-const s = require('./app.less')
+import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
+const s = require('./App.less')
 /**
  * App container component
  */
@@ -34,4 +35,15 @@ App.propTypes = {
   children: React.PropTypes.any.isRequired,
 }
 
-export default App
+export default connect(App)
+
+// import React from 'react'
+// import { connect } from 'mobx-connect'
+
+// const App = connect(function() {
+//     return <div>
+//         {this.props.children}
+//     </div>
+// })
+
+// export default App

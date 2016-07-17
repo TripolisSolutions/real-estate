@@ -1,23 +1,44 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { browserHistory, match, Router } from 'react-router'
+import { browserHistory, match, Router, RouterContext } from 'react-router'
+
+import log from 'loglevel'
+import mobx, { extendObservable } from 'mobx'
+
 import routes from './shared/routes'
+import defaultState from './shared/state'
+import actions from './shared/actions'
+import Context from './shared/components/Common/Context'
+import { fetchDataOnLocationMatch } from './shared/store/helpers'
 
-import { ContextProvider } from './shared/context'
+log.setLevel(window.CONFIG.logLevel)
 
-import { Store, fetchDataOnLocationMatch } from './shared/store'
+window.STATE = extendObservable(defaultState, window.STATE)
 
-const store = Store.fromJSON(__STORE__)
-fetchDataOnLocationMatch(browserHistory, routes, match, store)
+// Initialize stores & inject server-side state into front-end
+const context = {
+    state: window.STATE,
+    store: actions(window.STATE)
+}
 
-// Render the application
-ReactDOM.render(
-  (
-    <ContextProvider context={{ store }}>
-      <Router history={browserHistory}>
-        { routes }
-      </Router>
-    </ContextProvider>
-  ),
-  document.getElementById('root')
-)
+fetchDataOnLocationMatch(browserHistory, routes, match, context.state, context.store)
+
+function createElement(props) {
+    return (
+      <Context context={context}>
+        <RouterContext {...props} />
+      </Context>
+    )
+}
+
+// Render HTML on the browser
+ReactDOM.render(<Router history={browserHistory}
+                render={createElement}
+                routes={routes(context)}/>,
+document.getElementById('root'))
+
+if (module.hot) module.hot.accept()
+
+// for dev
+window.context = context
+window.mobx = mobx

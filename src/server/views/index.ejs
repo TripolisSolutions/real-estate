@@ -14,10 +14,11 @@
   <body>
     <div id="root"><%- renderedRoot %></div>
     <script type="text/javascript">
-      var __STORE__ = <%- JSON.stringify(store) %>;
-      var __CONFIG__ = <%- JSON.stringify(config) %>;
+      window.ALLOYEDITOR_BASEPATH = '../../node_modules/alloyeditor/dist/alloy-editor/';
+      window.CKEDITOR_BASEPATH = '../../node_modules/alloyeditor/dist/alloy-editor/';
+      window.STATE = <%- JSON.stringify(state) %>;
+      window.CONFIG = <%- JSON.stringify(config) %>;
     </script>
-    <script src="/assets/vendor.js"></script>
     <script src="/assets/client.js"></script>
   </body>
 </html>

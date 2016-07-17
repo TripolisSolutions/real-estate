@@ -4,7 +4,7 @@ import {Decorator as FormsyElement} from 'formsy-react'
 import find from 'lodash/fp/find'
 import log from 'loglevel'
 
-import PropertyEdit from 'components/Admin/PropertyForm/PropertyForm'
+import PropertyFormComponent from 'components/Admin/PropertyForm/PropertyForm'
 
 const { Checkbox, CheckboxGroup, Input, RadioGroup, Row, Select, File } = FRC
 
@@ -26,7 +26,7 @@ class PropertyDetail extends React.Component {
     const formData = store.adminFormCreateProperty
 
     return (
-      <PropertyEdit formData={ formData } />
+      <PropertyFormComponent formData={ formData } />
     )
   }
 }
