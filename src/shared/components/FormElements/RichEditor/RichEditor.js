@@ -1,32 +1,39 @@
 import React from 'react'
 import {Decorator as FormsyElement} from 'formsy-react'
-import 'trumbowyg'
 import { connect } from 'mobx-connect'
-
-import 'trumbowyg/dist/ui/trumbowyg.min.css'
-
-// const s = require('./Textarea.less')
+import AlloyEditor from 'alloyeditor'
 
 @FormsyElement()
 @connect
-class RichEditor {
+class RichEditor extends React.Component {
 
   propTypes = {
     value: React.PropTypes.string,
   }
 
+  constructor(props) {
+    super(props)
+
+    this.id = Math.random().toString()
+  }
+
   componentDidMount() {
-    const $ele = $(this.refs.main)
-    $ele.trumbowyg()
-    .on('tbwchange', () => {
-      const content = $ele.trumbowyg('html')
+    this.editor = AlloyEditor.editable(this.id, this.props.alloyEditorConfig)
+    // const $ele = $(this.refs.main)
+    // $ele.trumbowyg()
+    // .on('tbwchange', () => {
+    //   const content = $ele.trumbowyg('html')
 
-      this.setValue(content)
+    //   this.setValue(content)
 
-      if (this.onChange) {
-        this.onChange(content)
-      }
-    })
+    //   if (this.onChange) {
+    //     this.onChange(content)
+    //   }
+    // })
+  }
+
+  componentWillUnmount() {
+    this.editor.destroy()
   }
 
   onChange = (e) => {
@@ -38,7 +45,7 @@ class RichEditor {
 
   render() {
     return (
-      <div ref='main'>
+      <div id={ this.id } ref='container'>
       </div>
     )
   }

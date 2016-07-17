@@ -14,8 +14,10 @@
   <body>
     <div id="root"><%- renderedRoot %></div>
     <script type="text/javascript">
-      var STATE = <%- JSON.stringify(state) %>;
-      var CONFIG = <%- JSON.stringify(config) %>;
+      window.ALLOYEDITOR_BASEPATH = '../../node_modules/alloyeditor/dist/alloy-editor/';
+      window.CKEDITOR_BASEPATH = '../../node_modules/alloyeditor/dist/alloy-editor/';
+      window.STATE = <%- JSON.stringify(state) %>;
+      window.CONFIG = <%- JSON.stringify(config) %>;
     </script>
     <script src="/client.js"></script>
   </body>

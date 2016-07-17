@@ -27,6 +27,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "alloyeditor": "^1.2.3",
     "body-parser": "^1.15.2",
     "classnames": "^2.2.5",
     "compression": "^1.6.2",
@@ -46,7 +47,6 @@
     "helmet": "^2.1.1",
     "jest-cli": "^0.10.0",
     "jest-css-modules": "^1.0.0",
-    "jquery": "^3.1.0",
     "lodash": "^4.13.1",
     "lodash-fp": "^0.10.4",
     "loglevel": "^1.4.1",
@@ -70,7 +70,6 @@
     "request-promise": "^3.0.0",
     "serve-favicon": "^2.3.0",
     "source-map-support": "^0.4.1",
-    "trumbowyg": "^2.1.0",
     "url-join": "^1.1.0",
     "winston": "^2.2.0",
     "ws": "1.0.1"

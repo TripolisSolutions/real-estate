@@ -1,19 +1,10 @@
 import React from 'react'
 import { connect } from 'mobx-connect'
 import FRC from 'formsy-react-components'
-import {Decorator as FormsyElement} from 'formsy-react'
 import find from 'lodash/fp/find'
 import log from 'loglevel'
 
 import PropertyForm from 'components/Admin/PropertyForm/PropertyForm'
-
-const { Checkbox, CheckboxGroup, Input, RadioGroup, Row, Select, File } = FRC
-
-function locale(language) {
-  return function(field) {
-    return find({language})(field).text
-  }
-}
 
 @connect
 class PropertyDetail extends React.Component {
@@ -24,10 +15,7 @@ class PropertyDetail extends React.Component {
   }
 
   render() {
-    const { state, store } = this.context
-    const { language } = state
-
-    const localize = locale(language)
+    const { store } = this.context
 
     const formData = {
     }

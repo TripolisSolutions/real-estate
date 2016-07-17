@@ -21,7 +21,7 @@ function Input(props) {
 
 Input.propTypes = {
   value: React.PropTypes.string,
-  placeholder: React.PropTypes.string.isRequired
+  placeholder: React.PropTypes.string
 }
 
 
