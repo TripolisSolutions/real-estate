@@ -15,7 +15,11 @@ export default (state, store) => {
         }
 
         find() {
-            return this.request('/api/properties')
+            return this.service('/api/properties').find()
+        }
+
+        create(property) {
+            return this.service('/api/properties').create(property)
         }
     }
 }

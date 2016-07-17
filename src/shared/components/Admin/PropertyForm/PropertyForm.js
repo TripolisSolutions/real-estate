@@ -8,12 +8,17 @@ import FloatInput from 'components/FormElements/FloatInput/FloatInput'
 import RichEditor from 'components/FormElements/RichEditor/RichEditor'
 import Dropdown from 'components/FormElements/Dropdown/Dropdown'
 import DatePicker from 'components/FormElements/DatePicker/DatePicker'
+import LocationMap from 'components/LocationMap/LocationMap'
 
 import {
   Grid, Row, Col,
   FormGroup, ControlLabel, FormControl, HelpBlock,
   Checkbox, Button,
 } from 'react-bootstrap'
+
+function formDataToProperty(form) {
+
+}
 
 function PropertyEdit(props) {
 
@@ -25,6 +30,8 @@ function PropertyEdit(props) {
 
   function submit(model) {
     log.debug('submit model', model)
+
+
   }
 
   return (
@@ -180,6 +187,11 @@ function PropertyEdit(props) {
                   </Col>
                 </Row>
               </FormGroup>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <LocationMap />
             </Col>
           </Row>
           <Row>

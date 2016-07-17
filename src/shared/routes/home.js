@@ -2,7 +2,7 @@ import React from 'react'
 import PropertyList from '../components/PropertyList/PropertyList'
 import SearchBar from '../components/SearchBar/SearchBar'
 import Info from '../components/Info/Info'
-import Map from '../components/Map/Map'
+import LocationMap from '../components/LocationMap/LocationMap'
 
 
 class Home extends React.Component {
@@ -12,7 +12,7 @@ class Home extends React.Component {
         <SearchBar></SearchBar>
         <PropertyList></PropertyList>
         <Info />
-        <Map />
+        <LocationMap />
       </div>
     )
   }

@@ -1,9 +1,11 @@
 import React from 'react'
+import { connect } from 'mobx-connect'
 
-import { observer } from '../../../context'
+import PropertyList from 'components/PropertyList/PropertyList'
+import SearchBar from 'components/SearchBar/SearchBar'
 
-@observer
-class PropertyList extends React.Component {
+@connect
+class AdminPropertyList extends React.Component {
 
   static fetchData(store) {
     return store.propertiesStore.find()
@@ -12,17 +14,10 @@ class PropertyList extends React.Component {
   render() {
     return (
       <div>
-        {
-          this.context.store.propertiesStore.properties.map((property) => {
-            return (
-              <div>
-              </div>
-            )
-          })
-        }
+        <PropertyList />
       </div>
-    );
+    )
   }
 }
 
-export default PropertyList
+export default AdminPropertyList

@@ -1,7 +1,5 @@
 import React from 'react'
 import { connect } from 'mobx-connect'
-import FRC from 'formsy-react-components'
-import find from 'lodash/fp/find'
 import log from 'loglevel'
 
 import PropertyForm from 'components/Admin/PropertyForm/PropertyForm'

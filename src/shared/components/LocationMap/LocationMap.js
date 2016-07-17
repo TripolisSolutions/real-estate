@@ -3,11 +3,11 @@ import GoogleMap from 'google-map-react'
 
 import Block from '../Block/Block'
 
-const s = require('./Map.less')
+const s = require('./LocationMap.less')
 
 function Map(props) {
   return (
-    <Block title='We are here'  noBorder={ true }>
+    <Block title='We are here' noBorder={ true }>
       <div className={ s.container }>
         <GoogleMap
           defaultCenter={ props.center }
