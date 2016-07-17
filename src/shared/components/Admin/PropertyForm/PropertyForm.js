@@ -13,11 +13,12 @@ import RichEditor from 'components/FormElements/RichEditor/RichEditor'
 import Dropdown from 'components/FormElements/Dropdown/Dropdown'
 import DatePicker from 'components/FormElements/DatePicker/DatePicker'
 import LocationMap from 'components/LocationMap/LocationMap'
+import Button from 'components/Button/Button'
 
 import {
   Grid, Row, Col,
   FormGroup, ControlLabel, FormControl, HelpBlock,
-  Checkbox, Button,
+  Checkbox
 } from 'react-bootstrap'
 
 function formDataToProperty(form) {
@@ -267,9 +268,10 @@ class PropertyEdit extends React.Component {
             </Row>
             <Row>
               <Col xs={12}>
-                <Button type="submit">
-                  Save
-                </Button>
+                <div style={{ height: 52 }}>
+                  <Button type="submit" text='Save'>
+                  </Button>
+                </div>
               </Col>
             </Row>
           </Grid>

@@ -5,7 +5,7 @@ const s = require('./ButtonWrapper.less')
 
 function Button(props) {
   return (
-    <BootstrapButton bsSize='large' className={ s.container } >
+    <BootstrapButton bsSize='large' className={ s.container } type={ props.type }>
       { props.children }
     </BootstrapButton>
   )
@@ -13,6 +13,11 @@ function Button(props) {
 
 Button.propTypes = {
   children: React.PropTypes.any.isRequired,
+  type: React.PropTypes.string
+}
+
+Button.defaultProps = {
+  type: 'submit'
 }
 
 export default Button

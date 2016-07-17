@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'mobx-connect'
 
 import s from './LocationMapCircleMarker.less'
 
@@ -30,4 +31,4 @@ LocationMapCircleMarker.defaultProps = {
 }
 
 
-export default LocationMapCircleMarker
+export default connect(LocationMapCircleMarker)
