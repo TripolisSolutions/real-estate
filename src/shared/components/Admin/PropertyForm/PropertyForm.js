@@ -1,7 +1,7 @@
 import React from 'react'
 import log from 'loglevel'
 import { connect } from 'mobx-connect'
-import { observable } from 'mobx'
+import { observable, extendObservable } from 'mobx'
 import request from 'axios'
 import { fitBounds } from 'google-map-react/utils'
 
@@ -29,6 +29,7 @@ class PropertyEdit extends React.Component {
 
   @observable mapCenter // {lat: 10.7859378, lng: 106.5255811}
   @observable mapZoom // 10
+  @observable mapCircleMarker// {lat, lng, radius}
 
   constructor(props) {
     super(props)
@@ -48,7 +49,8 @@ class PropertyEdit extends React.Component {
         return
       }
 
-      const { geometry: { bounds }} = data.results[0]
+      const { geometry } = data.results[0]
+      const bounds = geometry.bounds || geometry.viewport
       const sanatizedBounds = {
         nw: {
           lat: bounds.northeast.lat,
@@ -72,6 +74,16 @@ class PropertyEdit extends React.Component {
     .catch( (error) => {
       log.error('error geoencoding google api ', error)
     })
+  }
+
+  setCircleMarker = ({x, y, lat, lng}) => {
+    log.debug('setCircleMarker ', x, y, lat, lng)
+
+    this.mapCircleMarker = {
+      lat: lat,
+      lng: lng,
+      radius: 300,
+    }
   }
 
   render() {
@@ -241,7 +253,9 @@ class PropertyEdit extends React.Component {
             </Row>
             <Row>
               <Col xs={12}>
-                <LocationMap center={ this.mapCenter } zoom={ this.mapZoom }/>
+                <LocationMap center={ this.mapCenter } zoom={ this.mapZoom }
+                  circleMarker={ this.mapCircleMarker }
+                  onClick={ this.setCircleMarker }/>
               </Col>
             </Row>
             <Row>
