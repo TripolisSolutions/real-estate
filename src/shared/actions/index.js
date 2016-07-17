@@ -3,6 +3,7 @@ import properties from './properties'
 import categories from './categories'
 import salesTypes from './salesTypes'
 import directions from './directions'
+import rentalPeriods from './rentalPeriods'
 import locale from './locale'
 
 // All our actions are listed here
@@ -11,6 +12,7 @@ const actions = {
     categories,
     salesTypes,
     directions,
+    rentalPeriods,
     locale,
 }
 

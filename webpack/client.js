@@ -19,7 +19,9 @@ module.exports = {
   },
   plugins: [
     new webpack.ProvidePlugin({
-      React: 'react'
+      React: 'react',
+      $: 'jquery',
+      jQuery: 'jquery',
     }),
     new webpack.DefinePlugin({
       __CLIENT__: true,

@@ -5,7 +5,7 @@ import { connect } from 'mobx-connect'
 import Input from 'components/FormElements/Input/Input'
 import IntegerInput from 'components/FormElements/IntegerInput/IntegerInput'
 import FloatInput from 'components/FormElements/FloatInput/FloatInput'
-import Textarea from 'components/FormElements/Textarea/Textarea'
+import RichEditor from 'components/FormElements/RichEditor/RichEditor'
 import Dropdown from 'components/FormElements/Dropdown/Dropdown'
 import DatePicker from 'components/FormElements/DatePicker/DatePicker'
 
@@ -20,6 +20,7 @@ function PropertyEdit(props) {
   const { store } = this.context
   const salesTypes = store.salesTypes.options
   const directions = store.directions.options
+  const rentalPeriods = store.rentalPeriods.options
   const { formData, categories } = props
 
   function submit(model) {
@@ -54,13 +55,13 @@ function PropertyEdit(props) {
             <Col xs={6}>
               <FormGroup>
                 <ControlLabel>Description (in Vietnamese)</ControlLabel>
-                <Textarea name="desc" value={ formData.descVN }/>
+                <RichEditor name="desc" value={ formData.descVN }/>
               </FormGroup>
             </Col>
             <Col xs={6}>
               <FormGroup>
                 <ControlLabel>Description (in English)</ControlLabel>
-                <Textarea name="desc" value={ formData.descEN }/>
+                <RichEditor name="desc" value={ formData.descEN }/>
               </FormGroup>
             </Col>
           </Row>
@@ -140,7 +141,7 @@ function PropertyEdit(props) {
                   </Col>
                   <Col xs={2}>
                     <Dropdown name='rentalPeriodUnit' title='Rental period unit'
-                      options={ formData.categories }
+                      options={ rentalPeriods }
                       value={ formData.categoryID }
                     />
                   </Col>

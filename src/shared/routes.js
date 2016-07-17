@@ -2,11 +2,23 @@ import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 import App from './components/App/App'
 
-import Home from './routes/home'
-
 import 'font-awesome/css/font-awesome.css'
 import 'react-select/dist/react-select.css'
 import './styles/index.less'
+
+import jQuery from 'jquery'
+
+if (global.isClient) {
+    window.jQuery = jQuery
+} else {
+    global.jQuery = jQuery
+    global.window = global.window || {}
+    global.document = global.document || {}
+    global.navigator = {
+      userAgent: '',
+      appVersion: '',
+    }
+}
 
 /**
  * Asynchronously load a file

@@ -12,11 +12,11 @@ let defaultState = observable({
     salesTypes: asFlat([
       {
         value: 'buy',
-        translationKey: 'saleTypes.buy'
+        translationKey: 'salesTypes.buy'
       },
       {
         value: 'rent',
-        translationKey: 'saleTypes.rent'
+        translationKey: 'salesTypes.rent'
       },
     ]),
     directions: asFlat([
@@ -27,6 +27,24 @@ let defaultState = observable({
       {
         value: 'east',
         translationKey: 'directions.east'
+      },
+    ]),
+    rentalPeriods: asFlat([
+      {
+        value: 'days',
+        translationKey: 'rentalPeriods.days'
+      },
+      {
+        value: 'months',
+        translationKey: 'rentalPeriods.months'
+      },
+      {
+        value: 'quarters',
+        translationKey: 'rentalPeriods.quarters'
+      },
+      {
+        value: 'years',
+        translationKey: 'rentalPeriods.years'
       },
     ]),
     account: {
