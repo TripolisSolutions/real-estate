@@ -9,6 +9,7 @@ import compress from 'compression'
 import bodyParser from 'body-parser'
 import favicon from 'serve-favicon'
 import nconf from 'nconf'
+import morgan from 'morgan'
 
 import _ from 'lodash'
 import cloneDeep from 'lodash/fp/cloneDeep'
@@ -116,7 +117,9 @@ const isomorphic = (req, res) => {
   })
 }
 
-app.use(compress())
+app
+  .use(morgan('combined'))
+  .use(compress())
   .use(favicon(path.join(nconf.get('SETTINGS_PUBLIC'), 'favicon.ico')))
   .use('/public', serveStatic(nconf.get('SETTINGS_PUBLIC')))
   .use('/assets', serveStatic('./build'))
