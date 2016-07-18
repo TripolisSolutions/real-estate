@@ -4,7 +4,7 @@ import App from './components/App/App'
 
 import 'font-awesome/css/font-awesome.css'
 import 'react-select/dist/react-select.css'
-import 'alloyeditor/dist/alloy-editor/assets/alloy-editor-moono.css'
+import 'alloyeditor/dist/alloy-editor/assets/alloy-editor-ocean.css'
 import './styles/index.less'
 
 /**

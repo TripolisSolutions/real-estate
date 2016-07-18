@@ -174,75 +174,45 @@ class PropertyForm extends React.Component {
           <Grid>
             <Row>
               <Col xs={6}>
-                <FormGroup>
-                  <ControlLabel>Name (in Vietnamese)</ControlLabel>
-                  <Input name="nameVN" value={ formData.nameVN }/>
-                  <FormControl.Feedback />
-                  <HelpBlock>This field is required</HelpBlock>
-                </FormGroup>
+                <Input label='Name (in Vietnamese)' name="nameVN" value={ formData.nameVN } required/>
               </Col>
               <Col xs={6}>
-                <FormGroup
-                  controlId="formBasicText"
-                >
-                  <ControlLabel>Name (in English)</ControlLabel>
-                  <Input name="nameEN" value={ formData.nameEN }/>
-                  <FormControl.Feedback />
-                  <HelpBlock>This field is required</HelpBlock>
-                </FormGroup>
+                <Input label='Name (in English)' name="nameEN" value={ formData.nameEN } required/>
               </Col>
             </Row>
             <Row>
               <Col xs={6}>
-                <FormGroup>
-                  <ControlLabel>Description (in Vietnamese)</ControlLabel>
-                  <RichEditor name="descVN" value={ formData.descVN }/>
-                </FormGroup>
+                <RichEditor label='Description (in Vietnamese) ' name="descVN" value={ formData.descVN }/>
               </Col>
               <Col xs={6}>
-                <FormGroup>
-                  <ControlLabel>Description (in English)</ControlLabel>
-                  <RichEditor name="descEN" value={ formData.descEN }/>
-                </FormGroup>
+                <RichEditor label='Description (in English) ' name="descEN" value={ formData.descEN }/>
               </Col>
             </Row>
             <Row>
               <Col xs={12}>
-                <FormGroup>
-                  <ControlLabel>Category</ControlLabel>
-                  <Dropdown name='categoryID' title='Category'
-                    options={ categories }
-                    value={ formData.categoryID } />
-                </FormGroup>
+                <Dropdown name='categoryID' label='Category'
+                  options={ categories }
+                  value={ formData.categoryID } />
               </Col>
             </Row>
             <Row>
               <Col xs={12}>
-                <FormGroup>
-                  <ControlLabel>Sales type</ControlLabel>
-                  <Dropdown name='salesType' title='Sales type'
-                    options={ salesTypes }
-                    value={ formData.salesType } />
-                </FormGroup>
+                <Dropdown name='salesType' label='Sales type'
+                  options={ salesTypes }
+                  value={ formData.salesType } />
               </Col>
             </Row>
             <Row>
               <Col xs={12}>
-                <FormGroup>
-                  <ControlLabel>Available Until</ControlLabel>
-                  <DatePicker name='availableUntil'
+                <DatePicker name='availableUntil' label='Available Until'
                     value={formData.availableUntil} />
-                </FormGroup>
               </Col>
             </Row>
             <Row>
               <Col xs={12}>
-                <FormGroup>
-                  <ControlLabel>Facing direction</ControlLabel>
-                  <Dropdown name='facingDirection' title='Facing direction'
-                    options={ directions }
-                    value={ formData.facingDirection } />
-                </FormGroup>
+                <Dropdown name='facingDirection' label='Facing direction'
+                  options={ directions }
+                  value={ formData.facingDirection } />
               </Col>
             </Row>
             <Row>
@@ -281,7 +251,7 @@ class PropertyForm extends React.Component {
                       />
                     </Col>
                     <Col xs={2}>
-                      <Dropdown name='rentalPeriodUnit' title='Rental period unit'
+                      <Dropdown name='rentalPeriodUnit' placeholder='Rental period unit'
                         options={ rentalPeriods }
                         value={ formData.rentalPeriodUnit }
                       />
