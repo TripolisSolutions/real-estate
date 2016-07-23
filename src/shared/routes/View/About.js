@@ -3,10 +3,10 @@ import { Col as BootstrapCol} from 'react-bootstrap'
 import { connect } from 'mobx-connect'
 import classnames from 'classnames'
 
-import Map from '../components/Map/Map'
-import Block from '../components/Block/Block'
+import Map from '../../components/Map/Map'
+import Block from '../../components/Block/Block'
 
-const s = require('./about.less')
+const s = require('./About.less')
 
 @connect
 class About extends React.Component {

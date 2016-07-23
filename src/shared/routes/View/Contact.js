@@ -1,12 +1,12 @@
 import React from 'react'
 import { Col as BootstrapCol} from 'react-bootstrap'
 
-import Block from '../components/Block/Block'
-import Map from '../components/Map/Map'
-import Input from '../components/Input/Input'
-import TextArea from '../components/TextArea/TextArea'
+import Block from '../../components/Block/Block'
+import Map from '../../components/Map/Map'
+import Input from '../../components/Input/Input'
+import TextArea from '../../components/TextArea/TextArea'
 
-const s = require('./contact.less')
+const s = require('./Contact.less')
 
 class Contact extends React.Component {
   render() {
