@@ -278,22 +278,19 @@ class PropertyForm extends React.Component {
             </Row>
             <Row>
               <Col xs={12}>
-                <FormGroup>
-                  <ControlLabel>Address</ControlLabel>
-                  <Row>
-                    <Col xs={5}>
-                      <AddressInput name='addressVN' value={ formData.addressVN }
-                        onMarkerClicked={ this.trackLocationOnMap }/>
-                    </Col>
-                    <Col xs={5}>
-                      <AddressInput name='addressEN' value={ formData.addressEN }
-                        onMarkerClicked={ this.trackLocationOnMap }/>
-                    </Col>
-                    <Col xs={2}>
-                      <Checkbox name='addressVisible' value={ formData.address.visible }>Hide this information from visistors</Checkbox>
-                    </Col>
-                  </Row>
-                </FormGroup>
+                <Row>
+                  <Col xs={5}>
+                    <AddressInput name='addressVN' label='address (VN)' value={ formData.addressVN }
+                      onMarkerClicked={ this.trackLocationOnMap }/>
+                  </Col>
+                  <Col xs={5}>
+                    <AddressInput name='addressEN' label='address (EN)' value={ formData.addressEN }
+                      onMarkerClicked={ this.trackLocationOnMap }/>
+                  </Col>
+                  <Col xs={2}>
+                    <Checkbox name='addressVisible' value={ formData.address.visible }>Hide this information from visistors</Checkbox>
+                  </Col>
+                </Row>
               </Col>
             </Row>
             <Row>

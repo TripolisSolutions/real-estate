@@ -1,6 +1,6 @@
 import React from 'react'
 import {Decorator as FormsyElement} from 'formsy-react'
-import { FormControl, InputGroup, FormGroup, Button } from 'react-bootstrap'
+import { FormControl, InputGroup, FormGroup, Button, ControlLabel } from 'react-bootstrap'
 import { connect } from 'mobx-connect'
 
 const s = require('./AddressInput.less')
@@ -23,6 +23,7 @@ function Input(props) {
 
   return (
     <FormGroup>
+      <ControlLabel>{ props.label }</ControlLabel>
       <InputGroup>
         <FormControl className={ s.container } type="text" placeholder={ props.placeholder }
           onChange={ onChange }/>
