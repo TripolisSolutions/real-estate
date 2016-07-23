@@ -35,9 +35,10 @@ function createRoutes({ state }) {
         <Route component={App}>
 
             <Route path="/">
-                <IndexRoute getComponent={requireAsync('home')}/>
-                <Route path="about" getComponent={requireAsync('about')}/>
-                <Route path="contact" getComponent={requireAsync('contact')}/>
+                <IndexRoute getComponent={requireAsync('Home')}/>
+                <Route path="about" getComponent={requireAsync('About')}/>
+                <Route path="contact" getComponent={requireAsync('Contact')}/>
+                <Route path="properties/:id" getComponent={requireAsync('PropertyDetail')}/>
 
                 {/* User management */}
                 <Route path="login" getComponents={requireAsync('Account/Login')}/>

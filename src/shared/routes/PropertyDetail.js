@@ -6,9 +6,9 @@ import Map from '../components/Map/Map'
 import Input from '../components/Input/Input'
 import TextArea from '../components/TextArea/TextArea'
 
-const s = require('./Contact.less')
+const s = require('./PropertyDetail.less')
 
-class Contact extends React.Component {
+class PropertyDetail extends React.Component {
   render() {
     return (
       <div>
@@ -32,4 +32,4 @@ class Contact extends React.Component {
   }
 }
 
-export default Contact
+export default PropertyDetail

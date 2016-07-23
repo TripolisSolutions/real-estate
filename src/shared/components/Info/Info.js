@@ -9,10 +9,11 @@ const s = require('./Info.less')
 function Info(props) {
   return (
     <div className={ 'container ' }>
-      <Block title={ '"We chose this site based on its reputation for building high quality homes while providing incredible customer service."' }>
+      <Block>
           <div className={ s.container }>
+            { prop.children }
             <div className={ s.button }>
-                <Button text='More info' />
+                <Button text={ props.btnText } />
             </div>
           </div>
       </Block>
@@ -21,7 +22,8 @@ function Info(props) {
 }
 
 Info.propTypes = {
-  
+  children: React.PropTypes.any.isRequired,
+  btnText: React.PropTypes.string,
 }
 
 export default Info

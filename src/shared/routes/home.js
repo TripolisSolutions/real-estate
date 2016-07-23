@@ -11,7 +11,7 @@ class Home extends React.Component {
       <div>
         <SearchBar></SearchBar>
         <PropertyList></PropertyList>
-        <Info />
+       
         <Map />
       </div>
     )
