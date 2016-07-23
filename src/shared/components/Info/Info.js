@@ -11,7 +11,7 @@ function Info(props) {
     <div className={ 'container ' }>
       <Block>
           <div className={ s.container }>
-            { prop.children }
+            { props.children }
             <div className={ s.button }>
                 <Button text={ props.btnText } />
             </div>
