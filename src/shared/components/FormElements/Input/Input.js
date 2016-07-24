@@ -17,7 +17,7 @@ function Input(props) {
     <FormGroup>
       <ControlLabel>{ props.label }</ControlLabel>
       <FormControl className={ s.container } type="text" placeholder={ props.placeholder }
-      onChange={ onChange } value={ props.getValue() }/>
+      onChange={ onChange } defaultValue={ props.getValue() }/>
       <FormControl.Feedback />
       {
         props.isRequired() ? <HelpBlock>This field is required</HelpBlock> : undefined

@@ -28,8 +28,6 @@ class PropertyForm extends React.Component {
   @observable mapZoom // 10
   @observable mapCircleMarker// {lat, lng, radius}
 
-  @observable isFetching = false
-
   constructor(props) {
     super(props)
 
@@ -39,12 +37,7 @@ class PropertyForm extends React.Component {
   submit = (data) => {
     log.debug('submiting', data)
 
-    this.isFetching = true
-    this.context.store.properties.create(data).then((resp) => {
-      log.debug('resp: ', resp)
-      this.isFetching = false
-      this.context.router.push(`/admin/properties/${ resp.doc.id }`)
-    })
+    this.props.onSave(data)
   }
 
   mapInputs(inputs) {
@@ -316,7 +309,7 @@ class PropertyForm extends React.Component {
             <Row>
               <Col xs={12}>
                 <div style={{ height: 52 }}>
-                  <Button type="submit" text='Save' disabled={ this.isFetching }>
+                  <Button type="submit" text='Save' disabled={ this.props.isFetching }>
                   </Button>
                 </div>
               </Col>
@@ -330,6 +323,8 @@ class PropertyForm extends React.Component {
 
 PropertyForm.propTypes = {
   formData: React.PropTypes.object.isRequired,
+  isFetching: React.PropTypes.bool,
+  onSave: React.PropTypes.func.isRequired,
   categories: React.PropTypes.array.isRequired,
 }
 

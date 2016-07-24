@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'mobx-connect'
+import { observable } from 'mobx'
 import log from 'loglevel'
 
 import PropertyForm from 'components/Admin/PropertyForm/PropertyForm'
@@ -7,8 +8,24 @@ import PropertyForm from 'components/Admin/PropertyForm/PropertyForm'
 @connect
 class PropertyNew extends React.Component {
 
+  @observable isFetching = false
+
   static fetchData({ store, params }) {
     return store.properties.prepareFormEdit(params.id)
+  }
+
+  updateProperty = (data) => {
+    this.isFetching = true
+
+    const id = this.context.state.propertyEdit.id
+    log.debug('id: ', id)
+
+    this.context.store.properties.update(id, data).then((resp) => {
+      log.debug('resp: ', resp)
+      this.isFetching = false
+
+      this.context.router.push('/admin/properties')
+    })
   }
 
   render() {
@@ -19,7 +36,9 @@ class PropertyNew extends React.Component {
     const categories = store.categories.options
 
     return (
-      <PropertyForm formData={ formData } categories={ categories }/>
+      <PropertyForm formData={ formData } categories={ categories }
+        isFetching={ this.isFetching }
+        onSave={ this.updateProperty }/>
     )
   }
 }

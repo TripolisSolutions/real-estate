@@ -34,6 +34,10 @@ export default (state, store) => {
             return this.service('/api/properties').create(property)
         }
 
+        update(id, property) {
+            return this.service('/api/properties').update(id, property)
+        }
+
         @computed get formEdit() {
             function findText(language, field) {
                 return find({language: language})(field).text
