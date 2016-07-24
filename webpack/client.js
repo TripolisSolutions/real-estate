@@ -13,6 +13,7 @@ module.exports = {
   target: 'web',
   entry: {
     client: [
+      'babel-polyfill',
       'webpack-hot-middleware/client',
       './src/client.js'
     ]

@@ -18,86 +18,8 @@ import Button from 'components/Button/Button'
 
 import {
   Grid, Row, Col,
-  FormGroup, ControlLabel, FormControl, HelpBlock,
+  FormGroup, ControlLabel,
 } from 'react-bootstrap'
-
-function formDataToProperty(form) {
-  const property = {
-    name: [
-      {
-        language: 'vietnamese',
-        text: form.nameVN,
-      },
-      {
-        language: 'english',
-        text: form.nameEN,
-      },
-    ],
-    desc: [
-      {
-        language: 'vietnamese',
-        text: form.descVN,
-      },
-      {
-        language: 'english',
-        text: form.descEN,
-      },
-    ],
-    categoryID: form.categoryID,
-    salesType: form.salesType,
-    availableUntil: form.availableUntil,
-    size: {
-      width: form.sizeWidth,
-      length: form.sizeLength,
-    },
-    address: {
-      name: [
-        {
-          language: 'vietnamese',
-          text: form.addressVN,
-        },
-        {
-          language: 'english',
-          text: form.addressEN,
-        },
-      ],
-      visible: form.addressVisible,
-    },
-    bedRoomCount: form.bedRoomCount,
-    facingDirection: form.facingDirection,
-    rentalPeriod: {
-      digits: form.rentalPeriodValue,
-      unit: form.rentalPeriodUnit,
-    },
-    price: [
-      {
-        currency: 'VND',
-        value: form.priceVN,
-      },
-      {
-        currency: 'USD',
-        value: form.priceEN,
-      },
-    ],
-    visible: form.visible
-  }
-
-  if (this.mapCenter) {
-    property.address.viewport = {
-      lat: this.mapCenter.lat,
-      lng: this.mapCenter.lng,
-      zoom: this.mapZoom,
-    }
-  }
-
-  if (this.mapCircleMarker) {
-    property.address.circleMarker = {
-      lat: this.mapCircleMarker.lat,
-      lng: this.mapCircleMarker.lng,
-      radius: this.mapCircleMarker.radius,
-    }
-  }
-}
 
 @connect
 class PropertyForm extends React.Component {
@@ -106,12 +28,102 @@ class PropertyForm extends React.Component {
   @observable mapZoom // 10
   @observable mapCircleMarker// {lat, lng, radius}
 
+  @observable isFetching = false
+
   constructor(props) {
     super(props)
   }
 
   submit = (data) => {
-    log.debug('submit', data)
+    log.debug('submiting', data)
+
+    this.isFetching = true
+    this.context.store.properties.create(data).then((resp) => {
+      log.debug('resp: ', resp)
+      this.isFetching = false
+      this.context.router.push(`/admin/properties/${ resp.doc.id }`)
+    })
+  }
+
+  mapInputs(inputs) {
+    log.debug('mapInputs ', inputs)
+
+    const property = {
+      name: [
+        {
+          language: 'vietnamese',
+          text: inputs.nameVN,
+        },
+        {
+          language: 'english',
+          text: inputs.nameEN,
+        },
+      ],
+      desc: [
+        {
+          language: 'vietnamese',
+          text: inputs.descVN,
+        },
+        {
+          language: 'english',
+          text: inputs.descEN,
+        },
+      ],
+      categoryID: inputs.categoryID,
+      salesType: inputs.salesType,
+      availableUntil: inputs.availableUntil,
+      size: {
+        width: inputs.sizeWidth,
+        length: inputs.sizeLength,
+      },
+      address: {
+        name: [
+          {
+            language: 'vietnamese',
+            text: inputs.addressVN,
+          },
+          {
+            language: 'english',
+            text: inputs.addressEN,
+          },
+        ],
+        visible: inputs.addressVisible,
+      },
+      bedRoomCount: inputs.bedRoomCount,
+      facingDirection: inputs.facingDirection,
+      rentalPeriod: {
+        digits: inputs.rentalPeriodValue,
+        unit: inputs.rentalPeriodUnit,
+      },
+      price: [
+        {
+          currency: 'VND',
+          value: inputs.priceVN,
+        },
+        {
+          currency: 'USD',
+          value: inputs.priceEN,
+        },
+      ],
+      visible: inputs.visible
+    }
+
+    if (this.mapCenter) {
+      property.address.viewport = {
+        lat: this.mapCenter.lat,
+        lng: this.mapCenter.lng,
+        zoom: this.mapZoom,
+      }
+    }
+
+    if (this.mapCircleMarker) {
+      property.address.circleMarker = {
+        lat: this.mapCircleMarker.lat,
+        lng: this.mapCircleMarker.lng,
+        radius: this.mapCircleMarker.radius,
+      }
+    }
+    return property
   }
 
   trackLocationOnMap = (address) => {
@@ -170,7 +182,7 @@ class PropertyForm extends React.Component {
 
     return (
       <div>
-        <Formsy.Form onSubmit={ this.submit }>
+        <Formsy.Form onSubmit={ this.submit } mapping={ this.mapInputs }>
           <Grid>
             <Row>
               <Col xs={6}>
@@ -302,7 +314,7 @@ class PropertyForm extends React.Component {
             <Row>
               <Col xs={12}>
                 <div style={{ height: 52 }}>
-                  <Button type="submit" text='Save'>
+                  <Button type="submit" text='Save' disabled={ this.isFetching }>
                   </Button>
                 </div>
               </Col>
