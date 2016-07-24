@@ -14,7 +14,7 @@ function LocationMap(props) {
   const { store: { locale: { languageCode } } } = this.context
 
   return (
-    <Block title='We are here' noBorder={ true }>
+    <Block title={ props.title } noBorder={ true }>
       <div className={ s.container }>
         <GoogleMap
           bootstrapURLKeys={{
@@ -44,12 +44,13 @@ LocationMap.propTypes = {
   zoom: React.PropTypes.number,
   circleMarker: React.PropTypes.object,
   onClick: React.PropTypes.func,
+  title: React.PropTypes.string,
 }
 // 10.7859378,106.5255811
 LocationMap.defaultProps = {
   center: {lat: 10.7859378, lng: 106.5255811},
   zoom: 12,
-  // coords: {lat: 59.724465, lng: 30.080121}
+  title: 'We are here'
 }
 
 export default connect(LocationMap)
