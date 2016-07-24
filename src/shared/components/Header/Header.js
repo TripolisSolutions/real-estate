@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router'
+import React, { PropTypes } from 'react'
+import { IndexLink } from 'react-router'
 import classnames from 'classnames'
 
 import {Navbar as BootstrapNavbar } from 'react-bootstrap'
@@ -8,7 +8,7 @@ const s = require('./Header.less')
 
 function Header(props) {
   return (
-    <BootstrapNavbar className={ s.container }  inverse fixedTop>
+    <BootstrapNavbar className={ s.container } inverse fixedTop>
       <BootstrapNavbar.Header>
         <BootstrapNavbar.Brand>
           <span className= { s.logo }>Real estate</span>
@@ -16,15 +16,16 @@ function Header(props) {
       </BootstrapNavbar.Header>
     <BootstrapNavbar.Collapse>
       <div className={ classnames('nav navbar-right', s.link)}>
-        <li className={ s.selected }>
-          <Link to='/'>Home</Link>
-        </li>
-        <li>
-          <Link to='/about'>About</Link>
-        </li>
-        <li>
-          <Link to='/contact'>Contact</Link>
-        </li>
+        {
+          props.items.map((item) => (
+            <li>
+              <IndexLink
+                to={ item.url }
+                activeClassName={ s.selected }
+              >{ item.label }</IndexLink>
+            </li>
+          ))
+        }
       </div>
     </BootstrapNavbar.Collapse>
   </BootstrapNavbar>
@@ -32,7 +33,10 @@ function Header(props) {
 }
 
 Header.propTypes = {
-  
+  items: PropTypes.arrayOf(PropTypes.shape({
+    url: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  })).isRequired,
 }
 
 export default Header

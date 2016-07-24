@@ -21,7 +21,20 @@ function App(props) {
             { name: 'description', content: 'Real estate' },
         ] }
       />
-      <Header />
+      <Header items={[
+        {
+          url: '/',
+          label: 'Home'
+        },
+        {
+          url: '/about',
+          label: 'About'
+        },
+        {
+          url: '/contact',
+          label: 'Contact'
+        },
+      ]}/>
       <div>
         { props.children }
       </div>

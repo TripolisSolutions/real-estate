@@ -12,7 +12,12 @@ function App(props) {
       <Helmet
         title='Admin'
       />
-      <Header />
+      <Header items={[
+        {
+          url: '/properties',
+          label: 'Properties List'
+        },
+      ]}/>
       <div>
         { props.children }
       </div>
