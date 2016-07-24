@@ -2,9 +2,9 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { connect } from 'mobx-connect'
 
-import Header from '../Header/Header'
-import Footer from '../Footer/Footer'
-const s = require('./App.less')
+import Header from 'components/Header/Header'
+import Footer from 'components/Footer/Footer'
+
 /**
  * App container component
  */
@@ -16,10 +16,9 @@ function App(props) {
           lang: 'en',
           amp: undefined
         }} // amp takes no value
-        title='My Title'
+        title='Real Estate'
         meta={ [
-            { name: 'description', content: 'Helmet application' },
-            { property: 'og:type', content: 'article' },
+            { name: 'description', content: 'Real estate' },
         ] }
       />
       <Header />
@@ -36,14 +35,3 @@ App.propTypes = {
 }
 
 export default connect(App)
-
-// import React from 'react'
-// import { connect } from 'mobx-connect'
-
-// const App = connect(function() {
-//     return <div>
-//         {this.props.children}
-//     </div>
-// })
-
-// export default App

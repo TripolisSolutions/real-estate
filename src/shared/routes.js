@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
-import App from './components/App/App'
 
 import 'font-awesome/css/font-awesome.css'
 import 'react-select/dist/react-select.css'
@@ -32,9 +31,14 @@ function createRoutes({ state }) {
     }
 
     return (
-        <Route component={App}>
+        <Route>
 
-            <Route path="/">
+            <Route path="/admin/" getComponent={requireAsync('Admin/Admin')}>
+                <Route path='properties/new' getComponents={ requireAsync('Admin/NewProperty/NewProperty') } />
+                <Route path='properties/:id' getComponents={ requireAsync('Admin/EditProperty/EditProperty') } />
+            </Route>
+
+            <Route path="/" getComponent={requireAsync('View/App')}>
                 <IndexRoute getComponent={requireAsync('View/Home')}/>
                 <Route path="about" getComponent={requireAsync('View/About')}/>
                 <Route path="contact" getComponent={requireAsync('View/Contact')}/>
@@ -44,10 +48,6 @@ function createRoutes({ state }) {
                 <Route path="login" getComponents={requireAsync('Account/Login')}/>
                 <Route path="logout" getComponents={requireAsync('Account/Logout')} onEnter={requireLogin}/>
                 <Route path="register" getComponents={requireAsync('Account/Register')}/>
-
-                { /* admin pages */ }
-                <Route path='admin/properties/:id' getComponents={ requireAsync('Admin/EditProperty/EditProperty') } />
-                <Route path='admin/properties/new' getComponents={ requireAsync('Admin/NewProperty/NewProperty') } />
             </Route>
 
             <Route path="*" getComponent={requireAsync('NotFound')}/>
