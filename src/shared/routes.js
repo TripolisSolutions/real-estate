@@ -34,6 +34,7 @@ function createRoutes({ state }) {
         <Route>
 
             <Route path="/admin/" getComponent={requireAsync('Admin/Admin')}>
+                <Route path='properties' getComponents={ requireAsync('Admin/ListProperties/ListProperties') } />
                 <Route path='properties/new' getComponents={ requireAsync('Admin/NewProperty/NewProperty') } />
                 <Route path='properties/:id' getComponents={ requireAsync('Admin/EditProperty/EditProperty') } />
             </Route>

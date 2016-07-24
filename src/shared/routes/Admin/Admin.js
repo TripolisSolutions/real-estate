@@ -14,7 +14,7 @@ function App(props) {
       />
       <Header items={[
         {
-          url: '/properties',
+          url: '/admin/properties',
           label: 'Properties List'
         },
       ]}/>

@@ -58,6 +58,7 @@ let defaultState = observable({
         loading: false,
         items: asFlat([])
     },
+    properties: [],
     propertyEdit: null,
     isFetching: true
 })

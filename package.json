@@ -61,6 +61,7 @@
     "passport": "^0.3.2",
     "react": "^15.2.0",
     "react-bootstrap": "^0.30.0-rc.2",
+    "react-data-grid": "^1.0.18",
     "react-datepicker": "^0.28.1",
     "react-dom": "^15.2.0",
     "react-fontawesome": "^1.1.0",

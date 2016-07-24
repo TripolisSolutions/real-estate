@@ -26,8 +26,16 @@ export default (state, store) => {
             return this.service('/api/properties/').get(id)
         }
 
-        find() {
-            return this.service('/api/properties').find()
+        async find() {
+            const resp = await this.service('/api/properties').find()
+            const data = JSON.parse(resp)
+
+            if (global.isClient) {
+                state.properties.replace(data.docs)
+            } else {
+                log.debug('state.properties', state.properties)
+                state.properties = data.docs
+            }
         }
 
         create(property) {
