@@ -2,8 +2,6 @@ import mobx, { action, computed } from 'mobx'
 import log from 'loglevel'
 import find from 'lodash/fp/find'
 
-// mobx.useStrict(true)
-
 export default (state, store) => {
     /**
      * @name properties
@@ -20,11 +18,12 @@ export default (state, store) => {
 
             const property = await store.properties.get(id)
 
-            state.propertyEdit = property
+            state.propertyEdit = JSON.parse(property).doc
+            log.debug('state.propertyEdit', state.propertyEdit)
         }
 
         get(id) {
-            return this.service(`/api/properties/${ id }`).get()
+            return this.service('/api/properties/').get(id)
         }
 
         find() {
@@ -40,17 +39,20 @@ export default (state, store) => {
                 return find({language: language})(field).text
             }
 
-            if (!state.propertyEdit) {
-                return null
-            }
-
             const data = state.propertyEdit
+
+            if (!data) {
+                return {}
+            }
 
             return {
                 nameVN: findText('vietnamese', data.name),
                 nameEN: findText('english', data.name),
                 descVN: findText('vietnamese', data.desc),
                 descEN: findText('english', data.desc),
+                addressVisible: data.address.visible,
+                addressVN: findText('vietnamese', data.address.name),
+                addressEN: findText('english', data.address.name),
             }
         }
     }

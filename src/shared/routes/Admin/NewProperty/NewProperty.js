@@ -16,9 +16,7 @@ class PropertyNew extends React.Component {
     const { store } = this.context
 
     const formData = {
-      address: {
-        visible: true,
-      }
+      addressVisible: true
     }
 
     const categories = store.categories.options

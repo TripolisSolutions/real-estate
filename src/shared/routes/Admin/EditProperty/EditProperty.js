@@ -8,7 +8,7 @@ import PropertyForm from 'components/Admin/PropertyForm/PropertyForm'
 class PropertyNew extends React.Component {
 
   static fetchData({ store, params }) {
-    return store.properties.prepareEditForm(params.id)
+    return store.properties.prepareFormEdit(params.id)
   }
 
   render() {

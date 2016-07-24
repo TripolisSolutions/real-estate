@@ -32,6 +32,8 @@ class PropertyForm extends React.Component {
 
   constructor(props) {
     super(props)
+
+    log.info('PropertyForm props: ', props)
   }
 
   submit = (data) => {
@@ -292,7 +294,7 @@ class PropertyForm extends React.Component {
                       onMarkerClicked={ this.trackLocationOnMap }/>
                   </Col>
                   <Col xs={2}>
-                    <Checkbox name='addressVisible' value={ formData.address.visible }>Hide this information from visistors</Checkbox>
+                    <Checkbox name='addressVisible' value={ formData.addressVisible }>Hide this information from visistors</Checkbox>
                   </Col>
                 </Row>
               </Col>
