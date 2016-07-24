@@ -6,7 +6,7 @@ import classnames from 'classnames'
 import LocationMap from 'components/LocationMap/LocationMap'
 import Block from 'components/Block/Block'
 
-const s = require('./about.less')
+const s = require('./About.less')
 
 @connect
 class About extends React.Component {

@@ -1,19 +1,45 @@
 @import '../../styles/variables';
 
 .container {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  overflow: hidden;
+
   img {
     width: 100%;
   }
 }
+
+.info {
+  transition: bottom 0.5s ease-in-out;
+
+  position: absolute;
+  bottom: -113px;
+  width: 100%;
+  padding: @margin;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+
+  background: fade(@color-white, 70%);  
+ 
+
+  h2 {
+    margin: 0;
+  }
+
+  &:hover{  
+    transition: bottom 0.5s ease-in-out;
+    bottom: 0;
+  }
+}
+
 
 .options {
   display: flex;
   flex-wrap: wrap;
 }
 
-.button {
-  float: right;
-  width: @button-width;
-  height: @button-height;
-  margin: 10px 0;
-}
