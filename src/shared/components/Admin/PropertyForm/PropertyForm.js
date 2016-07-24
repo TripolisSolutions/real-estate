@@ -189,34 +189,28 @@ class PropertyForm extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col xs={12}>
+              <Col xs={6}>
                 <Dropdown name='categoryID' label='Category'
                   options={ categories }
                   value={ formData.categoryID } />
               </Col>
-            </Row>
-            <Row>
-              <Col xs={12}>
+              <Col xs={6}>
                 <Dropdown name='salesType' label='Sales type'
                   options={ salesTypes }
                   value={ formData.salesType } />
               </Col>
             </Row>
             <Row>
-              <Col xs={12}>
+              <Col xs={4}>
                 <DatePicker name='availableUntil' label='Available Until'
                     value={formData.availableUntil} />
               </Col>
-            </Row>
-            <Row>
-              <Col xs={12}>
+              <Col xs={4}>
                 <Dropdown name='facingDirection' label='Facing direction'
                   options={ directions }
                   value={ formData.facingDirection } />
               </Col>
-            </Row>
-            <Row>
-              <Col xs={12}>
+              <Col xs={4}>
                 <FormGroup>
                   <ControlLabel>Number of bed rooms</ControlLabel>
                   <IntegerInput name="bedRoomCount"
@@ -225,32 +219,30 @@ class PropertyForm extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col xs={12}>
+              <Col xs={6}>
                 <FormGroup>
                   <ControlLabel>Size (width x length)</ControlLabel>
                   <Row>
-                    <Col xs={2}>
+                    <Col xs={6}>
                       <IntegerInput name="sizeWidth" value={ formData.sizeWidth }
                       />
                     </Col>
-                    <Col xs={2}>
+                    <Col xs={6}>
                       <IntegerInput name="sizeLength" value={ formData.sizeLength }
                       />
                     </Col>
                   </Row>
                 </FormGroup>
               </Col>
-            </Row>
-            <Row>
-              <Col xs={12}>
+              <Col xs={6}>
                 <FormGroup>
                   <ControlLabel>Rental Period</ControlLabel>
                   <Row>
-                    <Col xs={2}>
+                    <Col xs={6}>
                       <IntegerInput name="rentalPeriodValue" value={ formData.rentalPeriodValue }
                       />
                     </Col>
-                    <Col xs={2}>
+                    <Col xs={6}>
                       <Dropdown name='rentalPeriodUnit' placeholder='Rental period unit'
                         options={ rentalPeriods }
                         value={ formData.rentalPeriodUnit }
