@@ -21,7 +21,6 @@ class PropertyNew extends React.Component {
       }
     }
 
-    // const categories = state.categories.items.map( (item) => ({value: item.id, label: localize(item.name)}))
     const categories = store.categories.options
 
     return (

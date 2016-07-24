@@ -324,7 +324,7 @@ class PropertyForm extends React.Component {
 
 PropertyForm.propTypes = {
   formData: React.PropTypes.object.isRequired,
-  categories: React.PropTypes.object.isRequired,
+  categories: React.PropTypes.array.isRequired,
 }
 
 export default PropertyForm

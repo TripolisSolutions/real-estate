@@ -42,7 +42,7 @@ function Dropdown(props) {
 Dropdown.propTypes = {
   label: React.PropTypes.string,
   placeholder: React.PropTypes.string,
-  options: React.PropTypes.object.isRequired,
+  options: React.PropTypes.array.isRequired,
 }
 
 export default FormsyElement()(connect(Dropdown))

@@ -17,8 +17,8 @@ function Block(props) {
 Block.propTypes = {
   children: React.PropTypes.any.isRequired,
   title: React.PropTypes.string,
-  noBorder: React.PropTypes.string,
-  bigger: React.PropTypes.boolean,
+  noBorder: React.PropTypes.bool,
+  bigger: React.PropTypes.bool,
 }
 
 export default Block
