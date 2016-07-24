@@ -60,7 +60,7 @@
     "nconf": "^0.8.4",
     "passport": "^0.3.2",
     "react": "^15.2.0",
-    "react-bootstrap": "^0.29.5",
+    "react-bootstrap": "^0.30.0-rc.2",
     "react-datepicker": "^0.28.1",
     "react-dom": "^15.2.0",
     "react-fontawesome": "^1.1.0",
