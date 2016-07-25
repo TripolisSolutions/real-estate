@@ -10,35 +10,35 @@ class PropertyNew extends React.Component {
 
   @observable isFetching = false
 
-  static fetchData({ state, store }) {
-    log.debug('PropertyDetail.fetchData state: ', state)
-    return store.properties.prepareForm()
+  static fetchData({ store, params }) {
+    return store.properties.prepareFormEdit(params.id)
   }
 
-  createProperty = (data) => {
+  updateProperty = (data) => {
     this.isFetching = true
 
-    this.context.store.properties.create(data).then((resp) => {
+    const id = this.context.state.propertyEdit.id
+    log.debug('id: ', id)
+
+    this.context.store.properties.update(id, data).then((resp) => {
       log.debug('resp: ', resp)
       this.isFetching = false
 
-      this.context.router.push(`/admin/properties/${ resp.doc.id }`)
+      this.context.router.push('/admin/properties')
     })
   }
 
   render() {
     const { store } = this.context
 
-    const formData = {
-      addressVisible: true
-    }
+    const formData = store.properties.formEdit
 
     const categories = store.categories.options
 
     return (
       <PropertyForm formData={ formData } categories={ categories }
         isFetching={ this.isFetching }
-        onSave={ this.createProperty }/>
+        onSave={ this.updateProperty }/>
     )
   }
 }

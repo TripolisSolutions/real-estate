@@ -1,6 +1,7 @@
 import React from 'react'
 import NumberInput from 'react-number-input'
 import {Decorator as FormsyElement} from 'formsy-react'
+import { FormGroup, ControlLabel } from 'react-bootstrap'
 import { connect } from 'mobx-connect'
 
 const s = require('./IntegerInput.less')
@@ -17,18 +18,24 @@ function Input(props) {
   value = parseInt(value)
 
   return (
-    <div className={ s.container }>
-      <NumberInput
-        type='number'
-        value={ value }
-        placeholder={ props.placeholder }
-        onChange={ onChange }
-        format='0'/>
-    </div>
+    <FormGroup>
+      {
+        props.label ? <ControlLabel>{ props.label }</ControlLabel> : null
+      }
+      <div className={ s.container }>
+        <NumberInput
+          type='number'
+          value={ value }
+          placeholder={ props.placeholder }
+          onChange={ onChange }
+          format='0'/>
+      </div>
+    </FormGroup>
   )
 }
 
 Input.propTypes = {
+  label: React.PropTypes.string,
   value: React.PropTypes.string,
   placeholder: React.PropTypes.string
 }

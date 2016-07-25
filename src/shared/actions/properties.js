@@ -1,7 +1,6 @@
 import mobx, { action, computed } from 'mobx'
 import log from 'loglevel'
-
-// mobx.useStrict(true)
+import find from 'lodash/fp/find'
 
 export default (state, store) => {
     /**
@@ -14,8 +13,59 @@ export default (state, store) => {
             return store.categories.fetchData()
         }
 
-        find() {
-            return this.request('/api/properties')
+        async prepareFormEdit(id) {
+            await store.categories.fetchData()
+
+            const property = await store.properties.get(id)
+
+            state.propertyEdit = JSON.parse(property).doc
+            log.debug('state.propertyEdit', state.propertyEdit)
+        }
+
+        get(id) {
+            return this.service('/api/properties/').get(id)
+        }
+
+        async find() {
+            const resp = await this.service('/api/properties').find()
+            const data = JSON.parse(resp)
+
+            if (global.isClient) {
+                state.properties.replace(data.docs)
+            } else {
+                log.debug('state.properties', state.properties)
+                state.properties = data.docs
+            }
+        }
+
+        create(property) {
+            return this.service('/api/properties').create(property)
+        }
+
+        update(id, property) {
+            return this.service('/api/properties').update(id, property)
+        }
+
+        @computed get formEdit() {
+            function findText(language, field) {
+                return find({language: language})(field).text
+            }
+
+            const data = state.propertyEdit
+
+            if (!data) {
+                return {}
+            }
+
+            return {
+                nameVN: findText('vietnamese', data.name),
+                nameEN: findText('english', data.name),
+                descVN: findText('vietnamese', data.desc),
+                descEN: findText('english', data.desc),
+                addressVisible: data.address.visible,
+                addressVN: findText('vietnamese', data.address.name),
+                addressEN: findText('english', data.address.name),
+            }
         }
     }
 }

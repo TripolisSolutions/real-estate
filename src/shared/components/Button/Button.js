@@ -4,7 +4,7 @@ import ButtonWrapper from '../ButtonWrapper/ButtonWrapper'
 
 function Button(props) {
   return (
-    <ButtonWrapper>
+    <ButtonWrapper type={ props.type }>
       { props.text }
     </ButtonWrapper>
   )

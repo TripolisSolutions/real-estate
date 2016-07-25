@@ -1,5 +1,6 @@
 import React from 'react'
 import {Decorator as FormsyElement} from 'formsy-react'
+import { FormGroup, ControlLabel } from 'react-bootstrap'
 import { connect } from 'mobx-connect'
 import AlloyEditor from 'alloyeditor'
 import log from 'loglevel'
@@ -12,6 +13,8 @@ class RichEditor extends React.Component {
 
   static propTypes = {
     value: React.PropTypes.string,
+    label: React.PropTypes.string,
+    placeholder: React.PropTypes.string,
   }
 
   constructor(props) {
@@ -38,9 +41,12 @@ class RichEditor extends React.Component {
 
   render() {
     return (
-      <div id={ this.id } className={ s.editor }>
-        <p>Content...</p>
-      </div>
+      <FormGroup>
+        <ControlLabel>{ this.props.label }</ControlLabel>
+        <div id={ this.id } className={ s.editor }>
+          <p>{ this.props.placeholder }</p>
+        </div>
+      </FormGroup>
     )
   }
 }

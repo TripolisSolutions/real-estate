@@ -1,7 +1,7 @@
 import React from 'react'
 import {Decorator as FormsyElement} from 'formsy-react'
-import { observer } from 'shared/context'
-import { FormControl as BootstrapControl} from 'react-bootstrap'
+import { connect } from 'mobx-connect'
+import { FormControl, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap'
 
 const s = require('./Input.less')
 
@@ -14,15 +14,23 @@ function Input(props) {
   }
 
   return (
-    <BootstrapControl className={ s.container } type="text" placeholder={ props.placeholder }
-      onChange={ onChange }/>
+    <FormGroup>
+      <ControlLabel>{ props.label }</ControlLabel>
+      <FormControl className={ s.container } type="text" placeholder={ props.placeholder }
+      onChange={ onChange } defaultValue={ props.getValue() }/>
+      <FormControl.Feedback />
+      {
+        props.isRequired() ? <HelpBlock>This field is required</HelpBlock> : undefined
+      }
+    </FormGroup>
   )
 }
 
 Input.propTypes = {
+  label: React.PropTypes.string,
   value: React.PropTypes.string,
   placeholder: React.PropTypes.string
 }
 
 
-export default FormsyElement()(observer(Input))
+export default FormsyElement()(connect(Input))

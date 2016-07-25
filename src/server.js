@@ -9,6 +9,7 @@ import compress from 'compression'
 import bodyParser from 'body-parser'
 import favicon from 'serve-favicon'
 import nconf from 'nconf'
+import morgan from 'morgan'
 
 import _ from 'lodash'
 import cloneDeep from 'lodash/fp/cloneDeep'
@@ -30,12 +31,11 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { RouterContext, match } from 'react-router'
 import Helmet from 'react-helmet'
-import { toJS } from 'mobx'
 
 // react internal packages
 import routes from './shared/routes'
 import Context from './shared/components/Common/Context'
-import { fetchData } from './shared/store/helpers'
+import { fetchData } from './shared/helpers/fetchData'
 import defaultState from './shared/state'
 import actions from './shared/actions'
 
@@ -101,6 +101,7 @@ const isomorphic = (req, res) => {
         const config = {
           env: process.env.NODE_ENV ? process.env.NODE_ENV : 'development',
           logLevel: nconf.get('SETTINGS_LOG_LEVEL'),
+          googleMapAPIKey: nconf.get('SETTINGS_GOOGLE_MAP_API_KEY'),
         }
 
         const head = Helmet.rewind()
@@ -116,7 +117,9 @@ const isomorphic = (req, res) => {
   })
 }
 
-app.use(compress())
+app
+  .use(morgan('combined'))
+  .use(compress())
   .use(favicon(path.join(nconf.get('SETTINGS_PUBLIC'), 'favicon.ico')))
   .use('/public', serveStatic(nconf.get('SETTINGS_PUBLIC')))
   .use('/assets', serveStatic('./build'))

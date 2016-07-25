@@ -10,7 +10,11 @@ export default (state, store) => {
     return class categories {
 
         setItems(data) {
-            state.categories.items = data
+            if (global.isClient) {
+                state.categories.items.replace(data)
+            } else {
+                state.categories.items = data
+            }
         }
 
         fetchData() {
