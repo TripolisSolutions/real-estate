@@ -2,8 +2,7 @@ import * as update from 'react/lib/update'
 
 import { IAction, IHandler } from '../../models'
 
-const CATEGORIES_REQUEST = 'CATEGORIES_REQUEST'
-const CATEGORIES_FAILURE = 'CATEGORIES_FAILURE'
+const SWITCH_LANGUAGE = 'SWITCH_LANGUAGE'
 
 export interface IState {
   currentLangCode: string
@@ -16,17 +15,11 @@ const INITIAL_STATE: IState = {
 }
 
 const ACTION_HANDLERS = {
-  [CATEGORIES_REQUEST]: (state: IState): IState => {
+  [SWITCH_LANGUAGE]: (state: IState): IState => {
+    const nextLangCode = state.currentLangCode === 'vi' ? 'en' : 'vi'
     return update(state, {
-      isFetching: {
-        $set: true,
-      },
-    })
-  },
-  [CATEGORIES_FAILURE]: (state: IState): IState => {
-    return update(state, {
-      isFetching: {
-        $set: false,
+      currentLangCode: {
+        $set: nextLangCode,
       },
     })
   },
@@ -35,4 +28,11 @@ const ACTION_HANDLERS = {
 export function i18nReducer(state = INITIAL_STATE, action: IAction<any>): IState {
   const handler: IHandler<IState> = ACTION_HANDLERS[action.type]
   return handler ? handler(state, action) : state
+}
+
+/** Action Creator */
+export function switchLanguage() {
+  return {
+    type: SWITCH_LANGUAGE,
+  }
 }

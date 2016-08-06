@@ -1,6 +1,4 @@
 module.exports = {
-  "appName": "react-i18next-example",
-  "interpolateSample": "you can interplate {{value}} or {{component}} via interpolate component!",
-  "usingDefaultNS": "example using empty tranlate() decarator, defaults to defaultNS",
-  "contact_us": "Contact US"
+  'switch_language': 'Tieng Viet',
+  'contact_us': 'Contact US'
 }

@@ -6,6 +6,9 @@ import './app/styles/index.less'
 import * as e6p from 'es6-promise';
 (e6p as any).polyfill();
 import 'isomorphic-fetch';
+import * as log from 'loglevel'
+
+log.setLevel(0)
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -24,8 +27,22 @@ const store: Redux.Store = configureStore(
   window.__INITIAL_STATE__
 );
 
-const lng = window.__INITIAL_STATE__.i18nData.currentLangCode
+// init sync client lang with server
+let lng = window.__INITIAL_STATE__.i18nData.currentLangCode
 i18n.changeLanguage(lng)
+
+store.subscribe(() => {
+  const nextLang = store.getState().i18nData.currentLangCode
+
+  if (!nextLang) {
+    return
+  }
+
+  if (nextLang !== lng) {
+    i18n.changeLanguage(nextLang)
+    lng = nextLang
+  }
+})
 
 const history = syncHistoryWithStore(browserHistory, store);
 

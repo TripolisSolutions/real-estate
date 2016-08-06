@@ -1,12 +1,15 @@
 import * as React from 'react'
 import * as Helmet from 'react-helmet'
-
+import { connect } from 'react-redux'
 
 import Header from '../../components/Header/Header'
+
+import { switchLanguage } from '../../redux/modules/i18n/i18n'
+
 /**
  * App container component
  */
-function App(props) {
+function Admin(props) {
   return (
     <div>
       <Helmet
@@ -21,7 +24,9 @@ function App(props) {
           url: '/admin/properties/new',
           label: 'New Property',
         },
-      ]}/>
+      ]}
+        onSwitchLanguageClicked={ props.switchLanguage }
+      />
       <div>
         { props.children }
       </div>
@@ -29,4 +34,9 @@ function App(props) {
   )
 }
 
-export default App
+export default connect(
+  state => state,
+  dispatch => ({
+    switchLanguage: () => dispatch(switchLanguage()),
+  })
+)(Admin)
