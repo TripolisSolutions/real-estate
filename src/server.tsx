@@ -7,6 +7,7 @@ import * as e6p from 'es6-promise';
 import 'isomorphic-fetch';
 
 import * as log from 'loglevel'
+import * as nconf from 'nconf'
 
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
@@ -26,8 +27,17 @@ const path = require('path');
 const compression = require('compression');
 const Chalk = require('chalk');
 const favicon = require('serve-favicon');
+const proxy = require('http-proxy-middleware')
 
 log.setLevel(0)
+
+// Setup nconf to use (in-order):
+// 1. Environment variables
+// 2. A file located at '../config/env.json'
+const configPath = path.join(path.resolve('.'), 'config/env.json')
+nconf.env().file({file: configPath})
+
+log.setLevel(nconf.get('SETTINGS_LOG_LEVEL'))
 
 const app = express();
 
@@ -53,6 +63,11 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use(favicon(path.join(__dirname, '../src/favicon.ico')));
+
+app.use('/api', proxy({
+  target: nconf.get('SETTINGS_REAL_ESTATE_API'),
+  '^/remove/api' : '',
+}))
 
 app.use('/public', express.static(path.join(__dirname, '../build/public')));
 
