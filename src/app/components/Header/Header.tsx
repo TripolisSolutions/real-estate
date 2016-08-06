@@ -48,8 +48,11 @@ function Header(props: IProps) {
           </li>
           <li>
             <a
-              href='#'
-              onClick={ () => props.onSwitchLanguageClicked() }
+              href='/languages/switch'
+              onClick={ (e) => {
+                e.nativeEvent.preventDefault()
+                props.onSwitchLanguageClicked()
+              }}
             >{
               props.t('switch_language')
             }</a>
