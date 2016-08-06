@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Route, IndexRoute } from 'react-router'
+// import { I18nextProvider } from 'react-i18next'
 
 import { Counter, Stars } from './containers'
 import App from './containers/View/App'
@@ -15,23 +16,27 @@ import AdminPropertiesEdit from './containers/Admin/PropertiesEdit/PropertiesEdi
 
 import NotFound from './containers/NotFound'
 
+import i18n from '../i18n'
+
 export default (
-  <Route>
-    <Route path='/' component={ App }>
-      <IndexRoute component={ Home }/>
-      <Route path='about' component={ About }/>
-      <Route path='contact' component={ Contact }/>
-      <Route path='properties/:id' component={ PropertyDetail }/>
-      <Route path='counter' component={ Counter } />
-      <Route path='stars' component={ Stars } />
-    </Route>
 
-    <Route path='/admin' component={ Admin }>
-      <IndexRoute component={ AdminPropertiesList }/>
-      <Route path='/properties/new' component={ AdminPropertiesNew } />
-      <Route path='/properties/:id' component={ AdminPropertiesEdit } />
-    </Route>
+    <Route>
+      <Route path='/' component={ App }>
+        <IndexRoute component={ Home }/>
+        <Route path='about' component={ About }/>
+        <Route path='contact' component={ Contact }/>
+        <Route path='properties/:id' component={ PropertyDetail }/>
+        <Route path='counter' component={ Counter } />
+        <Route path='stars' component={ Stars } />
+      </Route>
 
-    <Route path='*' component={ NotFound }/>
-  </Route>
+      <Route path='/admin' component={ Admin }>
+        <IndexRoute component={ AdminPropertiesList }/>
+        <Route path='/properties/new' component={ AdminPropertiesNew } />
+        <Route path='/properties/:id' component={ AdminPropertiesEdit } />
+      </Route>
+
+      <Route path='*' component={ NotFound }/>
+    </Route>
+  
 )

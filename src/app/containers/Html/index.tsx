@@ -31,7 +31,8 @@ class Html extends React.Component<IHtmlProps, {}> {
     );
 
     const config = {
-      googleMapAPIKey: nconf.get('SETTINGS_GOOGLE_MAP_API_KEY'),
+      // googleMapAPIKey: nconf.get('SETTINGS_GOOGLE_MAP_API_KEY'),
+      googleMapAPIKey: '',
     }
 
     // tslint:disable-next-line:max-line-length

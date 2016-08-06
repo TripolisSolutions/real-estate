@@ -18,7 +18,7 @@ function App(props) {
           label: 'Properties List',
         },
         {
-          url: '/admin',
+          url: '/admin/properties/new',
           label: 'New Property',
         },
       ]}/>
