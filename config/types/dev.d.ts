@@ -12,3 +12,11 @@ interface Window {
 interface ObjectConstructor {
   assign(target: any, ...sources: any[]): any;
 }
+
+/* tslint:disable:no-internal-module */
+declare module 'react/lib/update' {
+  namespace update {}
+  function update (...arg: any[]): any
+  export = update
+}
+/* tslint:enable*/
