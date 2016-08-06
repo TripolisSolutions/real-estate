@@ -76,7 +76,7 @@ var config = {
         exclude: path.resolve('./src/app'),
         loaders: [
           'style-loader',
-          'css-loader'
+          'css-loader?sourceMap'
         ]
       },
       {
@@ -99,7 +99,7 @@ var config = {
       },
       {
         test: /\.ttf(\?.*)?$/,
-        loader: 'url?limit=10000&mimetype=application/octet-stream&name=fonts/[hash].[ext]'
+        loader: 'url?limit=100000&mimetype=application/octet-stream&name=fonts/[hash].[ext]'
       },
       {
         test: /\.svg(\?.*)?$/,
