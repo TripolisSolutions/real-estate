@@ -1,3 +1,5 @@
+require('source-map-support').install()
+
 const appConfig = require('../config/main');
 
 import * as e6p from 'es6-promise';

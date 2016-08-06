@@ -10,7 +10,7 @@ const loader = {
 }
 
 var config = {
-  devtool: 'eval',
+  devtool: 'cheap-module-eval-source-map',
 
   debug: true,
 

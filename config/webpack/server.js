@@ -18,6 +18,8 @@ var config = {
   externals: nodeModules,
   target: 'node',
 
+  devtool: 'source-map',
+
   resolve: {
     extensions: ['', '.ts', '.tsx', '.js', '.jsx'],
     alias: {
@@ -25,11 +27,14 @@ var config = {
     }
   },
 
-  entry: './src/server.tsx',
+  entry: {
+    server: ['./src/server.tsx'],
+  },
 
   output: {
     path: path.resolve('./build/public'),
-    filename: '../server.js',
+    filename: '../[name].js',
+    sourceMapFilename: '../[name].js.map',
     publicPath: '/public/',
     libraryTarget: 'commonjs2'
   },
