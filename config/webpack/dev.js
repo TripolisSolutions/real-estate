@@ -99,12 +99,8 @@ var config = {
       },
       {
         test: /\.ttf(\?.*)?$/,
-        loader: 'url?prefix=fonts/&name=[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url?limit=100000&mimetype=application/octet-stream&name=fonts/[hash].[ext]'
       },
-      // {
-      //   test: /\.ttf(\?.*)?$/,
-      //   loader: 'url?limit=10000&mimetype=application/octet-stream&name=fonts/[hash].[ext]'
-      // },
       {
         test: /\.svg(\?.*)?$/,
         loader: 'url?limit=10000&mimetype=image/svg+xml&name=fonts/[hash].[ext]'
