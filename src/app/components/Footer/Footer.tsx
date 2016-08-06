@@ -10,28 +10,37 @@ function Footer(props) {
     <div className={ 'container' }>
       <div className={ s.container }>
         <div className={ s.left }>
-          <ul className={ s.items }>
-            <li>
-              <Icon icon='map-marker' />
-              <p>215F3 Nguyen Van Huong st. Thao Dien, District 2, HCMC, Vietnam</p>
-            </li>
-            <li>
-              <Icon icon='phone' />
-              <p>(84) 1231549)</p>
+          <ul className={ s.items }>            
+            <li className={ s.phone }>
+              <div>
+                <Icon icon='phone' />
+              </div>
+              <div>
+                <strong>English speaker:</strong>
+                <p>Dean Walkerden (+84) 981 688 075</p>
+                <strong>French-English-Vietnamese speaker:</strong>
+                <p>Sonia-Phuong Tran (+84) 981 688 076</p>
+              </div>              
             </li>
             <li>
               <Icon icon='envelope' />
-              <p>myemail@gmail.com</p>
+              <p>d2realstate@gmail.com</p>
             </li>
           </ul>
         </div>
         <div className={ s.right }>
           <div className={ 'row' }>
             <div className={ s.button } >
+              <ButtonIcon icon='facebook'/>
+            </div>
+            <div className={ s.button } >
+              <ButtonIcon icon='facebook' text='share'/>
+            </div>
+            <div className={ s.button } >
               <ButtonIcon icon='twitter'/>
             </div>
             <div className={ s.button } >
-              <ButtonIcon icon='facebook'/>
+              <ButtonIcon icon='twitter' text='tweet'/>
             </div>
           </div>
           <p>Copy &copy; 2016 by YOUR SIDE</p>

@@ -10,24 +10,46 @@
  :global .navbar-brand, :global .navbar-brand:hover {
    color: @color-main; 
  }
+
+ a, a:hover, a.selected {
+   background: none;
+   color: @color-main;
+   text-decoration: none;
+ }
 }
 
 .logo {
   font-family: 'SFUGillSansBold';
   font-size: @font-size-logo;
+  font-weight: bold;
   text-transform: uppercase;
 }
 
 .link {
   display: flex;
-  li > a {
+  ul, p {
+    list-style: none;
+    display: flex;
+    margin: 0;
+  }
+
+  > ul {
+    margin-top: 15px;
+  }
+
+  > ul > li {
+    border-right: 1px solid @color-main;
+    &:last-child{
+      border: none;
+    }
+  }
+
+  > ul > li, .menu  {
+    padding: 0 @margin;    
+  }  
+
+  li > a, p {
     color: @color-main-fade;
     font-size: @font-size;
-  }
-  
-  li:hover > a, 
-  li > a.selected{
-    background: none;
-    color: @color-main;
   }
 }

@@ -9,15 +9,19 @@ function ButtonIcon(props) {
   return (
     <ButtonWrapper>
       <div className={ s.container }>
-      <Icon icon={ props.icon} color={ '#fff' } />
+        <Icon icon={ props.icon} color={ '#fff' } />
+        {
+          props.text ? (
+            <label>
+             { props.text }
+            </label>
+          ) : undefined
+        }
       </div>
     </ButtonWrapper>
   )
 }
 
-// ButtonIcon.propTypes = {
-//   icon: React.PropTypes.string.isRequired,
-// }
 
 export default ButtonIcon
 
