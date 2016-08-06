@@ -16,6 +16,10 @@
     align-items: center;
   }
 
+  .phone {
+    align-items: flex-start;
+  }
+
   span {
     width: @margin*3;
   }
@@ -40,7 +44,7 @@
 @size: 50px;
 
 .button {
-  width: @size*2;
+  min-width: @size;
   height: @size;
   margin-right: 15px;
 }

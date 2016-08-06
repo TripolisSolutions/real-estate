@@ -11,21 +11,39 @@ function Header(props) {
     <BootstrapNavbar className={ s.container } inverse fixedTop>
       <BootstrapNavbar.Header>
         <BootstrapNavbar.Brand>
-          <span className= { s.logo }>Real estate</span>
+          <div className={ s.logo } >
+            <IndexLink
+                to={ '/' }              
+              >D2 real estate</IndexLink>
+          </div>
         </BootstrapNavbar.Brand>
       </BootstrapNavbar.Header>
     <BootstrapNavbar.Collapse>
       <div className={ classnames('nav navbar-right', s.link)}>
-        {
-          props.items.map((item) => (
-            <li key={ item.url }>
-              <IndexLink
-                to={ item.url }
-                activeClassName={ s.selected }
-              >{ item.label }</IndexLink>
-            </li>
-          ))
-        }
+        <ul>
+          <li>
+            <ul>
+              {
+                props.items.map((item) => (
+                  <li key={ item.url } className={ s.menu } >
+                    <IndexLink
+                      to={ item.url }
+                      activeClassName={ s.selected }
+                    >{ item.label }</IndexLink>
+                  </li>
+                ))
+              }
+            </ul>
+          </li>
+          <li>
+            <IndexLink
+              to={ 'changelink' }              
+            >Tiếng việt</IndexLink>
+          </li>
+          <li>
+            <p>Tiền tệ: VND</p>
+          </li>
+        </ul>        
       </div>
     </BootstrapNavbar.Collapse>
   </BootstrapNavbar>
