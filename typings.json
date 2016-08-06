@@ -8,6 +8,7 @@
     "jquery": "registry:dt/jquery#1.10.0+20160417213236",
     "loglevel": "registry:dt/loglevel#1.4.0+20160412141402",
     "mocha": "registry:dt/mocha#2.2.5+20160317120654",
+    "nconf": "registry:dt/nconf#0.0.0+20160724073144",
     "node": "registry:dt/node#4.0.0+20160423143914",
     "react": "registry:dt/react#0.14.0+20160423065914",
     "react-addons-test-utils": "registry:dt/react-addons-test-utils#0.14.0+20160417144949",

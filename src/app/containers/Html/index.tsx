@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as Helmet from 'react-helmet';
+import * as nconf from 'nconf'
 
 interface IHtmlProps {
   manifest?: Object;
@@ -30,7 +31,7 @@ class Html extends React.Component<IHtmlProps, {}> {
     );
 
     const config = {
-      googleMapAPIKey: '',
+      googleMapAPIKey: nconf.get('SETTINGS_GOOGLE_MAP_API_KEY'),
     }
 
     // tslint:disable-next-line:max-line-length
