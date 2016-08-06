@@ -21,6 +21,7 @@ import { configureStore } from './app/redux/store';
 import 'isomorphic-fetch';
 import routes from './app/routes';
 import i18n from './i18n'
+const cookie = require('react-cookie')
 
 const store: Redux.Store = configureStore(
   browserHistory,
@@ -41,6 +42,8 @@ store.subscribe(() => {
   if (nextLang !== lng) {
     i18n.changeLanguage(nextLang)
     lng = nextLang
+
+    cookie.save('i18next', lng)
   }
 })
 

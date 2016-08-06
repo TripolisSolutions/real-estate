@@ -78,20 +78,6 @@ function simplifyLocale(locale: string) {
   return lng
 }
 
-// app.use('/locales/:lng/:ns.json', (req, res) => {
-//   const lng = req.params.lng.indexOf('-') !== -1 ? req.params.lng.split('-')[0] : req.params.lng
-//   fs.readFile(`${ __dirname }/../locales/${ lng }/${ req.params.ns }.json`, (error, data) => {
-//     if (error) {
-//       log.error('error while load locale through url: ', req.url, error)
-//       res.status(500).send(error.message)
-//       return
-//     }
-
-//     const locale = JSON.parse(data.toString('utf8'))
-//     res.status(200).send(locale)
-//   })
-// })
-
 app.use('/api', proxy({
   target: nconf.get('SETTINGS_REAL_ESTATE_API'),
   '^/remove/api' : '',
@@ -105,7 +91,6 @@ app.get('*', (req, res) => {
   const memoryHistory = createMemoryHistory(req.originalUrl);
 
   const langCode = simplifyLocale(req.language)
-  log.debug('req.language', langCode);
 
   req.i18n.changeLanguage(langCode)
 

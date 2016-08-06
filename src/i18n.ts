@@ -37,29 +37,6 @@ i18n
       ajax: loadLocales,
     })
   )
-  // .use(process.env.BROWSER ?
-  //     new (require('i18next-xhr-backend'))(null, {
-  //       parse: (data) => data,
-  //       ajax(url, options, callback, data) {
-  //         fetch(url).then((res) => {
-  //           if (res.ok) {
-  //             return res.json()
-  //               .then(res => callback(data, {status: '200'}) );
-  //           } else {
-  //             return res.json()
-  //               .then(res => callback(null, {status: '404'}) );
-  //           }
-  //         })
-  //       },
-  //     })
-  //   : new (require('i18next-sync-fs-backend'))(null, {
-  //     loadPath: __dirname + '/../locales/{{lng}}/{{ns}}.json',
-  //   })
-  // )
-  // .use(process.env.BROWSER ?
-  //     require('i18next-browser-languagedetector')
-  //   : require('i18next-express-middleware').LanguageDetector
-  // )
   .use(require('i18next-express-middleware').LanguageDetector)
   .init({
     fallbackLng: 'en',
@@ -72,6 +49,10 @@ i18n
 
     interpolation: {
       escapeValue: false, // not needed for react!!
+    },
+
+    detection: {
+      caches: ['cookie'],
     },
   }, (error) => {
     if (error) {
