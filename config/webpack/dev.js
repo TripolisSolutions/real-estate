@@ -76,7 +76,7 @@ var config = {
         exclude: path.resolve('./src/app'),
         loaders: [
           'style-loader',
-          'css-loader'
+          'css-loader?sourceMap'
         ]
       },
       {
@@ -99,8 +99,12 @@ var config = {
       },
       {
         test: /\.ttf(\?.*)?$/,
-        loader: 'url?limit=10000&mimetype=application/octet-stream&name=fonts/[hash].[ext]'
+        loader: 'url?prefix=fonts/&name=[name].[ext]&limit=10000&mimetype=application/octet-stream'
       },
+      // {
+      //   test: /\.ttf(\?.*)?$/,
+      //   loader: 'url?limit=10000&mimetype=application/octet-stream&name=fonts/[hash].[ext]'
+      // },
       {
         test: /\.svg(\?.*)?$/,
         loader: 'url?limit=10000&mimetype=image/svg+xml&name=fonts/[hash].[ext]'
