@@ -48,11 +48,6 @@ var config = {
       {
         test: /\.jsx?$/,
         loader: loader.babel,
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.tsx?$/,
-        loader: 'react-hot!ts'
       },
       {
         test: /\.jsx$/,
