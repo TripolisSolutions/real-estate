@@ -15,7 +15,8 @@
     "start:prod": "cross-env NODE_ENV=production npm start",
     "test": "node_modules/.bin/karma start config/test/karma.conf.js",
     "lint": "node_modules/.bin/tslint \"src/**/**.ts*\"",
-    "dev": "npm start"
+    "dev": "npm start",
+    "storybook": "start-storybook -p 9002"
   },
   "author": "Barbar Startup Factory <hey@barbar.com.tr>",
   "contributors": [
@@ -61,6 +62,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@kadira/storybook": "^2.2.0",
     "babel-core": "^6.7.7",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.4",
