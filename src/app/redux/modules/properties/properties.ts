@@ -86,7 +86,7 @@ export function triggerFetchProperties(): Redux.Dispatch {
       .then(res => {
         if (res.ok) {
           return res.json()
-            .then(res => dispatch(propertiesSuccess(res)));
+            .then(res => dispatch(propertiesSuccess(res.docs)));
         } else {
           return res.json()
             .then(res => dispatch(propertiesFailure(res)));
@@ -128,7 +128,7 @@ export function triggerFetchProperty(id: string): Redux.Dispatch {
       .then(res => {
         if (res.ok) {
           return res.json()
-            .then(res => dispatch(propertySuccess(res)));
+            .then(res => dispatch(propertySuccess(res.doc)));
         } else {
           return res.json()
             .then(res => dispatch(propertyFailure(res)));

@@ -59,7 +59,7 @@ export function triggerFetchCategories(): Redux.Dispatch {
       .then(res => {
         if (res.ok) {
           return res.json()
-            .then(res => dispatch(categoriesSuccess(res)));
+            .then(res => dispatch(categoriesSuccess(res.docs)));
         } else {
           return res.json()
             .then(res => dispatch(categoriesFailure(res)));
