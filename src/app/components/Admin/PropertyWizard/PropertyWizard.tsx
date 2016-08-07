@@ -4,11 +4,14 @@ import { translate, InjectedTranslateProps } from 'react-i18next'
 
 import 'react-multistep/assets/css/prog-tracker.css'
 
+import { ICategory } from '../../../redux/modules/categories/categories.model'
+
 import StepBasicInfo from './StepBasicInfo/StepBasicInfo'
 import StepDescription from './StepDescription/StepDescription'
 
 interface IProps extends InjectedTranslateProps {
   langCode: string
+  categories: ICategory[]
 }
 
 const PropertyWizard = (props: IProps) => {
@@ -17,7 +20,7 @@ const PropertyWizard = (props: IProps) => {
   const steps: IStep[] = [
     {
       name: t('step_basic_info'),
-      component: <StepBasicInfo langCode={ props.langCode } />,
+      component: <StepBasicInfo langCode={ props.langCode } categories={ props.categories } />,
     },
     {
       name: t('step_description_vietnamese'),

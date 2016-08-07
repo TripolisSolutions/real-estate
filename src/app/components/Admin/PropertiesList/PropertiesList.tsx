@@ -3,7 +3,7 @@ import * as log from 'loglevel'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
 import { IProperty } from '../../../redux/modules/properties/properties.model'
-import { ITranslatableText } from '../../../redux/models'
+import { ITranslatableText, translateText } from '../../../redux/models'
 
 import sanitizeUrl from '../../../helpers/sanitizeUrl'
 
@@ -34,21 +34,6 @@ function createLinkFormatter(currentLangCode, t) {
 function dateFormatter(cell: string, row: IProperty) {
   const date = new Date(cell)
   return `${date.getHours()}:${date.getMinutes()} - ${date.getDate()}/${ date.getMonth() + 1 }/${date.getFullYear()}`
-}
-
-function getLangCodeFromLanguage(language: string) {
-  switch (language) {
-    case 'vietnamese':
-      return 'vi'
-    case 'english':
-      return 'en'
-    default:
-      throw new Error('unsupported language: ' + language)
-  }
-}
-
-function translateText(field: ITranslatableText[], langCode) {
-  return field.filter((tran) => getLangCodeFromLanguage(tran.language) === langCode)[0].text
 }
 
 function createTranslateFormatter(currentLangCode: string) {

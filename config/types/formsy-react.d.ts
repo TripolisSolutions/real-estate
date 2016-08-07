@@ -14,7 +14,8 @@ declare module 'formsy-react' {
   }
 
   export class Form extends __React.Component<{
-
+    className: string
+    onSubmit(data: any)
   }, {}>{
     render(): __React.DOMElement<any, any>
   }
