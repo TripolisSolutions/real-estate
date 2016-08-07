@@ -60,3 +60,5 @@ export const StorybookProvider = (props: IProps) => {
     </I18nextProvider>
   )
 }
+
+export default i18n

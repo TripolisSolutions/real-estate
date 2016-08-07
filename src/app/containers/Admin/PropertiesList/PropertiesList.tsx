@@ -34,6 +34,7 @@ export default class PropertiesListContainer extends React.Component<IProps, {}>
             properties={ this.props.propertiesData.properties }
             isFetching={ this.props.propertiesData.isFetching }
             langCode={ this.props.i18nData.currentLangCode }
+            onDeleteClicked={ () => {} }
           />
         </Row>
       </Grid>

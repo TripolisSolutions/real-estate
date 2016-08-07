@@ -15,10 +15,20 @@ interface IProps extends InjectedTranslateProps {
   properties: IProperty[]
   isFetching: boolean
   langCode: string
+  onDeleteClicked(id: string)
 }
 
-function linkFormatter(cell: string, row: IProperty) {
-  return <IndexLink to={ `/properties/${ cell }/${ sanitizeUrl(row.name) }` } target='_blank'>Link</IndexLink>
+function createLinkFormatter(currentLangCode, t) {
+  return function(cell: string, row: IProperty) {
+    const translatedName = translateText(row.name, currentLangCode)
+    const sanitizedName = sanitizeUrl(translatedName)
+
+    return (
+      <IndexLink to={ `/properties/${ cell }/${ sanitizedName }` } target='_blank'>
+        { t('link') }
+      </IndexLink>
+    )
+  }
 }
 
 function dateFormatter(cell: string, row: IProperty) {
@@ -47,7 +57,7 @@ function createTranslateFormatter(currentLangCode: string) {
   }
 }
 
-function createCommandsFormatter(currentLangCode: string, t) {
+function createCommandsFormatter(currentLangCode: string, t, onDeleteClicked) {
   return function(id: string, row: IProperty) {
     log.debug('commandsFormatter, row: ', row)
 
@@ -56,13 +66,12 @@ function createCommandsFormatter(currentLangCode: string, t) {
 
     return (
       <ButtonToolbar>
-        <Button bsStyle='link'>
-          <IndexLink to={ `/properties/${ id }/${ sanitizedName }` } target='_blank'>
-            { t('view_page') }
-          </IndexLink>
-        </Button>
-        <Button bsStyle='primary'>{ t('edit') }</Button>
-        <Button bsStyle='danger'>{ t('delete') }</Button>
+        <IndexLink to={ `/admin/properties/${ id }/${ sanitizedName }` }>
+          <Button bsStyle='primary'>
+            { t('edit') }
+          </Button>
+        </IndexLink>
+        <Button bsStyle='danger' onClick={ () => onDeleteClicked(id) }>{ t('delete') }</Button>
       </ButtonToolbar>
     )
   }
@@ -74,7 +83,9 @@ const PropertiesList = (props: IProps) => {
   return(
     <div>
       { props.isFetching ? 'Fetching Properties' : (
-        <BootstrapTable data={ props.properties }>
+        <BootstrapTable data={ props.properties } headerStyle={{
+          marginBottom: -20,
+        }}>
           <TableHeaderColumn dataField='name' dataFormat={
             createTranslateFormatter(props.langCode)
           } dataSort={true}>
@@ -84,9 +95,14 @@ const PropertiesList = (props: IProps) => {
             { t('created_date') }
           </TableHeaderColumn>
           <TableHeaderColumn dataField='id' isKey={true}
-            dataFormat={ createCommandsFormatter(props.langCode, t) } width='300'
+            dataFormat={ createCommandsFormatter(props.langCode, t, props.onDeleteClicked) } width='170'
           >
             { t('commands') }
+          </TableHeaderColumn>
+          <TableHeaderColumn dataField='id'
+            dataFormat={ createLinkFormatter(props.langCode, t) } width='150'
+          >
+            { t('view_page') }
           </TableHeaderColumn>
         </BootstrapTable>
       ) }
