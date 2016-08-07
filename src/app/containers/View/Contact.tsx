@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Col as BootstrapCol} from 'react-bootstrap'
+import { translate, InjectedTranslateProps } from 'react-i18next'
 
 import Block from '../../components/Block/Block'
 import LocationMap from '../../components/LocationMap/LocationMap'
@@ -8,7 +9,7 @@ import TextArea from '../../components/TextArea/TextArea'
 
 const s = require('./Contact.less')
 
-interface IProps {
+interface IProps extends InjectedTranslateProps {
 
 }
 
@@ -16,7 +17,7 @@ const Contact = (props: IProps) => {
   return (
     <div>
       <div className={ 'container' } >
-        <Block title={ 'contact us' } bigger ={ true }>
+        <Block title={ props.t('contact_us') } bigger ={ true }>
           <div className={ 'row' } >
             <BootstrapCol md={4}>
               <Input placeholder={ 'your name' }/>
@@ -34,4 +35,4 @@ const Contact = (props: IProps) => {
   )
   }
 
-export default Contact
+export default translate()(Contact)

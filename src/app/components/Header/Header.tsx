@@ -1,19 +1,30 @@
 import * as React from 'react'
 import { IndexLink } from 'react-router'
 import * as classnames from 'classnames'
+import { translate, InjectedTranslateProps } from 'react-i18next'
 
 import {Navbar as BootstrapNavbar } from 'react-bootstrap'
 
 const s = require('./Header.less')
 
-function Header(props) {
+export interface IMenuItem {
+  url: string
+  label: string
+}
+
+interface IProps extends InjectedTranslateProps {
+  items: IMenuItem[]
+  onSwitchLanguageClicked: () => void
+}
+
+function Header(props: IProps) {
   return (
     <BootstrapNavbar className={ s.container } inverse fixedTop>
       <BootstrapNavbar.Header>
         <BootstrapNavbar.Brand>
           <div className={ s.logo } >
             <IndexLink
-                to={ '/' }              
+                to={ '/' }
               >D2 real estate</IndexLink>
           </div>
         </BootstrapNavbar.Brand>
@@ -36,18 +47,24 @@ function Header(props) {
             </ul>
           </li>
           <li>
-            <IndexLink
-              to={ 'changelink' }              
-            >Tiếng việt</IndexLink>
+            <a
+              href='/languages/switch'
+              onClick={ (e) => {
+                e.nativeEvent.preventDefault()
+                props.onSwitchLanguageClicked()
+              }}
+            >{
+              props.t('switch_language')
+            }</a>
           </li>
           <li>
             <p>Tiền tệ: VND</p>
           </li>
-        </ul>        
+        </ul>
       </div>
     </BootstrapNavbar.Collapse>
   </BootstrapNavbar>
   )
 }
 
-export default Header
+export default translate()(Header)

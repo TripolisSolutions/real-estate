@@ -3,9 +3,7 @@ const { connect } = require('react-redux');
 const { asyncConnect } = require('redux-connect');
 
 import { triggerFetchCategories } from '../../../redux/modules/categories/categories'
-// import { ICategory } from '../../../redux/modules/categories/categories.model'
 import { triggerFetchProperties } from '../../../redux/modules/properties/properties'
-// import { IProperty } from '../../../redux/modules/properties/properties.model'
 import { IState } from '../../../redux/reducers'
 
 // const s = require('./PropertiesList.less')
