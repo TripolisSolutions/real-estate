@@ -1,11 +1,17 @@
-import React from 'react'
-import {Decorator as FormsyElement} from 'formsy-react'
+import * as React from 'react'
+import { SFC } from 'react'
+import { Decorator, IFormElementProps } from 'formsy-react'
 
 import { FormControl, FormGroup, ControlLabel, HelpBlock } from 'react-bootstrap'
 
-const s = require('./Input.less')
+interface IProps extends IFormElementProps{
+  label: string
+  value: string
+  placeholder: string
+  onChange(v: string)
+}
 
-function Input(props) {
+const Input: SFC<IProps> = (props: IProps) => {
   function onChange(e) {
     props.setValue(e.target.value)
     if (props.onChange) {
@@ -16,7 +22,7 @@ function Input(props) {
   return (
     <FormGroup>
       <ControlLabel>{ props.label }</ControlLabel>
-      <FormControl className={ s.container } type='text' placeholder={ props.placeholder }
+      <FormControl type='text' placeholder={ props.placeholder }
       onChange={ onChange } defaultValue={ props.getValue() }/>
       <FormControl.Feedback />
       {
@@ -26,11 +32,4 @@ function Input(props) {
   )
 }
 
-Input.propTypes = {
-  label: React.PropTypes.string,
-  value: React.PropTypes.string,
-  placeholder: React.PropTypes.string
-}
-
-
-export default FormsyElement()(connect(Input))
+export default Decorator()(Input)

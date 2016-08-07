@@ -135,6 +135,8 @@
     "es6-promise": "^3.1.2",
     "express": "^4.13.4",
     "font-awesome": "^4.6.3",
+    "formsy-react": "^0.18.1",
+    "formsy-react-components": "^0.8.1",
     "google-map-react": "^0.16.3",
     "history": "^3.0.0",
     "http-proxy-middleware": "^0.17.0",

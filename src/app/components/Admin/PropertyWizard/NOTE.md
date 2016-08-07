@@ -28,3 +28,14 @@ step visible select
 step review??
 
 step done??
+
+
+Wizard
+  wizardData
+
+  onSubmit(basicInfoData) {
+    wizardData.basicInfo = basicInfoData
+    nextStep()
+  }
+
+  StepBasicInfo onSubmit={ onSubmit }
