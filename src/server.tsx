@@ -6,8 +6,6 @@ import * as e6p from 'es6-promise';
 (e6p as any).polyfill();
 import 'isomorphic-fetch';
 
-import * as fs from 'fs'
-
 import * as log from 'loglevel'
 import * as nconf from 'nconf'
 
@@ -80,7 +78,9 @@ function simplifyLocale(locale: string) {
 
 app.use('/api', proxy({
   target: nconf.get('SETTINGS_REAL_ESTATE_API'),
-  '^/remove/api' : '',
+  pathRewrite: {
+    '^/api' : '',
+  },
 }))
 
 const vi = require('../locales/vi/common')
