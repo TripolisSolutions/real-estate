@@ -50,8 +50,8 @@ var config = {
         loader: loader.babel,
       },
       {
-        test: /\.jsx$/,
-        loader: 'babel?presets[]=es2015'
+        test: /\.tsx?$/,
+        loader: 'react-hot!ts'
       },
       {
         test: /\.json$/,
