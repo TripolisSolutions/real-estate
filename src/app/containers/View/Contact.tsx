@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Col as BootstrapCol} from 'react-bootstrap'
+import { Col, Row } from 'react-bootstrap'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
 import Block from '../../components/Block/Block'
@@ -18,16 +18,16 @@ const Contact = (props: IProps) => {
     <div>
       <div className={ 'container' } >
         <Block title={ props.t('contact_us') } bigger ={ true }>
-          <div className={ 'row' } >
-            <BootstrapCol md={4}>
+          <Row>
+            <Col md={4}>
               <Input placeholder={ 'your name' }/>
               <Input placeholder={ 'gender' }/>
               <Input placeholder={ 'gender' }/>
-            </BootstrapCol>
-            <BootstrapCol md={8} className={ s.textarea  }>
+            </Col>
+            <Col md={8} className={ s.textarea  }>
               <TextArea placeholder={ 'your name' } />
-            </BootstrapCol>
-          </div>
+            </Col>
+          </Row>
         </Block>
       </div>
       <LocationMap />

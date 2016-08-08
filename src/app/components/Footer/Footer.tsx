@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Row } from 'react-bootstrap'
 
 import Icon from '../Icon/Icon'
 import ButtonIcon from '../ButtonIcon/ButtonIcon'
@@ -29,7 +30,7 @@ function Footer(props) {
           </ul>
         </div>
         <div className={ s.right }>
-          <div className={ 'row' }>
+          <Row>
             <div className={ s.button } >
               <ButtonIcon icon='facebook'/>
             </div>
@@ -42,7 +43,7 @@ function Footer(props) {
             <div className={ s.button } >
               <ButtonIcon icon='twitter' text='tweet'/>
             </div>
-          </div>
+          </Row>
           <p>Copy &copy; 2016 by YOUR SIDE</p>
         </div>
       </div>
