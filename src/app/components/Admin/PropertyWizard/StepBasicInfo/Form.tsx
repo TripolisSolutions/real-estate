@@ -7,6 +7,8 @@ import { translate, InjectedTranslateProps } from 'react-i18next'
 
 const { Input, Row, Select } = FRC
 
+const s = require('./Form.less')
+
 import { ICategory } from '../../../../redux/modules/categories/categories.model'
 import { translateText } from '../../../../redux/models'
 import { salesTypeOptions, facingDirectionOptions, rentalPeriodOptions } from './options'
@@ -67,7 +69,7 @@ class Playground extends React.Component<IProps, {}> {
     })
 
     return (
-      <div className='row'>
+      <div className={ s.container }>
         <Formsy.Form
             className='horizontal'
             ref='formsy'
