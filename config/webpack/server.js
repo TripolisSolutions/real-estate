@@ -75,6 +75,14 @@ var config = {
         ]
       },
       {
+        test: /\.scss$/,
+        loaders: [
+          'isomorphic-style-loader',
+          'css-loader?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]',
+          'sass?sourceMap',
+        ]
+      },
+      {
         test: /\.eot(\?.*)?$/,
         loader: 'file?name=fonts/[hash].[ext]'
       },
