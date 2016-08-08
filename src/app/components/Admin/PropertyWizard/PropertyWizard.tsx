@@ -9,11 +9,14 @@ import './ReactMultistep/prog-tracker.less'
 import { ICategory } from '../../../redux/modules/categories/categories.model'
 
 import StepBasicInfo from './StepBasicInfo/StepBasicInfo'
+import { IFormData as IBasicInfoFormData } from './StepBasicInfo/Form'
 import StepDescription from './StepDescription/StepDescription'
+import StepDone from './StepDone/StepDone'
 
 interface IProps extends InjectedTranslateProps, React.Props<any> {
   langCode: string
   categories: ICategory[]
+  onWizardDone(cat: ICategory)
 }
 
 export class PropertyWizard extends React.Component<IProps, void> {
@@ -26,12 +29,22 @@ export class PropertyWizard extends React.Component<IProps, void> {
   public render() {
     const { t } = this.props
 
+    let basicInfoFormData: IBasicInfoFormData
+
     const steps: IStep[] = [
       {
         name: t('step_basic_info'),
         component: <StepBasicInfo langCode={ this.props.langCode } categories={ this.props.categories }
           onSubmit={ (formData) => {
-          this.refs.multistep.next()
+            basicInfoFormData = formData
+            this.refs.multistep.next()
+        } } />,
+      },
+      {
+        name: t('step_done'),
+        component: <StepDone langCode={ this.props.langCode }
+          onSubmit={ () => {
+          this.props.onWizardDone()
         } } />,
       },
       {

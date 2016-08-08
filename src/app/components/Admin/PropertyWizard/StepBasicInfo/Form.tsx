@@ -22,6 +22,18 @@ function translateOptions(options, t): IOption[] {
 
 export interface IFormData {
   title_in_vietnamese: string
+  title_in_english: string
+  price_in_vnd: number
+  price_in_usd: number
+  category: string
+  sale_type: string
+  rental_period_value: number
+  rental_period_unit: string
+  available_until: Date
+  facing_direction: string
+  bed_room_count: number
+  size_width: number
+  size_length: number
 }
 
 interface IProps extends InjectedTranslateProps {

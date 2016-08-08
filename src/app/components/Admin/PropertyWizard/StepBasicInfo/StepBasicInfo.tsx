@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as log from 'loglevel'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
 import { ICategory } from '../../../../redux/modules/categories/categories.model'
@@ -11,11 +12,10 @@ interface IProps extends InjectedTranslateProps {
 }
 
 const StepBasicInfo = (props: IProps) => {
-  const { t } = props
 
   function onSubmit(data) {
     if (props.onSubmit) {
-      console.log('data: ', data)
+      log.debug('basic info submit data: ', data)
       props.onSubmit(data)
     }
   }
