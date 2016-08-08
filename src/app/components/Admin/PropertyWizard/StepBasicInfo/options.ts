@@ -11,12 +11,36 @@ export const salesTypeOptions = [
 
 export const facingDirectionOptions = [
   {
-    value: 'west',
-    translationKey: 'west',
+    value: 'north',
+    translationKey: 'north',
+  },
+  {
+    value: 'north-east',
+    translationKey: 'north-east',
   },
   {
     value: 'east',
     translationKey: 'east',
+  },
+  {
+    value: 'south-east',
+    translationKey: 'south-east',
+  },
+  {
+    value: 'south',
+    translationKey: 'south',
+  },
+  {
+    value: 'south-west',
+    translationKey: 'south-west',
+  },
+  {
+    value: 'west',
+    translationKey: 'west',
+  },
+  {
+    value: 'north-west',
+    translationKey: 'north-west',
   },
 ]
 

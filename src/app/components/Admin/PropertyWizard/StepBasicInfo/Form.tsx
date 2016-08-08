@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as Formsy from 'formsy-react'
 import * as FRC from 'formsy-react-components'
 import { IOption } from 'formsy-react-components'
+import * as log from 'loglevel'
 
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
@@ -43,6 +44,11 @@ interface IProps extends InjectedTranslateProps {
   onSubmit(data: IFormData)
 }
 
+const emptyOption = {
+  value: '',
+  label: '-----',
+}
+
 class Playground extends React.Component<IProps, {}> {
 
   constructor(props) {
@@ -50,7 +56,7 @@ class Playground extends React.Component<IProps, {}> {
   }
 
   private submitForm = (data) => {
-    console.log(data)
+    log.debug('from submit data: ', data)
     this.props.onSubmit(data)
   }
 
@@ -58,8 +64,13 @@ class Playground extends React.Component<IProps, {}> {
     const { t } = this.props
 
     const salesTypes = translateOptions(salesTypeOptions, t)
+    salesTypes.unshift(emptyOption)
+
     const facingDirections = translateOptions(facingDirectionOptions, t)
+    facingDirections.unshift(emptyOption)
+
     const rentalPeriods = translateOptions(rentalPeriodOptions, t)
+    rentalPeriods.unshift(emptyOption)
 
     const categoriesOptions = this.props.categories.map((cat) => {
       return {
@@ -67,6 +78,7 @@ class Playground extends React.Component<IProps, {}> {
         label: translateText(cat.name, this.props.langCode),
       }
     })
+    categoriesOptions.unshift(emptyOption)
 
     return (
       <div className={ s.container }>

@@ -11,9 +11,9 @@ const StepBasicInfo = (props: IProps) => {
 
   return (
     <div>
-      <a href='#' class='btn btn-lg btn-primary' onClick={ props.onSubmit }>
-        <span class='glyphicon glyphicon-saved'></span> { t('create_the_property') }
-      </a>
+      <button className='btn btn-lg btn-primary' onClick={ props.onSubmit }>
+        <span className='glyphicon glyphicon-saved'></span> { t('create_the_property') }
+      </button>
     </div>
   );
 }
