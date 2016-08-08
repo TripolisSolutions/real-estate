@@ -7,11 +7,14 @@ import Multistep, { IStep } from './ReactMultistep/ReactMultistep'
 import './ReactMultistep/prog-tracker.less'
 
 import { ICategory } from '../../../redux/modules/categories/categories.model'
+import { IProperty } from '../../../redux/modules/properties/properties.model'
 
 import StepBasicInfo from './StepBasicInfo/StepBasicInfo'
 import { IFormData as IBasicInfoFormData } from './StepBasicInfo/Form'
 import StepDescription from './StepDescription/StepDescription'
 import StepDone from './StepDone/StepDone'
+
+import { bindBasicInfoToProperty } from './converter'
 
 interface IProps extends InjectedTranslateProps, React.Props<any> {
   langCode: string
@@ -30,6 +33,8 @@ export class PropertyWizard extends React.Component<IProps, void> {
     const { t } = this.props
 
     let basicInfoFormData: IBasicInfoFormData
+    const object = {}
+    const property = object as IProperty
 
     const steps: IStep[] = [
       {
@@ -44,7 +49,9 @@ export class PropertyWizard extends React.Component<IProps, void> {
         name: t('step_done'),
         component: <StepDone langCode={ this.props.langCode }
           onSubmit={ () => {
-          this.props.onWizardDone()
+            const outProperty = bindBasicInfoToProperty(property, basicInfoFormData)
+            log.info('wizard property: ', outProperty)
+            this.props.onWizardDone(outProperty)
         } } />,
       },
       {
