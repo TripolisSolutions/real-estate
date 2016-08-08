@@ -24,11 +24,11 @@ const PropertyWizard = (props: IProps) => {
         nextButton='&#8594;'
         stepShouldChange={this.stepShouldChange}
       >
-        <Step customNavigator="User">
+        <Step customNavigator='User'>
         </Step>
-        <Step customNavigator="User">
+        <Step customNavigator='User'>
         </Step>
-        <Step customNavigator="User">
+        <Step customNavigator='User'>
         </Step>
       </Steps>
     </div>

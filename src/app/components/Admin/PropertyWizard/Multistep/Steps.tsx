@@ -3,11 +3,11 @@ import * as React from 'react';
 interface IProps {
   currentStep: number
   stepShouldChange(): boolean
-  onStepChange(currentStep: number)
-  mountOnlySiblings: boolean
+  onStepChange?(currentStep: number)
+  mountOnlySiblings?: boolean
   prevButton: React.ReactNode
   nextButton: React.ReactNode
-  children: React.ReactChild[]
+  children?: React.ReactChild[]
 }
 
 interface IState {
