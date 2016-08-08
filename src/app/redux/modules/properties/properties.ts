@@ -11,7 +11,12 @@ const PROPERTY_REQUEST = 'PROPERTY_REQUEST'
 const PROPERTY_SUCCESS = 'PROPERTY_SUCCESS'
 const PROPERTY_FAILURE = 'PROPERTY_FAILURE'
 
+const CREATE_NEW_PROPERTY_REQUEST = 'CREATE_NEW_PROPERTY_REQUEST'
+const CREATE_NEW_PROPERTY_SUCCESS = 'CREATE_NEW_PROPERTY_SUCCESS'
+const CREATE_NEW_PROPERTY_FAILURE = 'CREATE_NEW_PROPERTY_FAILURE'
+
 export interface IState {
+  property?: IProperty
   properties: IProperty[]
   isFetching: boolean
 }
@@ -65,6 +70,27 @@ const ACTION_HANDLERS = {
       property: {
         $set: action.payload,
       },
+      isFetching: {
+        $set: false,
+      },
+    });
+  },
+  [CREATE_NEW_PROPERTY_REQUEST]: (state: IState): IState => {
+    return update(state, {
+      isFetching: {
+        $set: true,
+      },
+    })
+  },
+  [CREATE_NEW_PROPERTY_FAILURE]: (state: IState): IState => {
+    return update(state, {
+      isFetching: {
+        $set: false,
+      },
+    })
+  },
+  [CREATE_NEW_PROPERTY_SUCCESS]: (state: IState, action: IAction<IProperty>): IState => {
+    return update(state, {
       isFetching: {
         $set: false,
       },
@@ -157,6 +183,55 @@ export function propertySuccess(item: IProperty): IAction<IProperty> {
 export function propertyFailure(error: Error) {
   return {
     type: PROPERTIES_FAILURE,
+    error: error,
+  };
+}
+
+/** Async Action Creator */
+export function createNewProperty(property: IProperty): Redux.Dispatch {
+  return dispatch => {
+    dispatch(createNewPropertyRequest());
+
+    return fetch('/api/properties', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(property),
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+            .then(res => dispatch(createNewPropertySuccess(res.doc)));
+        } else {
+          return res.json()
+            .then(res => dispatch(createNewPropertyFailure(res)));
+        }
+      })
+      .catch(err => dispatch(createNewPropertyFailure(err)));
+  };
+}
+
+/** Action Creator */
+export function createNewPropertyRequest() {
+  return {
+    type: CREATE_NEW_PROPERTY_REQUEST,
+  };
+}
+
+/** Action Creator */
+export function createNewPropertySuccess(item: IProperty): IAction<IProperty> {
+  return {
+    type: CREATE_NEW_PROPERTY_SUCCESS,
+    payload: item,
+  };
+}
+
+/** Action Creator */
+export function createNewPropertyFailure(error: Error) {
+  return {
+    type: CREATE_NEW_PROPERTY_FAILURE,
     error: error,
   };
 }
