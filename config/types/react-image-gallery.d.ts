@@ -2,7 +2,8 @@
 declare module reactImageGallery {
 
   export interface IProps {
-    
+    showThumbnails: boolean
+    items: any
   }
 
   export interface IState {}
