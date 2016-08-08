@@ -8,7 +8,7 @@ class Slider extends React.Component<any, any> {
   render() {
     return (
       <div className={'container'}>
-        <ImageGallery items= { ['1', '2'] } /> 
+        <ImageGallery showThumbnails={false} items= { [{ original:'http://www.pixelstalk.net/wp-content/uploads/2016/05/Laptop-Wallpapers-HD-For-Windows-10-HD.jpg'}, {original:'http://www.pixelstalk.net/wp-content/uploads/2016/05/Laptop-Wallpapers-HD-For-Windows-10-HD-Download.jpg'}] } /> 
       </div> 
     )
   }

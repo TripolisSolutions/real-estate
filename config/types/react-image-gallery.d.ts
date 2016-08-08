@@ -2,11 +2,7 @@
 declare module reactImageGallery {
 
   export interface IProps {
-    items: any
-    infinite?: boolean
-    lazyLoad?: boolean
-    showThumbnails?: boolean
-    showNav?: boolean
+    
   }
 
   export interface IState {}
