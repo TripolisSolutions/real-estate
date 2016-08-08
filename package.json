@@ -16,7 +16,8 @@
     "test": "node_modules/.bin/karma start config/test/karma.conf.js",
     "lint": "node_modules/.bin/tslint \"src/**/**.ts*\"",
     "dev": "npm start",
-    "storybook": "start-storybook -p 9003"
+    "storybook": "start-storybook -p 9003",
+    "release": "npm run build:prod"
   },
   "author": "Barbar Startup Factory <hey@barbar.com.tr>",
   "contributors": [
