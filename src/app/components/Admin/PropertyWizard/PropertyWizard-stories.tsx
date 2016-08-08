@@ -3,7 +3,6 @@ import * as log from 'loglevel'
 import { storiesOf, action } from '@kadira/storybook'
 
 import '../../../helpers/storyCommonResource'
-import { IProperty } from '../../../redux/modules/properties/properties.model'
 import i18n, { StorybookProvider } from '../../../helpers/storyTranslationHelper'
 import PropertyWizard from './PropertyWizard'
 
@@ -34,6 +33,7 @@ storiesOf('PropertyWizard', module)
         <PropertyWizard
           langCode={ 'vi' }
           categories={ categories }
+          onWizardDone={ (property) => action('wizard done', property)() }
         />
       </StorybookProvider>
     )
@@ -46,6 +46,7 @@ storiesOf('PropertyWizard', module)
         <PropertyWizard
           langCode={ 'en' }
           categories={ categories }
+          onWizardDone={ (property) => action('wizard done', property)() }
         />
       </StorybookProvider>
     )

@@ -9,18 +9,18 @@ interface ITranslatablePrice {
 export interface IProperty {
   id: string
   name: ITranslatableText[]
-  thumbnailImage: IImage
-  galleryImages: IImage[]
-  desc: ITranslatableText[]
+  thumbnailImage?: IImage
+  galleryImages?: IImage[]
+  desc?: ITranslatableText[]
 
-  categoryID: string
-  salesType: string
-  availableUntil: Date
-  size: {
+  categoryID?: string
+  salesType?: string
+  availableUntil?: Date
+  size?: {
     width: number
     length: number
   }
-  address: {
+  address?: {
     name: ITranslatableText[]
     viewport: {
       lat: number
@@ -35,17 +35,17 @@ export interface IProperty {
     visible: number
   }
 
-  bedRoomCount: number
-  facingDirection: string
-  rentalPeriod: {
+  bedRoomCount?: number
+  facingDirection?: string
+  rentalPeriod?: {
     digits: number
     unit: string
   }
 
-  price: ITranslatablePrice[]
+  price?: ITranslatablePrice[]
 
-  visible: boolean
+  visible?: boolean
 
-  c_at: string
-  u_at: string
+  c_at?: string
+  u_at?: string
 }

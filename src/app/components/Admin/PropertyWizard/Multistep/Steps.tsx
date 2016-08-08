@@ -19,7 +19,7 @@ export default class Steps extends React.Component<IProps, IState> {
   public static defaultProps = {
     currentStep: 1,
     stepShouldChange: () => {return true},
-    onStepChange: (currentStep: number) => {},
+    onStepChange: (currentStep: number) => { console.debug('currentStep', currentStep) },
     prevButton: 'Prev',
     nextButton: 'Next',
     mountOnlySiblings: false,
@@ -29,7 +29,7 @@ export default class Steps extends React.Component<IProps, IState> {
     super(props);
 
     this.state = {
-      currentStep: props.currentStep
+      currentStep: props.currentStep,
     };
 
     this._moveStep = this._moveStep.bind(this);
@@ -85,7 +85,7 @@ export default class Steps extends React.Component<IProps, IState> {
           index,
           stepNumber: stepNumber,
           isActive: currentStep === stepNumber,
-          isSibling: this.props.mountOnlySiblings ? isSibling : true
+          isSibling: this.props.mountOnlySiblings ? isSibling : true,
         };
         return (
           // child.type === <Step/>

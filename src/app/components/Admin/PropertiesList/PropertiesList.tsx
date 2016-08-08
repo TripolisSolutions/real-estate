@@ -95,6 +95,4 @@ const PropertiesList = (props: IProps) => {
   );
 }
 
-
 export default translate()(PropertiesList)
-

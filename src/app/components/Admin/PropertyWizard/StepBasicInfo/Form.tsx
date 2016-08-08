@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import * as Formsy from 'formsy-react'
 import * as FRC from 'formsy-react-components'
 import { IOption } from 'formsy-react-components'
