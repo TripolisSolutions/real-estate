@@ -24,7 +24,7 @@ storiesOf('ImageManagerModal', module)
           show={ true }
           onHideClicked={ () => action('hide')() }
           images={ files }
-          onFilesDrop={ (files) => { log.info('drop'); action('dropped files: ', files)() } }
+          onFilesDrop={ (files) => { action('dropped files: ', files)() } }
           isUploading={ false }
         />
       </StorybookProvider>

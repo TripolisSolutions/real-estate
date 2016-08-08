@@ -22,7 +22,7 @@ storiesOf('ImageManager', module)
       <StorybookProvider>
         <ImageManager
           images={ files }
-          onFilesDrop={ (files) => { log.info('drop'); action('dropped files: ', files) } }
+          onFilesDrop={ (files) => action('dropped files: ', files)() }
           isUploading={ false }
         />
       </StorybookProvider>
@@ -35,7 +35,7 @@ storiesOf('ImageManager', module)
       <StorybookProvider>
         <ImageManager
           images={ [] }
-          onFilesDrop={ (files) => { action('dropped files: ', files) } }
+          onFilesDrop={ (files) => { action('dropped files: ', files)() } }
           isUploading={ false }
         />
       </StorybookProvider>
@@ -48,7 +48,7 @@ storiesOf('ImageManager', module)
       <StorybookProvider>
         <ImageManager
           images={ [] }
-          onFilesDrop={ (files) => { action('dropped files: ', files) } }
+          onFilesDrop={ (files) => { action('dropped files: ', files)() } }
           isUploading={ true }
         />
       </StorybookProvider>
