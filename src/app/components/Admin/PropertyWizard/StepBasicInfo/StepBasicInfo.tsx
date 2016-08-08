@@ -7,13 +7,17 @@ import Form from './Form'
 interface IProps extends InjectedTranslateProps {
   langCode: string
   categories: ICategory[]
+  onSubmit?(data)
 }
 
 const StepBasicInfo = (props: IProps) => {
   const { t } = props
 
   function onSubmit(data) {
-    console.log('data: ', data)
+    if (props.onSubmit) {
+      console.log('data: ', data)
+      props.onSubmit(data)
+    }
   }
 
   return (

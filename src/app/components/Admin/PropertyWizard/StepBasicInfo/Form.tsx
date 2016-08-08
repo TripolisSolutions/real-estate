@@ -158,6 +158,11 @@ class Playground extends React.Component<IProps, {}> {
               />
             </Row>
           </fieldset>
+          <fieldset>
+            <Row layout='horizontal'>
+              <input className='btn btn-primary' formNoValidate={ true } type='submit' defaultValue='Ok' />
+            </Row>
+          </fieldset>
         </Formsy.Form>
       </div>
     )

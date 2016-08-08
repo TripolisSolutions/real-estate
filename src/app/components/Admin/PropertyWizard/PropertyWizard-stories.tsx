@@ -1,10 +1,13 @@
 import * as React from 'react'
+import * as log from 'loglevel'
 import { storiesOf, action } from '@kadira/storybook'
 
 import '../../../helpers/storyCommonResource'
 import { IProperty } from '../../../redux/modules/properties/properties.model'
 import i18n, { StorybookProvider } from '../../../helpers/storyTranslationHelper'
 import PropertyWizard from './PropertyWizard'
+
+log.setLevel(0)
 
 const categories = [
   {
