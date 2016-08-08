@@ -16,6 +16,7 @@
     "react-bootstrap": "registry:dt/react-bootstrap#0.0.0+20160728054947",
     "react-bootstrap-table": "registry:dt/react-bootstrap-table#2.3.0+20160726193956",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040",
+    "react-dropzone": "registry:dt/react-dropzone#0.0.0+20160316171810",
     "react-helmet": "registry:dt/react-helmet#0.0.0+20160423063849",
     "react-i18next": "registry:dt/react-i18next#1.6.3+20160805170225",
     "react-redux": "registry:dt/react-redux#4.4.0+20160406115600",
