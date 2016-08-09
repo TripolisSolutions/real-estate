@@ -1,5 +1,5 @@
 import { IProperty } from '../../../redux/modules/properties/properties.model'
-import { IFormData as IBasicInfoFormData } from './StepBasicInfo/Form'
+import { IFormData as IBasicInfoFormData } from './StepBasicInfo/StepBasicInfo'
 
 export function bindBasicInfoToProperty(cat: IProperty, data: IBasicInfoFormData): IProperty {
   cat.name = [

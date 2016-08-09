@@ -10,7 +10,7 @@ import { ICategory } from '../../../redux/modules/categories/categories.model'
 import { IProperty } from '../../../redux/modules/properties/properties.model'
 
 import StepBasicInfo from './StepBasicInfo/StepBasicInfo'
-import { IFormData as IBasicInfoFormData } from './StepBasicInfo/Form'
+import { IFormData as IBasicInfoFormData } from './StepBasicInfo/StepBasicInfo'
 import StepDescription from './StepDescription/StepDescription'
 import StepDone from './StepDone/StepDone'
 
@@ -39,11 +39,19 @@ export class PropertyWizard extends React.Component<IProps, void> {
     const steps: IStep[] = [
       {
         name: t('step_basic_info'),
-        component: <StepBasicInfo langCode={ this.props.langCode } categories={ this.props.categories }
-          onSubmit={ (formData) => {
-            basicInfoFormData = formData
-            this.refs.multistep.next()
-        } } />,
+        component: (
+          <StepBasicInfo
+            langCode={ this.props.langCode }
+            categories={ this.props.categories }
+            onChange={ (formData) => {
+              basicInfoFormData = formData
+            }}
+            onSubmit={ (formData) => {
+              basicInfoFormData = formData
+              this.refs.multistep.next()
+            }}
+          />
+        ),
       },
       {
         name: t('step_done'),
