@@ -1,5 +1,8 @@
 import * as update from 'react/lib/update'
 import * as log from 'loglevel'
+import * as urljoin from 'url-join'
+
+import rootUrl from '../../rootUrl'
 
 import { IAction, IHandler } from '../../models'
 import { IProperty } from './properties.model'
@@ -110,7 +113,7 @@ export function triggerFetchProperties(): Redux.Dispatch {
     dispatch(propertiesRequest());
     log.debug('propertiesRequest')
 
-    return fetch('/api/properties')
+    return fetch(urljoin(rootUrl, 'properties'))
       .then(res => {
         if (res.ok) {
           log.debug('propertiesSuccess')
@@ -153,7 +156,7 @@ export function triggerFetchProperty(id: string): Redux.Dispatch {
   return dispatch => {
     dispatch(propertyRequest());
 
-    return fetch('/api/properties/' + id)
+    return fetch(urljoin(rootUrl, 'properties/' + id))
       .then(res => {
         if (res.ok) {
           return res.json()
@@ -195,7 +198,7 @@ export function createNewProperty(property: IProperty): Redux.Dispatch {
   return dispatch => {
     dispatch(createNewPropertyRequest());
 
-    return fetch('/api/properties', {
+    return fetch(urljoin(rootUrl, 'properties'), {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

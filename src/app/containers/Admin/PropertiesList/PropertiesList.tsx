@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as log from 'loglevel'
 import { Grid, Row } from 'react-bootstrap'
 import { InjectedTranslateProps } from 'react-i18next'
 
@@ -16,10 +17,13 @@ interface IProps extends IState, InjectedTranslateProps {
 
 @asyncConnect([{
   promise: ({ store: { dispatch } }) => {
+    log.debug('async feching data for PropertiesList')
     return Promise.all([
       dispatch(triggerFetchCategories()),
       dispatch(triggerFetchProperties()),
-    ])
+    ]).then((results) => {
+      log.debug('async feched data for PropertiesList: ', results)
+    })
   },
 }])
 @connect(

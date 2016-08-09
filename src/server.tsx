@@ -8,6 +8,15 @@ import 'isomorphic-fetch';
 
 import * as log from 'loglevel'
 import * as nconf from 'nconf'
+const path = require('path');
+
+log.setLevel(0)
+
+// Setup nconf to use (in-order):
+// 1. Environment variables
+// 2. A file located at '../config/env.json'
+const configPath = path.join(path.resolve('.'), 'config/env.json')
+nconf.env().file({file: configPath})
 
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
@@ -26,19 +35,10 @@ import { Html } from './app/containers';
 const manifest = require('../build/manifest.json');
 
 const express = require('express');
-const path = require('path');
 const compression = require('compression');
 const Chalk = require('chalk');
 const favicon = require('serve-favicon');
 const proxy = require('http-proxy-middleware')
-
-log.setLevel(0)
-
-// Setup nconf to use (in-order):
-// 1. Environment variables
-// 2. A file located at '../config/env.json'
-const configPath = path.join(path.resolve('.'), 'config/env.json')
-nconf.env().file({file: configPath})
 
 log.setLevel(nconf.get('SETTINGS_LOG_LEVEL'))
 
