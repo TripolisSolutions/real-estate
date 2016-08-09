@@ -11,6 +11,9 @@ import { IProperty } from '../../../redux/modules/properties/properties.model'
 
 import StepBasicInfo from './StepBasicInfo/StepBasicInfo'
 import { IFormData as IBasicInfoFormData } from './StepBasicInfo/StepBasicInfo'
+
+import StepSelectThumbnail from './StepSelectThumbnail/StepSelectThumbnail'
+
 import StepDescription from './StepDescription/StepDescription'
 import StepDone from './StepDone/StepDone'
 
@@ -50,6 +53,18 @@ export class PropertyWizard extends React.Component<IProps, void> {
               basicInfoFormData = formData
               this.refs.multistep.next()
             }}
+          />
+        ),
+      },
+      {
+        name: t('step_select_thumbnail'),
+        component: (
+          <StepSelectThumbnail
+            langCode={ this.props.langCode }
+            // image={ this.props.property }
+            // isUploading={ this.props.isUploadingThumbnailImage }
+            isUploading={ false }
+            onFilesDrop={ () => {} }
           />
         ),
       },

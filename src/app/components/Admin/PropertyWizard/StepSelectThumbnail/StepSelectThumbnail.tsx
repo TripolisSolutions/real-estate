@@ -15,7 +15,6 @@ interface IProps extends InjectedTranslateProps {
   image?: IImage
   isUploading: boolean
   onFilesDrop(files: File[])
-  onSubmit?()
 }
 
 interface IState {
@@ -32,13 +31,13 @@ class StepBasicInfo extends React.Component<IProps, IState> {
     }
   }
 
-  public showUploadImageModal() {
+  public showUploadImageModal = () => {
     this.setState({
       showModal: true,
     })
   }
 
-  public hideUploadImageModal() {
+  public hideUploadImageModal = () => {
     this.setState({
       showModal: false,
     })
@@ -54,9 +53,9 @@ class StepBasicInfo extends React.Component<IProps, IState> {
           this.props.image ? (
             <Image src={
               urljoin(window.__CONFIG__.imageRootUrl, this.props.image.fileName)
-            } thumbnail />
+            } thumbnail className={ s.imageHolder }/>
           ) : (
-            <div className={ c('well', s.imageholder) } onClick={ this.showUploadImageModal }>
+            <div className={ c('well', s.imageHolder) } onClick={ this.showUploadImageModal }>
               { t('upload_image') }
             </div>
           )
