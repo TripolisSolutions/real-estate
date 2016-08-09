@@ -3,11 +3,13 @@ const { connect } = require('react-redux');
 const { asyncConnect } = require('redux-connect');
 
 import { triggerFetchCategories } from '../../../redux/modules/categories/categories'
+import { createNewProperty } from '../../../redux/modules/properties/properties'
 import { IState } from '../../../redux/reducers'
 
-// const s = require('./PropertiesList.less')
+import PropertyWizard from '../../../components/Admin/PropertyWizard/PropertyWizard'
 
 interface IProps extends IState {
+  createNewProperty: Redux.ActionCreator
 }
 
 @asyncConnect([{
@@ -16,14 +18,21 @@ interface IProps extends IState {
   },
 }])
 @connect(
-  state => state
+  state => state,
+  dispatch => ({
+    createNewProperty: (property) => dispatch(createNewProperty(property)),
+  })
 )
 class PropertiesNew extends React.Component<IProps, {}> {
 
   public render() {
     return(
       <div>
-        { this.props.categoriesData.isFetching ? 'Fetching Stars' : 'fetched' }
+        <PropertyWizard
+          categories={ this.props.categoriesData.categories }
+          langCode={ this.props.i18nData.currentLangCode }
+          onWizardDone={ this.props.createNewProperty }
+        />
       </div>
     );
   }

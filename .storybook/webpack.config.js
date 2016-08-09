@@ -3,7 +3,6 @@ var webpack = require('webpack');
 var postcssAssets = require('postcss-assets');
 var postcssNext = require('postcss-cssnext');
 var stylelint = require('stylelint');
-var ManifestPlugin = require('webpack-manifest-plugin');
 
 const loader = {
   babel: 'babel-loader?presets[]=react&presets[]=es2015&presets[]=stage-0'
@@ -119,9 +118,6 @@ var config = {
   },
 
   plugins: [
-    new ManifestPlugin({
-      fileName: '../manifest.json'
-    }),
     new webpack.DefinePlugin({
       'process.env': {
         BROWSER: JSON.stringify(true),

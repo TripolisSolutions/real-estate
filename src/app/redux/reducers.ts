@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { routerReducer } from 'react-router-redux'
+import { routerReducer, RouteActions } from 'react-router-redux'
 import { counterReducer } from './modules/counter/counter'
 import { starsReducer } from './modules/stars/stars'
 import { categoriesReducer, IState as ICategoriesData } from './modules/categories/categories'
@@ -15,9 +15,10 @@ const rootReducer: Redux.Reducer = combineReducers({
   propertiesData: propertiesReducer,
   i18nData: i18nReducer,
   reduxAsyncConnect: reducer,
-});
+})
 
 export interface IState {
+  router: RouteActions
   categoriesData: ICategoriesData
   propertiesData: IPropertiesData
   i18nData: II18n

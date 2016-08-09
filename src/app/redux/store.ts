@@ -10,7 +10,7 @@ export function configureStore(history, initialState?: any): Redux.Store {
   let middlewares: any[] = [
     routerMiddleware(history),
     thunk,
-  ];
+  ]
 
   /** Add Only Dev. Middlewares */
   if (appConfig.env !== 'production' && process.env.BROWSER) {
@@ -24,15 +24,15 @@ export function configureStore(history, initialState?: any): Redux.Store {
     typeof window === 'object' &&
     typeof window.devToolsExtension !== 'undefined'
       ? window.devToolsExtension() : f => f
-  )(createStore);
+  )(createStore)
 
-  const store: Redux.Store = finalCreateStore(rootReducer, initialState);
+  const store: Redux.Store = finalCreateStore(rootReducer, initialState)
 
   if (appConfig.env === 'development' && (module as any).hot) {
     (module as any).hot.accept('./reducers', () => {
-      store.replaceReducer((require('./reducers')));
-    });
+      store.replaceReducer((require('./reducers')))
+    })
   }
 
-  return store;
+  return store
 }

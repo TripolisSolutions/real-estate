@@ -1,5 +1,8 @@
 import * as update from 'react/lib/update'
+import * as urljoin from 'url-join'
+import * as log from 'loglevel'
 
+import rootUrl from '../../rootUrl'
 import { IAction, IHandler } from '../../models'
 import { ICategory } from './categories.model'
 
@@ -55,11 +58,14 @@ export function triggerFetchCategories(): Redux.Dispatch {
   return dispatch => {
     dispatch(categoriesRequest());
 
-    return fetch('/api/categories')
+    const url = urljoin(rootUrl, 'categories')
+    log.debug('category url: ', url)
+
+    return fetch(url)
       .then(res => {
         if (res.ok) {
           return res.json()
-            .then(res => dispatch(categoriesSuccess(res)));
+            .then(res => dispatch(categoriesSuccess(res.docs)));
         } else {
           return res.json()
             .then(res => dispatch(categoriesFailure(res)));

@@ -37,8 +37,12 @@ i18n
       ajax: loadLocales,
     })
   )
-  .use(require('i18next-express-middleware').LanguageDetector)
-  .init({
+
+if (!process.env.BROWSER) {
+  i18n.use(require('i18next-express-middleware').LanguageDetector)
+}
+
+i18n.init({
     fallbackLng: 'en',
 
     // have a common namespace used around the full app
