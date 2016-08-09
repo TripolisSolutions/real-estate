@@ -31,7 +31,7 @@ import routes from './app/routes';
 
 import i18n from './i18n'
 
-import { Html } from './app/containers';
+import { Html } from './app/containers/Html';
 const manifest = require('../build/manifest.json');
 
 const express = require('express');
