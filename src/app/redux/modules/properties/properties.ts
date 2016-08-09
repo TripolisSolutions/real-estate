@@ -1,4 +1,5 @@
 import * as update from 'react/lib/update'
+import * as log from 'loglevel'
 
 import { IAction, IHandler } from '../../models'
 import { IProperty } from './properties.model'
@@ -107,10 +108,12 @@ export function propertiesReducer(state = INITIAL_STATE, action: IAction<any>): 
 export function triggerFetchProperties(): Redux.Dispatch {
   return dispatch => {
     dispatch(propertiesRequest());
+    log.debug('propertiesRequest')
 
     return fetch('/api/properties')
       .then(res => {
         if (res.ok) {
+          log.debug('propertiesSuccess')
           return res.json()
             .then(res => dispatch(propertiesSuccess(res.docs)));
         } else {

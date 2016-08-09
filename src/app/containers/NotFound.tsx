@@ -1,22 +1,32 @@
 import * as React from 'react'
+const { connect } = require('react-redux')
+import { translate, InjectedTranslateProps } from 'react-i18next'
 
 import { IndexLink } from 'react-router'
+import { IState } from '../redux/reducers'
 
+interface IProps extends IState, InjectedTranslateProps {
+}
 
-class NotFound extends React.Component<any, any> {
+@connect(
+  state => state
+)
+class NotFound extends React.Component<IProps, any> {
     constructor(props) {
         super(props)
     }
     public render() {
-        const { router } = this.context as any
+        const { t } = this.props
 
-        return <main className="">
-            <h3>Page not found. Are you lost ?</h3>
+        return (
+            <main>
+                <h3>{ t('page_not_found.heading') }</h3>
 
-            <a onClick={router.goBack}>Go back</a>
-            <IndexLink to="/">Main menu</IndexLink>
-        </main>
+                <a onClick={ this.props.router.goBack() }>Go back</a>
+                <IndexLink to='/'>{ t('page_not_found.main_page') }</IndexLink>
+            </main>
+        )
     }
 }
 
-export default NotFound
+export default translate()(NotFound)
