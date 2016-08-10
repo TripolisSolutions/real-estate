@@ -5,6 +5,7 @@ const appConfig = require('../config/main');
 import * as e6p from 'es6-promise';
 (e6p as any).polyfill();
 import 'isomorphic-fetch';
+import * as fs from 'fs'
 
 import * as log from 'loglevel'
 import * as nconf from 'nconf'
@@ -39,6 +40,8 @@ const compression = require('compression');
 const Chalk = require('chalk');
 const favicon = require('serve-favicon');
 const proxy = require('http-proxy-middleware')
+const multer = require('multer')
+import * as urljoin from 'url-join'
 
 log.setLevel(nconf.get('SETTINGS_LOG_LEVEL'))
 
@@ -75,6 +78,61 @@ function simplifyLocale(locale: string) {
   const lng = locale.indexOf('-') !== -1 ? locale.split('-')[0] : locale
   return lng
 }
+
+function moveFile(fromPath, toPath) {
+  return new Promise((resolve, reject) => {
+    const source = fs.createReadStream(fromPath);
+    const dest = fs.createWriteStream(toPath);
+
+    source.pipe(dest);
+    source.on('end', function() {
+      resolve()
+    });
+    source.on('error', function(err) {
+      reject(err)
+    });
+  })
+}
+
+const thumbnailUpload = multer({
+  dest: '/tmp/',
+})
+app.post('/thumbnails/upload', thumbnailUpload.single('file'), (req, res) => {
+  log.debug('req.file', req.file)
+  log.debug('image width ', req.body.width, ' height ', req.body.height, ' params: ', req.params.width)
+  const destPath = path.join(nconf.get('SETTINGS_UPLOADED_IMAGE_FOLDER'), req.file.originalname)
+  log.debug('moving file ', req.file.path, ' to ', destPath)
+  moveFile(req.file.path, destPath).then(() => {
+
+    fetch(urljoin(nconf.get('SETTINGS_REAL_ESTATE_API'), 'images'), {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fileName: req.file.originalname,
+        width: req.body.width,
+        height: req.body.height,
+      }),
+    }).then(resp => {
+      if (resp.ok) {
+        return resp.json()
+          .then(resp => res.status(200, resp.doc));
+      } else {
+        log.error(`error while store image on api: `, resp)
+        res.status(500).send(resp)
+      }
+    }).catch((err) => {
+      log.error(`error while store image on api: `, err)
+      res.status(500).send(err.message)
+    })
+
+  }).catch((err) => {
+    log.error(`error while move file from ${ req.file.path } to ${ destPath }: `, err)
+    res.status(500).send(err.message)
+  })
+})
 
 app.use('/api', proxy({
   target: nconf.get('SETTINGS_REAL_ESTATE_API'),

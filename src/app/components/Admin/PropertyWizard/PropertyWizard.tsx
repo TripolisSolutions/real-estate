@@ -63,8 +63,6 @@ export class PropertyWizard extends React.Component<IProps, void> {
             langCode={ this.props.langCode }
             // image={ this.props.property }
             // isUploading={ this.props.isUploadingThumbnailImage }
-            isUploading={ false }
-            onFilesDrop={ () => {} }
           />
         ),
       },

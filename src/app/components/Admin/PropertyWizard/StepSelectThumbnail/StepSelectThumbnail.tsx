@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as c from 'classnames'
+import * as log from 'loglevel'
 import * as urljoin from 'url-join'
 import { Image } from 'react-bootstrap'
 import { translate, InjectedTranslateProps } from 'react-i18next'
@@ -13,8 +14,6 @@ const s = require('./StepSelectThumbnail.less')
 interface IProps extends InjectedTranslateProps {
   langCode: string
   image?: IImage
-  isUploading: boolean
-  onFilesDrop(files: File[])
 }
 
 interface IState {
@@ -43,6 +42,10 @@ class StepBasicInfo extends React.Component<IProps, IState> {
     })
   }
 
+  public onImageUploaded = (image: IImage) => {
+    log.debug('uploaded image: ', image)
+  }
+
   public render() {
 
     const { t } = this.props
@@ -61,10 +64,10 @@ class StepBasicInfo extends React.Component<IProps, IState> {
           )
         }
         <UploadImageModal
-          isUploading={ this.props.isUploading }
           show={ this.state.showModal }
-          onFilesDrop={ this.props.onFilesDrop }
-          onHideClicked={ this.hideUploadImageModal } />
+          onImageUploaded={ this.onImageUploaded }
+          onHideClicked={ this.hideUploadImageModal }
+        />
       </div>
     );
   }

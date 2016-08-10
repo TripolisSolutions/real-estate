@@ -8,7 +8,7 @@ import { translate, InjectedTranslateProps } from 'react-i18next'
 import { IImage } from '../../redux/modules/images/images.model'
 import UploadImagePanel, { IProps as IUploadImagePanelProps } from './UploadImagePanel'
 
-interface IProps {
+export interface IProps {
   onImageUploaded(image: IImage)
 }
 

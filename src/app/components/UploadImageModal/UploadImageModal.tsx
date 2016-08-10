@@ -9,7 +9,7 @@ import {
 
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
-import UploadImagePanel, { IProps as IUploadImagePanelProps } from './UploadImagePanel'
+import UploadImagePanel, { IProps as IUploadImagePanelProps } from './UploadImageContainer'
 
 interface IProps extends IUploadImagePanelProps, InjectedTranslateProps, React.Props<any> {
   show: boolean
@@ -28,8 +28,7 @@ export class ImageManagerModal extends React.Component<IProps, void> {
         </Modal.Header>
         <Modal.Body>
           <UploadImagePanel
-            onFilesDrop={ this.props.onFilesDrop }
-            isUploading={ this.props.isUploading }
+            onImageUploaded={ this.props.onImageUploaded }
           />
         </Modal.Body>
         <Modal.Footer>
