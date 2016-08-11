@@ -2,11 +2,8 @@ import * as React from 'react'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 import * as log from 'loglevel'
 
-window.ALLOYEDITOR_BASEPATH = '../node_modules/alloyeditor/dist/alloy-editor/'
-window.CKEDITOR_BASEPATH = '../node_modules/alloyeditor/dist/alloy-editor/'
-
-const AlloyEditor = require('alloyeditor')
-require('alloyeditor/dist/alloy-editor/assets/alloy-editor-ocean.css')
+const AlloyEditor = require('../../../alloyeditor/dist/alloy-editor/alloy-editor-no-react')
+require('../../../alloyeditor/dist/alloy-editor/assets/alloy-editor-ocean.css')
 
 const s = require('./StepDescription.less')
 

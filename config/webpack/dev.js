@@ -16,7 +16,7 @@ var config = {
 
   resolve: {
     root: path.resolve(__dirname),
-    extensions: ['', '.ts', '.tsx', '.js', '.jsx'],
+    extensions: ['', '.ts', '.tsx', '.js', '.jsx', '.css'],
     alias: {
       components: path.resolve(__dirname + '/src/app/components')
     }

@@ -53,9 +53,12 @@ class Html extends React.Component<IHtmlProps, {}> {
         <body>
           <main id='app' dangerouslySetInnerHTML={{ __html: markup }}></main>
           {initialState}
-          <script>
-            window.ALLOYEDITOR_BASEPATH = '../node_modules/alloyeditor/dist/alloy-editor/';
-            window.CKEDITOR_BASEPATH = '../node_modules/alloyeditor/dist/alloy-editor/';
+          <script dangerouslySetInnerHTML={{
+            __html: `
+              window.ALLOYEDITOR_BASEPATH = '/node_modules/alloyeditor/dist/alloy-editor/';
+              window.CKEDITOR_BASEPATH = '/node_modules/alloyeditor/dist/alloy-editor/';
+            `,
+          }}>
           </script>
           {renderScripts}
         </body>
