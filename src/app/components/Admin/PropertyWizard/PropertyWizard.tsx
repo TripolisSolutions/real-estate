@@ -96,6 +96,20 @@ export class PropertyWizard extends React.Component<IProps, void> {
         ),
       },
       {
+        name: t('step_config_carousel_images'),
+        component: (
+          <StepConfigCarouselImages
+            langCode={ this.props.langCode }
+            onImageUploaded={ (image) => {
+              thumbnailImage = image
+            }}
+            onNext={ () => {
+              this.refs.multistep.next()
+            } }
+          />
+        ),
+      },
+      {
         name: t('step_done'),
         component: <StepDone langCode={ this.props.langCode }
           onSubmit={ () => {
