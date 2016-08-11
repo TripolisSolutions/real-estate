@@ -29,6 +29,7 @@ class PropertiesNew extends React.Component<IProps, {}> {
     return(
       <div>
         <PropertyWizard
+          googleMapAPIKey={ window.__CONFIG__.googleMapAPIKey }
           categories={ this.props.categoriesData.categories }
           langCode={ this.props.i18nData.currentLangCode }
           onWizardDone={ this.props.createNewProperty }
