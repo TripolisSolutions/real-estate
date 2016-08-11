@@ -108,8 +108,8 @@ app.post('/thumbnails/upload', thumbnailUpload.single('file'), (req, res) => {
       },
       body: JSON.stringify({
         fileName: req.file.originalname,
-        width: req.body.width,
-        height: req.body.height,
+        width: parseInt(req.body.width, 10),
+        height: parseInt(req.body.height, 10),
       }),
     }).then(resp => {
       log.debug('resp ok: ', resp.ok)

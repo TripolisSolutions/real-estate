@@ -11,6 +11,7 @@ import { IProperty } from '../../../redux/modules/properties/properties.model'
 
 import StepBasicInfo from './StepBasicInfo/StepBasicInfo'
 import { IFormData as IBasicInfoFormData } from './StepBasicInfo/StepBasicInfo'
+import { IImage } from '../../../redux/modules/images/images.model'
 
 import StepSelectThumbnail from './StepSelectThumbnail/StepSelectThumbnail'
 
@@ -36,6 +37,7 @@ export class PropertyWizard extends React.Component<IProps, void> {
     const { t } = this.props
 
     let basicInfoFormData: IBasicInfoFormData
+    let thumbnailImage: IImage
     const object = {}
     const property = object as IProperty
 
@@ -57,12 +59,24 @@ export class PropertyWizard extends React.Component<IProps, void> {
         ),
       },
       {
+        name: t('step_description_vietnamese'),
+        component: <StepDescription langCode={ this.props.langCode } />,
+      },
+      {
+        name: t('step_description_english'),
+        component: <StepDescription langCode={ this.props.langCode } />,
+      },
+      {
         name: t('step_select_thumbnail'),
         component: (
           <StepSelectThumbnail
             langCode={ this.props.langCode }
-            // image={ this.props.property }
-            // isUploading={ this.props.isUploadingThumbnailImage }
+            onImageUploaded={ (image) => {
+              thumbnailImage = image
+            }}
+            onNext={ () => {
+              this.refs.multistep.next()
+            } }
           />
         ),
       },
@@ -70,18 +84,18 @@ export class PropertyWizard extends React.Component<IProps, void> {
         name: t('step_done'),
         component: <StepDone langCode={ this.props.langCode }
           onSubmit={ () => {
+            log.info('basicInfoFormData: ', basicInfoFormData)
             const outProperty = bindBasicInfoToProperty(property, basicInfoFormData)
+
+            if (thumbnailImage) {
+              log.info('thumbnailImage: ', thumbnailImage)
+              outProperty.thumbnailImage = thumbnailImage
+            }
+
             log.info('wizard property: ', outProperty)
+
             this.props.onWizardDone(outProperty)
         } } />,
-      },
-      {
-        name: t('step_description_vietnamese'),
-        component: <StepDescription langCode={ this.props.langCode } />,
-      },
-      {
-        name: t('step_description_english'),
-        component: <StepDescription langCode={ this.props.langCode } />,
       },
     ]
 

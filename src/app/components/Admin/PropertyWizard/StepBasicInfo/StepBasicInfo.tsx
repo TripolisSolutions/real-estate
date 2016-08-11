@@ -2,7 +2,6 @@ import * as React from 'react'
 import { Form } from 'formsy-react'
 import * as FRC from 'formsy-react-components'
 import { IOption } from 'formsy-react-components'
-import * as log from 'loglevel'
 
 import { translate, InjectedTranslateProps } from 'react-i18next'
 

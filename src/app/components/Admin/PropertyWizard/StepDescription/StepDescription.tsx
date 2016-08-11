@@ -3,6 +3,8 @@ import { translate, InjectedTranslateProps } from 'react-i18next'
 
 interface IProps extends InjectedTranslateProps {
   langCode: string
+  initialValue: string
+  onChange(desc: string)
 }
 
 const StepBasicInfo = (props: IProps) => {
