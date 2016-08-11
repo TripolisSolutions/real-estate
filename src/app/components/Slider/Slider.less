@@ -1,0 +1,40 @@
+@import '../../styles/variables';
+@font-size: 80px;
+@height: 730px;
+
+.container{
+  position: relative
+}
+
+.slider {
+  overflow: hidden; 
+}
+
+.box {
+  background: fade(@slider-box-shadow, 50%);
+
+  width: 100vw;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+
+  position: absolute;
+
+  pointer-events: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    color: @color-white; 
+    font-size: @font-size;
+  }
+  
+}
+
+@media (min-width: 1200px) {
+  .slider {
+    height: @height;
+  }
+}
