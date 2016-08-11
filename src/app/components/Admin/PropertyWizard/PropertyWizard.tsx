@@ -14,8 +14,8 @@ import { IFormData as IBasicInfoFormData } from './StepBasicInfo/StepBasicInfo'
 import { IImage } from '../../../redux/modules/images/images.model'
 
 import StepSelectThumbnail from './StepSelectThumbnail/StepSelectThumbnail'
-
 import StepDescription from './StepDescription/StepDescription'
+import StepConfigCarouselImages from './StepConfigCarouselImages/StepConfigCarouselImages'
 import StepDone from './StepDone/StepDone'
 
 import { bindBasicInfoToProperty } from './converter'
@@ -38,6 +38,7 @@ export class PropertyWizard extends React.Component<IProps, void> {
 
     let basicInfoFormData: IBasicInfoFormData
     let thumbnailImage: IImage
+    let galleryImages: IImage[]
     let descVN: string
     let descEN: string
 
@@ -100,8 +101,9 @@ export class PropertyWizard extends React.Component<IProps, void> {
         component: (
           <StepConfigCarouselImages
             langCode={ this.props.langCode }
-            onImageUploaded={ (image) => {
-              thumbnailImage = image
+            images={ [] }
+            onChange={ (images: IImage[]) => {
+              galleryImages = images
             }}
             onNext={ () => {
               this.refs.multistep.next()
@@ -119,6 +121,11 @@ export class PropertyWizard extends React.Component<IProps, void> {
             if (thumbnailImage) {
               log.info('thumbnailImage: ', thumbnailImage)
               outProperty.thumbnailImage = thumbnailImage
+            }
+
+            if (galleryImages) {
+              log.info('galleryImages: ', galleryImages)
+              outProperty.galleryImages = galleryImages
             }
 
             log.info('wizard property: ', outProperty)
