@@ -8,6 +8,33 @@ import { translate, InjectedTranslateProps } from 'react-i18next'
 import { IImage } from '../../redux/modules/images/images.model'
 import UploadImagePanel, { IProps as IUploadImagePanelProps } from './UploadImagePanel'
 
+interface IImageDimension {
+  width: number
+  height: number
+}
+
+function getDimension(imgUrl) {
+  return new Promise((resolve, reject) => {
+    const img = document.createElement('img');
+    img.onload = function() {
+        // `naturalWidth`/`naturalHeight` aren't supported on <IE9. Fallback to normal width/height
+        // The natural size is the actual image size regardless of rendering.
+        // The 'normal' width/height are for the **rendered** size.
+
+        const width  = img.naturalWidth || img.width;
+        const height = img.naturalHeight    || img.height
+
+        // Do something with the width and height
+        resolve({
+          width, height,
+        } as IImageDimension)
+    }
+
+    // Setting the source makes it start downloading and eventually call `onload`
+    img.src = imgUrl
+  })
+}
+
 export interface IProps {
   onImageUploaded(image: IImage)
 }
@@ -58,26 +85,30 @@ const UploadImagePanelContainer: SFC<IProps> = (props: IInternalProps) => {
       payload: file,
     })
 
-    const data = new FormData()
-    data.append('file', file)
+    getDimension(window.URL.createObjectURL(file)).then((dimension: IImageDimension) => {
+      const data = new FormData()
+      data.append('file', file)
+      data.append('width', dimension.width)
+      data.append('height', dimension.height)
 
-    fetch('/thumbnails/upload', {
-      method: 'POST',
-      body: data,
-    })
-    .then((res) => res.json())
-    .then((res) => {
-      props.dispatch({
-        type: 'UPLOAD_SUCCESS',
-        payload: res,
+      fetch('/thumbnails/upload', {
+        method: 'POST',
+        body: data,
       })
-      props.onImageUploaded(res)
+      .then((res) => res.json())
+      .then((res) => {
+        props.dispatch({
+          type: 'UPLOAD_SUCCESS',
+          payload: res,
+        })
+        props.onImageUploaded(res)
+      })
+      .catch((error) => props.dispatch({
+        type: 'UPLOAD_FAILURE',
+        payload: file,
+        error: error,
+      }))
     })
-    .catch((error) => props.dispatch({
-      type: 'UPLOAD_FAILURE',
-      payload: file,
-      error: error,
-    }))
   }
 
   return (

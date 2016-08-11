@@ -8,12 +8,9 @@ import { IState } from '../redux/reducers'
 interface IProps extends IState, InjectedTranslateProps {
 }
 
-@connect(
-  state => state
-)
-class NotFound extends React.Component<IProps, any> {
-    public contextTypes = {
-        router: React.PropTypes.func.isRequired,
+class NotFound extends React.Component<IProps, {}> {
+    public static contextTypes = {
+        'router': React.PropTypes.func.isRequired,
     }
 
     constructor(props) {
@@ -35,4 +32,6 @@ class NotFound extends React.Component<IProps, any> {
     }
 }
 
-export default translate()(NotFound)
+export default connect(
+  state => state
+)(translate()(NotFound))

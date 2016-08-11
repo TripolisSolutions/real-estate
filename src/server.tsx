@@ -41,6 +41,7 @@ const Chalk = require('chalk');
 const favicon = require('serve-favicon');
 const proxy = require('http-proxy-middleware')
 const multer = require('multer')
+const mv = require('mv')
 import * as urljoin from 'url-join'
 
 log.setLevel(nconf.get('SETTINGS_LOG_LEVEL'))
@@ -79,32 +80,27 @@ function simplifyLocale(locale: string) {
   return lng
 }
 
-function moveFile(fromPath, toPath) {
-  return new Promise((resolve, reject) => {
-    const source = fs.createReadStream(fromPath);
-    const dest = fs.createWriteStream(toPath);
-
-    source.pipe(dest);
-    source.on('end', function() {
-      resolve()
-    });
-    source.on('error', function(err) {
-      reject(err)
-    });
-  })
-}
-
 const thumbnailUpload = multer({
   dest: '/tmp/',
 })
 app.post('/thumbnails/upload', thumbnailUpload.single('file'), (req, res) => {
   log.debug('req.file', req.file)
   log.debug('image width ', req.body.width, ' height ', req.body.height, ' params: ', req.params.width)
-  const destPath = path.join(nconf.get('SETTINGS_UPLOADED_IMAGE_FOLDER'), req.file.originalname)
+  const destPath = path.join(__dirname, nconf.get('SETTINGS_UPLOADED_IMAGE_FOLDER'), req.file.originalname)
   log.debug('moving file ', req.file.path, ' to ', destPath)
-  moveFile(req.file.path, destPath).then(() => {
 
-    fetch(urljoin(nconf.get('SETTINGS_REAL_ESTATE_API'), 'images'), {
+  mv(req.file.path, destPath, (err) => {
+    if (err) {
+      log.error(`error while move file from ${ req.file.path } to ${ destPath }: `, err)
+      res.status(500).send(err.message)
+      return
+    }
+
+  // moveFile(req.file.path, destPath).then(() => {
+
+    const imagesUrl = urljoin(nconf.get('SETTINGS_REAL_ESTATE_API'), 'images')
+    log.debug('saving the image to api: ', imagesUrl)
+    fetch(imagesUrl, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -116,9 +112,13 @@ app.post('/thumbnails/upload', thumbnailUpload.single('file'), (req, res) => {
         height: req.body.height,
       }),
     }).then(resp => {
+      log.debug('resp ok: ', resp.ok)
       if (resp.ok) {
         return resp.json()
-          .then(resp => res.status(200, resp.doc));
+          .then(resp => {
+            log.debug('resp json: ', resp)
+            res.status(200).send(resp)
+          })
       } else {
         log.error(`error while store image on api: `, resp)
         res.status(500).send(resp)
@@ -127,11 +127,11 @@ app.post('/thumbnails/upload', thumbnailUpload.single('file'), (req, res) => {
       log.error(`error while store image on api: `, err)
       res.status(500).send(err.message)
     })
-
-  }).catch((err) => {
-    log.error(`error while move file from ${ req.file.path } to ${ destPath }: `, err)
-    res.status(500).send(err.message)
   })
+  // }).catch((err) => {
+  //   log.error(`error while move file from ${ req.file.path } to ${ destPath }: `, err)
+  //   res.status(500).send(err.message)
+  // })
 })
 
 app.use('/api', proxy({
