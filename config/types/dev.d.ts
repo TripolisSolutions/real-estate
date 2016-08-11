@@ -7,6 +7,8 @@ interface Window {
   devToolsExtension?: () => any;
   __CONFIG__?: any
   __INITIAL_STATE__?: any;
+  ALLOYEDITOR_BASEPATH: string
+  CKEDITOR_BASEPATH: string
 }
 
 interface ObjectConstructor {

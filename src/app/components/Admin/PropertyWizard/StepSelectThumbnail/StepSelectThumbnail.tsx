@@ -78,7 +78,7 @@ class StepBasicInfo extends React.Component<IProps, IState> {
             <Row layout='horizontal'>
               <input className='btn btn-primary'
                 formNoValidate={ true } type='submit' defaultValue='Ok'
-                onClick={ this.props.onNext() }
+                onClick={ this.props.onNext }
               />
             </Row>
           </fieldset>

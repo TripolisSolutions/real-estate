@@ -38,6 +38,9 @@ export class PropertyWizard extends React.Component<IProps, void> {
 
     let basicInfoFormData: IBasicInfoFormData
     let thumbnailImage: IImage
+    let descVN: string
+    let descEN: string
+
     const object = {}
     const property = object as IProperty
 
@@ -60,11 +63,23 @@ export class PropertyWizard extends React.Component<IProps, void> {
       },
       {
         name: t('step_description_vietnamese'),
-        component: <StepDescription langCode={ this.props.langCode } />,
+        component: <StepDescription
+          langCode={ this.props.langCode }
+          initialValue={ '' }
+          onChange={ (content) => {
+            descVN = content
+          } }
+        />,
       },
       {
         name: t('step_description_english'),
-        component: <StepDescription langCode={ this.props.langCode } />,
+        component: <StepDescription
+          langCode={ this.props.langCode }
+          initialValue={ '' }
+          onChange={ (content) => {
+            descEN = content
+          } }
+        />,
       },
       {
         name: t('step_select_thumbnail'),
