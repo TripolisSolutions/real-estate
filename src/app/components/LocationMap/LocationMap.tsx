@@ -31,6 +31,13 @@ interface IProps {
 const LocationMap: SFC<any> = function LocationMap(props) {
   log.debug('LocationMap render circleMarker: ', props.circleMarker)
 
+  let key
+  if (props.googleMapAPIKey) {
+    key = props.googleMapAPIKey
+  } else if (typeof window !== 'undefined') {
+    key = window.__CONFIG__.googleMapAPIKey
+  }
+
   return (
     <Block title={ props.title } noBorder={ true }>
       <div className={ s.container }>

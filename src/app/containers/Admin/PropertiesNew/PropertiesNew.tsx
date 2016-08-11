@@ -26,10 +26,15 @@ interface IProps extends IState {
 class PropertiesNew extends React.Component<IProps, {}> {
 
   public render() {
+    let key
+    if (typeof window !== 'undefined') {
+      key = window.__CONFIG__.googleMapAPIKey
+    }
+
     return(
       <div>
         <PropertyWizard
-          googleMapAPIKey={ window.__CONFIG__.googleMapAPIKey }
+          googleMapAPIKey={ key }
           categories={ this.props.categoriesData.categories }
           langCode={ this.props.i18nData.currentLangCode }
           onWizardDone={ this.props.createNewProperty }
