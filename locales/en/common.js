@@ -30,4 +30,19 @@ module.exports = {
   'size_width': 'Width',
   'size_length': 'Length',
 
+  'buy': 'Buy',
+  'rent': 'Rent',
+  'north': 'North',
+  'north-east': 'North East',
+  'east': 'East',
+  'south-east': 'South East',
+  'south': 'South',
+  'south-west': 'South West',
+  'west': 'West',
+  'north-west': 'North West',
+  'days': 'Day(s)',
+  'months': 'Month(s)',
+  'quarters': 'Quarter(s)',
+  'years': 'Year(s)',
+
 }

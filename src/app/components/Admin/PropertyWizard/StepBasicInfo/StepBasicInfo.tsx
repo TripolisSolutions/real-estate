@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Form } from 'formsy-react'
 import * as FRC from 'formsy-react-components'
 import { IOption } from 'formsy-react-components'
+import * as _ from 'lodash'
 
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
@@ -65,9 +66,9 @@ class StepBasicInfo extends React.Component<IProps, {}> {
     this.props.onSubmit(data)
   }
 
-  public onChange = (data) => {
+  public onChange = _.debounce((data) => {
     this.props.onChange(data)
-  }
+  }, 200)
 
   public render() {
     const { t, formData } = this.props
@@ -101,14 +102,14 @@ class StepBasicInfo extends React.Component<IProps, {}> {
             <legend>{ t('step_basic_info') }</legend>
             <Input
               name='title_in_vietnamese'
-              defaultValue={ formData.title_in_vietnamese }
+              value={ formData.title_in_vietnamese }
               label={ t('title_in_vietnamese') }
               type='text'
               placeholder={ t('title_in_vietnamese') }
             />
             <Input
               name='title_in_english'
-              defaultValue={ formData.title_in_english }
+              value={ formData.title_in_english }
               label={ t('title_in_english') }
               type='text'
               placeholder={ t('title_in_english') }
