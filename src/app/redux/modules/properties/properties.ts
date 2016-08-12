@@ -304,7 +304,7 @@ export function updateProperty(id: string, property: IProperty): Redux.Dispatch 
     dispatch(updatePropertyRequest());
 
     return fetch(urljoin(rootUrl, 'properties', id), {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',

@@ -51,6 +51,7 @@ class PropertiesEdit extends React.Component<IProps, {}> {
         <PropertyWizard
           imageRootUrl={ imageRootUrl }
           googleMapAPIKey={ key }
+          property={ this.props.propertiesData.property }
           categories={ this.props.categoriesData.categories }
           langCode={ this.props.i18nData.currentLangCode }
           onWizardDone={ (property) => this.props.updateProperty(this.props.propertiesData.property.id, property) }

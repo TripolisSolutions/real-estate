@@ -52,7 +52,10 @@ module.exports = {
   'address_visible': 'Show this address to viewers',
 
   'create_the_property': 'Create the property',
-  'create_the_property_desc': 'The property will be created by data from all the steps',
+  'create_the_property_desc': 'The property will be created by data from all the previous steps',
+
+  'update_the_property': 'Update the property data',
+  'update_the_property_desc': 'The property will be updated by data from all previous steps',
 
   'property_delete_confirm': 'Are you sure you want to delete this property?'
 }

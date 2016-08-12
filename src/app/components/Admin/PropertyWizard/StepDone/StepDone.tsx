@@ -24,10 +24,20 @@ const StepBasicInfo = (props: IProps) => {
               <li>
                 <button className='btn btn-lg btn-success' onClick={ props.onSubmit }>
                   <i className='glyphicon glyphicon-ok pull-left'></i>
-                  <span>
-                    { t('create_the_property') }<br/>
-                    <small>{ t('create_the_property_desc') }</small>
-                  </span>
+                  {
+                    props.isCreate ? (
+                      <span>
+                        { t('create_the_property') }<br/>
+                        <small>{ t('create_the_property_desc') }</small>
+                      </span>
+                    ) : (
+                      <span>
+                        { t('update_the_property') }<br/>
+                        <small>{ t('update_the_property_desc') }</small>
+                      </span>
+                    )
+                  }
+                  
                 </button>
               </li>
             </ul>
