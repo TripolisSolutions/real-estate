@@ -1,6 +1,7 @@
 import * as update from 'react/lib/update'
 import * as log from 'loglevel'
 import * as urljoin from 'url-join'
+import * as _ from 'lodash'
 
 import rootUrl from '../../rootUrl'
 
@@ -22,6 +23,10 @@ const CREATE_NEW_PROPERTY_FAILURE = 'CREATE_NEW_PROPERTY_FAILURE'
 const UPDATE_PROPERTY_REQUEST = 'UPDATE_PROPERTY_REQUEST'
 const UPDATE_PROPERTY_SUCCESS = 'UPDATE_PROPERTY_SUCCESS'
 const UPDATE_PROPERTY_FAILURE = 'UPDATE_PROPERTY_FAILURE'
+
+const DELETE_PROPERTY_REQUEST = 'DELETE_PROPERTY_REQUEST'
+const DELETE_PROPERTY_SUCCESS = 'DELETE_PROPERTY_SUCCESS'
+const DELETE_PROPERTY_FAILURE = 'DELETE_PROPERTY_FAILURE'
 
 export interface IState {
   property?: IProperty
@@ -119,6 +124,31 @@ const ACTION_HANDLERS = {
     })
   },
   [UPDATE_PROPERTY_FAILURE]: (state: IState, action: IAction<IProperty>): IState => {
+    return update(state, {
+      isFetching: {
+        $set: false,
+      },
+    });
+  },
+  [DELETE_PROPERTY_REQUEST]: (state: IState): IState => {
+    return update(state, {
+      isFetching: {
+        $set: true,
+      },
+    })
+  },
+  [DELETE_PROPERTY_SUCCESS]: (state: IState, action: IAction<string>): IState => {
+    const index = _.findIndex(state.properties, {id: action.payload})
+    return update(state, {
+      isFetching: {
+        $set: false,
+      },
+      properties: {
+        $splice: [[index, 1]],
+      },
+    })
+  },
+  [DELETE_PROPERTY_FAILURE]: (state: IState, action: IAction<IProperty>): IState => {
     return update(state, {
       isFetching: {
         $set: false,
@@ -313,6 +343,54 @@ export function updatePropertySuccess(item: IProperty): IAction<IProperty> {
 export function updatePropertyFailure(error: Error) {
   return {
     type: UPDATE_PROPERTY_FAILURE,
+    error: error,
+  };
+}
+
+/** Async Action Creator */
+export function deleteProperty(id: string): Redux.Dispatch {
+  return dispatch => {
+    dispatch(deletePropertyRequest(id));
+
+    return fetch(urljoin(rootUrl, 'properties', id), {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => {
+        if (res.ok) {
+          dispatch(deletePropertySuccess(id))
+        } else {
+          return res.json()
+            .then(res => dispatch(deletePropertyFailure(res)));
+        }
+      })
+      .catch(err => dispatch(deletePropertyFailure(err)));
+  };
+}
+
+/** Action Creator */
+export function deletePropertyRequest(id: string): IAction<string> {
+  return {
+    type: DELETE_PROPERTY_REQUEST,
+    payload: id,
+  };
+}
+
+/** Action Creator */
+export function deletePropertySuccess(id: string): IAction<string> {
+  return {
+    type: DELETE_PROPERTY_SUCCESS,
+    payload: id,
+  };
+}
+
+/** Action Creator */
+export function deletePropertyFailure(error: Error) {
+  return {
+    type: DELETE_PROPERTY_FAILURE,
     error: error,
   };
 }

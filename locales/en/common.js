@@ -51,6 +51,8 @@ module.exports = {
   'address_in_english': 'Address in English',
   'address_visible': 'Show this address to viewers',
 
-  'create_the_property': 'Create the post',
-  'create_the_property_desc': 'The post will be created by data from all the steps',
+  'create_the_property': 'Create the property',
+  'create_the_property_desc': 'The property will be created by data from all the steps',
+
+  'property_delete_confirm': 'Are you sure you want to delete this property?'
 }
