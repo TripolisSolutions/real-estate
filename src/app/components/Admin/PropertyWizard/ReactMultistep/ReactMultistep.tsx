@@ -30,7 +30,7 @@ export default class MultiStep extends Component<IProps, IState> {
       showPreviousBtn: false,
       showNextBtn: true,
       compState: 0,
-      navState: this.getNavStates(0, this.props.steps.length)
+      navState: this.getNavStates(0, this.props.steps.length),
     }
     this.hidden = {
       display: 'none',
@@ -128,7 +128,7 @@ export default class MultiStep extends Component<IProps, IState> {
         </ol>
         {
           this.props.steps.map((step, i) => (
-            <div style={{
+            <div key={ step.name } style={{
               display: i === this.state.compState ? 'block' : 'none',
             }}>
               { step.component }

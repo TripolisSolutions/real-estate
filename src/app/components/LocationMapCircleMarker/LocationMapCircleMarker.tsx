@@ -30,5 +30,4 @@ LocationMapCircleMarker.defaultProps = {
   radius: 300,
 }
 
-
 export default LocationMapCircleMarker

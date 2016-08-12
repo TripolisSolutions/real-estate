@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import { SFC } from 'react'
 import GoogleMap from 'google-map-react'
 

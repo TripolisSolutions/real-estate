@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { translate, InjectedTranslateProps } from 'react-i18next'
-import * as log from 'loglevel'
+// import * as log from 'loglevel'
 
 const ReactQuill = require('react-quill')
 
@@ -20,7 +20,7 @@ class StepDescription extends React.Component<IProps, void> {
   }
 
   public render() {
-    const { t } = this.props
+    // const { t } = this.props
 
     return (
       <ReactQuill theme='snow'

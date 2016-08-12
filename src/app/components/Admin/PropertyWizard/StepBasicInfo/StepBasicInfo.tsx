@@ -118,7 +118,7 @@ class StepBasicInfo extends React.Component<IProps, {}> {
               <Input
                 labelClassName='hidden'
                 name='price_in_vnd'
-                value=''
+                value={ formData.price_in_vnd + '' }
                 type='number'
                 placeholder={ t('price_in_vnd') }
                 addonAfter={<span>VND</span>}

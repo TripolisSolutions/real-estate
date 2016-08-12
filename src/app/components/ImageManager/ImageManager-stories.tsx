@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as log from 'loglevel'
 import { storiesOf, action } from '@kadira/storybook'
 
 import '../../helpers/storyCommonResource'

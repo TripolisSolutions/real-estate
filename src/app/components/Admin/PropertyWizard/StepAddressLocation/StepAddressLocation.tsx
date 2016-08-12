@@ -2,9 +2,6 @@ import * as update from 'react/lib/update'
 import * as React from 'react'
 import * as log from 'loglevel'
 import { SFC } from 'react'
-import * as urljoin from 'url-join'
-import * as c from 'classnames'
-import { Image } from 'react-bootstrap'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 import withReducer from 'recompose/withReducer'
 const fitBounds = require('google-map-react/utils').fitBounds
@@ -232,7 +229,7 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
 
           props.onMapDataChange(props.state.mapViewport, props.state.mapMarker)
         }}
-        onClick={ ({x, y, lat, lng}) => {
+        onClick={ ({lat, lng}) => {
           props.dispatch({
             type: 'SET_MAP_MARKER',
             payload: {

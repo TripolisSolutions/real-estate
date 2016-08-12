@@ -1,6 +1,6 @@
 import * as React from 'react'
-import * as log from 'loglevel'
-import * as c from 'classnames'
+// import * as log from 'loglevel'
+// import * as c from 'classnames'
 
 import {
   Button,

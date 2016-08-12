@@ -45,4 +45,11 @@ module.exports = {
   'quarters': 'Quarter(s)',
   'years': 'Year(s)',
 
+  'upload_image': 'Upload image',
+
+  'address_in_vietnamese': 'Address in Vietnamese',
+  'address_in_english': 'Address in English',
+  'address_visible': 'Show this address text to viewers',
+
+  'create_the_property': 'Create the post'
 }
