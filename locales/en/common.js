@@ -49,7 +49,7 @@ module.exports = {
 
   'address_in_vietnamese': 'Address in Vietnamese',
   'address_in_english': 'Address in English',
-  'address_visible': 'Show this address text to viewers',
+  'address_visible': 'Show this address to viewers',
 
   'create_the_property': 'Create the post',
   'create_the_property_desc': 'The post will be created by data from all the steps',

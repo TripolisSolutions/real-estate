@@ -389,9 +389,14 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
                   text: state.addressEN,
                 },
               ],
-              viewport: state.mapViewport,
-              circleMarker: state.mapMarker,
               visible: state.addressVisible,
+            }
+
+            if (state.mapViewport) {
+              outProperty.address.viewport = state.mapViewport
+            }
+            if (state.mapMarker) {
+              outProperty.address.circleMarker = state.mapMarker
             }
 
             log.info('wizard property: ', outProperty)

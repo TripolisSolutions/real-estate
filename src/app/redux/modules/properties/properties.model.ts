@@ -29,9 +29,9 @@ export interface IProperty {
   }
   address?: {
     name: ITranslatableText[]
-    viewport: IMapViewport
-    circleMarker: ICircleMarker
-    visible: boolean
+    viewport?: IMapViewport
+    circleMarker?: ICircleMarker
+    visible?: boolean
   }
 
   bedRoomCount?: number

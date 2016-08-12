@@ -113,7 +113,10 @@ export class StepConfigCarouselImages extends React.Component<IInternalProps, vo
                     urljoin(props.imageRootUrl, image.fileName)
                   }/>
                   <Button bsStyle='danger'
-                    onClick={ () => props.dispatch({type: 'REMOVE_IMAGE', payload: i, images}) }
+                    onClick={ () => {
+                      props.dispatch({type: 'REMOVE_IMAGE', payload: i, images})
+                      props.onChange(props.state.images)
+                    }}
                   >Remove</Button>
                 </Col>
               ))
@@ -132,7 +135,10 @@ export class StepConfigCarouselImages extends React.Component<IInternalProps, vo
         </Grid>
         <UploadImageModal
           show={ props.state.showModel }
-          onImageUploaded={ (image) => props.dispatch({type: 'IMAGE_UPLOADED', payload: image}) }
+          onImageUploaded={ (image) => {
+            props.dispatch({type: 'IMAGE_UPLOADED', payload: image})
+            props.onChange(props.state.images)
+          }}
           onHideClicked={ () => props.dispatch({type: 'HIDE_MODAL'}) }
         />
       </div>

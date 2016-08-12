@@ -38,7 +38,6 @@ interface IState {
 }
 
 const reducer = (state: IState, action) => {
-  log.debug('action: ', action)
   switch (action.type) {
     case 'UPDATE_ADDRESS':
       return update(state, {
