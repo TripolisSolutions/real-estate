@@ -245,6 +245,9 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
               payload: content,
             })
           } }
+          onNext={ () => {
+            this.refs.multistep.next()
+          } }
         />,
       },
       {
@@ -257,6 +260,9 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
               type: 'DESC_EN',
               payload: content,
             })
+          } }
+          onNext={ () => {
+            this.refs.multistep.next()
           } }
         />,
       },
@@ -344,6 +350,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
       {
         name: t('step_done'),
         component: <StepDone langCode={ this.props.langCode }
+          isCreate={ !this.props.property }
           onSubmit={ () => {
             log.info('basicInfoFormData: ', state.basicInfoFormData)
             const object = {}

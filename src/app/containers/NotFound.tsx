@@ -10,10 +10,6 @@ interface IProps extends IState, InjectedTranslateProps {
 }
 
 class NotFound extends React.Component<IProps, {}> {
-    public static contextTypes = {
-        'router': React.PropTypes.func.isRequired,
-    }
-
     constructor(props) {
         super(props)
     }

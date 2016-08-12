@@ -2,6 +2,9 @@ import * as update from 'react/lib/update'
 import * as React from 'react'
 import * as log from 'loglevel'
 import { translate, InjectedTranslateProps } from 'react-i18next'
+import {
+  Grid, Row, Col,
+} from 'react-bootstrap'
 import withReducer from 'recompose/withReducer'
 const fitBounds = require('google-map-react/utils').fitBounds
 
@@ -186,76 +189,96 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
 
     return (
       <div className={ s.container }>
-        <Form
-          className='horizontal'
-          onChange={ (data) => {
-            props.dispatch({type: 'UPDATE_ADDRESS', payload: data})
-            props.onAddressChange(data.address_in_vietnamese, data.address_in_english)
-          }}
-        >
-          <fieldset>
-            <Input
-              name='address_in_vietnamese'
-              value={ props.addressVN }
-              label={ t('address_in_vietnamese') }
-              type='text'
-              placeholder={ t('address_in_vietnamese') }
-              addonAfter={
-                this.lookup('vi')
-              }
-            />
-            <Input
-              name='address_in_english'
-              value={ props.addressEN }
-              label={ t('address_in_english') }
-              type='text'
-              placeholder={ t('address_in_english') }
-              addonAfter={
-                this.lookup('en')
-              }
-            />
-            <Checkbox
-                name='address_visible'
-                value={ props.addressVisible }
-                label={ t('address_visible') }
-                rowLabel=''
-                onChange={ (name, visible) => {
-                  props.onVisiblityChange(visible)
-                } }
-            />
-          </fieldset>
-        </Form>
-        <LocationMap
-          googleMapAPIKey={ props.googleMapAPIKey }
-          lat={ lat }
-          lng={ lng }
-          zoom={ zoom }
-          circleMarker={ marker }
-          onViewportChange={ ({center, zoom}) => {
-            log.debug('onViewportChange', center, zoom)
+        <Grid>
+          <Row>
+            <Col xs={12}>
+              <Form
+                className='horizontal'
+                onChange={ (data) => {
+                  props.dispatch({type: 'UPDATE_ADDRESS', payload: data})
+                  props.onAddressChange(data.address_in_vietnamese, data.address_in_english)
+                }}
+              >
+                <fieldset>
+                  <Input
+                    name='address_in_vietnamese'
+                    value={ props.addressVN }
+                    label={ t('address_in_vietnamese') }
+                    type='text'
+                    placeholder={ t('address_in_vietnamese') }
+                    addonAfter={
+                      this.lookup('vi')
+                    }
+                  />
+                  <Input
+                    name='address_in_english'
+                    value={ props.addressEN }
+                    label={ t('address_in_english') }
+                    type='text'
+                    placeholder={ t('address_in_english') }
+                    addonAfter={
+                      this.lookup('en')
+                    }
+                  />
+                  <Checkbox
+                      name='address_visible'
+                      value={ props.addressVisible }
+                      label={ t('address_visible') }
+                      rowLabel=''
+                      onChange={ (name, visible) => {
+                        props.onVisiblityChange(visible)
+                      } }
+                  />
+                </fieldset>
+              </Form>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <LocationMap
+                googleMapAPIKey={ props.googleMapAPIKey }
+                lat={ lat }
+                lng={ lng }
+                zoom={ zoom }
+                circleMarker={ marker }
+                onViewportChange={ ({center, zoom}) => {
+                  log.debug('onViewportChange', center, zoom)
 
-            props.dispatch({
-              type: 'SET_MAP_VIEWPORT',
-              payload: {
-                lat: center.lat,
-                lng: center.lng,
-                zoom,
-              },
-            })
+                  props.dispatch({
+                    type: 'SET_MAP_VIEWPORT',
+                    payload: {
+                      lat: center.lat,
+                      lng: center.lng,
+                      zoom,
+                    },
+                  })
 
-            props.onMapDataChange(props.state.mapViewport, props.state.mapMarker)
-          }}
-          onClick={ ({lat, lng}) => {
-            props.dispatch({
-              type: 'SET_MAP_MARKER',
-              payload: {
-                lat, lng,
-              },
-            })
+                  props.onMapDataChange(props.state.mapViewport, props.state.mapMarker)
+                }}
+                onClick={ ({lat, lng}) => {
+                  props.dispatch({
+                    type: 'SET_MAP_MARKER',
+                    payload: {
+                      lat, lng,
+                    },
+                  })
 
-            props.onMapDataChange(props.state.mapViewport, props.state.mapMarker)
-          }}
-        />
+                  props.onMapDataChange(props.state.mapViewport, props.state.mapMarker)
+                }}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <fieldset>
+                  <input className='btn btn-primary'
+                    formNoValidate={ true } type='button' defaultValue={ t('ok') }
+                    onClick={ props.onNext }
+                  />
+              </fieldset>
+            </Col>
+          </Row>
+        </Grid>
       </div>
     )
   }

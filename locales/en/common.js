@@ -11,7 +11,7 @@ module.exports = {
   'step_address_location': 'Address',
   'step_done': 'Done',
 
-  'ok': 'Ok',
+  'ok': 'Go to the next step',
 
   'title_in_vietnamese': 'Title in Vietnamese',
   'title_in_english': 'Title in English',
@@ -51,5 +51,6 @@ module.exports = {
   'address_in_english': 'Address in English',
   'address_visible': 'Show this address text to viewers',
 
-  'create_the_property': 'Create the post'
+  'create_the_property': 'Create the post',
+  'create_the_property_desc': 'The post will be created by data from all the steps',
 }

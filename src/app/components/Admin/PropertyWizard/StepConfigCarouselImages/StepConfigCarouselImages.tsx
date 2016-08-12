@@ -120,16 +120,14 @@ export class StepConfigCarouselImages extends React.Component<IInternalProps, vo
             }
           </Row>
           <Row>
-            <form>
+            <Col xs={12}>
               <fieldset>
-                <Row>
                   <input className='btn btn-primary'
                     formNoValidate={ true } type='button' defaultValue={ t('ok') }
                     onClick={ props.onNext }
                   />
-                </Row>
               </fieldset>
-            </form>
+            </Col>
           </Row>
         </Grid>
         <UploadImageModal

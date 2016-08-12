@@ -37,7 +37,7 @@ class PropertiesNew extends React.Component<IProps, {}> {
 
     let imageRootUrl
     if (typeof window !== 'undefined') {
-      key = window.__CONFIG__.imageRootUrl
+      imageRootUrl = window.__CONFIG__.imageRootUrl
     }
 
     return(
