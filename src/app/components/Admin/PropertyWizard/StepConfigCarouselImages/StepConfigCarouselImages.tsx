@@ -1,5 +1,6 @@
 import * as update from 'react/lib/update'
 import * as React from 'react'
+import * as log from 'loglevel'
 import { SFC } from 'react'
 import * as urljoin from 'url-join'
 import * as c from 'classnames'
@@ -53,6 +54,9 @@ const reducer = (state: IState, action) => {
         images: {
           $push: [action.payload],
         },
+        showModel: {
+          $set: false,
+        },
       })
     default:
       return state
@@ -72,6 +76,15 @@ interface IInternalProps extends IProps {
 const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
   const { t } = props
 
+  let images: IImage[]
+  if (props.state.images) {
+    images = props.state.images
+  } else if (props.images) {
+    images = props.images
+  } else {
+    images = []
+  }
+
   return (
     <div>
       <Grid>
@@ -82,7 +95,7 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
             </div>
           </Col>
           {
-            props.images.map( (image, i) => (
+            images.map( (image, i) => (
               <Col xs={6} md={4}>
                 <Image src={
                   urljoin(window.__CONFIG__.imageRootUrl, image.fileName)
@@ -99,7 +112,7 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
         <fieldset>
           <Row layout='horizontal'>
             <input className='btn btn-primary'
-              formNoValidate={ true } type='submit' defaultValue='Ok'
+              formNoValidate={ true } type='button' defaultValue='Ok'
               onClick={ props.onNext }
             />
           </Row>

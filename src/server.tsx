@@ -72,6 +72,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(favicon(path.join(__dirname, '../src/favicon.ico')));
 
 app.use('/public', express.static(path.join(__dirname, '../build/public')));
+app.use('/public/images', express.static(path.join(__dirname, nconf.get('SETTINGS_UPLOADED_IMAGE_FOLDER'))));
 app.use('/node_modules/alloyeditor', express.static(path.join(__dirname, '../node_modules/alloyeditor')));
 
 app.use(require('i18next-express-middleware').handle(i18n));

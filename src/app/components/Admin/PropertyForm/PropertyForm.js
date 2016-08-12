@@ -309,7 +309,7 @@ class PropertyForm extends React.Component {
             <Row>
               <Col xs={12}>
                 <div style={{ height: 52 }}>
-                  <Button type='submit' text='Save' disabled={ this.props.isFetching }>
+                  <Button type='button' text='Next' disabled={ this.props.isFetching }>
                   </Button>
                 </div>
               </Col>

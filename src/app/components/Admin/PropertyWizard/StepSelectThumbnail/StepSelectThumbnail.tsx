@@ -105,7 +105,7 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
         <fieldset>
           <Row layout='horizontal'>
             <input className='btn btn-primary'
-              formNoValidate={ true } type='submit' defaultValue='Ok'
+              formNoValidate={ true } type='button' defaultValue='Ok'
               onClick={ props.onNext }
             />
           </Row>
