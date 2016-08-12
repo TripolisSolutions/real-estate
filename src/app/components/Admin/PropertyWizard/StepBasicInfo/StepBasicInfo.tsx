@@ -24,21 +24,22 @@ function translateOptions(options, t): IOption[] {
 export interface IFormData {
   title_in_vietnamese: string
   title_in_english: string
-  price_in_vnd: number
-  price_in_usd: number
-  category: string
-  sale_type: string
-  rental_period_value: number
-  rental_period_unit: string
-  available_until: Date
-  facing_direction: string
-  bed_room_count: number
-  size_width: number
-  size_length: number
+  price_in_vnd?: number
+  price_in_usd?: number
+  category?: string
+  sale_type?: string
+  rental_period_value?: number
+  rental_period_unit?: string
+  available_until?: Date
+  facing_direction?: string
+  bed_room_count?: number
+  size_width?: number
+  size_length?: number
 }
 
 interface IProps extends InjectedTranslateProps, React.Props<StepBasicInfo> {
   langCode: string
+  formData: IFormData
   categories: ICategory[]
   onSubmit(data: IFormData)
   onChange(data: IFormData)
@@ -69,7 +70,7 @@ class StepBasicInfo extends React.Component<IProps, {}> {
   }
 
   public render() {
-    const { t } = this.props
+    const { t, formData } = this.props
 
     const salesTypes = translateOptions(salesTypeOptions, t)
     salesTypes.unshift(emptyOption)
@@ -97,17 +98,17 @@ class StepBasicInfo extends React.Component<IProps, {}> {
             onChange={ this.onChange }
         >
           <fieldset>
-            <legend>Input types</legend>
+            <legend>{ t('step_basic_info') }</legend>
             <Input
               name='title_in_vietnamese'
-              value=''
+              defaultValue={ formData.title_in_vietnamese }
               label={ t('title_in_vietnamese') }
               type='text'
               placeholder={ t('title_in_vietnamese') }
             />
             <Input
               name='title_in_english'
-              value=''
+              defaultValue={ formData.title_in_english }
               label={ t('title_in_english') }
               type='text'
               placeholder={ t('title_in_english') }
@@ -194,7 +195,7 @@ class StepBasicInfo extends React.Component<IProps, {}> {
           </fieldset>
           <fieldset>
             <Row layout='horizontal'>
-              <input className='btn btn-primary' formNoValidate={ true } type='submit' defaultValue='Ok' />
+              <input className='btn btn-primary' formNoValidate={ true } type='submit' defaultValue={ t('ok') } />
             </Row>
           </fieldset>
         </Form>

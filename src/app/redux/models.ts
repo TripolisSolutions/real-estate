@@ -13,6 +13,11 @@ export interface ITranslatableText {
   text: string
 }
 
+export interface ITranslatablePrice {
+  value: number
+  currency: string
+}
+
 export function getLangCodeFromLanguage(language: string) {
   switch (language) {
     case 'vietnamese':
@@ -26,4 +31,8 @@ export function getLangCodeFromLanguage(language: string) {
 
 export function translateText(field: ITranslatableText[], langCode) {
   return field.filter((tran) => getLangCodeFromLanguage(tran.language) === langCode)[0].text
+}
+
+export function translatePrice(field: ITranslatablePrice[], currency) {
+  return field.filter((tran) => getLangCodeFromLanguage(tran.currency) === currency)[0].value
 }

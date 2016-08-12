@@ -4,6 +4,7 @@ declare module 'formsy-react-components' {
   interface IElementProps {
     name: string
     value?: string
+    defaultValue?: string
     label?: string
     placeholder?: string
     type?: string

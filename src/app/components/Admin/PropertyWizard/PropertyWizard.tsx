@@ -1,5 +1,7 @@
 import * as React from 'react'
 import * as log from 'loglevel'
+import * as update from 'react/lib/update'
+import withReducer from 'recompose/withReducer'
 
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
@@ -8,6 +10,7 @@ import './ReactMultistep/prog-tracker.less'
 
 import { ICategory } from '../../../redux/modules/categories/categories.model'
 import { IProperty, IMapViewport, ICircleMarker } from '../../../redux/modules/properties/properties.model'
+import { translatePrice, translateText } from '../../../redux/models'
 
 import StepBasicInfo from './StepBasicInfo/StepBasicInfo'
 import { IFormData as IBasicInfoFormData } from './StepBasicInfo/StepBasicInfo'
@@ -23,12 +26,69 @@ import { bindBasicInfoToProperty } from './converter'
 
 interface IProps extends InjectedTranslateProps, React.Props<any> {
   langCode: string
+  property?: IProperty
   googleMapAPIKey: string
   categories: ICategory[]
   onWizardDone(cat: ICategory)
 }
 
-export class PropertyWizard extends React.Component<IProps, void> {
+interface IState {
+  basicInfoFormData?: IBasicInfoFormData
+  thumbnailImage?: IImage
+  galleryImages?: IImage[]
+  descVN: string
+  descEN: string
+  mapViewport?: IMapViewport
+  mapMarker?: ICircleMarker
+  addressVisible: boolean
+  addressVN: string
+  addressEN: string
+}
+
+const reducer = (state: IState, action) => {
+  log.debug('action: ', action)
+  switch (action.type) {
+    case 'BASIC_INFO':
+      return update(state, {
+        basicInfoFormData: {
+          $set: action.payload,
+        },
+      })
+    default:
+      return state
+  }
+}
+
+const enhance = withReducer<IState, any, IProps>('state', 'dispatch', reducer, {
+  descVN: '',
+  descEN: '',
+  addressVisible: false,
+  addressVN: '',
+  addressEN: '',
+})
+
+interface IInternalProps extends IProps {
+  state?: IState
+  dispatch?: Function
+}
+
+export class PropertyWizard extends React.Component<IInternalProps, void> {
+
+  public static defaultProps = {
+    langCode: 'vi',
+    property: {
+      name: [
+        {
+          language: 'vietnamese',
+          text: 'ddd',
+        },
+        {
+          language: 'english',
+          text: '',
+        },
+      ],
+    },
+  }
 
   public refs: {
     [key: string]: any
@@ -36,9 +96,39 @@ export class PropertyWizard extends React.Component<IProps, void> {
   }
 
   public render() {
-    const { t } = this.props
+    const { t, dispatch } = this.props
 
     let basicInfoFormData: IBasicInfoFormData
+    if (this.props.state.basicInfoFormData) {
+      basicInfoFormData = this.props.state.basicInfoFormData
+    } else {
+      const prop = this.props.property
+      basicInfoFormData = {
+        title_in_vietnamese: translateText(prop.name, 'vi'),
+        title_in_english: translateText(prop.name, 'en'),
+        category: prop.categoryID,
+        sale_type: prop.salesType,
+        available_until: prop.availableUntil,
+        facing_direction: prop.facingDirection,
+        bed_room_count: prop.bedRoomCount,
+      }
+
+      if (prop.price) {
+        basicInfoFormData.price_in_vnd = translatePrice(prop.price, 'VND')
+        basicInfoFormData.price_in_usd = translatePrice(prop.price, 'USD')
+      }
+
+      if (prop.rentalPeriod) {
+        basicInfoFormData.rental_period_value = prop.rentalPeriod.digits
+        basicInfoFormData.rental_period_unit = prop.rentalPeriod.unit
+      }
+
+      if (prop.size) {
+        basicInfoFormData.size_width = prop.size.width
+        basicInfoFormData.size_length = prop.size.length
+      }
+    }
+
     let thumbnailImage: IImage
     let galleryImages: IImage[]
     let descVN: string
@@ -58,12 +148,15 @@ export class PropertyWizard extends React.Component<IProps, void> {
         component: (
           <StepBasicInfo
             langCode={ this.props.langCode }
+            formData={ basicInfoFormData }
             categories={ this.props.categories }
             onChange={ (formData) => {
-              basicInfoFormData = formData
+              dispatch({
+                type: 'BASIC_INFO',
+                payload: formData,
+              })
             }}
             onSubmit={ (formData) => {
-              basicInfoFormData = formData
               this.refs.multistep.next()
             }}
           />
@@ -200,4 +293,4 @@ export class PropertyWizard extends React.Component<IProps, void> {
   }
 }
 
-export default translate()(PropertyWizard)
+export default enhance(translate()(PropertyWizard))

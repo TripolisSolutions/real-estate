@@ -1,10 +1,5 @@
-import { ITranslatableText } from '../../models'
+import { ITranslatableText, ITranslatablePrice } from '../../models'
 import { IImage } from '../images/images.model'
-
-interface ITranslatablePrice {
-  value: number
-  currency: string
-}
 
 export interface IMapViewport {
   lat: number
