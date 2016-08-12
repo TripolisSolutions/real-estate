@@ -37,7 +37,6 @@ const StepBasicInfo = (props: IProps) => {
                       </span>
                     )
                   }
-                  
                 </button>
               </li>
             </ul>

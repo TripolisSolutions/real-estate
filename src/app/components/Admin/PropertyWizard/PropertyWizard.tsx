@@ -128,22 +128,6 @@ interface IInternalProps extends IProps {
 
 export class PropertyWizard extends React.Component<IInternalProps, void> {
 
-  public static defaultProps = {
-    langCode: 'vi',
-    property: {
-      name: [
-        {
-          language: 'vietnamese',
-          text: '',
-        },
-        {
-          language: 'english',
-          text: '',
-        },
-      ],
-    },
-  }
-
   public refs: {
     [key: string]: any
     multistep: any
@@ -152,7 +136,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
   constructor(props: IInternalProps) {
     super(props)
 
-    const prop = props.property
+    const prop = props.property || {} as IProperty
 
     if (props.property) {
       const prop = this.props.property
@@ -180,39 +164,47 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
         props.state.basicInfoFormData.size_width = prop.size.width
         props.state.basicInfoFormData.size_length = prop.size.length
       }
+    } else {
+      props.state.basicInfoFormData = {
+        title_in_vietnamese: '',
+        title_in_english: '',
+      }
     }
 
-    if (!props.state.thumbnailImage && prop.thumbnailImage) {
-      props.state.thumbnailImage = prop.thumbnailImage
-    }
-    if (!props.state.galleryImages && prop.galleryImages) {
-      props.state.galleryImages = prop.galleryImages || []
-    }
-    if (!props.state.descVN && translateText(prop.desc, 'vi')) {
-      props.state.descVN = translateText(prop.desc, 'vi')
-    }
-    if (!props.state.descEN && translateText(prop.desc, 'en')) {
-      props.state.descEN = translateText(prop.desc, 'en')
-    }
-    if (!props.state.mapViewport && prop.address && prop.address.viewport) {
-      props.state.mapViewport = prop.address.viewport
-    }
-    if (!props.state.mapMarker && prop.address && prop.address.circleMarker) {
-      props.state.mapMarker = prop.address.circleMarker
-    }
-    if (!props.state.addressVisible && prop.address && prop.address.visible) {
-      props.state.addressVisible = prop.address.visible || false
-    }
-    if (!props.state.addressVN && prop.address && translateText(prop.address.name, 'vi')) {
-      props.state.addressVN = translateText(prop.address.name, 'vi')
-    }
-    if (!props.state.addressEN && prop.address && translateText(prop.address.name, 'en')) {
-      props.state.addressEN = translateText(prop.address.name, 'en')
-    }
+    // if (!props.state.thumbnailImage && prop.thumbnailImage) {
+    props.state.thumbnailImage = prop.thumbnailImage
+    // }
+    // if (!props.state.galleryImages && prop.galleryImages) {
+    props.state.galleryImages = prop.galleryImages || []
+    // }
+    // if (!props.state.descVN && translateText(prop.desc, 'vi')) {
+    props.state.descVN = translateText(prop.desc, 'vi')
+    // }
+    // if (!props.state.descEN && translateText(prop.desc, 'en')) {
+    props.state.descEN = translateText(prop.desc, 'en')
+    // }
+    // if (!props.state.mapViewport && prop.address && prop.address.viewport) {
+    props.state.mapViewport = (prop.address || {} as any).viewport
+    // }
+    // if (!props.state.mapMarker && prop.address && prop.address.circleMarker) {
+    props.state.mapMarker = (prop.address || {} as any).circleMarker
+    // }
+    // if (!props.state.addressVisible && prop.address && prop.address.visible) {
+    props.state.addressVisible = (prop.address || {} as any).visible || false
+    // }
+    // if (!props.state.addressVN && prop.address && translateText(prop.address.name, 'vi')) {
+    props.state.addressVN = translateText((prop.address || {} as any).name, 'vi')
+    // }
+    // if (!props.state.addressEN && prop.address && translateText(prop.address.name, 'en')) {
+    props.state.addressEN = translateText((prop.address || {} as any).name, 'en')
+    // }
   }
 
   public render() {
     const { t, dispatch, state } = this.props
+
+    const isCreate = !this.props.property
+    log.debug('isCreate', isCreate, this.props.property)
 
     const steps: IStep[] = [
       {

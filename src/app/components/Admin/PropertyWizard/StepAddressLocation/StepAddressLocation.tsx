@@ -1,6 +1,7 @@
 import * as update from 'react/lib/update'
 import * as React from 'react'
 import * as log from 'loglevel'
+import * as _ from 'lodash'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 import {
   Grid, Row, Col,
@@ -193,10 +194,10 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
             <Col xs={12}>
               <Form
                 className='horizontal'
-                onChange={ (data) => {
+                onChange={ _.debounce((data) => {
                   props.dispatch({type: 'UPDATE_ADDRESS', payload: data})
                   props.onAddressChange(data.address_in_vietnamese, data.address_in_english)
-                }}
+                }, 200)}
               >
                 <fieldset>
                   <Input
