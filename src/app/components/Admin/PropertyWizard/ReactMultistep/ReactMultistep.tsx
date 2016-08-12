@@ -84,7 +84,7 @@ export default class MultiStep extends Component<IProps, IState> {
 
   private handleKeyDown(evt) {
     if (evt.which === 13) {
-      this.next()
+      // this.next()
     }
   }
 

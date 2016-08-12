@@ -5,6 +5,7 @@ const appConfig = require('../config/main');
 import * as e6p from 'es6-promise';
 (e6p as any).polyfill();
 import 'isomorphic-fetch';
+import * as fs from 'fs'
 
 import * as log from 'loglevel'
 import * as nconf from 'nconf'
@@ -31,7 +32,7 @@ import routes from './app/routes';
 
 import i18n from './i18n'
 
-import { Html } from './app/containers';
+import { Html } from './app/containers/Html';
 const manifest = require('../build/manifest.json');
 
 const express = require('express');
@@ -39,6 +40,9 @@ const compression = require('compression');
 const Chalk = require('chalk');
 const favicon = require('serve-favicon');
 const proxy = require('http-proxy-middleware')
+const multer = require('multer')
+const mv = require('mv')
+import * as urljoin from 'url-join'
 
 log.setLevel(nconf.get('SETTINGS_LOG_LEVEL'))
 
@@ -68,6 +72,8 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(favicon(path.join(__dirname, '../src/favicon.ico')));
 
 app.use('/public', express.static(path.join(__dirname, '../build/public')));
+app.use('/public/images', express.static(path.join(__dirname, nconf.get('SETTINGS_UPLOADED_IMAGE_FOLDER'))));
+app.use('/node_modules/alloyeditor', express.static(path.join(__dirname, '../node_modules/alloyeditor')));
 
 app.use(require('i18next-express-middleware').handle(i18n));
 
@@ -75,6 +81,60 @@ function simplifyLocale(locale: string) {
   const lng = locale.indexOf('-') !== -1 ? locale.split('-')[0] : locale
   return lng
 }
+
+const thumbnailUpload = multer({
+  dest: '/tmp/',
+})
+app.post('/thumbnails/upload', thumbnailUpload.single('file'), (req, res) => {
+  log.debug('req.file', req.file)
+  log.debug('image width ', req.body.width, ' height ', req.body.height, ' params: ', req.params.width)
+  const destPath = path.join(__dirname, nconf.get('SETTINGS_UPLOADED_IMAGE_FOLDER'), req.file.originalname)
+  log.debug('moving file ', req.file.path, ' to ', destPath)
+
+  mv(req.file.path, destPath, (err) => {
+    if (err) {
+      log.error(`error while move file from ${ req.file.path } to ${ destPath }: `, err)
+      res.status(500).send(err.message)
+      return
+    }
+
+  // moveFile(req.file.path, destPath).then(() => {
+
+    const imagesUrl = urljoin(nconf.get('SETTINGS_REAL_ESTATE_API'), 'images')
+    log.debug('saving the image to api: ', imagesUrl)
+    fetch(imagesUrl, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fileName: req.file.originalname,
+        width: parseInt(req.body.width, 10),
+        height: parseInt(req.body.height, 10),
+      }),
+    }).then(resp => {
+      log.debug('resp ok: ', resp.ok)
+      if (resp.ok) {
+        return resp.json()
+          .then(resp => {
+            log.debug('resp json: ', resp)
+            res.status(200).send(resp)
+          })
+      } else {
+        log.error(`error while store image on api: `, resp)
+        res.status(500).send(resp)
+      }
+    }).catch((err) => {
+      log.error(`error while store image on api: `, err)
+      res.status(500).send(err.message)
+    })
+  })
+  // }).catch((err) => {
+  //   log.error(`error while move file from ${ req.file.path } to ${ destPath }: `, err)
+  //   res.status(500).send(err.message)
+  // })
+})
 
 app.use('/api', proxy({
   target: nconf.get('SETTINGS_REAL_ESTATE_API'),

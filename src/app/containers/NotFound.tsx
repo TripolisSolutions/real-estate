@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { browserHistory } from 'react-router'
 const { connect } = require('react-redux')
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
@@ -8,12 +9,9 @@ import { IState } from '../redux/reducers'
 interface IProps extends IState, InjectedTranslateProps {
 }
 
-@connect(
-  state => state
-)
-class NotFound extends React.Component<IProps, any> {
-    public contextTypes = {
-        router: React.PropTypes.func.isRequired,
+class NotFound extends React.Component<IProps, {}> {
+    public static contextTypes = {
+        'router': React.PropTypes.func.isRequired,
     }
 
     constructor(props) {
@@ -22,17 +20,18 @@ class NotFound extends React.Component<IProps, any> {
 
     public render() {
         const { t } = this.props
-        const router = (this.context as any).router as any
 
         return (
             <main>
                 <h3>{ t('page_not_found.heading') }</h3>
 
-                <a onClick={ router.goBack() }>Go back</a>
+                <a onClick={ () => browserHistory.goBack() }>Go back</a>
                 <IndexLink to='/'>{ t('page_not_found.main_page') }</IndexLink>
             </main>
         )
     }
 }
 
-export default translate()(NotFound)
+export default connect(
+  state => state
+)(translate()(NotFound))

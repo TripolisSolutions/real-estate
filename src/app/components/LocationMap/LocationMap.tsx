@@ -11,11 +11,28 @@ import mapStyles from './locationMapStyles'
 
 const s = require('./LocationMap.less')
 
-const LocationMap: SFC<any> = function LocationMap(props) {
+interface IProps {
+  googleMapAPIKey?: string
+  lat?: number
+  lng?: number
+  zoom?: number,
+  circleMarker?: {
+    lat: number
+    lng: number
+    radius: number
+  },
+  onViewportChange?: Function
+  onClick?: Function
+  title?: string,
+}
+
+const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
   log.debug('LocationMap render circleMarker: ', props.circleMarker)
 
-  let key: string
-  if (typeof window !== 'undefined') {
+  let key
+  if (props.googleMapAPIKey) {
+    key = props.googleMapAPIKey
+  } else if (typeof window !== 'undefined') {
     key = window.__CONFIG__.googleMapAPIKey
   }
 
@@ -24,14 +41,15 @@ const LocationMap: SFC<any> = function LocationMap(props) {
       <div className={ s.container }>
         <GoogleMap
           bootstrapURLKeys={{
-            key: key,
+            key: props.googleMapAPIKey,
             language: 'vi',
           }}
           options={{
             styles: mapStyles,
           }}
-          center={ props.center }
+          center={{lat: props.lat, lng: props.lng }}
           zoom={ props.zoom }
+          onChange={ props.onViewportChange }
           onClick={ props.onClick && props.onClick }>
           {
             props.circleMarker ? <LocationMapCircleMarker
@@ -45,18 +63,13 @@ const LocationMap: SFC<any> = function LocationMap(props) {
   )
 }
 
-LocationMap.propTypes = {
-  center: React.PropTypes.object,
-  zoom: React.PropTypes.number,
-  circleMarker: React.PropTypes.object,
-  onClick: React.PropTypes.func,
-  title: React.PropTypes.string,
-}
 // 10.7859378,106.5255811
 LocationMap.defaultProps = {
-  center: {lat: 10.7859378, lng: 106.5255811},
+  googleMapAPIKey: '',
+  lat: 10.7859378,
+  lng: 106.5255811,
   zoom: 12,
-  title: 'We are here',
+  title: '',
 }
 
 export default LocationMap

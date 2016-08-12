@@ -31,6 +31,7 @@ storiesOf('PropertyWizard', module)
     return (
       <StorybookProvider>
         <PropertyWizard
+          googleMapAPIKey='AIzaSyDHU5dwOcUU7uO3fvvM_5ZQd-83tLykEpA'
           langCode={ 'vi' }
           categories={ categories }
           onWizardDone={ (property) => action('wizard done', property)() }
@@ -44,6 +45,7 @@ storiesOf('PropertyWizard', module)
     return (
       <StorybookProvider>
         <PropertyWizard
+          googleMapAPIKey='AIzaSyDHU5dwOcUU7uO3fvvM_5ZQd-83tLykEpA'
           langCode={ 'en' }
           categories={ categories }
           onWizardDone={ (property) => action('wizard done', property)() }

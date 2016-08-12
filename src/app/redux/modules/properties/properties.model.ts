@@ -6,6 +6,18 @@ interface ITranslatablePrice {
   currency: string
 }
 
+export interface IMapViewport {
+  lat: number
+  lng: number
+  zoom: number
+}
+
+export interface ICircleMarker {
+  lat: number
+  lng: number
+  radius: number
+}
+
 export interface IProperty {
   id: string
   name: ITranslatableText[]
@@ -22,17 +34,9 @@ export interface IProperty {
   }
   address?: {
     name: ITranslatableText[]
-    viewport: {
-      lat: number
-      lng: number
-      zoon: number
-    }
-    circleMarker: {
-      lat: number
-      lng: number
-      radius: number
-    }
-    visible: number
+    viewport: IMapViewport
+    circleMarker: ICircleMarker
+    visible: boolean
   }
 
   bedRoomCount?: number

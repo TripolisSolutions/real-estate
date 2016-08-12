@@ -31,8 +31,8 @@ class Html extends React.Component<IHtmlProps, {}> {
     );
 
     const config = {
-      // googleMapAPIKey: nconf.get('SETTINGS_GOOGLE_MAP_API_KEY'),
-      googleMapAPIKey: '',
+      googleMapAPIKey: nconf.get('SETTINGS_GOOGLE_MAP_API_KEY'),
+      imageRootUrl: nconf.get('SETTINGS_IMAGE_ROOT_URL'),
     }
 
     // tslint:disable-next-line:max-line-length
@@ -53,6 +53,13 @@ class Html extends React.Component<IHtmlProps, {}> {
         <body>
           <main id='app' dangerouslySetInnerHTML={{ __html: markup }}></main>
           {initialState}
+          <script dangerouslySetInnerHTML={{
+            __html: `
+              window.ALLOYEDITOR_BASEPATH = '/node_modules/alloyeditor/dist/alloy-editor/';
+              window.CKEDITOR_BASEPATH = '/node_modules/alloyeditor/dist/alloy-editor/';
+            `,
+          }}>
+          </script>
           {renderScripts}
         </body>
       </html>
