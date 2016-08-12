@@ -1,12 +1,18 @@
 import * as React from 'react'
-import { DropdownButton as BootstrapDropdownButton } from 'react-bootstrap'
+import { FormGroup, ControlLabel } from 'react-bootstrap'
 import { MenuItem as BootstrapMenuItem} from 'react-bootstrap'
 const s = require('./Dropdown.less')
 
 function Dropdown(props) {
   return (
-    <BootstrapDropdownButton id='test' title={ props.title } className={ s.container }>
-    </BootstrapDropdownButton>
+     <FormGroup>
+      {
+        props.label ? <ControlLabel>{ props.label }</ControlLabel> : undefined
+      }
+      <div className={ s.container }>
+        
+      </div>
+    </FormGroup>
   )
 }
 

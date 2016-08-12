@@ -8,6 +8,19 @@
 
   img {
     width: 100%;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  &:hover{  
+    .info{
+      transition: bottom 0.5s ease-in-out;
+      bottom: 0;
+    }
+
+    img {
+      transition: transform 0.5s ease-in-out;
+      transform: scale(1.1);
+    }
   }
 }
 
@@ -15,7 +28,7 @@
   transition: bottom 0.5s ease-in-out;
 
   position: absolute;
-  bottom: -113px;
+  bottom: -145px;
   width: 100%;
   padding: @margin;
 
@@ -29,11 +42,6 @@
 
   h2 {
     margin: 0;
-  }
-
-  &:hover{  
-    transition: bottom 0.5s ease-in-out;
-    bottom: 0;
   }
 }
 
