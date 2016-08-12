@@ -19,6 +19,10 @@ const CREATE_NEW_PROPERTY_REQUEST = 'CREATE_NEW_PROPERTY_REQUEST'
 const CREATE_NEW_PROPERTY_SUCCESS = 'CREATE_NEW_PROPERTY_SUCCESS'
 const CREATE_NEW_PROPERTY_FAILURE = 'CREATE_NEW_PROPERTY_FAILURE'
 
+const UPDATE_PROPERTY_REQUEST = 'UPDATE_PROPERTY_REQUEST'
+const UPDATE_PROPERTY_SUCCESS = 'UPDATE_PROPERTY_SUCCESS'
+const UPDATE_PROPERTY_FAILURE = 'UPDATE_PROPERTY_FAILURE'
+
 export interface IState {
   property?: IProperty
   properties: IProperty[]
@@ -94,6 +98,27 @@ const ACTION_HANDLERS = {
     })
   },
   [CREATE_NEW_PROPERTY_SUCCESS]: (state: IState, action: IAction<IProperty>): IState => {
+    return update(state, {
+      isFetching: {
+        $set: false,
+      },
+    });
+  },
+  [UPDATE_PROPERTY_REQUEST]: (state: IState): IState => {
+    return update(state, {
+      isFetching: {
+        $set: true,
+      },
+    })
+  },
+  [UPDATE_PROPERTY_SUCCESS]: (state: IState): IState => {
+    return update(state, {
+      isFetching: {
+        $set: false,
+      },
+    })
+  },
+  [UPDATE_PROPERTY_FAILURE]: (state: IState, action: IAction<IProperty>): IState => {
     return update(state, {
       isFetching: {
         $set: false,
@@ -238,6 +263,56 @@ export function createNewPropertySuccess(item: IProperty): IAction<IProperty> {
 export function createNewPropertyFailure(error: Error) {
   return {
     type: CREATE_NEW_PROPERTY_FAILURE,
+    error: error,
+  };
+}
+
+/** Async Action Creator */
+export function updateProperty(id: string, property: IProperty): Redux.Dispatch {
+  return dispatch => {
+    property.id = id
+    dispatch(updatePropertyRequest());
+
+    return fetch(urljoin(rootUrl, 'properties', id), {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(property),
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+            .then(res => dispatch(updatePropertySuccess(res.doc)));
+        } else {
+          return res.json()
+            .then(res => dispatch(updatePropertyFailure(res)));
+        }
+      })
+      .catch(err => dispatch(updatePropertyFailure(err)));
+  };
+}
+
+/** Action Creator */
+export function updatePropertyRequest() {
+  return {
+    type: UPDATE_PROPERTY_REQUEST,
+  };
+}
+
+/** Action Creator */
+export function updatePropertySuccess(item: IProperty): IAction<IProperty> {
+  return {
+    type: UPDATE_PROPERTY_SUCCESS,
+    payload: item,
+  };
+}
+
+/** Action Creator */
+export function updatePropertyFailure(error: Error) {
+  return {
+    type: UPDATE_PROPERTY_FAILURE,
     error: error,
   };
 }
