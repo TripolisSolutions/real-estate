@@ -25,7 +25,7 @@ interface IProps extends InjectedTranslateProps {
 }
 
 interface IState {
-  images: IImage[]
+  images?: IImage[]
   showModel: boolean
 }
 
@@ -45,6 +45,11 @@ const reducer = (state: IState, action) => {
         },
       })
     case 'REMOVE_IMAGE':
+      state = update(state, {
+        images: {
+          $set: action.images,
+        },
+      })
       return update(state, {
         images: {
           $splice: [[action.payload, 1]],
@@ -59,13 +64,18 @@ const reducer = (state: IState, action) => {
           $set: false,
         },
       })
+    case 'SET_IMAGES':
+      return update(state, {
+        images: {
+          $set: action.payload,
+        },
+      })
     default:
       return state
   }
 }
 
 const enhance = withReducer<IState, any, IProps>('state', 'dispatch', reducer, {
-  images: [],
   showModel: false,
 })
 
@@ -77,13 +87,11 @@ interface IInternalProps extends IProps {
 const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
   const { t } = props
 
-  let images: IImage[]
+  let images: IImage[] = []
   if (props.state.images) {
     images = props.state.images
   } else if (props.images) {
     images = props.images
-  } else {
-    images = []
   }
 
   return (
@@ -102,23 +110,25 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
                   urljoin(props.imageRootUrl, image.fileName)
                  }/>
                  <Button bsStyle='danger'
-                  onClick={ () => props.dispatch({type: 'REMOVE_IMAGE', payload: i}) }
+                  onClick={ () => props.dispatch({type: 'REMOVE_IMAGE', payload: i, images}) }
                  >Remove</Button>
               </Col>
             ))
           }
         </Row>
+        <Row>
+          <form>
+            <fieldset>
+              <Row>
+                <input className='btn btn-primary'
+                  formNoValidate={ true } type='button' defaultValue={ t('ok') }
+                  onClick={ props.onNext }
+                />
+              </Row>
+            </fieldset>
+          </form>
+        </Row>
       </Grid>
-      <form>
-        <fieldset>
-          <Row layout='horizontal'>
-            <input className='btn btn-primary'
-              formNoValidate={ true } type='button' defaultValue='Ok'
-              onClick={ props.onNext }
-            />
-          </Row>
-        </fieldset>
-      </form>
       <UploadImageModal
         show={ props.state.showModel }
         onImageUploaded={ (image) => props.dispatch({type: 'IMAGE_UPLOADED', payload: image}) }

@@ -189,7 +189,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
       state.thumbnailImage = prop.thumbnailImage
     }
     if (!state.galleryImages && prop.galleryImages) {
-      state.galleryImages = prop.galleryImages
+      state.galleryImages = prop.galleryImages || []
     }
     if (!state.descVN && translateText(prop.desc, 'vi')) {
       state.descVN = translateText(prop.desc, 'vi')
@@ -212,16 +212,6 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
     if (!state.addressEN && prop.address && translateText(prop.address.name, 'en')) {
       state.addressEN = translateText(prop.address.name, 'en')
     }
-
-    // let thumbnailImage: IImage = state.thumbnailImage
-    // let galleryImages: IImage[] = state.galleryImages || []
-    // let descVN: string = state.descVN
-    // let descEN: string = state.descEN
-    // let mapViewport: IMapViewport
-    // let mapMarker: ICircleMarker
-    // let addressVisible: boolean
-    // let addressVN: string
-    // let addressEN: string
 
     const object = {}
     const property = object as IProperty
@@ -297,7 +287,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
           <StepConfigCarouselImages
             langCode={ this.props.langCode }
             imageRootUrl={ this.props.imageRootUrl }
-            images={ state.galleryImages || [] }
+            images={ state.galleryImages }
             onChange={ (images: IImage[]) => {
               dispatch({
                 type: 'GALLERY_IMAGES',
