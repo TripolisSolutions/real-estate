@@ -206,9 +206,8 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
               value={ false }
               label={ t('address_visible') }
               rowLabel=''
-              onChange={ (event) => {
-                console.log('visible event: ', event)
-                props.onVisiblityChange(event.target.checked)
+              onChange={ (name, visible) => {
+                props.onVisiblityChange(visible)
               } }
           />
         </fieldset>

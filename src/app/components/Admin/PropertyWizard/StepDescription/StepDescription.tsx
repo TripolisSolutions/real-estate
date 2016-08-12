@@ -24,6 +24,7 @@ class StepDescription extends React.Component<IProps, void> {
 
     return (
       <ReactQuill theme='snow'
+        className={ s.editor }
         value={ this.props.initialValue }
         onChange={this.props.onChange}
       />
