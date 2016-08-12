@@ -26,6 +26,7 @@ import { bindBasicInfoToProperty } from './converter'
 
 interface IProps extends InjectedTranslateProps, React.Props<any> {
   langCode: string
+  imageRootUrl: string
   property?: IProperty
   googleMapAPIKey: string
   categories: ICategory[]
@@ -276,6 +277,8 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
         component: (
           <StepSelectThumbnail
             langCode={ this.props.langCode }
+            imageRootUrl={ this.props.imageRootUrl }
+            image={ state.thumbnailImage }
             onImageUploaded={ (image) => {
               dispatch({
                 type: 'THUMBNAIL_IMAGE',
@@ -293,6 +296,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
         component: (
           <StepConfigCarouselImages
             langCode={ this.props.langCode }
+            imageRootUrl={ this.props.imageRootUrl }
             images={ state.galleryImages || [] }
             onChange={ (images: IImage[]) => {
               dispatch({

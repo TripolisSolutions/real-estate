@@ -17,7 +17,8 @@ const s = require('./StepSelectThumbnail.less')
 
 interface IProps extends InjectedTranslateProps {
   langCode: string
-  initialImage?: IImage
+  imageRootUrl: string
+  image?: IImage
   onImageUploaded(image: IImage)
   onNext()
 }
@@ -84,14 +85,14 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
 
   const { t } = props
 
-  const image = props.initialImage || props.state.image
+  const image = props.state.image || props.image
 
   return (
     <div>
       {
         image ? (
           <Image src={
-            urljoin(window.__CONFIG__.imageRootUrl, image.fileName)
+            urljoin(props.imageRootUrl, image.fileName)
           } thumbnail className={ s.imageHolder }
             onClick={ showUploadImageModal }
           />

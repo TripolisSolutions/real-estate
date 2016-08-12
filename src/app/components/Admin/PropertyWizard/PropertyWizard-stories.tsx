@@ -45,6 +45,7 @@ storiesOf('PropertyWizard', module)
     return (
       <StorybookProvider>
         <PropertyWizard
+          imageRootUrl={ 'http://localhost:9004/public/images' }
           googleMapAPIKey='AIzaSyDHU5dwOcUU7uO3fvvM_5ZQd-83tLykEpA'
           langCode={ 'vi' }
           categories={ categories }
@@ -59,6 +60,7 @@ storiesOf('PropertyWizard', module)
     return (
       <StorybookProvider>
         <PropertyWizard
+          imageRootUrl={ 'http://localhost:9004/public/images' }
           googleMapAPIKey='AIzaSyDHU5dwOcUU7uO3fvvM_5ZQd-83tLykEpA'
           langCode={ 'en' }
           categories={ categories }
@@ -161,6 +163,7 @@ storiesOf('PropertyWizard', module)
     return (
       <StorybookProvider>
         <PropertyWizard
+          imageRootUrl={ 'http://localhost:9004/public/images' }
           property={ property }
           googleMapAPIKey='AIzaSyDHU5dwOcUU7uO3fvvM_5ZQd-83tLykEpA'
           langCode={ 'en' }

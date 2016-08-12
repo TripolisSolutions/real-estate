@@ -18,6 +18,7 @@ import { IImage } from '../../../../redux/modules/images/images.model'
 
 interface IProps extends InjectedTranslateProps {
   langCode: string
+  imageRootUrl: string
   images: IImage[]
   onChange(images: IImage[])
   onNext()
@@ -98,7 +99,7 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
             images.map( (image, i) => (
               <Col xs={6} md={4}>
                 <Image src={
-                  urljoin(window.__CONFIG__.imageRootUrl, image.fileName)
+                  urljoin(props.imageRootUrl, image.fileName)
                  }/>
                  <Button bsStyle='danger'
                   onClick={ () => props.dispatch({type: 'REMOVE_IMAGE', payload: i}) }
