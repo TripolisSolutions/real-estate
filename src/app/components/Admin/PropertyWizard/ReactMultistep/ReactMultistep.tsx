@@ -30,7 +30,7 @@ export default class MultiStep extends Component<IProps, IState> {
       showPreviousBtn: false,
       showNextBtn: true,
       compState: 0,
-      navState: this.getNavStates(0, this.props.steps.length)
+      navState: this.getNavStates(0, this.props.steps.length),
     }
     this.hidden = {
       display: 'none',
@@ -126,7 +126,15 @@ export default class MultiStep extends Component<IProps, IState> {
         <ol className='progtrckr'>
           {this.renderSteps()}
         </ol>
-        {this.props.steps[this.state.compState].component}
+        {
+          this.props.steps.map((step, i) => (
+            <div key={ step.name } style={{
+              display: i === this.state.compState ? 'block' : 'none',
+            }}>
+              { step.component }
+            </div>
+          ))
+        }
         <div style={this.props.showNavigation ? {} : this.hidden}>
           <button style={this.state.showPreviousBtn ? {} : this.hidden}
                   className='multistep__btn--prev'

@@ -16,11 +16,11 @@ export function bindBasicInfoToProperty(cat: IProperty, data: IBasicInfoFormData
   cat.price = [
     {
       currency: 'VND',
-      value: data.price_in_vnd,
+      value: parseFloat(data.price_in_vnd as any),
     },
     {
       currency: 'USD',
-      value: data.price_in_usd,
+      value: parseFloat(data.price_in_usd as any),
     },
   ]
 
@@ -31,7 +31,7 @@ export function bindBasicInfoToProperty(cat: IProperty, data: IBasicInfoFormData
   cat.salesType = data.sale_type
 
   cat.rentalPeriod = {
-    digits: data.rental_period_value,
+    digits: parseInt(data.rental_period_value as any, 10),
     unit: data.rental_period_unit,
   }
 
@@ -39,11 +39,11 @@ export function bindBasicInfoToProperty(cat: IProperty, data: IBasicInfoFormData
 
   cat.facingDirection = data.facing_direction
 
-  cat.bedRoomCount = data.bed_room_count
+  cat.bedRoomCount = parseInt(data.bed_room_count as any, 10)
 
   cat.size = {
-    width: data.size_width,
-    length: data.size_length,
+    width: parseInt(data.size_width as any, 10),
+    length: parseInt(data.size_length as any, 10),
   }
 
   return cat

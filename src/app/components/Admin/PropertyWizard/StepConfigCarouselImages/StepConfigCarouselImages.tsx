@@ -1,7 +1,6 @@
 import * as update from 'react/lib/update'
 import * as React from 'react'
 import * as log from 'loglevel'
-import { SFC } from 'react'
 import * as urljoin from 'url-join'
 import * as c from 'classnames'
 import { translate, InjectedTranslateProps } from 'react-i18next'
@@ -18,13 +17,14 @@ import { IImage } from '../../../../redux/modules/images/images.model'
 
 interface IProps extends InjectedTranslateProps {
   langCode: string
+  imageRootUrl: string
   images: IImage[]
   onChange(images: IImage[])
   onNext()
 }
 
 interface IState {
-  images: IImage[]
+  images?: IImage[]
   showModel: boolean
 }
 
@@ -44,6 +44,11 @@ const reducer = (state: IState, action) => {
         },
       })
     case 'REMOVE_IMAGE':
+      state = update(state, {
+        images: {
+          $set: action.images,
+        },
+      })
       return update(state, {
         images: {
           $splice: [[action.payload, 1]],
@@ -58,73 +63,87 @@ const reducer = (state: IState, action) => {
           $set: false,
         },
       })
+    case 'SET_IMAGES':
+      return update(state, {
+        images: {
+          $set: action.payload,
+        },
+      })
     default:
       return state
   }
 }
 
 const enhance = withReducer<IState, any, IProps>('state', 'dispatch', reducer, {
-  images: [],
   showModel: false,
 })
 
 interface IInternalProps extends IProps {
-  state: IState
-  dispatch: Function
+  state?: IState
+  dispatch?: Function
 }
 
-const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
-  const { t } = props
+export class StepConfigCarouselImages extends React.Component<IInternalProps, void> {
 
-  let images: IImage[]
-  if (props.state.images) {
-    images = props.state.images
-  } else if (props.images) {
-    images = props.images
-  } else {
-    images = []
+  constructor(props: IInternalProps) {
+    super(props)
+
+    props.state.images = props.images || []
   }
 
-  return (
-    <div>
-      <Grid>
-        <Row>
-          <Col xs={6} md={4}>
-            <div className={ c('well', s.imageHolder) } onClick={ () => props.dispatch({type: 'SHOW_MODAL'}) }>
-              { t('upload_image') }
-            </div>
-          </Col>
-          {
-            images.map( (image, i) => (
-              <Col xs={6} md={4}>
-                <Image src={
-                  urljoin(window.__CONFIG__.imageRootUrl, image.fileName)
-                 }/>
-                 <Button bsStyle='danger'
-                  onClick={ () => props.dispatch({type: 'REMOVE_IMAGE', payload: i}) }
-                 >Remove</Button>
-              </Col>
-            ))
-          }
-        </Row>
-      </Grid>
-      <form>
-        <fieldset>
-          <Row layout='horizontal'>
-            <input className='btn btn-primary'
-              formNoValidate={ true } type='button' defaultValue='Ok'
-              onClick={ props.onNext }
-            />
+  public render() {
+    const props = this.props
+    const { t } = this.props
+
+    const images = this.props.state.images
+
+    return (
+      <div>
+        <Grid>
+          <Row>
+            <Col xs={6} md={4}>
+              <div className={ c('well', s.imageHolder) } onClick={ () => props.dispatch({type: 'SHOW_MODAL'}) }>
+                { t('upload_image') }
+              </div>
+            </Col>
+            {
+              images.map( (image, i) => (
+                <Col key={ image.id } xs={6} md={4}>
+                  <Image src={
+                    urljoin(props.imageRootUrl, image.fileName)
+                  }/>
+                  <Button bsStyle='danger'
+                    onClick={ () => {
+                      props.dispatch({type: 'REMOVE_IMAGE', payload: i, images})
+                      props.onChange(props.state.images)
+                    }}
+                  >Remove</Button>
+                </Col>
+              ))
+            }
           </Row>
-        </fieldset>
-      </form>
-      <UploadImageModal
-        show={ props.state.showModel }
-        onImageUploaded={ (image) => props.dispatch({type: 'IMAGE_UPLOADED', payload: image}) }
-        onHideClicked={ () => props.dispatch({type: 'HIDE_MODAL'}) }
-      />
-    </div>
-  );
+          <Row>
+            <Col xs={12}>
+              <fieldset>
+                  <input className='btn btn-primary'
+                    formNoValidate={ true } type='button' defaultValue={ t('ok') }
+                    onClick={ props.onNext }
+                  />
+              </fieldset>
+            </Col>
+          </Row>
+        </Grid>
+        <UploadImageModal
+          show={ props.state.showModel }
+          onImageUploaded={ (image) => {
+            props.dispatch({type: 'IMAGE_UPLOADED', payload: image})
+            props.onChange(props.state.images)
+          }}
+          onHideClicked={ () => props.dispatch({type: 'HIDE_MODAL'}) }
+        />
+      </div>
+    );
+  }
 }
 
-export default enhance(translate()(StepBasicInfo))
+export default enhance(translate()(StepConfigCarouselImages))

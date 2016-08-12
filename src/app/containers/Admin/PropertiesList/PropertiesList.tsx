@@ -1,20 +1,23 @@
 import * as React from 'react'
 import * as log from 'loglevel'
 import { Grid, Row } from 'react-bootstrap'
-import { InjectedTranslateProps } from 'react-i18next'
+import { translate, InjectedTranslateProps } from 'react-i18next'
 
 const { connect } = require('react-redux');
 const { asyncConnect } = require('redux-connect');
 
 import { triggerFetchCategories } from '../../../redux/modules/categories/categories'
 import { triggerFetchProperties } from '../../../redux/modules/properties/properties'
+import { deleteProperty } from '../../../redux/modules/properties/properties'
 import { IState } from '../../../redux/reducers'
 
 import PropertiesList from '../../../components/Admin/PropertiesList/PropertiesList'
 
 interface IProps extends IState, InjectedTranslateProps {
+  deleteProperty: Redux.ActionCreator
 }
 
+@translate()
 @asyncConnect([{
   promise: ({ store: { dispatch } }) => {
     log.debug('async feching data for PropertiesList')
@@ -27,9 +30,21 @@ interface IProps extends IState, InjectedTranslateProps {
   },
 }])
 @connect(
-  state => state
+  state => state,
+  dispatch => ({
+    deleteProperty: (id) => {
+      dispatch(deleteProperty(id))
+    },
+  })
 )
 export default class PropertiesListContainer extends React.Component<IProps, {}> {
+
+  private handleDelete = (id: string) => {
+    if (window.confirm(this.props.t('property_delete_confirm'))) {
+      this.props.deleteProperty(id)
+    }
+  }
+
   public render() {
     return(
       <Grid>
@@ -38,7 +53,7 @@ export default class PropertiesListContainer extends React.Component<IProps, {}>
             properties={ this.props.propertiesData.properties }
             isFetching={ this.props.propertiesData.isFetching }
             langCode={ this.props.i18nData.currentLangCode }
-            onDeleteClicked={ () => {} }
+            onDeleteClicked={ this.handleDelete }
           />
         </Row>
       </Grid>

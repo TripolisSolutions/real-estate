@@ -6,10 +6,14 @@ import * as urljoin from 'url-join'
 import * as c from 'classnames'
 import { Image } from 'react-bootstrap'
 import { translate, InjectedTranslateProps } from 'react-i18next'
-import { Row } from 'react-bootstrap'
+import {
+  Grid, Row, Col,
+} from 'react-bootstrap'
 import withReducer from 'recompose/withReducer'
 
+
 import UploadImageModal from '../../../UploadImageModal/UploadImageModal'
+
 
 import { IImage } from '../../../../redux/modules/images/images.model'
 
@@ -17,7 +21,8 @@ const s = require('./StepSelectThumbnail.less')
 
 interface IProps extends InjectedTranslateProps {
   langCode: string
-  initialImage?: IImage
+  imageRootUrl: string
+  image?: IImage
   onImageUploaded(image: IImage)
   onNext()
 }
@@ -84,33 +89,39 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
 
   const { t } = props
 
-  const image = props.initialImage || props.state.image
+  const image = props.state.image || props.image
 
   return (
     <div>
-      {
-        image ? (
-          <Image src={
-            urljoin(window.__CONFIG__.imageRootUrl, image.fileName)
-          } thumbnail className={ s.imageHolder }
-            onClick={ showUploadImageModal }
-          />
-        ) : (
-          <div className={ c('well', s.imageHolder) } onClick={ showUploadImageModal }>
-            { t('upload_image') }
-          </div>
-        )
-      }
-      <form>
-        <fieldset>
-          <Row>
-            <input className='btn btn-primary'
-              formNoValidate={ true } type='button' defaultValue='Ok'
-              onClick={ props.onNext }
-            />
-          </Row>
-        </fieldset>
-      </form>
+      <Grid>
+        <Row>
+          <Col xs={12}>
+            {
+              image ? (
+                <Image src={
+                  urljoin(props.imageRootUrl, image.fileName)
+                } thumbnail className={ s.imageHolder }
+                  onClick={ showUploadImageModal }
+                />
+              ) : (
+                <div className={ c('well', s.imageHolder) } onClick={ showUploadImageModal }>
+                  { t('upload_image') }
+                </div>
+              )
+            }
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <fieldset>
+              <input className='btn btn-primary'
+                formNoValidate={ true } type='button' defaultValue={ t('ok') }
+                onClick={ props.onNext }
+              />
+            </fieldset>
+          </Col>
+        </Row>
+      </Grid>
       <UploadImageModal
         show={ props.state.showModel }
         onImageUploaded={ onImageUploaded }

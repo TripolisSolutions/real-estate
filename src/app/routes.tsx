@@ -31,6 +31,7 @@ export default (
         <IndexRoute component={ AdminPropertiesList }/>
         <Route path='properties/new' component={ AdminPropertiesNew } />
         <Route path='properties/:id' component={ AdminPropertiesEdit } />
+        <Route path='properties/:id/:title' component={ AdminPropertiesEdit } />
       </Route>
 
       <Route path='*' component={ NotFound }/>

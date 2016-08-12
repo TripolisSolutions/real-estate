@@ -1,10 +1,5 @@
-import { ITranslatableText } from '../../models'
+import { ITranslatableText, ITranslatablePrice } from '../../models'
 import { IImage } from '../images/images.model'
-
-interface ITranslatablePrice {
-  value: number
-  currency: string
-}
 
 export interface IMapViewport {
   lat: number
@@ -34,9 +29,9 @@ export interface IProperty {
   }
   address?: {
     name: ITranslatableText[]
-    viewport: IMapViewport
-    circleMarker: ICircleMarker
-    visible: boolean
+    viewport?: IMapViewport
+    circleMarker?: ICircleMarker
+    visible?: boolean
   }
 
   bedRoomCount?: number

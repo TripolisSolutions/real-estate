@@ -6,12 +6,16 @@ var stylelint = require('stylelint');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+const loader = {
+  babel: 'babel-loader?presets[]=react&presets[]=es2015&presets[]=stage-0'
+}
+
 var config = {
   bail: true,
 
   resolve: {
     root: path.resolve(__dirname),
-    extensions: ['', '.ts', '.tsx', '.js', '.jsx']
+    extensions: ['', '.ts', '.tsx', '.js', '.jsx', '.css', '.less']
   },
 
   entry: {
@@ -26,7 +30,8 @@ var config = {
       'react-router-redux',
       'redux',
       'redux-connect',
-      'redux-thunk'
+      'redux-thunk',
+      'lodash',
     ]
   },
 
@@ -45,12 +50,12 @@ var config = {
     ],
     loaders: [
       {
-        test: /\.tsx?$/,
-        loader: 'ts-loader'
+        test: /\.jsx?$/,
+        loader: loader.babel,
       },
       {
-        test: /\.jsx$/,
-        loader: 'babel?presets[]=es2015'
+        test: /\.tsx?$/,
+        loader: 'ts-loader'
       },
       {
         test: /\.json$/,
@@ -61,7 +66,7 @@ var config = {
         include: path.resolve('./src/app'),
         loader: ExtractTextPlugin.extract(
           'style-loader',
-          'css-loader?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]',
+          'css-loader?modules&importLoaders=2&localIdentName=[local]___[hash:base64:5]',
           'postcss-loader'
         )
       },
@@ -76,11 +81,9 @@ var config = {
       {
         test: /\.less$/,
         include: path.resolve('./src/app'),
-        loader: ExtractTextPlugin(
+        loader: ExtractTextPlugin.extract(
           'style-loader',
-          'css-loader?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]',
-          'postcss-loader',
-          'less?sourceMap'
+          'css-loader?modules&importLoaders=1&localIdentName=[local]___[hash:base64:5]!postcss-loader!less'
         )
       },
       {
@@ -108,10 +111,10 @@ var config = {
 
   postcss: function () {
     return [
-      stylelint({ files: '../../src/app/*.css' }),
+      // stylelint({ files: '../../src/app/*.css' }),
       postcssNext(),
       postcssAssets({ relative: true })
-    ];
+    ]
   },
 
   tslint: {
@@ -142,6 +145,6 @@ var config = {
       }
     })
   ]
-};
+}
 
-module.exports = config;
+module.exports = config

@@ -41,7 +41,7 @@ export class UploadImagePanel extends React.Component<IProps, void> {
                   onClick={ this.openSelectFile }
                 >
                   <i className='fa fa-plus' aria-hidden='true'></i>
-                  { t('choose_file') }
+                  { t('upload_image') }
                 </a>
               )
             }

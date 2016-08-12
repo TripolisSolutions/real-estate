@@ -35,9 +35,15 @@ class PropertiesNew extends React.Component<IProps, {}> {
       key = window.__CONFIG__.googleMapAPIKey
     }
 
+    let imageRootUrl
+    if (typeof window !== 'undefined') {
+      imageRootUrl = window.__CONFIG__.imageRootUrl
+    }
+
     return(
       <div>
         <PropertyWizard
+          imageRootUrl={ imageRootUrl }
           googleMapAPIKey={ key }
           categories={ this.props.categoriesData.categories }
           langCode={ this.props.i18nData.currentLangCode }
