@@ -33,6 +33,6 @@ export default (
         <Route path='properties/:id' component={ AdminPropertiesEdit } />
       </Route>
 
-      { /* <Route path='*' component={ NotFound }/> */ }
+      <Route path='*' component={ NotFound }/>
     </Route>
 )

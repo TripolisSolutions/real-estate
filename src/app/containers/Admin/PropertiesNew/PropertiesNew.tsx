@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { browserHistory } from 'react-router'
 const { connect } = require('react-redux');
 const { asyncConnect } = require('redux-connect');
 
@@ -20,7 +21,10 @@ interface IProps extends IState {
 @connect(
   state => state,
   dispatch => ({
-    createNewProperty: (property) => dispatch(createNewProperty(property)),
+    createNewProperty: (property) => {
+      dispatch(createNewProperty(property))
+      browserHistory.push('/admin')
+    },
   })
 )
 class PropertiesNew extends React.Component<IProps, {}> {

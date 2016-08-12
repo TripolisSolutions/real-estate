@@ -158,6 +158,17 @@ export class PropertyWizard extends React.Component<IProps, void> {
               outProperty.galleryImages = galleryImages
             }
 
+            outProperty.desc = [
+              {
+                language: 'vietnamese',
+                text: descVN,
+              },
+              {
+                language: 'english',
+                text: addressEN,
+              },
+            ]
+
             outProperty.address = {
               name: [
                 {

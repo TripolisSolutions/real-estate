@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { browserHistory } from 'react-router'
 const { connect } = require('react-redux')
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
@@ -19,13 +20,12 @@ class NotFound extends React.Component<IProps, {}> {
 
     public render() {
         const { t } = this.props
-        const router = (this.context as any).router as any
 
         return (
             <main>
                 <h3>{ t('page_not_found.heading') }</h3>
 
-                <a onClick={ router.goBack() }>Go back</a>
+                <a onClick={ () => browserHistory.goBack() }>Go back</a>
                 <IndexLink to='/'>{ t('page_not_found.main_page') }</IndexLink>
             </main>
         )
