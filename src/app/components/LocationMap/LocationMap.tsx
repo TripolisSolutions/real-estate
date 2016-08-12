@@ -2,7 +2,7 @@ import * as React from 'react'
 import { SFC } from 'react'
 import GoogleMap from 'google-map-react'
 
-import * as log from 'loglevel'
+// import * as log from 'loglevel'
 
 import Block from '../Block/Block'
 import LocationMapCircleMarker from '../LocationMapCircleMarker/LocationMapCircleMarker'
@@ -26,7 +26,6 @@ interface IProps {
 }
 
 const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
-  log.debug('LocationMap render circleMarker: ', props.circleMarker)
 
   let key
   if (props.googleMapAPIKey) {

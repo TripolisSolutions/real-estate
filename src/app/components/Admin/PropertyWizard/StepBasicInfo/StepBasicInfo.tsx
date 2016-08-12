@@ -3,7 +3,7 @@ import { Form } from 'formsy-react'
 import * as FRC from 'formsy-react-components'
 import { IOption } from 'formsy-react-components'
 import * as _ from 'lodash'
-import * as log from 'loglevel'
+// import * as log from 'loglevel'
 
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
@@ -111,8 +111,6 @@ class StepBasicInfo extends React.Component<IProps, void> {
       }
     })
     categoriesOptions.unshift(emptyOption)
-
-    log.debug('stringValueOf(formData.available_until)', stringValueOf(formData.available_until))
 
     return (
       <div className={ s.container }>
