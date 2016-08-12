@@ -5,6 +5,7 @@ import { storiesOf, action } from '@kadira/storybook'
 import '../../../helpers/storyCommonResource'
 import i18n, { StorybookProvider } from '../../../helpers/storyTranslationHelper'
 import PropertyWizard from './PropertyWizard'
+import { IProperty, IMapViewport, ICircleMarker } from '../../../redux/modules/properties/properties.model'
 
 log.setLevel(0)
 
@@ -19,6 +20,19 @@ const categories = [
       {
         language: 'english',
         text: 'Cat 1',
+      },
+    ],
+  },
+  {
+    id: '2',
+    name: [
+      {
+        language: 'vietnamese',
+        text: 'Cat 2',
+      },
+      {
+        language: 'english',
+        text: 'Cat 2',
       },
     ],
   },
@@ -45,6 +59,58 @@ storiesOf('PropertyWizard', module)
     return (
       <StorybookProvider>
         <PropertyWizard
+          googleMapAPIKey='AIzaSyDHU5dwOcUU7uO3fvvM_5ZQd-83tLykEpA'
+          langCode={ 'en' }
+          categories={ categories }
+          onWizardDone={ (property) => action('wizard done', property)() }
+        />
+      </StorybookProvider>
+    )
+  })
+  .add('edit english', () => {
+    i18n.changeLanguage('en')
+
+    const property: IProperty = {
+      id: 'abc',
+      name: [
+        {
+          language: 'vietnamese',
+          text: 'Ưu đãi mùa thu cho căn hộ Hateco Hoàng Mai',
+        },
+        {
+          language: 'english',
+          text: 'Apartment for rent in Happy Valley, Phu My Hung, District 7, HCM',
+        },
+      ],
+      price: [
+        {
+          currency: 'VND',
+          value: 5000000,
+        },
+        {
+          currency: 'USD',
+          value: 100,
+        },
+      ],
+      categoryID: '2',
+      salesType: 'rent',
+      rentalPeriod: {
+        digits: 2,
+        unit: 'months',
+      },
+      availableUntil: new Date('2017/02/03'),
+      facingDirection: 'west',
+      bedRoomCount: 4,
+      size: {
+        width: 200,
+        length: 50,
+      },
+    }
+
+    return (
+      <StorybookProvider>
+        <PropertyWizard
+          property={ property }
           googleMapAPIKey='AIzaSyDHU5dwOcUU7uO3fvvM_5ZQd-83tLykEpA'
           langCode={ 'en' }
           categories={ categories }

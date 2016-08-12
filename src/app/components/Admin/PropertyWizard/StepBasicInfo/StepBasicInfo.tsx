@@ -3,6 +3,7 @@ import { Form } from 'formsy-react'
 import * as FRC from 'formsy-react-components'
 import { IOption } from 'formsy-react-components'
 import * as _ from 'lodash'
+import * as log from 'loglevel'
 
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
@@ -51,7 +52,28 @@ const emptyOption = {
   label: '-----',
 }
 
-class StepBasicInfo extends React.Component<IProps, {}> {
+function formatDate(d: Date) {
+  const day = ('0' + d.getDate()).slice(-2)
+  const month = ('0' + (d.getMonth() + 1)).slice(-2)
+  const formated = d.getFullYear() + '-' + (month) + '-' + (day)
+
+  return formated
+}
+
+function stringValueOf(v: any) {
+  if (_.isNull(v) || _.isUndefined(v)) {
+    return ''
+  }
+
+  if (_.isDate(v)) {
+    const d = v as Date
+    return formatDate(d)
+  }
+
+  return String(v)
+}
+
+class StepBasicInfo extends React.Component<IProps, void> {
 
   public refs: {
     [key: string]: any
@@ -90,6 +112,8 @@ class StepBasicInfo extends React.Component<IProps, {}> {
     })
     categoriesOptions.unshift(emptyOption)
 
+    log.debug('stringValueOf(formData.available_until)', stringValueOf(formData.available_until))
+
     return (
       <div className={ s.container }>
         <Form
@@ -118,7 +142,7 @@ class StepBasicInfo extends React.Component<IProps, {}> {
               <Input
                 labelClassName='hidden'
                 name='price_in_vnd'
-                value={ formData.price_in_vnd + '' }
+                value={ stringValueOf(formData.price_in_vnd) }
                 type='number'
                 placeholder={ t('price_in_vnd') }
                 addonAfter={<span>VND</span>}
@@ -127,7 +151,7 @@ class StepBasicInfo extends React.Component<IProps, {}> {
               <Input
                 labelClassName='hidden'
                 name='price_in_usd'
-                value=''
+                value={ stringValueOf(formData.price_in_usd) }
                 type='number'
                 placeholder={ t('price_in_usd') }
                 addonAfter={<span>USD</span>}
@@ -135,44 +159,52 @@ class StepBasicInfo extends React.Component<IProps, {}> {
             </Row>
             <Select
               name='category'
+              value={ formData.category }
               label={ t('category') }
               options={categoriesOptions}
             />
               <Select
               name='sale_type'
+              value={ formData.sale_type }
               label={ t('sale_type') }
               options={salesTypes}
             />
-            <Row layout='horizontal' label={ t('rental_period') }>
-              <Input
-                labelClassName='hidden'
-                name='rental_period_value'
-                value=''
-                type='number'
-                placeholder={ t('rental_period_value') }
-              />
-              <Select
-                labelClassName='hidden'
-                name='rental_period_unit'
-                placeholder={ t('rental_period_unit') }
-                options={rentalPeriods}
-              />
-            </Row>
+            {
+              formData.sale_type === 'rent' ? (
+                <Row layout='horizontal' label={ t('rental_period') }>
+                  <Input
+                    labelClassName='hidden'
+                    name='rental_period_value'
+                    value={ stringValueOf(formData.rental_period_value) }
+                    type='number'
+                    placeholder={ t('rental_period_value') }
+                  />
+                  <Select
+                    labelClassName='hidden'
+                    name='rental_period_unit'
+                    value={ formData.rental_period_unit }
+                    placeholder={ t('rental_period_unit') }
+                    options={rentalPeriods}
+                  />
+                </Row>
+              ) : undefined
+            }
             <Input
               name='available_until]'
-              value=''
+              value={ stringValueOf(formData.available_until) }
               label={ t('available_until') }
               type='date'
               placeholder={ t('available_until') }
             />
             <Select
               name='facing_direction'
+              value={ formData.facing_direction }
               label={ t('facing_direction') }
               options={facingDirections}
             />
             <Input
               name='bed_room_count'
-              value=''
+              value={ stringValueOf(formData.bed_room_count) }
               type='number'
               label={ t('bed_room_count') }
               placeholder={ t('bed_room_count') }
@@ -181,14 +213,14 @@ class StepBasicInfo extends React.Component<IProps, {}> {
               <Input
                 labelClassName='hidden'
                 name='size_width'
-                value=''
+                value={ stringValueOf(formData.size_width) }
                 type='number'
                 placeholder={ t('size_width') }
               />
               <Input
                 labelClassName='hidden'
                 name='size_length'
-                value=''
+                value={ stringValueOf(formData.size_length) }
                 type='number'
                 placeholder={ t('size_length') }
               />

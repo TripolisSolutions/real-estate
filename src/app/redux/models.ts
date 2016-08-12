@@ -30,9 +30,25 @@ export function getLangCodeFromLanguage(language: string) {
 }
 
 export function translateText(field: ITranslatableText[], langCode) {
-  return field.filter((tran) => getLangCodeFromLanguage(tran.language) === langCode)[0].text
+  if (!field) {
+    return ''
+  }
+
+  const rs = field.filter((tran) => getLangCodeFromLanguage(tran.language) === langCode)
+  if (rs.length === 0) {
+    return ''
+  }
+  return rs[0].text
 }
 
 export function translatePrice(field: ITranslatablePrice[], currency) {
-  return field.filter((tran) => getLangCodeFromLanguage(tran.currency) === currency)[0].value
+  if (!field) {
+    return 0
+  }
+
+  const rs = field.filter((tran) => tran.currency === currency)
+  if (rs.length === 0) {
+    return 0
+  }
+  return rs[0].value
 }

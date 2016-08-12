@@ -16,6 +16,9 @@ const s = require('./StepAddressLocation.less')
 
 interface IProps extends InjectedTranslateProps {
   langCode: string
+  addressVN: string
+  addressEN: string
+  addressVisible: boolean
   mapViewport?: IMapViewport
   mapMarker?: ICircleMarker
   googleMapAPIKey: string
@@ -180,7 +183,7 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
         <fieldset>
           <Input
             name='address_in_vietnamese'
-            value=''
+            value={ props.addressVN }
             label={ t('address_in_vietnamese') }
             type='text'
             placeholder={ t('address_in_vietnamese') }
@@ -190,7 +193,7 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
           />
           <Input
             name='address_in_english'
-            value=''
+            value={ props.addressEN }
             label={ t('address_in_english') }
             type='text'
             placeholder={ t('address_in_english') }
@@ -200,7 +203,7 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
           />
           <Checkbox
               name='address_visible'
-              value={ false }
+              value={ props.addressVisible }
               label={ t('address_visible') }
               rowLabel=''
               onChange={ (name, visible) => {

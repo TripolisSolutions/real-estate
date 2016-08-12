@@ -53,6 +53,60 @@ const reducer = (state: IState, action) => {
           $set: action.payload,
         },
       })
+    case 'THUMBNAIL_IMAGE':
+      return update(state, {
+        thumbnailImage: {
+          $set: action.payload,
+        },
+      })
+    case 'GALLERY_IMAGES':
+      return update(state, {
+        galleryImages: {
+          $set: action.payload,
+        },
+      })
+    case 'DESC_VN':
+      return update(state, {
+        descVN: {
+          $set: action.payload,
+        },
+      })
+    case 'DESC_EN':
+      return update(state, {
+        descEN: {
+          $set: action.payload,
+        },
+      })
+    case 'MAP_VIEWPORT':
+      return update(state, {
+        mapViewport: {
+          $set: action.payload,
+        },
+      })
+    case 'MAP_MARKER':
+      return update(state, {
+        mapMarker: {
+          $set: action.payload,
+        },
+      })
+    case 'ADDRESS_VISIBLE':
+      return update(state, {
+        addressVisible: {
+          $set: action.payload,
+        },
+      })
+    case 'ADDRESS_VN':
+      return update(state, {
+        addressVN: {
+          $set: action.payload,
+        },
+      })
+    case 'ADDRESS_EN':
+      return update(state, {
+        addressEN: {
+          $set: action.payload,
+        },
+      })
     default:
       return state
   }
@@ -79,7 +133,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
       name: [
         {
           language: 'vietnamese',
-          text: 'ddd',
+          text: '',
         },
         {
           language: 'english',
@@ -95,11 +149,13 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
   }
 
   public render() {
-    const { t, dispatch } = this.props
+    const { t, dispatch, state } = this.props
+
+    const prop = this.props.property
 
     let basicInfoFormData: IBasicInfoFormData
-    if (this.props.state.basicInfoFormData) {
-      basicInfoFormData = this.props.state.basicInfoFormData
+    if (state.basicInfoFormData) {
+      basicInfoFormData = state.basicInfoFormData
     } else {
       const prop = this.props.property
       basicInfoFormData = {
@@ -128,15 +184,43 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
       }
     }
 
-    let thumbnailImage: IImage
-    let galleryImages: IImage[]
-    let descVN: string
-    let descEN: string
-    let mapViewport: IMapViewport
-    let mapMarker: ICircleMarker
-    let addressVisible: boolean
-    let addressVN: string
-    let addressEN: string
+    if (!state.thumbnailImage && prop.thumbnailImage) {
+      state.thumbnailImage = prop.thumbnailImage
+    }
+    if (!state.galleryImages && prop.galleryImages) {
+      state.galleryImages = prop.galleryImages
+    }
+    if (!state.descVN && translateText(prop.desc, 'vi')) {
+      state.descVN = translateText(prop.desc, 'vi')
+    }
+    if (!state.descEN && translateText(prop.desc, 'en')) {
+      state.descEN = translateText(prop.desc, 'en')
+    }
+    if (!state.mapViewport && prop.address && prop.address.viewport) {
+      state.mapViewport = prop.address.viewport
+    }
+    if (!state.mapMarker && prop.address && prop.address.circleMarker) {
+      state.mapMarker = prop.address.circleMarker
+    }
+    if (!state.addressVisible && prop.address && prop.address.visible) {
+      state.addressVisible = prop.address.visible || false
+    }
+    if (!state.addressVN && prop.address && translateText(prop.address.name, 'vi')) {
+      state.addressVN = translateText(prop.address.name, 'vi')
+    }
+    if (!state.addressEN && prop.address && translateText(prop.address.name, 'en')) {
+      state.addressEN = translateText(prop.address.name, 'en')
+    }
+
+    // let thumbnailImage: IImage = state.thumbnailImage
+    // let galleryImages: IImage[] = state.galleryImages || []
+    // let descVN: string = state.descVN
+    // let descEN: string = state.descEN
+    // let mapViewport: IMapViewport
+    // let mapMarker: ICircleMarker
+    // let addressVisible: boolean
+    // let addressVN: string
+    // let addressEN: string
 
     const object = {}
     const property = object as IProperty
@@ -165,9 +249,12 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
         name: t('step_description_vietnamese'),
         component: <StepDescription
           langCode={ this.props.langCode }
-          initialValue={ '' }
+          initialValue={ state.descVN || '' }
           onChange={ (content) => {
-            descVN = content
+            dispatch({
+              type: 'DESC_VN',
+              payload: content,
+            })
           } }
         />,
       },
@@ -175,9 +262,12 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
         name: t('step_description_english'),
         component: <StepDescription
           langCode={ this.props.langCode }
-          initialValue={ '' }
+          initialValue={ state.descEN || '' }
           onChange={ (content) => {
-            descEN = content
+            dispatch({
+              type: 'DESC_EN',
+              payload: content,
+            })
           } }
         />,
       },
@@ -187,7 +277,10 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
           <StepSelectThumbnail
             langCode={ this.props.langCode }
             onImageUploaded={ (image) => {
-              thumbnailImage = image
+              dispatch({
+                type: 'THUMBNAIL_IMAGE',
+                payload: image,
+              })
             }}
             onNext={ () => {
               this.refs.multistep.next()
@@ -200,9 +293,12 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
         component: (
           <StepConfigCarouselImages
             langCode={ this.props.langCode }
-            images={ [] }
+            images={ state.galleryImages || [] }
             onChange={ (images: IImage[]) => {
-              galleryImages = images
+              dispatch({
+                type: 'GALLERY_IMAGES',
+                payload: images,
+              })
             }}
             onNext={ () => {
               this.refs.multistep.next()
@@ -216,16 +312,36 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
           <StepAddressLocation
             googleMapAPIKey={ this.props.googleMapAPIKey }
             langCode={ this.props.langCode }
+            addressVN={ state.addressVN || '' }
+            addressEN={ state.addressEN || '' }
+            mapViewport={ state.mapViewport }
+            mapMarker={ state.mapMarker }
+            addressVisible={ state.addressVisible }
             onVisiblityChange={ (visible) => {
-              addressVisible = visible
+              dispatch({
+                type: 'ADDRESS_VISIBLE',
+                payload: visible,
+              })
             }}
             onAddressChange={ (vn: string, en: string) => {
-              addressVN = vn
-              addressEN = en
+              dispatch({
+                type: 'ADDRESS_VN',
+                payload: vn,
+              })
+              dispatch({
+                type: 'ADDRESS_EN',
+                payload: en,
+              })
             }}
             onMapDataChange={ (viewport: IMapViewport, marker: ICircleMarker) => {
-              mapViewport = viewport
-              mapMarker = marker
+              dispatch({
+                type: 'MAP_VIEWPORT',
+                payload: viewport,
+              })
+              dispatch({
+                type: 'MAP_MARKER',
+                payload: marker,
+              })
             }}
             onNext={ () => {
               this.refs.multistep.next()
@@ -240,24 +356,24 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
             log.info('basicInfoFormData: ', basicInfoFormData)
             const outProperty = bindBasicInfoToProperty(property, basicInfoFormData)
 
-            if (thumbnailImage) {
-              log.info('thumbnailImage: ', thumbnailImage)
-              outProperty.thumbnailImage = thumbnailImage
+            if (state.thumbnailImage) {
+              log.info('thumbnailImage: ', state.thumbnailImage)
+              outProperty.thumbnailImage = state.thumbnailImage
             }
 
-            if (galleryImages) {
-              log.info('galleryImages: ', galleryImages)
-              outProperty.galleryImages = galleryImages
+            if (state.galleryImages) {
+              log.info('galleryImages: ', state.galleryImages)
+              outProperty.galleryImages = state.galleryImages
             }
 
             outProperty.desc = [
               {
                 language: 'vietnamese',
-                text: descVN,
+                text: state.descVN,
               },
               {
                 language: 'english',
-                text: addressEN,
+                text: state.descEN,
               },
             ]
 
@@ -265,16 +381,16 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
               name: [
                 {
                   language: 'vietnamese',
-                  text: addressVN,
+                  text: state.addressVN,
                 },
                 {
                   language: 'english',
-                  text: addressEN,
+                  text: state.addressEN,
                 },
               ],
-              viewport: mapViewport,
-              circleMarker: mapMarker,
-              visible: addressVisible,
+              viewport: state.mapViewport,
+              circleMarker: state.mapMarker,
+              visible: state.addressVisible,
             }
 
             log.info('wizard property: ', outProperty)
