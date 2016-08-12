@@ -12,23 +12,21 @@ import mapStyles from './locationMapStyles'
 const s = require('./LocationMap.less')
 
 interface IProps {
-  googleMapAPIKey: string
-  center: {
-    lat: number
-    lng: number
-  }
-  zoom: number,
-  circleMarker: {
+  googleMapAPIKey?: string
+  lat?: number
+  lng?: number
+  zoom?: number,
+  circleMarker?: {
     lat: number
     lng: number
     radius: number
   },
-  onViewportChange: Function
-  onClick: Function
+  onViewportChange?: Function
+  onClick?: Function
   title?: string,
 }
 
-const LocationMap: SFC<any> = function LocationMap(props) {
+const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
   log.debug('LocationMap render circleMarker: ', props.circleMarker)
 
   let key
@@ -49,7 +47,7 @@ const LocationMap: SFC<any> = function LocationMap(props) {
           options={{
             styles: mapStyles,
           }}
-          center={ props.center }
+          center={{lat: props.lat, lng: props.lng }}
           zoom={ props.zoom }
           onChange={ props.onViewportChange }
           onClick={ props.onClick && props.onClick }>
@@ -67,9 +65,11 @@ const LocationMap: SFC<any> = function LocationMap(props) {
 
 // 10.7859378,106.5255811
 LocationMap.defaultProps = {
-  center: {lat: 10.7859378, lng: 106.5255811},
+  googleMapAPIKey: '',
+  lat: 10.7859378,
+  lng: 106.5255811,
   zoom: 12,
-  title: 'We are here',
+  title: '',
 }
 
 export default LocationMap

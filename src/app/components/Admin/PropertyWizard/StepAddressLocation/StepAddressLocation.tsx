@@ -123,8 +123,13 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
           )
           .then((res) => {
             log.debug('geoencoding response: ', res)
+            if (!res.ok) {
+              log.error('error response from google: ', res)
+              return
+            }
 
-            const { data } = res as any
+            return res.json()
+          }).then((data) => {
             if (data.results <= 0) {
               return
             }
@@ -210,10 +215,11 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
       </Form>
       <LocationMap
         googleMapAPIKey={ props.googleMapAPIKey }
-        center={{lat: lat, lng: lng}}
+        lat={ lat }
+        lng={ lng }
         zoom={ zoom }
         circleMarker={ marker }
-        onViewportChange={ (center, zoom) => {
+        onViewportChange={ ({center, zoom}) => {
           log.debug('onViewportChange', center, zoom)
 
           props.dispatch({

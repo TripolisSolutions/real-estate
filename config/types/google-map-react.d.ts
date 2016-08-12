@@ -6,8 +6,8 @@ declare module googleMapReact {
     options?: Object
     center?: any
     zoom?: any
-    onClick?: () => void
-    onChange?(center: {lat: number, lng: number}, zoom: number)
+    onClick?: Function
+    onChange?: Function
   }
 
   export interface IState {}
