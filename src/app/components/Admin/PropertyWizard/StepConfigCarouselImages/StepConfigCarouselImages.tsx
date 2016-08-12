@@ -88,7 +88,7 @@ export class StepConfigCarouselImages extends React.Component<IInternalProps, vo
   constructor(props: IInternalProps) {
     super(props)
 
-    props.state.images = props.images
+    props.state.images = props.images || []
   }
 
   public render() {
