@@ -204,7 +204,6 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
     const { t, dispatch, state } = this.props
 
     const isCreate = !this.props.property
-    log.debug('isCreate', isCreate, this.props.property)
 
     const steps: IStep[] = [
       {
