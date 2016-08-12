@@ -1,7 +1,6 @@
 import * as update from 'react/lib/update'
 import * as React from 'react'
 import * as log from 'loglevel'
-import { SFC } from 'react'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 import withReducer from 'recompose/withReducer'
 const fitBounds = require('google-map-react/utils').fitBounds
@@ -78,38 +77,33 @@ const enhance = withReducer<IState, any, IProps>('state', 'dispatch', reducer, {
 })
 
 interface IInternalProps extends IProps {
-  state: IState
-  dispatch: Function
+  state?: IState
+  dispatch?: Function
 }
 
-const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
-  const { t } = props
+export class StepAddressLocation extends React.Component<IInternalProps, void> {
 
-  let lat: number
-  let lng: number
-  let zoom: number
+  constructor(props: IInternalProps) {
+    super(props)
 
-  if (props.state.mapViewport) {
-    lat = props.state.mapViewport.lat
-    lng = props.state.mapViewport.lng
-    zoom = props.state.mapViewport.zoom
-  } else if (props.mapViewport) {
-    lat = props.mapViewport.lat
-    lng = props.mapViewport.lng
-    zoom = props.mapViewport.zoom
+    if (props.mapViewport) {
+      props.state.mapViewport = props.mapViewport
+    }
+
+    if (props.mapMarker) {
+      props.state.mapMarker = props.mapMarker
+    }
+
+    props.state.addressVN = props.addressVN || ''
+    props.state.addressEN = props.addressEN || ''
   }
 
-  let marker: ICircleMarker
-  if (props.state.mapMarker) {
-    marker = props.state.mapMarker
-  } else if (props.mapMarker) {
-    marker = props.mapMarker
-  }
-
-  function lookup(langCode: string) {
+  private lookup = (langCode: string) => {
     return (
       <span className='glyphicon glyphicon-search'
         onClick={() => {
+          const props = this.props
+
           let address
           if (langCode === 'vi') {
             address = props.state.addressVN
@@ -171,80 +165,100 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
     )
   }
 
-  return (
-    <div className={ s.container }>
-      <Form
-        className='horizontal'
-        onChange={ (data) => {
-          props.dispatch({type: 'UPDATE_ADDRESS', payload: data})
-          props.onAddressChange(data.address_in_vietnamese, data.address_in_english)
-        }}
-      >
-        <fieldset>
-          <Input
-            name='address_in_vietnamese'
-            value={ props.addressVN }
-            label={ t('address_in_vietnamese') }
-            type='text'
-            placeholder={ t('address_in_vietnamese') }
-            addonAfter={
-              lookup('vi')
-            }
-          />
-          <Input
-            name='address_in_english'
-            value={ props.addressEN }
-            label={ t('address_in_english') }
-            type='text'
-            placeholder={ t('address_in_english') }
-            addonAfter={
-              lookup('en')
-            }
-          />
-          <Checkbox
-              name='address_visible'
-              value={ props.addressVisible }
-              label={ t('address_visible') }
-              rowLabel=''
-              onChange={ (name, visible) => {
-                props.onVisiblityChange(visible)
-              } }
-          />
-        </fieldset>
-      </Form>
-      <LocationMap
-        googleMapAPIKey={ props.googleMapAPIKey }
-        lat={ lat }
-        lng={ lng }
-        zoom={ zoom }
-        circleMarker={ marker }
-        onViewportChange={ ({center, zoom}) => {
-          log.debug('onViewportChange', center, zoom)
+  public render() {
+    const props = this.props
+    const { t } = props
 
-          props.dispatch({
-            type: 'SET_MAP_VIEWPORT',
-            payload: {
-              lat: center.lat,
-              lng: center.lng,
-              zoom,
-            },
-          })
+    let lat: number
+    let lng: number
+    let zoom: number
 
-          props.onMapDataChange(props.state.mapViewport, props.state.mapMarker)
-        }}
-        onClick={ ({lat, lng}) => {
-          props.dispatch({
-            type: 'SET_MAP_MARKER',
-            payload: {
-              lat, lng,
-            },
-          })
+    if (props.state.mapViewport) {
+      lat = props.state.mapViewport.lat
+      lng = props.state.mapViewport.lng
+      zoom = props.state.mapViewport.zoom
+    }
 
-          props.onMapDataChange(props.state.mapViewport, props.state.mapMarker)
-        }}
-      />
-    </div>
-  )
+    let marker: ICircleMarker
+    if (props.state.mapMarker) {
+      marker = props.state.mapMarker
+    }
+
+    return (
+      <div className={ s.container }>
+        <Form
+          className='horizontal'
+          onChange={ (data) => {
+            props.dispatch({type: 'UPDATE_ADDRESS', payload: data})
+            props.onAddressChange(data.address_in_vietnamese, data.address_in_english)
+          }}
+        >
+          <fieldset>
+            <Input
+              name='address_in_vietnamese'
+              value={ props.addressVN }
+              label={ t('address_in_vietnamese') }
+              type='text'
+              placeholder={ t('address_in_vietnamese') }
+              addonAfter={
+                this.lookup('vi')
+              }
+            />
+            <Input
+              name='address_in_english'
+              value={ props.addressEN }
+              label={ t('address_in_english') }
+              type='text'
+              placeholder={ t('address_in_english') }
+              addonAfter={
+                this.lookup('en')
+              }
+            />
+            <Checkbox
+                name='address_visible'
+                value={ props.addressVisible }
+                label={ t('address_visible') }
+                rowLabel=''
+                onChange={ (name, visible) => {
+                  props.onVisiblityChange(visible)
+                } }
+            />
+          </fieldset>
+        </Form>
+        <LocationMap
+          googleMapAPIKey={ props.googleMapAPIKey }
+          lat={ lat }
+          lng={ lng }
+          zoom={ zoom }
+          circleMarker={ marker }
+          onViewportChange={ ({center, zoom}) => {
+            log.debug('onViewportChange', center, zoom)
+
+            props.dispatch({
+              type: 'SET_MAP_VIEWPORT',
+              payload: {
+                lat: center.lat,
+                lng: center.lng,
+                zoom,
+              },
+            })
+
+            props.onMapDataChange(props.state.mapViewport, props.state.mapMarker)
+          }}
+          onClick={ ({lat, lng}) => {
+            props.dispatch({
+              type: 'SET_MAP_MARKER',
+              payload: {
+                lat, lng,
+              },
+            })
+
+            props.onMapDataChange(props.state.mapViewport, props.state.mapMarker)
+          }}
+        />
+      </div>
+    )
+  }
 }
 
-export default enhance(translate()(StepBasicInfo))
+export default enhance(translate()(StepAddressLocation))

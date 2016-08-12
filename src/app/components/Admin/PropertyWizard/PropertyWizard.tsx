@@ -149,17 +149,14 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
     multistep: any
   }
 
-  public render() {
-    const { t, dispatch, state } = this.props
+  constructor(props: IInternalProps) {
+    super(props)
 
-    const prop = this.props.property
+    const prop = props.property
 
-    let basicInfoFormData: IBasicInfoFormData
-    if (state.basicInfoFormData) {
-      basicInfoFormData = state.basicInfoFormData
-    } else {
+    if (props.property) {
       const prop = this.props.property
-      basicInfoFormData = {
+      props.state.basicInfoFormData = {
         title_in_vietnamese: translateText(prop.name, 'vi'),
         title_in_english: translateText(prop.name, 'en'),
         category: prop.categoryID,
@@ -170,51 +167,52 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
       }
 
       if (prop.price) {
-        basicInfoFormData.price_in_vnd = translatePrice(prop.price, 'VND')
-        basicInfoFormData.price_in_usd = translatePrice(prop.price, 'USD')
+        props.state.basicInfoFormData.price_in_vnd = translatePrice(prop.price, 'VND')
+        props.state.basicInfoFormData.price_in_usd = translatePrice(prop.price, 'USD')
       }
 
       if (prop.rentalPeriod) {
-        basicInfoFormData.rental_period_value = prop.rentalPeriod.digits
-        basicInfoFormData.rental_period_unit = prop.rentalPeriod.unit
+        props.state.basicInfoFormData.rental_period_value = prop.rentalPeriod.digits
+        props.state.basicInfoFormData.rental_period_unit = prop.rentalPeriod.unit
       }
 
       if (prop.size) {
-        basicInfoFormData.size_width = prop.size.width
-        basicInfoFormData.size_length = prop.size.length
+        props.state.basicInfoFormData.size_width = prop.size.width
+        props.state.basicInfoFormData.size_length = prop.size.length
       }
     }
 
-    if (!state.thumbnailImage && prop.thumbnailImage) {
-      state.thumbnailImage = prop.thumbnailImage
+    if (!props.state.thumbnailImage && prop.thumbnailImage) {
+      props.state.thumbnailImage = prop.thumbnailImage
     }
-    if (!state.galleryImages && prop.galleryImages) {
-      state.galleryImages = prop.galleryImages || []
+    if (!props.state.galleryImages && prop.galleryImages) {
+      props.state.galleryImages = prop.galleryImages || []
     }
-    if (!state.descVN && translateText(prop.desc, 'vi')) {
-      state.descVN = translateText(prop.desc, 'vi')
+    if (!props.state.descVN && translateText(prop.desc, 'vi')) {
+      props.state.descVN = translateText(prop.desc, 'vi')
     }
-    if (!state.descEN && translateText(prop.desc, 'en')) {
-      state.descEN = translateText(prop.desc, 'en')
+    if (!props.state.descEN && translateText(prop.desc, 'en')) {
+      props.state.descEN = translateText(prop.desc, 'en')
     }
-    if (!state.mapViewport && prop.address && prop.address.viewport) {
-      state.mapViewport = prop.address.viewport
+    if (!props.state.mapViewport && prop.address && prop.address.viewport) {
+      props.state.mapViewport = prop.address.viewport
     }
-    if (!state.mapMarker && prop.address && prop.address.circleMarker) {
-      state.mapMarker = prop.address.circleMarker
+    if (!props.state.mapMarker && prop.address && prop.address.circleMarker) {
+      props.state.mapMarker = prop.address.circleMarker
     }
-    if (!state.addressVisible && prop.address && prop.address.visible) {
-      state.addressVisible = prop.address.visible || false
+    if (!props.state.addressVisible && prop.address && prop.address.visible) {
+      props.state.addressVisible = prop.address.visible || false
     }
-    if (!state.addressVN && prop.address && translateText(prop.address.name, 'vi')) {
-      state.addressVN = translateText(prop.address.name, 'vi')
+    if (!props.state.addressVN && prop.address && translateText(prop.address.name, 'vi')) {
+      props.state.addressVN = translateText(prop.address.name, 'vi')
     }
-    if (!state.addressEN && prop.address && translateText(prop.address.name, 'en')) {
-      state.addressEN = translateText(prop.address.name, 'en')
+    if (!props.state.addressEN && prop.address && translateText(prop.address.name, 'en')) {
+      props.state.addressEN = translateText(prop.address.name, 'en')
     }
+  }
 
-    const object = {}
-    const property = object as IProperty
+  public render() {
+    const { t, dispatch, state } = this.props
 
     const steps: IStep[] = [
       {
@@ -222,7 +220,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
         component: (
           <StepBasicInfo
             langCode={ this.props.langCode }
-            formData={ basicInfoFormData }
+            formData={ state.basicInfoFormData }
             categories={ this.props.categories }
             onChange={ (formData) => {
               dispatch({
@@ -347,8 +345,10 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
         name: t('step_done'),
         component: <StepDone langCode={ this.props.langCode }
           onSubmit={ () => {
-            log.info('basicInfoFormData: ', basicInfoFormData)
-            const outProperty = bindBasicInfoToProperty(property, basicInfoFormData)
+            log.info('basicInfoFormData: ', state.basicInfoFormData)
+            const object = {}
+            const property = object as IProperty
+            const outProperty = bindBasicInfoToProperty(property, state.basicInfoFormData)
 
             if (state.thumbnailImage) {
               log.info('thumbnailImage: ', state.thumbnailImage)
