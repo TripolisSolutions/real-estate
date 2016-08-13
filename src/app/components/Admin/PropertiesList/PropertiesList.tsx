@@ -10,7 +10,7 @@ import sanitizeUrl from '../../../helpers/sanitizeUrl'
 
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { ButtonToolbar, Button } from 'react-bootstrap'
-import { IndexLink } from 'react-router'
+import { IndexLink, Link } from 'react-router'
 
 const ReactPaginate = require('react-paginate')
 
@@ -50,7 +50,6 @@ function createTranslateFormatter(currentLangCode: string) {
 
 function createCommandsFormatter(currentLangCode: string, t, onDeleteClicked) {
   return function(id: string, row: IProperty) {
-    log.debug('commandsFormatter, row: ', row)
 
     const translatedName = translateText(row.name, currentLangCode)
     const sanitizedName = sanitizeUrl(translatedName)
@@ -111,10 +110,14 @@ const PropertiesList = (props: IProps) => {
             </TableHeaderColumn>
           </BootstrapTable>
           <ReactPaginate
-            previousLabel={'previous'}
-            nextLabel={'next'}
+            previousLabel={
+              t('previous')
+            }
+            nextLabel={
+              t('next')
+            }
             breakLabel={<a href=''>...</a>}
-            breakClassName={'break-me'}
+            breakClassName={ 'break-me' }
             pageNum={ props.pageNum }
             initialSelected={ props.currentPage }
             marginPagesDisplayed={2}
