@@ -1,25 +1,26 @@
 import * as React from 'react'
-import { SFC } from 'react'
+import * as classnames from 'classnames'
 import { Button as BootstrapButton } from 'react-bootstrap'
 
 const s = require('./ButtonWrapper.less')
 
-const Button: SFC<any> = function Button(props) {
+function ButtonWrapper(props) {
+  function onClick() {
+    props.onClick()
+  }
   return (
-    <BootstrapButton bsSize='large' className={ s.container } type={ props.type }>
+    <BootstrapButton
+    bsSize='large'
+    className={ classnames(s.container, props.active ? s.active : '') }
+    type={ props.type }
+    onClick={ onClick }>
       { props.children }
     </BootstrapButton>
   )
 }
 
-Button.propTypes = {
-  children: React.PropTypes.any.isRequired,
-  type: React.PropTypes.string
-}
+// Button.propTypes = {
+//   text: React.PropTypes.string.isRequired,
+// }
 
-Button.defaultProps = {
-  type: 'submit',
-}
-
-export default Button
-
+export default ButtonWrapper
