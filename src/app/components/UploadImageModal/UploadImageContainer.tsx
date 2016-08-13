@@ -6,6 +6,7 @@ import withReducer from 'recompose/withReducer'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
 import { IImage } from '../../redux/modules/images/images.model'
+import { token } from '../../helpers/auth'
 import UploadImagePanel, { IProps as IUploadImagePanelProps } from './UploadImagePanel'
 
 interface IImageDimension {
@@ -93,6 +94,9 @@ const UploadImagePanelContainer: SFC<IProps> = (props: IInternalProps) => {
 
       fetch('/api/thumbnails/upload', {
         method: 'POST',
+        headers: {
+          'x-access-token': token(),
+        },
         body: data,
       })
       .then((res) => res.json())

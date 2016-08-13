@@ -6,6 +6,7 @@ import * as _ from 'lodash'
 import rootUrl from '../../rootUrl'
 
 import { IAction, IHandler } from '../../models'
+import { token } from '../../../helpers/auth'
 import { IProperty } from './properties.model'
 
 const PROPERTIES_REQUEST = 'PROPERTIES_REQUEST'
@@ -258,6 +259,7 @@ export function createNewProperty(property: IProperty): Redux.Dispatch {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'x-access-token': token(),
       },
       body: JSON.stringify(property),
     })
@@ -308,6 +310,7 @@ export function updateProperty(id: string, property: IProperty): Redux.Dispatch 
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'x-access-token': token(),
       },
       body: JSON.stringify(property),
     })
@@ -357,6 +360,7 @@ export function deleteProperty(id: string): Redux.Dispatch {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'x-access-token': token(),
       },
     })
       .then(res => {

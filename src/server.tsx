@@ -91,22 +91,6 @@ app.use('/node_modules/alloyeditor', express.static(path.join(__dirname, '../nod
 
 app.use(require('i18next-express-middleware').handle(i18n));
 
-app.use(bodyParser.json())
-
-app.post('/auth/sign_in', (req, res) => {
-  const body = req.body
-  log.debug('login body: ', body)
-  if (body.username === nconf.get('SETTINGS_LOGIN_USERNAME')
-    && body.password === nconf.get('SETTINGS_LOGIN_PASSWORD')) {
-      const token = createToken(body.username)
-      res.setHeader('access-token', token)
-      res.send({
-        username: body.email,
-        token: token,
-      })
-  }
-})
-
 function simplifyLocale(locale: string) {
   const lng = locale.indexOf('-') !== -1 ? locale.split('-')[0] : locale
   return lng
@@ -124,7 +108,9 @@ app.use('/api', (req, res, next) => {
     return
   }
 
+  log.debug('token', token)
   const payload = decodeToken(token)
+  log.debug('payload', payload)
   if (!payload.sub || payload.sub !== nconf.get('SETTINGS_LOGIN_USERNAME')) {
     res.status(401).send({ message: 'Not authorized.' })
     return
@@ -189,6 +175,22 @@ app.use('/api', proxy({
     '^/api' : '',
   },
 }))
+
+app.use(bodyParser.json())
+
+app.post('/auth/sign_in', (req, res) => {
+  const body = req.body
+  log.debug('login body: ', body)
+  if (body.username === nconf.get('SETTINGS_LOGIN_USERNAME')
+    && body.password === nconf.get('SETTINGS_LOGIN_PASSWORD')) {
+      const token = createToken(body)
+      res.setHeader('x-access-token', token)
+      res.send({
+        username: body.email,
+        token: token,
+      })
+  }
+})
 
 const vi = require('../locales/vi/common')
 const en = require('../locales/en/common')
