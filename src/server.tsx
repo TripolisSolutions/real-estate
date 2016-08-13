@@ -19,6 +19,12 @@ log.setLevel(0)
 const configPath = path.join(path.resolve('.'), 'config/env.json')
 nconf.env().file({file: configPath})
 
+const pickBy = require('lodash/fp/pickBy')
+const startsWith = require('lodash/fp/startsWith')
+
+console.log('environment settings are: ',
+  pickBy((value, key) => startsWith('SETTINGS_')(key) && key.indexOf('SECRET') === -1 )(nconf.get()))
+
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 
@@ -30,10 +36,17 @@ const { ReduxAsyncConnect, loadOnServer } = require('redux-connect');
 import { configureStore } from './app/redux/store';
 import routes from './app/routes';
 
+import { createToken, decodeToken } from './server/token_helper'
+
 import i18n from './i18n'
 
 import { Html } from './app/containers/Html';
-const manifest = require('../build/manifest.json');
+let manifest
+try {
+  manifest = require('../build/manifest.json');
+} catch (e) {
+  log.warn('fail load manifest.json: ', e.message)
+}
 
 const express = require('express');
 const compression = require('compression');
@@ -51,22 +64,22 @@ const app = express();
 app.use(compression());
 
 if (process.env.NODE_ENV !== 'production') {
-  const webpack = require('webpack');
-  const webpackConfig = require('../config/webpack/dev');
-  const webpackCompiler = webpack(webpackConfig);
+  // const webpack = require('webpack');
+  // const webpackConfig = require('../config/webpack/dev');
+  // const webpackCompiler = webpack(webpackConfig);
 
-  app.use(require('webpack-dev-middleware')(webpackCompiler, {
-    publicPath: webpackConfig.output.publicPath,
-    stats: { colors: true },
-    noInfo: true,
-    hot: true,
-    inline: true,
-    lazy: false,
-    historyApiFallback: true,
-    quiet: true,
-  }));
+  // app.use(require('webpack-dev-middleware')(webpackCompiler, {
+  //   publicPath: webpackConfig.output.publicPath,
+  //   stats: { colors: true },
+  //   noInfo: true,
+  //   hot: true,
+  //   inline: true,
+  //   lazy: false,
+  //   historyApiFallback: true,
+  //   quiet: true,
+  // }));
 
-  app.use(require('webpack-hot-middleware')(webpackCompiler));
+  // app.use(require('webpack-hot-middleware')(webpackCompiler));
 }
 
 app.use(favicon(path.join(__dirname, '../src/favicon.ico')));
@@ -76,6 +89,22 @@ app.use('/public/images', express.static(path.join(__dirname, nconf.get('SETTING
 app.use('/node_modules/alloyeditor', express.static(path.join(__dirname, '../node_modules/alloyeditor')));
 
 app.use(require('i18next-express-middleware').handle(i18n));
+
+app.post('/auth/sign_in', (req, res) => {
+  const body = req.body
+  log.debug('login body: ', body)
+  if (body.email === nconf.get('SETTINGS_LOGIN_USERNAME') && body.password === nconf.get('SETTINGS_LOGIN_PASSWORD')) {
+    res.setHeader('access-token', 'abc')
+    res.setHeader('uid', body.email)
+    res.send({
+      data: {
+        uuid: body.email,
+        provider: 'email',
+        email: body.email,
+      },
+    })
+  }
+})
 
 function simplifyLocale(locale: string) {
   const lng = locale.indexOf('-') !== -1 ? locale.split('-')[0] : locale
@@ -130,10 +159,6 @@ app.post('/thumbnails/upload', thumbnailUpload.single('file'), (req, res) => {
       res.status(500).send(err.message)
     })
   })
-  // }).catch((err) => {
-  //   log.error(`error while move file from ${ req.file.path } to ${ destPath }: `, err)
-  //   res.status(500).send(err.message)
-  // })
 })
 
 app.use('/api', proxy({

@@ -26,7 +26,19 @@ var config = {
     app: [
       'webpack-hot-middleware/client?reload=true',
       './src/client.tsx',
-      './src/vendor/main.ts'
+    ],
+    vendor: [
+      './src/vendor/main.ts',
+      'react',
+      'react-dom',
+      'react-router',
+      'react-helmet',
+      'react-redux',
+      'react-router-redux',
+      'redux',
+      'redux-connect',
+      'redux-thunk',
+      'lodash',
     ]
   },
 
@@ -47,10 +59,12 @@ var config = {
     loaders: [
       {
         test: /\.jsx?$/,
+        include: path.resolve('./src'),
         loader: loader.babel,
       },
       {
         test: /\.tsx?$/,
+        include: path.resolve('./src'),
         loader: 'react-hot!ts'
       },
       {
@@ -92,26 +106,31 @@ var config = {
           'sass?sourceMap',
         ]
       },
+      { test: /\.(png|jpg|gif)$/, loader: 'url?limit=8192' },
       {
-        test: /\.eot(\?.*)?$/,
-        loader: 'file?name=fonts/[hash].[ext]'
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=100000&mimetype=application/font-woff'
       },
       {
-        test: /\.(woff|woff2)(\?.*)?$/,
-        loader: 'file-loader?name=fonts/[hash].[ext]'
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=100000&mimetype=application/font-woff'
       },
       {
-        test: /\.ttf(\?.*)?$/,
-        loader: 'url?limit=100000&mimetype=application/octet-stream&name=fonts/[hash].[ext]'
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=100000&mimetype=application/octet-stream'
       },
       {
-        test: /\.svg(\?.*)?$/,
-        loader: 'url?limit=10000&mimetype=image/svg+xml&name=fonts/[hash].[ext]'
+        test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file'
       },
       {
-        test: /\.(jpe?g|png|gif)$/i,
-        loader: 'url?limit=1000&name=images/[hash].[ext]'
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file'
       },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=100000&mimetype=image/svg+xml'
+      }
     ],
     // Shut off warnings about using pre-built javascript files
     // as Quill.js unfortunately ships one as its `main`.
@@ -139,9 +158,14 @@ var config = {
         NODE_ENV: JSON.stringify('development')
       }
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'js/[name].js',
+      minChunks: Infinity
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
-};
+}
 
-module.exports = config;
+module.exports = config

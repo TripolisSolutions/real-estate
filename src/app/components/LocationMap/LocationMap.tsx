@@ -39,7 +39,7 @@ const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
       <div className={ s.container }>
         <GoogleMap
           bootstrapURLKeys={{
-            key: props.googleMapAPIKey,
+            key: key,
             language: 'vi',
           }}
           options={{
