@@ -10,6 +10,12 @@ interface IHtmlProps {
 
 class Html extends React.Component<IHtmlProps, {}> {
   private resolve(files) {
+    if (!this.props.manifest) {
+      return files.map((src) => {
+        return '/public/js/' + src
+      })
+    }
+
     return files.map((src) => {
       if (!this.props.manifest[src]) { return; }
       return '/public/' + this.props.manifest[src];
@@ -22,7 +28,7 @@ class Html extends React.Component<IHtmlProps, {}> {
 
     const styles = this.resolve(['vendor.css', 'app.css']);
     const renderStyles = styles.map((src, i) =>
-      <link key={i} rel='stylesheet' type='text/css' href={src} />
+      process.env.NODE_ENV !== 'production' ? undefined : <link key={i} rel='stylesheet' type='text/css' href={src} />
     );
 
     const scripts = this.resolve(['vendor.js', 'app.js']);

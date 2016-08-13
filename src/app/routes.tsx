@@ -8,6 +8,8 @@ import About from './containers/View/About'
 import Contact from './containers/View/Contact'
 import PropertyDetail from './containers/View/PropertyDetail'
 
+import Login from './containers/Login/Login'
+
 import Admin from './containers/Admin/Admin'
 import AdminPropertiesList from './containers/Admin/PropertiesList/PropertiesList'
 import AdminPropertiesNew from './containers/Admin/PropertiesNew/PropertiesNew'
@@ -26,6 +28,8 @@ export default (
         <Route path='counter' component={ Counter } />
         <Route path='stars' component={ Stars } />
       </Route>
+
+      <Route path='/login' component={ Login } />
 
       <Route path='/admin' component={ Admin }>
         <IndexRoute component={ AdminPropertiesList }/>

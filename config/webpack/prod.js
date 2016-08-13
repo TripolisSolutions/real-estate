@@ -51,11 +51,13 @@ var config = {
     loaders: [
       {
         test: /\.jsx?$/,
+        include: path.resolve('./src'),
         loader: loader.babel,
       },
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader'
+        include: path.resolve('./src'),
+        loader: 'react-hot!ts'
       },
       {
         test: /\.json$/,
@@ -86,30 +88,35 @@ var config = {
           'css-loader?modules&importLoaders=1&localIdentName=[local]___[hash:base64:5]!postcss-loader!less'
         )
       },
+      { test: /\.(png|jpg|gif)$/, loader: 'url?limit=8192' },
       {
-        test: /\.eot(\?.*)?$/,
-        loader: 'file?name=fonts/[hash].[ext]'
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=100000&mimetype=application/font-woff'
       },
       {
-        test: /\.(woff|woff2)(\?.*)?$/,
-        loader: 'file-loader?name=fonts/[hash].[ext]'
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=100000&mimetype=application/font-woff'
       },
       {
-        test: /\.ttf(\?.*)?$/,
-        loader: 'url?limit=10000&mimetype=application/octet-stream&name=fonts/[hash].[ext]'
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=100000&mimetype=application/octet-stream'
       },
       {
-        test: /\.svg(\?.*)?$/,
-        loader: 'url?limit=10000&mimetype=image/svg+xml&name=fonts/[hash].[ext]'
+        test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file'
       },
       {
-        test: /\.(jpe?g|png|gif)$/i,
-        loader: 'url?limit=1000&name=images/[hash].[ext]'
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file'
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=100000&mimetype=image/svg+xml'
       }
     ]
   },
 
-  postcss: function () {
+  postcss() {
     return [
       // stylelint({ files: '../../src/app/*.css' }),
       postcssNext(),
