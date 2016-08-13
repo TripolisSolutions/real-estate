@@ -12,15 +12,9 @@ function Info(props) {
     <div className={ s.container }>
       { props.children }
       <div className={ s.button }>
-          <Button text={ props.btnText } onClick={ onClick }/>
+          <Button text={ props.btnText } onClick={ onClick } active={ props.active }/>
       </div>
     </div>
   )
 }
-
-// Info.propTypes = {
-//   children: React.PropTypes.any.isRequired,
-//   btnText: React.PropTypes.string,
-// }
-
 export default Info

@@ -3,8 +3,11 @@ import * as React from 'react'
 import ButtonWrapper from '../ButtonWrapper/ButtonWrapper'
 
 function Button(props) {
+  function onClick() {
+    props.onClick()
+  }
   return (
-    <ButtonWrapper type={ props.type }>
+    <ButtonWrapper type={ props.type } onClick={ onClick } active={ props.active }>
       { props.text }
     </ButtonWrapper>
   )
