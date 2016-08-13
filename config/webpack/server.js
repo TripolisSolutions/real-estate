@@ -51,12 +51,13 @@ var config = {
       },
       {
         test: /\.jsx?$/,
+        include: path.resolve('./src'),
         loader: loader.babel
       },
       {
         test: /\.tsx?$/,
         loader: 'ts-loader',
-        exclude: /node_modules/
+        include: path.resolve('./src'),
       },
       {
         test: /\.css$/,

@@ -341,7 +341,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
       {
         name: t('step_done'),
         component: <StepDone langCode={ this.props.langCode }
-          isCreate={ !this.props.property }
+          isCreate={ isCreate }
           onSubmit={ () => {
             log.info('basicInfoFormData: ', state.basicInfoFormData)
             const object = {}
