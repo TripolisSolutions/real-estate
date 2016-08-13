@@ -36,6 +36,8 @@ const { ReduxAsyncConnect, loadOnServer } = require('redux-connect');
 import { configureStore } from './app/redux/store';
 import routes from './app/routes';
 
+import { createToken, decodeToken } from './server/token_helper'
+
 import i18n from './i18n'
 
 import { Html } from './app/containers/Html';

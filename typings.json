@@ -7,6 +7,7 @@
     "i18next": "registry:dt/i18next#2.3.4+20160709062428",
     "isomorphic-fetch": "registry:dt/isomorphic-fetch#0.0.0+20160316155526",
     "jquery": "registry:dt/jquery#1.10.0+20160417213236",
+    "jwt-simple": "registry:dt/jwt-simple#0.5.0+20160401095215",
     "loglevel": "registry:dt/loglevel#1.4.0+20160412141402",
     "mocha": "registry:dt/mocha#2.2.5+20160317120654",
     "nconf": "registry:dt/nconf#0.0.0+20160724073144",
