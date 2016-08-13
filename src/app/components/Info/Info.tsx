@@ -1,21 +1,19 @@
 import * as React from 'react'
 
-import Block from '../Block/Block'
 import Button from '../Button/Button'
 
 const s = require('./Info.less')
 
 function Info(props) {
+  function onClick() {
+    props.onClick()
+  }
   return (
-    <div className={ 'container ' }>
-      <Block>
-          <div className={ s.container }>
-            { props.children }
-            <div className={ s.button }>
-                <Button text={ props.btnText } />
-            </div>
-          </div>
-      </Block>
+    <div className={ s.container }>
+      { props.children }
+      <div className={ s.button }>
+          <Button text={ props.btnText } onClick={ onClick }/>
+      </div>
     </div>
   )
 }
