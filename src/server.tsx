@@ -93,16 +93,16 @@ app.use(require('i18next-express-middleware').handle(i18n));
 app.post('/auth/sign_in', (req, res) => {
   const body = req.body
   log.debug('login body: ', body)
-  if (body.email === nconf.get('SETTINGS_LOGIN_USERNAME') && body.password === nconf.get('SETTINGS_LOGIN_PASSWORD')) {
-    res.setHeader('access-token', 'abc')
-    res.setHeader('uid', body.email)
-    res.send({
-      data: {
-        uuid: body.email,
-        provider: 'email',
-        email: body.email,
-      },
-    })
+  if (body.username === nconf.get('SETTINGS_LOGIN_USERNAME')
+    && body.password === nconf.get('SETTINGS_LOGIN_PASSWORD')) {
+      const token = createToken(body.username)
+      res.setHeader('access-token', token)
+      res.send({
+        data: {
+          username: body.email,
+          token: token,
+        },
+      })
   }
 })
 
@@ -111,10 +111,31 @@ function simplifyLocale(locale: string) {
   return lng
 }
 
+app.use('/api', (req, res, next) => {
+  if (req.method === 'GET') {
+    next()
+    return
+  }
+
+  const token = req.headers['x-access-token']
+  if (!token) {
+    res.status(401).send({ message: 'No token provided.' })
+    return
+  }
+
+  const payload = decodeToken(token)
+  if (!payload.sub || payload.sub !== nconf.get('SETTINGS_LOGIN_USERNAME')) {
+    res.status(401).send({ message: 'Not authorized.' })
+    return
+  }
+
+  next()
+})
+
 const thumbnailUpload = multer({
   dest: '/tmp/',
 })
-app.post('/thumbnails/upload', thumbnailUpload.single('file'), (req, res) => {
+app.post('/api/thumbnails/upload', thumbnailUpload.single('file'), (req, res) => {
   log.debug('req.file', req.file)
   log.debug('image width ', req.body.width, ' height ', req.body.height, ' params: ', req.params.width)
   const destPath = path.join(__dirname, nconf.get('SETTINGS_UPLOADED_IMAGE_FOLDER'), req.file.originalname)

@@ -91,7 +91,7 @@ const UploadImagePanelContainer: SFC<IProps> = (props: IInternalProps) => {
       data.append('width', dimension.width)
       data.append('height', dimension.height)
 
-      fetch('/thumbnails/upload', {
+      fetch('/api/thumbnails/upload', {
         method: 'POST',
         body: data,
       })
