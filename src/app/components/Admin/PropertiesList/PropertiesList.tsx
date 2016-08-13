@@ -1,7 +1,6 @@
 import * as React from 'react'
-import * as log from 'loglevel'
+// import * as log from 'loglevel'
 import { translate, InjectedTranslateProps } from 'react-i18next'
-import { browserHistory } from 'react-router'
 
 import { IProperty } from '../../../redux/modules/properties/properties.model'
 import { ITranslatableText, translateText } from '../../../redux/models'
@@ -10,9 +9,9 @@ import sanitizeUrl from '../../../helpers/sanitizeUrl'
 
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { ButtonToolbar, Button } from 'react-bootstrap'
-import { IndexLink, Link } from 'react-router'
+import { IndexLink } from 'react-router'
 
-const ReactPaginate = require('react-paginate')
+const ReactPaginate = require('../../Paginate/index')
 
 interface IProps extends InjectedTranslateProps {
   pageNum: number
@@ -70,17 +69,6 @@ function createCommandsFormatter(currentLangCode: string, t, onDeleteClicked) {
 const PropertiesList = (props: IProps) => {
   const { t } = props
 
-  function handlePageClick(data) {
-    let selected = data.selected;
-    // let offset = Math.ceil(selected * props.perPage)
-    log.debug('page: ', selected)
-    if (selected === parseInt(props.currentPage as any, 10)) {
-      return
-    }
-
-    browserHistory.push('/admin?page=' + selected)
-  }
-
   return(
     <div>
       { props.isFetching ? '' : (
@@ -116,13 +104,13 @@ const PropertiesList = (props: IProps) => {
             nextLabel={
               t('next')
             }
+            navigateUrl='/admin'
             breakLabel={<a href=''>...</a>}
             breakClassName={ 'break-me' }
             pageNum={ props.pageNum }
             initialSelected={ props.currentPage }
             marginPagesDisplayed={2}
             pageRangeDisplayed={5}
-            clickCallback={ handlePageClick }
             containerClassName={'pagination'}
             subContainerClassName={'pages pagination'}
             activeClassName={'active'}
