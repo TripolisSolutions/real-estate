@@ -1,31 +1,5 @@
 @import '../../styles/variables';
 
 .container {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 0;
   border-color: @color-main-fade;
-  height: 60px;
-
-  padding: 0 @margin*2 0 @margin;
-  color: @color-main;
-
-  &:hover {
-    background: none;
-    border-color: @color-main;
-  }
-
-  span {
-    border: none;
-    margin-top: -25px;
-    font-weight: bold;
-  }
-
-  > span:after{
-    content: '^';
-    transform: rotateX(180deg);
-    display: inline-block;
-  }
 }
