@@ -5,18 +5,18 @@ const s = require('./Dropdown.less')
 function Dropdown(props) {
   return (
      <div className={ s.container } >
-        <ul>
-          <li className={ s.option } >
+        <select>
+          <option className={ s.option } value={ props.defaultValue }>
             { props.defaultValue }
-          </li>
+          </option>
           {
-            this.props.options.map((option, i) => (
-              <li className={ s.option } >
+            props.options.map((option, i) => (
+              <option className={ s.option } value={ option.value }>
                   { option.value }
-              </li>
+              </option>
             ))
           }
-        </ul>
+        </select>
      </div>
   )
 }

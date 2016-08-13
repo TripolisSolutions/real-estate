@@ -1,5 +1,37 @@
 @import '../../styles/variables';
 
 .container {
-  border-color: @color-main-fade;
+  display: flex;
+  align-items: center;
+
+  border: 1px solid fade(@color-main, 50%);
+  width: 100%;
+  height: @button-height;
+
+  overflow: hidden;
+  cursor: pointer;
+
+  position: relative;
+
+  &:after{		
+    content: '^';		
+    transform: rotateX(180deg);		
+    pointer-events: none;
+    position: absolute;
+    right: @margin;
+  }
+
+  select {
+    margin-left: @margin;
+
+    width: 100%;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    appearance: none;
+  }
+
+  select:focus {
+    outline: none;
+  }
 }
