@@ -49,6 +49,7 @@ try {
 }
 
 const express = require('express');
+const bodyParser = require('body-parser')
 const compression = require('compression');
 const Chalk = require('chalk');
 const favicon = require('serve-favicon');
@@ -90,6 +91,8 @@ app.use('/node_modules/alloyeditor', express.static(path.join(__dirname, '../nod
 
 app.use(require('i18next-express-middleware').handle(i18n));
 
+app.use(bodyParser.json())
+
 app.post('/auth/sign_in', (req, res) => {
   const body = req.body
   log.debug('login body: ', body)
@@ -98,10 +101,8 @@ app.post('/auth/sign_in', (req, res) => {
       const token = createToken(body.username)
       res.setHeader('access-token', token)
       res.send({
-        data: {
-          username: body.email,
-          token: token,
-        },
+        username: body.email,
+        token: token,
       })
   }
 })

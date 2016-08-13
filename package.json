@@ -15,8 +15,8 @@
     "start:prod": "cross-env NODE_ENV=production npm start",
     "test": "node_modules/.bin/karma start config/test/karma.conf.js",
     "lint": "node_modules/.bin/tslint \"src/**/**.ts*\"",
-    "dev:server:watch": "webpack --config config/webpack/server.js --watch",
-    "dev:server:run": "nodemon --watch src build/server.js",
+    "dev:server:watch": "webpack --watch --config config/webpack/server.js",
+    "dev:server:run": "nodemon build/server.js",
     "dev:browser:run": "node config/webpack/run.js",
     "dev:watch": "concurrently --kill-others 'npm run dev:server:watch' 'npm run dev:server:run' 'npm run dev:browser:run'",
     "dev": "npm run clean && npm run postbuild && npm run dev:watch",
@@ -143,6 +143,7 @@
   },
   "dependencies": {
     "alloyeditor": "^1.2.3",
+    "body-parser": "^1.15.2",
     "bootstrap": "^3.3.7",
     "es6-promise": "^3.1.2",
     "express": "^4.13.4",

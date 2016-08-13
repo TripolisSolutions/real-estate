@@ -14,7 +14,9 @@ interface IFormData {
 }
 
 interface IProps extends InjectedTranslateProps {
+    error: boolean
     submitForm(data: IFormData)
+    onChange()
 }
 
 class Login extends React.Component<IProps, any> {
@@ -28,6 +30,7 @@ class Login extends React.Component<IProps, any> {
               <Form
                  className='vertical'
                  onSubmit={ this.props.submitForm }
+                 onChange={ () => this.props.onChange() }
                 >
                 <div className={ s['form-login'] }>
                 <h4>{ t('login') }</h4>
@@ -44,6 +47,10 @@ class Login extends React.Component<IProps, any> {
                     type='password'
                     placeholder={ t('password') }
                 />
+                <br/>
+                {
+                    this.props.error ? <div className={ s.error }>{ t('login_error') }</div> : undefined
+                }
                 <br/>
                 <div className={ s.wrapper }>
                 <span className='group-btn'>
