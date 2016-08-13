@@ -1,31 +1,37 @@
 @import '../../styles/variables';
 
 .container {
-  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border-radius: 0;
-  border-color: @color-main-fade;
-  height: 60px;
 
-  padding: 0 @margin*2 0 @margin;
-  color: @color-main;
+  border: 1px solid fade(@color-main, 50%);
+  width: 100%;
+  height: @button-height;
 
-  &:hover {
-    background: none;
-    border-color: @color-main;
+  overflow: hidden;
+  cursor: pointer;
+
+  position: relative;
+
+  &:after{		
+    content: '^';		
+    transform: rotateX(180deg);		
+    pointer-events: none;
+    position: absolute;
+    right: @margin;
   }
 
-  span {
+  select {
+    margin-left: @margin;
+
+    width: 100%;
     border: none;
-    margin-top: -25px;
-    font-weight: bold;
+    box-shadow: none;
+    background: transparent;
+    appearance: none;
   }
 
-  > span:after{
-    content: '^';
-    transform: rotateX(180deg);
-    display: inline-block;
+  select:focus {
+    outline: none;
   }
 }

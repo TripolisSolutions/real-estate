@@ -11,7 +11,7 @@ function Footer(props) {
     <div className={ 'container' }>
       <div className={ s.container }>
         <div className={ s.left }>
-          <ul className={ s.items }>            
+          <ul className={ s.items }>
             <li className={ s.phone }>
               <div>
                 <Icon icon='phone' />
@@ -21,7 +21,7 @@ function Footer(props) {
                 <p>Dean Walkerden (+84) 981 688 075</p>
                 <strong>French-English-Vietnamese speaker:</strong>
                 <p>Sonia-Phuong Tran (+84) 981 688 076</p>
-              </div>              
+              </div>
             </li>
             <li>
               <Icon icon='envelope' />

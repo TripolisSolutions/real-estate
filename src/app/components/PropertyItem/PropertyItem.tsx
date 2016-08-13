@@ -2,7 +2,6 @@ import * as React from 'react'
 import { Link } from 'react-router'
 
 import Option from './Option/Option'
-import Button from '../Button/Button'
 
 const s = require('./PropertyItem.less')
 
@@ -23,7 +22,7 @@ function PropertyItem(props) {
             <Option icon='clock-o' text='Aviable' value='4' />
             <Option icon='hourglass-start' text='Day for rent' value='4' />
           </div>
-        </div> 
+        </div>
       </div>
     </Link>
   )

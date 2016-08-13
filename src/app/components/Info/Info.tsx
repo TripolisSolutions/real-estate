@@ -1,5 +1,4 @@
 import * as React from 'react'
-const FontAwesome = require('react-fontawesome')
 
 import Block from '../Block/Block'
 import Button from '../Button/Button'

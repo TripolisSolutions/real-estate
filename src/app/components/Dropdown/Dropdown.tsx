@@ -1,24 +1,25 @@
 import * as React from 'react'
-import { FormGroup, ControlLabel } from 'react-bootstrap'
-import { MenuItem as BootstrapMenuItem} from 'react-bootstrap'
+
 const s = require('./Dropdown.less')
 
 function Dropdown(props) {
   return (
-     <FormGroup>
-      {
-        props.label ? <ControlLabel>{ props.label }</ControlLabel> : undefined
-      }
-      <div className={ s.container }>
-        
-      </div>
-    </FormGroup>
+     <div className={ s.container } >
+        <select>
+          <option className={ s.option } value={ props.defaultValue }>
+            { props.defaultValue }
+          </option>
+          {
+            props.options.map((option, i) => (
+              <option className={ s.option } value={ option.value }>
+                  { option.value }
+              </option>
+            ))
+          }
+        </select>
+     </div>
   )
 }
-
-// Dropdown.propTypes = {
-//   title: React.PropTypes.string.isRequired,
-// }
 
 export default Dropdown
 
