@@ -58,6 +58,9 @@ storiesOf('PropertiesList', module)
     return (
       <StorybookProvider>
         <PropetiesList
+          pageNum={ 10 }
+          perPage={ 5 }
+          currentPage={ 1 }
           properties={ properties }
           isFetching={ false }
           langCode={ 'vi' }
@@ -72,6 +75,9 @@ storiesOf('PropertiesList', module)
     return (
       <StorybookProvider>
         <PropetiesList
+          pageNum={ 10 }
+          perPage={ 5 }
+          currentPage={ 1 }
           properties={ properties }
           isFetching={ false }
           langCode={ 'en' }

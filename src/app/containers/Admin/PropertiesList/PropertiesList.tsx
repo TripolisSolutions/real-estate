@@ -19,11 +19,11 @@ interface IProps extends IState, InjectedTranslateProps {
 
 @translate()
 @asyncConnect([{
-  promise: ({ store: { dispatch } }) => {
+  promise: ({ store: { dispatch }, location: { query } }) => {
     log.debug('async feching data for PropertiesList')
     return Promise.all([
       dispatch(triggerFetchCategories()),
-      dispatch(triggerFetchProperties()),
+      dispatch(triggerFetchProperties(parseInt(query.page, 10) || 0)),
     ]).then((results) => {
       log.debug('async feched data for PropertiesList: ', results)
     })
@@ -46,10 +46,21 @@ export default class PropertiesListContainer extends React.Component<IProps, {}>
   }
 
   public render() {
+
+    const props = this.props as any
+    const location = props.location as any
+    log.info('location', location)
+    const perPage = 20
+    const pageNum = Math.ceil(this.props.propertiesData.total / perPage)
+    const currentPage = parseInt(location.query.page, 10) || 0
+
     return(
       <Grid>
         <Row>
           <PropertiesList
+            pageNum={ pageNum }
+            perPage={ perPage }
+            currentPage={ currentPage }
             properties={ this.props.propertiesData.properties }
             isFetching={ this.props.propertiesData.isFetching }
             langCode={ this.props.i18nData.currentLangCode }

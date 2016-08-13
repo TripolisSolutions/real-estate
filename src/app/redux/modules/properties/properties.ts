@@ -31,12 +31,14 @@ const DELETE_PROPERTY_FAILURE = 'DELETE_PROPERTY_FAILURE'
 
 export interface IState {
   property?: IProperty
-  properties: IProperty[]
+  properties: IProperty[],
+  total: number,
   isFetching: boolean
 }
 
 const INITIAL_STATE: IState = {
   properties: [],
+  total: 0,
   isFetching: false,
 }
 
@@ -55,10 +57,13 @@ const ACTION_HANDLERS = {
       },
     })
   },
-  [PROPERTIES_SUCCESS]: (state: IState, action: IAction<IProperty[]>): IState => {
+  [PROPERTIES_SUCCESS]: (state: IState, action: IAction<{docs: IProperty[], total: number}>): IState => {
     return update(state, {
       properties: {
-        $set: action.payload,
+        $set: action.payload.docs,
+      },
+      total: {
+        $set: action.payload.total,
       },
       isFetching: {
         $set: false,
@@ -164,17 +169,17 @@ export function propertiesReducer(state = INITIAL_STATE, action: IAction<any>): 
 }
 
 /** Async Action Creator */
-export function triggerFetchProperties(): Redux.Dispatch {
+export function triggerFetchProperties(page: number): Redux.Dispatch {
   return dispatch => {
     dispatch(propertiesRequest());
     log.debug('propertiesRequest')
 
-    return fetch(urljoin(rootUrl, 'properties'))
+    return fetch(urljoin(rootUrl, 'properties?page=' + page))
       .then(res => {
         if (res.ok) {
           log.debug('propertiesSuccess')
           return res.json()
-            .then(res => dispatch(propertiesSuccess(res.docs)));
+            .then(res => dispatch(propertiesSuccess(res)));
         } else {
           return res.json()
             .then(res => dispatch(propertiesFailure(res)));
