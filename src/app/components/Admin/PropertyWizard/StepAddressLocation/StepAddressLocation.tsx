@@ -190,7 +190,9 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
       marker = props.state.mapMarker
     }
 
-    const districts = translatedOptions(t)
+    const {
+      districts,
+    } = translatedOptions(t)
 
     return (
       <div className={ s.container }>
