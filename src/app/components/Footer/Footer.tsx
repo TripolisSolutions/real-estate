@@ -43,7 +43,7 @@ function Footer(props: InjectedTranslateProps) {
               <ButtonIcon icon='twitter' text='tweet'/>
             </div>
           </Row>
-          <p>{ t('footer_copyright') }</p>
+          <p dangerouslySetInnerHTML={{__html: t('footer_copyright')}}></p>
         </div>
       </div>
     </div>

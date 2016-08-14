@@ -1,6 +1,14 @@
 module.exports = {
   'switch_language': 'Tiếng Việt',
+
   'contact_us': 'Contact US',
+  'contact_name': 'Name',
+  'contact_gender': 'Gender',
+  'contact_email': 'Email',
+  'contact_message': 'Input your message here...',
+  'contact_send': 'Send',
+  'contact_sending': 'Sending...',
+
   'view_page': 'View in page',
 
   'step_basic_info': 'Basic Info',
