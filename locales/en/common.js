@@ -9,8 +9,6 @@ module.exports = {
   'contact_send': 'Send',
   'contact_sending': 'Sending...',
 
-  'view_page': 'View in page',
-
   'step_basic_info': 'Basic Info',
   'step_description_vietnamese': 'Description in Vietnamese',
   'step_description_english': 'Description in English',
@@ -164,4 +162,15 @@ module.exports = {
   'username': 'Username',
   'password': 'Password',
   'login_error': 'Please double check your username & password!',
+
+  'delete': 'Delete',
+  'edit': 'Edit',
+  'link': 'Link',
+  'property_name': 'Property Name',
+  'created_date': 'Created Date',
+  'commands': 'Commands',
+  'view_page': 'View in page',
+
+  'previous': 'Previous',
+  'next': 'Next',
 }
