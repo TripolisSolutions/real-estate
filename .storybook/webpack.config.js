@@ -46,10 +46,12 @@ var config = {
     loaders: [
       {
         test: /\.jsx?$/,
+        include: path.resolve('./src'),
         loader: loader.babel,
       },
       {
         test: /\.tsx?$/,
+        include: path.resolve('./src'),
         loader: 'react-hot!ts'
       },
       {

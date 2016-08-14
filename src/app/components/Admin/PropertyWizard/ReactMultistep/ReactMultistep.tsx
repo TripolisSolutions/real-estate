@@ -9,6 +9,7 @@ export interface IStep {
 interface IProps {
   showNavigation: boolean
   steps: IStep[]
+  onNavigated?(step: IStep, index: number)
 }
 
 interface IState {
@@ -80,6 +81,10 @@ export default class MultiStep extends Component<IProps, IState> {
       this.setState(Object.assign({compState: next}))
     }
     this.checkNavState(next)
+
+    if (this.props.onNavigated) {
+      this.props.onNavigated(this.props.steps[next], next)
+    }
   }
 
   private handleKeyDown(evt) {

@@ -18,10 +18,6 @@ export class UploadImagePanel extends React.Component<IProps, void> {
     dropzone: any
   }
 
-  private openSelectFile = () => {
-    this.refs.dropzone.open()
-  }
-
   private onFileDrop = (files: File[]) => {
     this.props.onFilesDrop(files)
   }
@@ -32,17 +28,15 @@ export class UploadImagePanel extends React.Component<IProps, void> {
     return (
       <Dropzone ref='dropzone' onDrop={this.onFileDrop} accept='image/*' className={ s.dropzone }>
         <div className='row'>
-          <div className='col-lg-3 col-md-4 col-xs-6 thumb'>
+          <div className={'col-lg-3 col-md-4 col-xs-6 ' + s.thumb }>
             {
               this.props.isUploading ? (
                 <div>Uploading</div>
               ) : (
-                <a className={ c('thumbnail', s.uploadImageBtn) } href='javascript:void()'
-                  onClick={ this.openSelectFile }
-                >
+                <div className={ c('thumbnail', s.uploadImageBtn) }>
                   <i className='fa fa-plus' aria-hidden='true'></i>
                   { t('upload_image') }
-                </a>
+                </div>
               )
             }
           </div>

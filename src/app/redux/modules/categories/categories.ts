@@ -54,8 +54,12 @@ export function categoriesReducer(state = INITIAL_STATE, action: IAction<any>): 
 }
 
 /** Async Action Creator */
-export function triggerFetchCategories(): Redux.Dispatch {
-  return dispatch => {
+export function triggerFetchCategories() {
+  return (dispatch, getState: () => any) => {
+    if (getState().categoriesData.categories.length > 0) {
+      return
+    }
+
     dispatch(categoriesRequest());
 
     const url = urljoin(rootUrl, 'categories')

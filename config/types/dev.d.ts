@@ -9,6 +9,7 @@ interface Window {
   __INITIAL_STATE__?: any;
   ALLOYEDITOR_BASEPATH: string
   CKEDITOR_BASEPATH: string
+  google: any
 }
 
 interface ObjectConstructor {
