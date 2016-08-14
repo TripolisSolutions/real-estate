@@ -45,6 +45,11 @@ class Home extends React.Component<IProps, void> {
   public render() {
     const properties = this.props.propertiesData.properties.slice(0, 6)
 
+    let imageRootUrl
+    if (typeof window !== 'undefined') {
+      imageRootUrl = window.__CONFIG__.imageRootUrl
+    }
+
     return (
       <div>
         <Banner slogan={ 'A New Life Has Begun' } image={ banner } />
@@ -55,6 +60,7 @@ class Home extends React.Component<IProps, void> {
           title={ 'I want to' }
         ></SearchBar>
         <PropertyList
+          imageRootUrl={ imageRootUrl }
           currency={ this.props.i18nData.currentCurrency }
           langCode={ this.props.i18nData.currentLangCode }
           properties={ properties }

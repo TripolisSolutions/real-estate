@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Col, Row} from 'react-bootstrap'
+import * as urljoin from 'url-join'
 
 import { IProperty } from '../../redux/modules/properties/properties.model'
 import { translateText } from '../../redux/models'
@@ -13,6 +14,7 @@ interface IProps {
   langCode: string
   currency: string
   properties: IProperty[]
+  imageRootUrl: string
   title?: string
 }
 
@@ -30,6 +32,9 @@ class PropertyList extends React.Component<IProps, any> {
                     currency={ this.props.currency }
                     id={ prop.id }
                     title={ translateText(prop.name, this.props.langCode) }
+                    imageUrl={
+                      prop.thumbnailImage ? urljoin(this.props.imageRootUrl, prop.thumbnailImage.fileName) : null
+                    }
                     bedRoomCount={ prop.bedRoomCount }
                     size={ prop.size }
                     district={ prop.address.district }
