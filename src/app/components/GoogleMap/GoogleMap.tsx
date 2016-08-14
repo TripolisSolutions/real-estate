@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { SFC } from 'react'
+import * as log from 'loglevel'
 import * as _ from 'lodash'
 import mapStyles from './locationMapStyles'
 
@@ -18,7 +19,6 @@ interface IProps extends React.Props<any> {
   },
   onViewportChange?: Function
   onClick?: Function
-  title?: string,
 }
 
 const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
@@ -34,20 +34,20 @@ const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
     <ScriptjsLoader
       hostname={'maps.googleapis.com'}
       pathname={'/maps/api/js'}
-      query={{v: `3.24`, libraries: 'places', key: key}}
+      query={{v: `3.24`, libraries: 'places,geometry', key: key}}
       loadingElement={
         <div>
         </div>
       }
       containerElement={
-        <div style={{
+        <div id='realestateGMap' style={{
           height: '600px',
         }}/>
       }
       googleMapElement={
         <GoogleMap
-          defaultZoom={ props.zoom }
-          defaultCenter={{ lat: props.lat, lng: props.lng }}
+          zoom={ props.zoom }
+          center={{ lat: props.lat, lng: props.lng }}
           onClick={ function({latLng}) {
             const bounds = this.getBounds();
 
@@ -97,10 +97,9 @@ const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
 // 10.7859378,106.5255811
 LocationMap.defaultProps = {
   googleMapAPIKey: '',
-  lat: 10.790996617593493,
-  lng: 106.64231083632808,
+  lat: 10.81442195828899,
+  lng: 106.6552734375,
   zoom: 12,
-  title: '',
 }
 
 export default LocationMap

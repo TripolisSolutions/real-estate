@@ -1,12 +1,8 @@
 import * as React from 'react'
 import { SFC } from 'react'
-import GoogleMap from 'google-map-react'
-
-// import * as log from 'loglevel'
 
 import Block from '../Block/Block'
-import LocationMapCircleMarker from '../LocationMapCircleMarker/LocationMapCircleMarker'
-import mapStyles from './locationMapStyles'
+import GoogleMap from '../GoogleMap/GoogleMap'
 
 const s = require('./LocationMap.less')
 
@@ -38,24 +34,14 @@ const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
     <Block title={ props.title } noBorder={ true }>
       <div className={ s.container }>
         <GoogleMap
-          bootstrapURLKeys={{
-            key: key,
-            language: 'vi',
-          }}
-          options={{
-            styles: mapStyles,
-          }}
-          center={{lat: props.lat, lng: props.lng }}
+          googleMapAPIKey={ props.googleMapAPIKey }
+          lat={ props.lat }
+          lng={ props.lng }
           zoom={ props.zoom }
-          onChange={ props.onViewportChange }
-          onClick={ props.onClick && props.onClick }>
-          {
-            props.circleMarker ? <LocationMapCircleMarker
-              lat={ props.circleMarker.lat }
-              lng={ props.circleMarker.lng }
-              radius={ props.circleMarker.radius }/> : undefined
-          }
-        </GoogleMap>
+          circleMarker={ props.circleMarker }
+          onViewportChange={ props.onViewportChange }
+          onClick={ props.onClick }
+        />
       </div>
     </Block>
   )
@@ -64,8 +50,8 @@ const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
 // 10.7859378,106.5255811
 LocationMap.defaultProps = {
   googleMapAPIKey: '',
-  lat: 10.790996617593493,
-  lng: 106.64231083632808,
+  lat: 10.81442195828899,
+  lng: 106.6552734375,
   zoom: 12,
   title: '',
 }

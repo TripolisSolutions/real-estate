@@ -59,10 +59,6 @@ class Html extends React.Component<IHtmlProps, {}> {
         <body>
           <main id='app' dangerouslySetInnerHTML={{ __html: markup }}></main>
           {initialState}
-          <script type='text/javascript'
-            src={`//maps.googleapis.com/maps/api/js?key=${ nconf.get('SETTINGS_GOOGLE_MAP_API_KEY') }&sensor=true`}
-          >
-          </script>
           <script dangerouslySetInnerHTML={{
             __html: `
               window.ALLOYEDITOR_BASEPATH = '/node_modules/alloyeditor/dist/alloy-editor/';

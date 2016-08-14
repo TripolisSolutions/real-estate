@@ -55,7 +55,7 @@ const reducer = (state: IState, action) => {
           $set: {
             lat: action.payload.lat,
             lng: action.payload.lng,
-            zoom: 300,
+            radius: action.payload.radius,
           },
         },
       })
@@ -103,7 +103,7 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
 
   private lookup = (langCode: string) => {
     return (
-      <span className='glyphicon glyphicon-search'
+      <span className={'glyphicon glyphicon-search ' + s.clickable}
         onClick={() => {
           const props = this.props
 
@@ -255,11 +255,11 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
 
                   props.onMapDataChange(props.state.mapViewport, props.state.mapMarker)
                 }}
-                onClick={ ({lat, lng}) => {
+                onClick={ ({lat, lng}, {radius}) => {
                   props.dispatch({
                     type: 'SET_MAP_MARKER',
                     payload: {
-                      lat, lng,
+                      lat, lng, radius,
                     },
                   })
 
