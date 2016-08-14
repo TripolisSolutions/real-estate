@@ -1,6 +1,16 @@
 import * as update from 'react/lib/update'
 import * as React from 'react'
 import { Col, Row } from 'react-bootstrap'
+import { translate, InjectedTranslateProps } from 'react-i18next'
+
+const { connect } = require('react-redux');
+const { asyncConnect } = require('redux-connect');
+
+import { triggerFetchCategories } from '../../redux/modules/categories/categories'
+import { triggerFetchProperty } from '../../redux/modules/properties/properties'
+import { IState } from '../../redux/reducers'
+
+import { formatDate } from '../../helpers/date'
 
 import Block from '../../components/Block/Block'
 import LocationMap from '../../components/LocationMap/LocationMap'
@@ -11,13 +21,24 @@ import ContactForm from '../ContactForm/ContactForm'
 
 const s = require('./PropertyDetail.less')
 
-
-interface IPropertyDetailState {
-  toggleBtn: boolean
+interface IProps extends IState, InjectedTranslateProps {
 }
 
-class PropertyDetail extends React.Component<any, IPropertyDetailState> {
-
+@translate()
+@asyncConnect([{
+  promise: ({ store: { dispatch }, params: { id } }) => {
+    return Promise.all([
+      dispatch(triggerFetchCategories()),
+      dispatch(triggerFetchProperty(id)),
+    ])
+  },
+}])
+@connect(
+  state => state
+)
+class PropertyDetail extends React.Component<IProps, {
+  toggleBtn: boolean
+}> {
   constructor(props, context) {
     super(props, context)
 
@@ -25,8 +46,6 @@ class PropertyDetail extends React.Component<any, IPropertyDetailState> {
       toggleBtn: false,
     }
   }
-
-
 
   private handleClickContact = (e) => {
     this.setState(
@@ -38,21 +57,27 @@ class PropertyDetail extends React.Component<any, IPropertyDetailState> {
     )
   }
 
-
   public render() {
-    let images = [
-      'http://www.uum.org.my/wp-content/uploads/2016/05/s-ac2562875c06eae6cf546b0c0cf10b6f47311b47.jpg',
-      'http://ghk.h-cdn.co/assets/cm/15/11/54ff82282ac26-living-room-green-window-de.jpg',
-      'http://www.beeyoutifullife.com/wp-content/uploads/2014/12/mid-century-modern-rugs-Living-Room-Modern-with-none-.jpg',
-    ]
+    const { t } = this.props
+
+    const property = this.props.propertiesData.property
+
+    const imageUrls = property.galleryImages.map((image) => {
+      return image.url
+    })
+
     return (
       <div>
-        <Slider title={ 'Nice to meet you'} images={ images }/>
+        {
+          imageUrls.length > 0 ? (
+            <Slider title={ 'Nice to meet you'} images={ imageUrls }/>
+          ) : undefined
+        }
         <div className={ 'container' } >
           <Block>
             <Row>
               <Col md={2}>
-                <label>Create date: jul 10 2016</label>
+                <label>{ t('created_date') } { formatDate(property.c_at) }</label>
               </Col>
               <Col md={10}>
                 <Row>

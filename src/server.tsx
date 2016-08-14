@@ -244,6 +244,7 @@ app.get('*', (req, res) => {
 
   const store = configureStore(memoryHistory, {
     i18nData: {
+      currentCurrency: 'VND',
       currentLangCode: langCode,
       locales: {
         vi: vi,

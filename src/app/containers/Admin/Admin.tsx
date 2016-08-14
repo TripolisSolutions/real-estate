@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import Header from '../../components/Header/Header'
 
-import { switchLanguage } from '../../redux/modules/i18n/i18n'
+import { switchLanguage, switchCurrency } from '../../redux/modules/i18n/i18n'
 
 /**
  * App container component
@@ -25,7 +25,10 @@ function Admin(props) {
           label: 'New Property',
         },
       ]}
+
+        currentCurrency={ props.i18nData.currentCurrency }
         onSwitchLanguageClicked={ props.switchLanguage }
+        onSwitchCurrencyClicked={ props.switchCurrency }
       />
       <div>
         { props.children }
@@ -38,5 +41,6 @@ export default connect(
   state => state,
   dispatch => ({
     switchLanguage: () => dispatch(switchLanguage()),
+    switchCurrency: () => dispatch(switchCurrency()),
   })
 )(Admin)

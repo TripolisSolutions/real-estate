@@ -26,6 +26,7 @@ export interface IProperty {
   size?: {
     width: number
     length: number
+    area?: number
   }
   address?: {
     name: ITranslatableText[]

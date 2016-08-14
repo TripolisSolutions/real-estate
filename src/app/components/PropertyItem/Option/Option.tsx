@@ -10,7 +10,7 @@ function Option(props) {
         <Icon icon={ props.icon } />
       </div>
       <span>{ props.text }: </span>
-      <span>{ props.value } </span>
+      <span> { props.value } </span>
     </div>
   )
 }

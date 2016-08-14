@@ -1,13 +1,32 @@
 import * as React from 'react'
 import { Link } from 'react-router'
-
+import sanitizeUrl from '../../helpers/sanitizeUrl'
 import Option from './Option/Option'
+
+import { formatDate } from '../../helpers/date'
+
+import { ITranslatablePrice } from '../../redux/models'
 
 const s = require('./PropertyItem.less')
 
-function PropertyItem(props) {
+interface IProps {
+  currency: string
+  id: string
+  title: string
+  bedRoomCount?: number
+  size?: {
+    width: number
+    length: number
+  }
+  district?: string
+  price?: ITranslatablePrice[]
+  available?: string | Date
+  facingDirection?: string
+}
+
+function PropertyItem(props: IProps) {
   return (
-    <Link to='/properties/:id'>
+    <Link to={'/properties/${ props.id }/${ sanitizeUrl(props.title) }'}>
       <div className={ s.container } >
         <div>
           <img alt='property' src='http://ghk.h-cdn.co/assets/cm/15/11/54ff82282ac26-living-room-green-window-de.jpg' />

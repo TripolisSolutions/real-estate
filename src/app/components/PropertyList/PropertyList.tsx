@@ -11,11 +11,13 @@ const s = require('./PropertyList.less')
 
 interface IProps {
   langCode: string
+  currency: string
   properties: IProperty[]
   title?: string
 }
 
 class PropertyList extends React.Component<IProps, any> {
+
   public render() {
     return (
       <div className={'container'}>
@@ -24,7 +26,17 @@ class PropertyList extends React.Component<IProps, any> {
             {
               this.props.properties.map((prop) => (
                 <Col key={ prop.id } md={4} className={ s.item }>
-                  <PropertyItem title={ translateText(prop.name, this.props.langCode) } />
+                  <PropertyItem
+                    currency={ this.props.currency }
+                    id={ prop.id }
+                    title={ translateText(prop.name, this.props.langCode) }
+                    bedRoomCount={ prop.bedRoomCount }
+                    size={ prop.size }
+                    district={ prop.address.district }
+                    price={ prop.price }
+                    available={ prop.availableUntil }
+                    facingDirection={ prop.facingDirection }
+                  />
                 </Col>
               ))
             }
