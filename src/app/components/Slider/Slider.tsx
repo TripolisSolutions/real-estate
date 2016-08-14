@@ -4,7 +4,12 @@ import Slogan from '../Slogan/Slogan'
 
 const s = require('./Slider.less')
 
-function Slider(props) {
+interface IProps {
+  title?: string
+  images: string[]
+}
+
+function Slider(props: IProps) {
   return (
     <div className={ s.container }>
       <div className={ s.box }>
@@ -13,7 +18,7 @@ function Slider(props) {
       <Carousel className={ s.slider }>
         {
           props.images.map((image, i) => (
-            <Carousel.Item>
+            <Carousel.Item key={ image }>
               <img width='100%' alt='900x500' src={ image } />
             </Carousel.Item>
           ))

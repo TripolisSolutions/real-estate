@@ -39,7 +39,10 @@ function PropertyItem(props: IProps) {
         <div>
           <img
             alt='property'
-            src={ props.imageUrl ? props.imageUrl : 'http://ghk.h-cdn.co/assets/cm/15/11/54ff82282ac26-living-room-green-window-de.jpg' }
+            src={
+              props.imageUrl ?
+                props.imageUrl :
+                'http://ghk.h-cdn.co/assets/cm/15/11/54ff82282ac26-living-room-green-window-de.jpg' }
           />
         </div>
         <div className={ s.info }>
