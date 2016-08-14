@@ -78,6 +78,7 @@ class Home extends React.Component<IProps, void> {
             nextLabel={
               t('>')
             }
+            query={ location.query }
             navigateUrl='/properties'
             breakLabel={<a href=''>...</a>}
             breakClassName={ 'break-me' }
