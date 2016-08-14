@@ -62,7 +62,7 @@ class Home extends React.Component<IProps, void> {
           langCode={ this.props.i18nData.currentLangCode }
           properties={ properties }
         >
-           <ReactPaginate
+          <ReactPaginate
             previousLabel={
               t('<')
             }
@@ -82,6 +82,7 @@ class Home extends React.Component<IProps, void> {
           />
           <LocationMap />
         </PropertyList>
+
       </div>
     )
   }
