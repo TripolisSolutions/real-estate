@@ -1,24 +1,25 @@
 import * as React from 'react'
 import Icon from '../../Icon/Icon'
+import { translate, InjectedTranslateProps } from 'react-i18next'
 
 const s = require('./Option.less')
 
-function Option(props) {
+interface IProps extends InjectedTranslateProps {
+  icon: string
+  text: string
+  value: string | number
+}
+
+function Option(props: IProps) {
   return (
     <div className={ s.container } >
       <div className={ s.icon }>
         <Icon icon={ props.icon } />
       </div>
       <span>{ props.text }: </span>
-      <span> { props.value } </span>
+      <span> { props.value || props.t('unknown') } </span>
     </div>
   )
 }
 
-// Option.propTypes = {
-//   icon: React.PropTypes.string.isRequired,
-//   text: React.PropTypes.string.isRequired,
-//   value: React.PropTypes.string.isRequired,
-// }
-
-export default Option
+export default translate()(Option)
