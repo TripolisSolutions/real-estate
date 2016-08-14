@@ -43,6 +43,7 @@ class Home extends React.Component<IProps, void> {
   }
 
   public render() {
+    const { t } = this.props
     const properties = this.props.propertiesData.properties.slice(0, 6)
 
     let imageRootUrl
@@ -52,25 +53,30 @@ class Home extends React.Component<IProps, void> {
 
     return (
       <div>
-        <Banner slogan={ 'A New Life Has Begun' } image={ banner } />
+        <Banner slogan={ t('home_slogan') } image={ banner } />
         <SearchBar
           langCode={ this.props.i18nData.currentLangCode }
+          currency={ this.props.i18nData.currentCurrency }
           categories={ this.props.categoriesData.categories }
           onSearch={ this.handleSearch }
-          title={ 'I want to' }
+          title={ t('search_bar_heading') }
         ></SearchBar>
         <PropertyList
           imageRootUrl={ imageRootUrl }
           currency={ this.props.i18nData.currentCurrency }
           langCode={ this.props.i18nData.currentLangCode }
           properties={ properties }
-          title={ 'Recently properties' }
+          title={ t('home_lastest_properties') }
         ></PropertyList>
         <div className={ 'container' }>
           <Block>
-            <Info btnText={ 'More info' }>
+            <Info btnText={ t('home_message_btn') } onClick={() => {
+              browserHistory.push('/about')
+            }} >
               <h1>
-                "We chose this site based on its reputation for building high quality homes while providing incredible customer service."
+                {
+                  t('home_message')
+                }
               </h1>
             </Info>
           </Block>

@@ -67,7 +67,7 @@ function Header(props: IProps) {
                 props.onSwitchCurrencyClicked()
               }}
             >
-              <p>{ props.t('currency') } { props.currentCurrency }</p>
+              <p>{ props.t('switch_currency_label') } { props.currentCurrency }</p>
             </a>
           </li>
         </ul>

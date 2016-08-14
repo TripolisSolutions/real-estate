@@ -18,7 +18,12 @@ export default class PageView extends React.Component {
 
     return (
         <li className={cssClassName}>
-            <Link className={linkClassName} to={ this.props.navigateUrl + '?page=' + (this.props.page - 1) }>
+            <Link className={linkClassName} to={{
+              pathname: this.props.navigateUrl,
+              query: Object.assign({}, this.props.query || {}, {
+                page: (this.props.page - 1),
+              })
+            }}>
               {this.props.page}
             </Link>
         </li>

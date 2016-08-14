@@ -21,7 +21,7 @@ function Option(props: IProps) {
           <span>{ props.text }: </span>
         ) : undefined
       }
-      <span className={ s.value }> { props.value || props.t('unknown') } </span>
+      <span> { props.value || props.t('unknown') } </span>
     </div>
   )
 }

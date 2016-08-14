@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { Route, IndexRoute } from 'react-router'
-import { browserHistory } from 'react-router'
 
 import { Counter, Stars } from './containers'
 import App from './containers/View/App'

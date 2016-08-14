@@ -1,12 +1,14 @@
 import * as React from 'react'
 import * as log from 'loglevel'
 import { browserHistory } from 'react-router'
+import { translate } from 'react-i18next'
 
 // const EmailSignInForm = require('redux-auth/bootstrap-theme').EmailSignInForm
 import Login from '../../components/Login/Login'
 import { logIn } from '../../helpers/auth'
 
-export default class PropertiesListContainer extends React.Component<{}, {
+@translate()
+export default class LoginContainer extends React.Component<{}, {
   error: boolean
 }> {
 

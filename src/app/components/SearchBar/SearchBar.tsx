@@ -26,11 +26,13 @@ export interface ISearchQuery {
   maxPrice: string
   district: string
   size: string
+  currency: string
 }
 
 interface IProps extends InjectedTranslateProps {
   query?: ISearchQuery
   langCode: string
+  currency: string
   categories: ICategory[]
   onSearch(query: ISearchQuery)
   title?: string
@@ -55,6 +57,7 @@ class SearchBar extends React.Component<IProps, void> {
       maxPrice: '',
       district: '',
       size: '',
+      currency: 'VND',
     },
     langCode: 'vi',
     categories: [],
@@ -74,6 +77,8 @@ class SearchBar extends React.Component<IProps, void> {
 
   private handleSubmit = (event) => {
     event.preventDefault()
+    this.form.currency = this.props.currency
+    this.form.lang = this.props.langCode
     this.props.onSearch(this.form)
   }
 
@@ -133,7 +138,7 @@ class SearchBar extends React.Component<IProps, void> {
                     placeHolder={ t('search_min_bed') }
                     defaultValue={ query.minBed }
                     options={ minBedOptions }
-                    onChange={ (value) => this.updateForm('category', value) }
+                    onChange={ (value) => this.updateForm('minBed', value) }
                   />
                 </Col>
                 <Col md={ 1 }>
@@ -141,7 +146,7 @@ class SearchBar extends React.Component<IProps, void> {
                     placeHolder={ t('search_max_bed') }
                     defaultValue={ query.maxBed }
                     options={ maxBedOptions }
-                    onChange={ (value) => this.updateForm('category', value) }
+                    onChange={ (value) => this.updateForm('maxBed', value) }
                   />
                 </Col>
                 <Col md={ 1 }>
@@ -149,7 +154,7 @@ class SearchBar extends React.Component<IProps, void> {
                     type='number'
                     defaultValue={ query.minPrice }
                     placeholder={ t('search_min_price') }
-                    onChange={ _.debounce((value) => this.updateForm('q', value), 200) }
+                    onChange={ _.debounce((value) => this.updateForm('minPrice', value), 200) }
                   />
                 </Col>
                 <Col md={ 1 }>
@@ -157,7 +162,7 @@ class SearchBar extends React.Component<IProps, void> {
                     type='number'
                     defaultValue={ query.maxPrice }
                     placeholder={ t('search_max_price') }
-                    onChange={ _.debounce((value) => this.updateForm('q', value), 200) }
+                    onChange={ _.debounce((value) => this.updateForm('maxPrice', value), 200) }
                   />
                 </Col>
                 <Col md={ 1 }>
@@ -165,7 +170,7 @@ class SearchBar extends React.Component<IProps, void> {
                     placeHolder={ t('search_district') }
                     defaultValue={ query.district }
                     options={ districts }
-                    onChange={ (value) => this.updateForm('category', value) }
+                    onChange={ (value) => this.updateForm('district', value) }
                   />
                 </Col>
                 <Col md={ 1 }>
@@ -173,12 +178,12 @@ class SearchBar extends React.Component<IProps, void> {
                     placeHolder={ t('search_size') }
                     defaultValue={ query.size }
                     options={ sizes }
-                    onChange={ (value) => this.updateForm('category', value) }
+                    onChange={ (value) => this.updateForm('size', value) }
                   />
                 </Col>
               </Row>
               <div className={ s.button }>
-                <Button type='submit' text='More Info' />
+                <Button type='submit' text={ t('search_btn') } />
               </div>
             </form>
           </div>

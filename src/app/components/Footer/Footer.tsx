@@ -1,12 +1,15 @@
 import * as React from 'react'
 import { Row } from 'react-bootstrap'
+import { translate, InjectedTranslateProps } from 'react-i18next'
 
 import Icon from '../Icon/Icon'
 import ButtonIcon from '../ButtonIcon/ButtonIcon'
 
 const s = require('./Footer.less')
 
-function Footer(props) {
+function Footer(props: InjectedTranslateProps) {
+  const { t } = props
+
   return (
     <div className={ 'container' }>
       <div className={ s.container }>
@@ -16,11 +19,7 @@ function Footer(props) {
               <div>
                 <Icon icon='phone' />
               </div>
-              <div>
-                <strong>English speaker:</strong>
-                <p>Dean Walkerden (+84) 981 688 075</p>
-                <strong>French-English-Vietnamese speaker:</strong>
-                <p>Sonia-Phuong Tran (+84) 981 688 076</p>
+              <div dangerouslySetInnerHTML={{__html: t('footer_phone_info')}}>
               </div>
             </li>
             <li>
@@ -44,11 +43,11 @@ function Footer(props) {
               <ButtonIcon icon='twitter' text='tweet'/>
             </div>
           </Row>
-          <p>Copy &copy; 2016 by YOUR SIDE</p>
+          <p dangerouslySetInnerHTML={{__html: t('footer_copyright')}}></p>
         </div>
       </div>
     </div>
   )
 }
 
-export default Footer
+export default translate()(Footer)

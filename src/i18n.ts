@@ -49,8 +49,8 @@ i18n.init({
     ns: ['common'],
     defaultNS: 'common',
 
-    // debug: process.env.NODE_ENV === 'development',
-    debug: false,
+    debug: process.env.NODE_ENV === 'development',
+    // debug: false,
 
     interpolation: {
       escapeValue: false, // not needed for react!!

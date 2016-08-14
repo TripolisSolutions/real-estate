@@ -116,7 +116,9 @@ export default class PaginationBoxView extends Component {
           pageLinkClassName={this.props.pageLinkClassName}
           activeClassName={this.props.activeClassName}
           navigateUrl={ this.props.navigateUrl }
-          page={index + 1} />
+          page={index + 1}
+          query={ this.props.query }
+        />
       }
 
     } else {
@@ -199,7 +201,12 @@ export default class PaginationBoxView extends Component {
     return (
       <ul className={classNames(this.props.containerClassName, s.container)}>
         <li className={previousClasses}>
-          <Link className={this.props.previousLinkClassName} to={ this.props.navigateUrl + '?page=' + (this.props.initialSelected - 1) }>
+          <Link className={this.props.previousLinkClassName} to={{
+            pathname: this.props.navigateUrl,
+            query: Object.assign(this.props.query || {}, {
+              page: (this.props.initialSelected - 1),
+            })
+          }}>
             {this.props.previousLabel}
           </Link>
         </li>
@@ -207,7 +214,12 @@ export default class PaginationBoxView extends Component {
         {createFragment(this.pagination())}
 
         <li className={nextClasses}>
-          <Link className={this.props.nextLinkClassName} to={ this.props.navigateUrl + '?page=' + (this.props.initialSelected + 1) }>
+          <Link className={this.props.nextLinkClassName} to={{
+            pathname: this.props.navigateUrl,
+            query: Object.assign({}, this.props.query || {}, {
+              page: (this.props.initialSelected + 1),
+            })
+          }}>
             {this.props.nextLabel}
           </Link>
         </li>
