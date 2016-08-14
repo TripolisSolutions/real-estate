@@ -1,18 +1,30 @@
 import * as React from 'react'
+import { IOption } from 'formsy-react-components'
 
 const s = require('./Dropdown.less')
 
-function Dropdown(props) {
+interface IProps {
+  defaultValue?: string
+  placeHolder?: string
+  options: IOption[]
+  onChange(value: string)
+}
+
+function Dropdown(props: IProps) {
   return (
      <div className={ s.container } >
-        <select>
-          <option className={ s.option } value={ props.defaultValue }>
-            { props.defaultValue }
-          </option>
+        <select defaultValue={ props.defaultValue }>
+          {
+            props.placeHolder ? (
+              <option className={ s.option } value={ '' }>
+                { props.placeHolder }
+              </option>
+            ) : undefined
+          }
           {
             props.options.map((option, i) => (
-              <option className={ s.option } value={ option.value }>
-                  { option.value }
+              <option key={ option.value } className={ s.option } value={ option.value }>
+                  { option.label }
               </option>
             ))
           }
@@ -22,4 +34,3 @@ function Dropdown(props) {
 }
 
 export default Dropdown
-

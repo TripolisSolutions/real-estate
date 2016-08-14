@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { Form } from 'formsy-react'
 import * as FRC from 'formsy-react-components'
-import { IOption } from 'formsy-react-components'
 import * as _ from 'lodash'
 // import * as log from 'loglevel'
+
+import { emptyOption, translatedOptions } from '../../../../helpers/options'
 
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
@@ -13,16 +14,6 @@ const s = require('./Form.less')
 
 import { ICategory } from '../../../../redux/modules/categories/categories.model'
 import { translateText } from '../../../../redux/models'
-import { salesTypeOptions, facingDirectionOptions, rentalPeriodOptions } from './options'
-
-function translateOptions(options, t): IOption[] {
-  return options.map((item) => {
-    return {
-      value: item.value,
-      label: t(item.translationKey),
-    }
-  })
-}
 
 export interface IFormData {
   title_in_vietnamese: string
@@ -46,11 +37,6 @@ interface IProps extends InjectedTranslateProps, React.Props<StepBasicInfo> {
   categories: ICategory[]
   onSubmit(data: IFormData)
   onChange(data: IFormData)
-}
-
-const emptyOption = {
-  value: '',
-  label: '-----',
 }
 
 function formatDate(d: Date) {
@@ -96,14 +82,11 @@ class StepBasicInfo extends React.Component<IProps, void> {
   public render() {
     const { t, formData } = this.props
 
-    const salesTypes = translateOptions(salesTypeOptions, t)
-    salesTypes.unshift(emptyOption)
-
-    const facingDirections = translateOptions(facingDirectionOptions, t)
-    facingDirections.unshift(emptyOption)
-
-    const rentalPeriods = translateOptions(rentalPeriodOptions, t)
-    rentalPeriods.unshift(emptyOption)
+    const {
+      salesTypes,
+      facingDirections,
+      rentalPeriods,
+    } = translatedOptions(t)
 
     const categoriesOptions = this.props.categories.map((cat) => {
       return {

@@ -29,6 +29,7 @@ export interface IProperty {
   }
   address?: {
     name: ITranslatableText[]
+    district?: string
     viewport?: IMapViewport
     circleMarker?: ICircleMarker
     visible?: boolean

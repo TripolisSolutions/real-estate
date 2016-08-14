@@ -10,10 +10,12 @@ import withReducer from 'recompose/withReducer'
 const fitBounds = require('google-map-react/utils').fitBounds
 
 import { Form } from 'formsy-react'
-const { Input, Checkbox } = require('formsy-react-components')
+const { Input, Checkbox, Select } = require('formsy-react-components')
 
 import { ICircleMarker, IMapViewport } from '../../../../redux/modules/properties/properties.model'
 import LocationMap from '../../../LocationMap/LocationMap'
+
+import { translatedOptions } from '../../../../helpers/options'
 
 const s = require('./StepAddressLocation.less')
 
@@ -22,11 +24,12 @@ interface IProps extends InjectedTranslateProps {
   addressVN: string
   addressEN: string
   addressVisible: boolean
+  district: string
   mapViewport?: IMapViewport
   mapMarker?: ICircleMarker
   googleMapAPIKey: string
   onVisiblityChange(visible: boolean)
-  onAddressChange(addressVN: string, addressEN: string)
+  onAddressChange(addressVN: string, addressEN: string, district: string)
   onMapDataChange(viewport: IMapViewport, marker: ICircleMarker)
   onNext()
 }
@@ -187,6 +190,8 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
       marker = props.state.mapMarker
     }
 
+    const districts = translatedOptions(t)
+
     return (
       <div className={ s.container }>
         <Grid>
@@ -196,7 +201,7 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
                 className='horizontal'
                 onChange={ _.debounce((data) => {
                   props.dispatch({type: 'UPDATE_ADDRESS', payload: data})
-                  props.onAddressChange(data.address_in_vietnamese, data.address_in_english)
+                  props.onAddressChange(data.address_in_vietnamese, data.address_in_english, data.district)
                 }, 200)}
               >
                 <fieldset>
@@ -228,6 +233,12 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
                       onChange={ (name, visible) => {
                         props.onVisiblityChange(visible)
                       } }
+                  />
+                  <Select
+                    name='district'
+                    value={ props.district }
+                    label={ t('district') }
+                    options={ districts }
                   />
                 </fieldset>
               </Form>
