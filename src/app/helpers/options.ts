@@ -1,5 +1,7 @@
 import { IOption } from 'formsy-react-components'
-import { salesTypeOptions, facingDirectionOptions, rentalPeriodOptions, districtOptions, sizeOptions } from './optionsData'
+import {
+  salesTypeOptions,
+  facingDirectionOptions, rentalPeriodOptions, districtOptions, sizeOptions } from './optionsData'
 
 export function translateOptions(options, t): IOption[] {
   return options.map((item) => {

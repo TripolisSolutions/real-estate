@@ -13,8 +13,10 @@ export interface IMenuItem {
 }
 
 interface IProps extends InjectedTranslateProps {
+  currentCurrency: string
   items: IMenuItem[]
   onSwitchLanguageClicked: () => void
+  onSwitchCurrencyClicked: () => void
 }
 
 function Header(props: IProps) {
@@ -58,7 +60,15 @@ function Header(props: IProps) {
             }</a>
           </li>
           <li>
-            <p>Tiền tệ: VND</p>
+            <a
+              href='/currency/switch'
+              onClick={ (e) => {
+                e.nativeEvent.preventDefault()
+                props.onSwitchCurrencyClicked()
+              }}
+            >
+              <p>{ props.t('currency') } { props.currentCurrency }</p>
+            </a>
           </li>
         </ul>
       </div>

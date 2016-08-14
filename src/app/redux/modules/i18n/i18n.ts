@@ -3,13 +3,16 @@ import * as update from 'react/lib/update'
 import { IAction, IHandler } from '../../models'
 
 const SWITCH_LANGUAGE = 'SWITCH_LANGUAGE'
+const SWITCH_CURRENCY = 'SWITCH_CURRENCY'
 
 export interface IState {
+  currentCurrency: string
   currentLangCode: string
   locales: Object // readonly
 }
 
 const INITIAL_STATE: IState = {
+  currentCurrency: 'VND',
   currentLangCode: 'vi',
   locales: {},
 }
@@ -20,6 +23,14 @@ const ACTION_HANDLERS = {
     return update(state, {
       currentLangCode: {
         $set: nextLangCode,
+      },
+    })
+  },
+  [SWITCH_CURRENCY]: (state: IState): IState => {
+    const next = state.currentCurrency === 'VND' ? 'USD' : 'VND'
+    return update(state, {
+      currentCurrency: {
+        $set: next,
       },
     })
   },
@@ -34,5 +45,12 @@ export function i18nReducer(state = INITIAL_STATE, action: IAction<any>): IState
 export function switchLanguage() {
   return {
     type: SWITCH_LANGUAGE,
+  }
+}
+
+/** Action Creator */
+export function switchCurrency() {
+  return {
+    type: SWITCH_CURRENCY,
   }
 }

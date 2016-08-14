@@ -55,6 +55,7 @@ class Home extends React.Component<IProps, void> {
           title={ 'I want to' }
         ></SearchBar>
         <PropertyList
+          currency={ this.props.i18nData.currentCurrency }
           langCode={ this.props.i18nData.currentLangCode }
           properties={ properties }
           title={ 'Recently properties' }

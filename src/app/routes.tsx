@@ -39,6 +39,7 @@ export default (
         <Route path='contact' component={ Contact }/>
         <Route path='properties' component={ Properties }/>
         <Route path='properties/:id' component={ PropertyDetail }/>
+        <Route path='properties/:id/:title' component={ PropertyDetail }/>
         <Route path='counter' component={ Counter } />
         <Route path='stars' component={ Stars } />
       </Route>

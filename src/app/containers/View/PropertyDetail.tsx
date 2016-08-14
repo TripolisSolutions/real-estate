@@ -1,6 +1,17 @@
 import * as update from 'react/lib/update'
 import * as React from 'react'
 import { Col, Row } from 'react-bootstrap'
+import { translate, InjectedTranslateProps } from 'react-i18next'
+
+const { connect } = require('react-redux');
+const { asyncConnect } = require('redux-connect');
+
+import { triggerFetchCategories } from '../../redux/modules/categories/categories'
+import { triggerFetchProperty } from '../../redux/modules/properties/properties'
+import { IState } from '../../redux/reducers'
+
+import { formatDate } from '../../helpers/date'
+import { formatCurrency } from '../../helpers/currency'
 
 import Block from '../../components/Block/Block'
 import LocationMap from '../../components/LocationMap/LocationMap'
@@ -9,15 +20,28 @@ import Option from '../../components/PropertyItem/Option/Option'
 import Slider from '../../components/Slider/Slider'
 import ContactForm from '../ContactForm/ContactForm'
 
+import { translatePrice, translateText } from '../../redux/models'
+
 const s = require('./PropertyDetail.less')
 
-
-interface IPropertyDetailState {
-  toggleBtn: boolean
+interface IProps extends IState, InjectedTranslateProps {
 }
 
-class PropertyDetail extends React.Component<any, IPropertyDetailState> {
-
+@translate()
+@asyncConnect([{
+  promise: ({ store: { dispatch }, params: { id } }) => {
+    return Promise.all([
+      dispatch(triggerFetchCategories()),
+      dispatch(triggerFetchProperty(id)),
+    ])
+  },
+}])
+@connect(
+  state => state
+)
+class PropertyDetail extends React.Component<IProps, {
+  toggleBtn: boolean
+}> {
   constructor(props, context) {
     super(props, context)
 
@@ -25,8 +49,6 @@ class PropertyDetail extends React.Component<any, IPropertyDetailState> {
       toggleBtn: false,
     }
   }
-
-
 
   private handleClickContact = (e) => {
     this.setState(
@@ -38,41 +60,79 @@ class PropertyDetail extends React.Component<any, IPropertyDetailState> {
     )
   }
 
-
   public render() {
-    let images = [
-      'http://www.uum.org.my/wp-content/uploads/2016/05/s-ac2562875c06eae6cf546b0c0cf10b6f47311b47.jpg',
-      'http://ghk.h-cdn.co/assets/cm/15/11/54ff82282ac26-living-room-green-window-de.jpg',
-      'http://www.beeyoutifullife.com/wp-content/uploads/2014/12/mid-century-modern-rugs-Living-Room-Modern-with-none-.jpg',
-    ]
+    const props = this.props
+    const { t } = this.props
+
+    const currency = props.i18nData.currentCurrency
+    const langCode = props.i18nData.currentLangCode
+
+    const property = this.props.propertiesData.property
+
+    const imageUrls = property.galleryImages.map((image) => {
+      return image.url
+    })
+
+    const price = translatePrice(property.price, currency)
+    const size = property.size && property.size.length !== 0
+      ? `${ property.size.width } X ${ property.size.length } ` : null
+
     return (
       <div>
-        <Slider title={ 'Nice to meet you'} images={ images }/>
+        {
+          imageUrls.length > 0 ? (
+            <Slider title={ t('gallery') } images={ imageUrls }/>
+          ) : undefined
+        }
         <div className={ 'container' } >
           <Block>
             <Row>
               <Col md={2}>
-                <label>Create date: jul 10 2016</label>
+                <label>{ t('created_date') } { formatDate(property.c_at) }</label>
               </Col>
               <Col md={10}>
                 <Row>
                   <Col md={1}>
-                    <Option icon='bed' text='Beds' value='4' />
+                    <Option
+                      icon='bed'
+                      text={ t('detail_beds') }
+                      value={ property.bedRoomCount }
+                    />
                   </Col>
                   <Col md={2}>
-                    <Option icon='arrows-alt' text='Square' value='4' />
+                    <Option
+                      icon='arrows-alt'
+                      text={ t('detail_size') }
+                      value={ size }
+                    />
                   </Col>
                   <Col md={2}>
-                    <Option icon='map-marker' text='District' value='4' />
+                    <Option
+                      icon='map-marker'
+                      text={ t('district') }
+                      value={ property.address.district ? t(property.address.district) : null }
+                    />
                   </Col>
                   <Col md={2}>
-                    <Option icon='usd' text='Bed' value='4' />
+                    <Option
+                      icon='usd'
+                      text={ t('detail_price') }
+                      value={ price ? formatCurrency(price, currency) : null }
+                    />
                   </Col>
                   <Col md={2}>
-                    <Option icon='clock-o' text='Aviable' value='4' />
+                    <Option
+                      icon='clock-o'
+                      text={ t('detail_available_until') }
+                      value={ property.availableUntil ? formatDate(property.availableUntil) : null }
+                    />
                   </Col>
                   <Col md={3}>
-                    <Option icon='hourglass-start' text='Day for rent' value='4' />
+                    <Option
+                      icon='arrow-circle-o-right'
+                      text={ t('detail_facing_direction') }
+                      value={ property.facingDirection }
+                    />
                   </Col>
                 </Row>
               </Col>
@@ -85,9 +145,12 @@ class PropertyDetail extends React.Component<any, IPropertyDetailState> {
             </Row>
           </Block>
           <Block>
-            <Info btnText={ this.state.toggleBtn ? 'Close' : 'Contact Us'} onClick={ this.handleClickContact } active={ this.state.toggleBtn }>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in eleifend ipsum. Duis hendrerit turpis et sapien hendrerit, et convallis ligula ultrices. Integer venenatis venenatis neque non feugiat. Maecenas pretium nisi a pharetra malesuada. Sed bibendum lorem eu elit mattis pellentesque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed fermentum dapibus nibh, eget commodo ante porttitor ut. Suspendisse pulvinar, magna id pulvinar mattis, tellus purus faucibus lorem, non porttitor neque massa quis odio. Duis lobortis suscipit nunc, id consectetur nisl vestibulum at. Curabitur id dui lacinia, porttitor ex vitae, sollicitudin lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent vel metus porttitor elit tincidunt rutrum eget a leo. Nulla facilisi. Praesent ut sollicitudin mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in eleifend ipsum. Duis hendrerit turpis et sapien hendrerit, et convallis ligula ultrices. Integer venenatis venenatis neque non feugiat. Maecenas pretium nisi a pharetra malesuada. Sed bibendum lorem eu elit mattis pellentesque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed fermentum dapibus nibh, eget commodo ante porttitor ut. Suspendisse pulvinar, magna id pulvinar mattis, tellus purus faucibus lorem, non porttitor neque massa quis odio. Duis lobortis suscipit nunc, id consectetur nisl vestibulum at. Curabitur id dui lacinia, porttitor ex vitae, sollicitudin lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent vel metus porttitor elit tincidunt rutrum eget a leo. Nulla facilisi. Praesent ut sollicitudin mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+            <Info
+              btnText={ this.state.toggleBtn ? 'Close' : 'Contact Us'}
+              onClick={ this.handleClickContact }
+              active={ this.state.toggleBtn }
+            >
+              <div dangerouslySetInnerHTML={{__html: translateText(property.desc, langCode) }}></div>
             </Info>
             {
               this.state.toggleBtn ? (
@@ -98,7 +161,17 @@ class PropertyDetail extends React.Component<any, IPropertyDetailState> {
             }
           </Block>
         </div>
-        <LocationMap title={ 'Property location' }/>
+        {
+          property.address && property.address.viewport && property.address.circleMarker ? (
+            <LocationMap
+              title={ 'Property location' }
+              lat={ property.address.viewport.lat }
+              lng={ property.address.viewport.lng }
+              zoom={ property.address.viewport.zoom }
+              circleMarker={ property.address.circleMarker }
+            />
+          ) : undefined
+        }
       </div>
     )
   }
