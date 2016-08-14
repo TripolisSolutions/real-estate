@@ -159,4 +159,9 @@ module.exports = {
   'detail_price': 'Price',
   'detail_available_until': 'Available',
   'detail_facing_direction': 'Facing',
+
+  'login': 'Login',
+  'username': 'Username',
+  'password': 'Password',
+  'login_error': 'Please double check your username & password!',
 }

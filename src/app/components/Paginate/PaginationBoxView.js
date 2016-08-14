@@ -203,7 +203,7 @@ export default class PaginationBoxView extends Component {
         <li className={previousClasses}>
           <Link className={this.props.previousLinkClassName} to={{
             pathname: this.props.navigateUrl,
-            query: Object.assign(this.props.query, {
+            query: Object.assign(this.props.query || {}, {
               page: (this.props.initialSelected - 1),
             })
           }}>
@@ -216,7 +216,7 @@ export default class PaginationBoxView extends Component {
         <li className={nextClasses}>
           <Link className={this.props.nextLinkClassName} to={{
             pathname: this.props.navigateUrl,
-            query: Object.assign({}, this.props.query, {
+            query: Object.assign({}, this.props.query || {}, {
               page: (this.props.initialSelected + 1),
             })
           }}>

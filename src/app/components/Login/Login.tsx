@@ -55,7 +55,7 @@ class Login extends React.Component<IProps, any> {
                 <div className={ s.wrapper }>
                 <span className='group-btn'>
                     <button type='submit' className='btn btn-primary btn-md' formNoValidate={ true }>
-                        login <i className='fa fa-sign-in'></i>
+                        { t('login') } <i className='fa fa-sign-in'></i>
                     </button>
                 </span>
                 </div>
