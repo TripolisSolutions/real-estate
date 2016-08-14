@@ -79,16 +79,13 @@ const reducer = (state: IState, action) => {
           $set: action.payload,
         },
       })
-    case 'MAP_VIEWPORT':
+    case 'MAP_CHANGE':
       return update(state, {
         mapViewport: {
-          $set: action.payload,
+          $set: action.payload.viewport,
         },
-      })
-    case 'MAP_MARKER':
-      return update(state, {
         mapMarker: {
-          $set: action.payload,
+          $set: action.payload.marker,
         },
       })
     case 'ADDRESS_VISIBLE':
@@ -97,22 +94,16 @@ const reducer = (state: IState, action) => {
           $set: action.payload,
         },
       })
-    case 'ADDRESS_VN':
+    case 'ADDRESS_UPDATE':
       return update(state, {
         addressVN: {
-          $set: action.payload,
+          $set: action.payload.vn,
         },
-      })
-    case 'ADDRESS_EN':
-      return update(state, {
         addressEN: {
-          $set: action.payload,
+          $set: action.payload.en,
         },
-      })
-    case 'ADDRESS_DISTRICT':
-      return update(state, {
         district: {
-          $set: action.payload,
+          $set: action.payload.district,
         },
       })
     default:
@@ -324,26 +315,14 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
             }}
             onAddressChange={ (vn: string, en: string, district: string) => {
               dispatch({
-                type: 'ADDRESS_VN',
-                payload: vn,
-              })
-              dispatch({
-                type: 'ADDRESS_EN',
-                payload: en,
-              })
-              dispatch({
-                type: 'ADDRESS_DISTRICT',
-                payload: district,
+                type: 'ADDRESS_UPDATE',
+                payload: {vn, en, district},
               })
             }}
             onMapDataChange={ (viewport: IMapViewport, marker: ICircleMarker) => {
               dispatch({
-                type: 'MAP_VIEWPORT',
-                payload: viewport,
-              })
-              dispatch({
-                type: 'MAP_MARKER',
-                payload: marker,
+                type: 'MAP_CHANGE',
+                payload: { viewport, marker },
               })
             }}
             onNext={ () => {

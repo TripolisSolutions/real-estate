@@ -59,6 +59,7 @@ class Home extends React.Component<IProps, void> {
           title={'Avaiable property' }
         ></SearchBar>
         <PropertyList
+          currency={ this.props.i18nData.currentCurrency }
           langCode={ this.props.i18nData.currentLangCode }
           properties={ properties }
         >

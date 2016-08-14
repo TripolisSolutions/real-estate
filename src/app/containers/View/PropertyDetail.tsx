@@ -11,6 +11,7 @@ import { triggerFetchProperty } from '../../redux/modules/properties/properties'
 import { IState } from '../../redux/reducers'
 
 import { formatDate } from '../../helpers/date'
+import { formatCurrency } from '../../helpers/currency'
 
 import Block from '../../components/Block/Block'
 import LocationMap from '../../components/LocationMap/LocationMap'
@@ -18,6 +19,8 @@ import Info from '../../components/Info/Info'
 import Option from '../../components/PropertyItem/Option/Option'
 import Slider from '../../components/Slider/Slider'
 import ContactForm from '../ContactForm/ContactForm'
+
+import { translatePrice, translateText } from '../../redux/models'
 
 const s = require('./PropertyDetail.less')
 
@@ -58,7 +61,11 @@ class PropertyDetail extends React.Component<IProps, {
   }
 
   public render() {
+    const props = this.props
     const { t } = this.props
+
+    const currency = props.i18nData.currentCurrency
+    const langCode = props.i18nData.currentLangCode
 
     const property = this.props.propertiesData.property
 
@@ -66,11 +73,15 @@ class PropertyDetail extends React.Component<IProps, {
       return image.url
     })
 
+    const price = translatePrice(property.price, currency)
+    const size = property.size && property.size.length !== 0
+      ? `${ property.size.width } X ${ property.size.length } ` : null
+
     return (
       <div>
         {
           imageUrls.length > 0 ? (
-            <Slider title={ 'Nice to meet you'} images={ imageUrls }/>
+            <Slider title={ t('gallery') } images={ imageUrls }/>
           ) : undefined
         }
         <div className={ 'container' } >
@@ -82,22 +93,46 @@ class PropertyDetail extends React.Component<IProps, {
               <Col md={10}>
                 <Row>
                   <Col md={1}>
-                    <Option icon='bed' text='Beds' value='4' />
+                    <Option
+                      icon='bed'
+                      text={ t('detail_beds') }
+                      value={ property.bedRoomCount }
+                    />
                   </Col>
                   <Col md={2}>
-                    <Option icon='arrows-alt' text='Square' value='4' />
+                    <Option
+                      icon='arrows-alt'
+                      text={ t('detail_size') }
+                      value={ size }
+                    />
                   </Col>
                   <Col md={2}>
-                    <Option icon='map-marker' text='District' value='4' />
+                    <Option
+                      icon='map-marker'
+                      text={ t('district') }
+                      value={ property.address.district ? t(property.address.district) : null }
+                    />
                   </Col>
                   <Col md={2}>
-                    <Option icon='usd' text='Bed' value='4' />
+                    <Option
+                      icon='usd'
+                      text={ t('detail_price') }
+                      value={ price ? formatCurrency(price, currency) : null }
+                    />
                   </Col>
                   <Col md={2}>
-                    <Option icon='clock-o' text='Aviable' value='4' />
+                    <Option
+                      icon='clock-o'
+                      text={ t('detail_available_until') }
+                      value={ property.availableUntil ? formatDate(property.availableUntil) : null }
+                    />
                   </Col>
                   <Col md={3}>
-                    <Option icon='hourglass-start' text='Day for rent' value='4' />
+                    <Option
+                      icon='arrow-circle-o-right'
+                      text={ t('detail_facing_direction') }
+                      value={ property.facingDirection }
+                    />
                   </Col>
                 </Row>
               </Col>
@@ -110,9 +145,12 @@ class PropertyDetail extends React.Component<IProps, {
             </Row>
           </Block>
           <Block>
-            <Info btnText={ this.state.toggleBtn ? 'Close' : 'Contact Us'} onClick={ this.handleClickContact } active={ this.state.toggleBtn }>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in eleifend ipsum. Duis hendrerit turpis et sapien hendrerit, et convallis ligula ultrices. Integer venenatis venenatis neque non feugiat. Maecenas pretium nisi a pharetra malesuada. Sed bibendum lorem eu elit mattis pellentesque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed fermentum dapibus nibh, eget commodo ante porttitor ut. Suspendisse pulvinar, magna id pulvinar mattis, tellus purus faucibus lorem, non porttitor neque massa quis odio. Duis lobortis suscipit nunc, id consectetur nisl vestibulum at. Curabitur id dui lacinia, porttitor ex vitae, sollicitudin lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent vel metus porttitor elit tincidunt rutrum eget a leo. Nulla facilisi. Praesent ut sollicitudin mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in eleifend ipsum. Duis hendrerit turpis et sapien hendrerit, et convallis ligula ultrices. Integer venenatis venenatis neque non feugiat. Maecenas pretium nisi a pharetra malesuada. Sed bibendum lorem eu elit mattis pellentesque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed fermentum dapibus nibh, eget commodo ante porttitor ut. Suspendisse pulvinar, magna id pulvinar mattis, tellus purus faucibus lorem, non porttitor neque massa quis odio. Duis lobortis suscipit nunc, id consectetur nisl vestibulum at. Curabitur id dui lacinia, porttitor ex vitae, sollicitudin lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent vel metus porttitor elit tincidunt rutrum eget a leo. Nulla facilisi. Praesent ut sollicitudin mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+            <Info
+              btnText={ this.state.toggleBtn ? 'Close' : 'Contact Us'}
+              onClick={ this.handleClickContact }
+              active={ this.state.toggleBtn }
+            >
+              <div dangerouslySetInnerHTML={{__html: translateText(property.desc, langCode) }}></div>
             </Info>
             {
               this.state.toggleBtn ? (
@@ -123,7 +161,17 @@ class PropertyDetail extends React.Component<IProps, {
             }
           </Block>
         </div>
-        <LocationMap title={ 'Property location' }/>
+        {
+          property.address && property.address.viewport && property.address.circleMarker ? (
+            <LocationMap
+              title={ 'Property location' }
+              lat={ property.address.viewport.lat }
+              lng={ property.address.viewport.lng }
+              zoom={ property.address.viewport.zoom }
+              circleMarker={ property.address.circleMarker }
+            />
+          ) : undefined
+        }
       </div>
     )
   }

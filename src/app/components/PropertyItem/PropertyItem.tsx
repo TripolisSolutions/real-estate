@@ -33,7 +33,7 @@ function PropertyItem(props: IProps) {
   const size = props.size && props.size.length !== 0 ? `${ props.size.width } X ${ props.size.length } ` : null
 
   return (
-    <Link to={'/properties/${ props.id }/${ sanitizeUrl(props.title) }'}>
+    <Link to={`/properties/${ props.id }/${ sanitizeUrl(props.title) }`}>
       <div className={ s.container } >
         <div>
           <img alt='property' src='http://ghk.h-cdn.co/assets/cm/15/11/54ff82282ac26-living-room-green-window-de.jpg' />

@@ -204,12 +204,12 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
                 onChange={ _.debounce((data) => {
                   props.dispatch({type: 'UPDATE_ADDRESS', payload: data})
                   props.onAddressChange(data.address_in_vietnamese, data.address_in_english, data.district)
-                }, 200)}
+                }, 300)}
               >
                 <fieldset>
                   <Input
                     name='address_in_vietnamese'
-                    value={ props.addressVN }
+                    defaultValue={ props.addressVN }
                     label={ t('address_in_vietnamese') }
                     type='text'
                     placeholder={ t('address_in_vietnamese') }
@@ -219,7 +219,7 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
                   />
                   <Input
                     name='address_in_english'
-                    value={ props.addressEN }
+                    defaultValue={ props.addressEN }
                     label={ t('address_in_english') }
                     type='text'
                     placeholder={ t('address_in_english') }
@@ -255,18 +255,18 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
                 zoom={ zoom }
                 circleMarker={ marker }
                 onViewportChange={ ({center, zoom}) => {
-                  log.debug('onViewportChange', center, zoom)
+                  const viewport = {
+                    lat: center.lat,
+                    lng: center.lng,
+                    zoom,
+                  }
 
                   props.dispatch({
                     type: 'SET_MAP_VIEWPORT',
-                    payload: {
-                      lat: center.lat,
-                      lng: center.lng,
-                      zoom,
-                    },
+                    payload: viewport,
                   })
 
-                  props.onMapDataChange(props.state.mapViewport, props.state.mapMarker)
+                  props.onMapDataChange(viewport, props.state.mapMarker)
                 }}
                 onClick={ ({lat, lng}, {radius}) => {
                   props.dispatch({
@@ -276,7 +276,7 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
                     },
                   })
 
-                  props.onMapDataChange(props.state.mapViewport, props.state.mapMarker)
+                  props.onMapDataChange(props.state.mapViewport, {lat, lng, radius})
                 }}
               />
             </Col>
