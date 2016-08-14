@@ -48,36 +48,48 @@ function PropertyItem(props: IProps) {
         <div className={ s.info }>
           <h2> { props.title } </h2>
           <div className={ s.options }>
-            <Option
-              icon='bed'
-              text={ t('detail_beds') }
-              value={ props.bedRoomCount }
-            />
-            <Option
-              icon='arrows-alt'
-              text={ t('detail_size') }
-              value={ size }
-            />
-            <Option
-              icon='map-marker'
-              text={ t('district') }
-              value={ props.district ? t(props.district) : null }
-            />
-            <Option
-              icon='usd'
-              text={ t('detail_price') }
-              value={ price ? formatCurrency(price, props.currency) : null }
-            />
-            <Option
-              icon='clock-o'
-              text={ t('detail_available_until') }
-              value={ props.available ? formatDate(props.available) : null }
-            />
-            <Option
-              icon='arrow-circle-o-right'
-              text={ t('detail_facing_direction') }
-              value={ props.facingDirection }
-            />
+            <div className={ s.option}>
+              <Option
+                icon='bed'
+                text={ t('detail_beds') }
+                value={ props.bedRoomCount }
+              />
+            </div>
+            <div className={ s.option}>
+              <Option
+                icon='arrows-alt'
+                text={ t('detail_size') }
+                value={ size }
+              />
+            </div>
+            <div className={ s.option}>
+              <Option
+                icon='map-signs'
+                text={ t('district') }
+                value={ props.district ? t(props.district) : null }
+              />
+            </div>
+            <div className={ s.option}>
+              <Option
+                icon='clock-o'
+                text={ t('detail_available_until') }
+                value={ props.available ? formatDate(props.available) : null }
+              />
+            </div>
+            <div className={ s.option}>
+              <Option
+                icon='hourglass-start'
+                text={ t('detail_facing_direction') }
+                value={ props.facingDirection }
+              />
+            </div>
+            <div className={ s.option}>
+              <Option
+                icon='usd'
+                text={ t('detail_price') }
+                value={ price ? formatCurrency(price, props.currency) : null }
+              />
+            </div>
           </div>
         </div>
       </div>
