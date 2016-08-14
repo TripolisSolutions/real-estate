@@ -7,7 +7,7 @@ import LocationMap from '../../components/LocationMap/LocationMap'
 import Info from '../../components/Info/Info'
 import Option from '../../components/PropertyItem/Option/Option'
 import Slider from '../../components/Slider/Slider'
-import ContactInput from '../../components/ContactInput/ContactInput'
+import ContactForm from '../ContactForm/ContactForm'
 
 const s = require('./PropertyDetail.less')
 
@@ -92,7 +92,7 @@ class PropertyDetail extends React.Component<any, IPropertyDetailState> {
             {
               this.state.toggleBtn ? (
                 <div className={ s.contact }>
-                  <ContactInput />
+                  <ContactForm />
                 </div>
               ) : undefined
             }

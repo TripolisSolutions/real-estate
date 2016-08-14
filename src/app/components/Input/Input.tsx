@@ -4,18 +4,27 @@ import { FormControl as BootstrapControl} from 'react-bootstrap'
 
 const s = require('./Input.less')
 
-function Input(props) {
+interface IProps {
+  type?: string
+  defaultValue?: string
+  placeholder?: string
+  disabled?: boolean
+  onChange(value: string)
+}
+
+function Input(props: IProps) {
   return (
     <BootstrapFormGroup>
-      <BootstrapControl className={ s.container } type='text' placeholder={ props.placeholder } />
+      <BootstrapControl
+        className={ s.container }
+        type={ props.type || 'text' }
+        defaultValue={ props.defaultValue }
+        placeholder={ props.placeholder }
+        disabled={ props.disabled }
+        onChange={ (e) => props.onChange((e.target as any).value) }
+      />
     </BootstrapFormGroup>
   )
 }
-
-// Input.propTypes = {
-//   value: React.PropTypes.string,
-//   placeholder: React.PropTypes.string.isRequired
-// }
-
 
 export default Input

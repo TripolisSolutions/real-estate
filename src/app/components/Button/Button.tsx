@@ -7,7 +7,7 @@ function Button(props) {
     props.onClick()
   }
   return (
-    <ButtonWrapper type={ props.type } onClick={ onClick } active={ props.active }>
+    <ButtonWrapper type={ props.type } onClick={ onClick } active={ props.active } disabled={ props.disabled }>
       { props.text }
     </ButtonWrapper>
   )
