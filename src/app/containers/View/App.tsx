@@ -22,7 +22,11 @@ function App(props) {
         },
         {
           url: '/about',
-          label: 'About',
+          label: 'About Us',
+        },
+        {
+          url: '/properties',
+          label: 'Properties',
         },
         {
           url: '/contact',
