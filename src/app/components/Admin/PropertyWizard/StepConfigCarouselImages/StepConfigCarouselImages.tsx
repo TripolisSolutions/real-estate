@@ -44,11 +44,6 @@ const reducer = (state: IState, action) => {
         },
       })
     case 'REMOVE_IMAGE':
-      state = update(state, {
-        images: {
-          $set: action.images,
-        },
-      })
       return update(state, {
         images: {
           $splice: [[action.payload, 1]],
@@ -115,8 +110,12 @@ export class StepConfigCarouselImages extends React.Component<IInternalProps, vo
                     }/>
                     <Button bsStyle='danger'
                       onClick={ () => {
-                        props.dispatch({type: 'REMOVE_IMAGE', payload: i, images})
-                        props.onChange(props.state.images)
+                        props.onChange(update(props.state, {
+                          images: {
+                            $splice: [[i, 1]],
+                          },
+                        }).images)
+                        props.dispatch({type: 'REMOVE_IMAGE', payload: i})
                       }}
                     >Remove</Button>
                   </Col>
@@ -138,8 +137,9 @@ export class StepConfigCarouselImages extends React.Component<IInternalProps, vo
         <UploadImageModal
           show={ props.state.showModel }
           onImageUploaded={ (image) => {
+            props.onChange(props.state.images.concat([image]))
+
             props.dispatch({type: 'IMAGE_UPLOADED', payload: image})
-            props.onChange(props.state.images)
           }}
           onHideClicked={ () => props.dispatch({type: 'HIDE_MODAL'}) }
         />

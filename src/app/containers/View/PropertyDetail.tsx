@@ -2,6 +2,8 @@ import * as update from 'react/lib/update'
 import * as React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { translate, InjectedTranslateProps } from 'react-i18next'
+import * as log from 'loglevel'
+import * as urljoin from 'url-join'
 
 const { connect } = require('react-redux');
 const { asyncConnect } = require('redux-connect');
@@ -64,13 +66,18 @@ class PropertyDetail extends React.Component<IProps, {
     const props = this.props
     const { t } = this.props
 
+    let imageRootUrl
+    if (typeof window !== 'undefined') {
+      imageRootUrl = window.__CONFIG__.imageRootUrl
+    }
+
     const currency = props.i18nData.currentCurrency
     const langCode = props.i18nData.currentLangCode
 
     const property = this.props.propertiesData.property
 
     const imageUrls = property.galleryImages.map((image) => {
-      return image.url
+      return urljoin(imageRootUrl, image.fileName)
     })
 
     const price = translatePrice(property.price, currency)
