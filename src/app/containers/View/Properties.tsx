@@ -9,24 +9,23 @@ import { triggerFetchCategories } from '../../redux/modules/categories/categorie
 import { triggerFetchProperties } from '../../redux/modules/properties/properties'
 import { IState } from '../../redux/reducers'
 
-import Block from '../../components/Block/Block'
 import PropertyList from '../../components/PropertyList/PropertyList'
 import SearchBar, { ISearchQuery } from '../../components/SearchBar/SearchBar'
-import Info from '../../components/Info/Info'
 import LocationMap from '../../components/LocationMap/LocationMap'
-import Banner from '../../components/Banner/Banner'
 
-const banner = require('./images/p5.png')
+const ReactPaginate = require('../../components/Paginate/index')
 
 interface IProps extends IState, InjectedTranslateProps {
 }
+
+const perPage = 20
 
 @translate()
 @asyncConnect([{
   promise: ({ store: { dispatch }, location: { query } }) => {
     return Promise.all([
       dispatch(triggerFetchCategories()),
-      dispatch(triggerFetchProperties(parseInt(query.page, 10) || 0)),
+      dispatch(triggerFetchProperties(parseInt(query.page, 10) || 0, perPage)),
     ])
   },
 }])
@@ -43,32 +42,47 @@ class Home extends React.Component<IProps, void> {
   }
 
   public render() {
-    const properties = this.props.propertiesData.properties.slice(0, 6)
+    const { t } = this.props
+    const properties = this.props.propertiesData.properties
+
+    const props = this.props as any
+    const location = props.location as any
+    const pageNum = Math.ceil(this.props.propertiesData.total / perPage)
+    const currentPage = parseInt(location.query.page, 10) || 0
 
     return (
       <div>
-        <Banner slogan={ 'A New Life Has Begun' } image={ banner } />
         <SearchBar
           langCode={ this.props.i18nData.currentLangCode }
           categories={ this.props.categoriesData.categories }
           onSearch={ this.handleSearch }
-          title={ 'I want to' }
+          title={'Avaiable property' }
         ></SearchBar>
         <PropertyList
           langCode={ this.props.i18nData.currentLangCode }
           properties={ properties }
-          title={ 'Recently properties' }
-        ></PropertyList>
-        <div className={ 'container' }>
-          <Block>
-            <Info btnText={ 'More info' }>
-              <h1>
-                "We chose this site based on its reputation for building high quality homes while providing incredible customer service."
-              </h1>
-            </Info>
-          </Block>
-        </div>
-        <LocationMap />
+        >
+          <ReactPaginate
+            previousLabel={
+              t('<')
+            }
+            nextLabel={
+              t('>')
+            }
+            navigateUrl='/properties'
+            breakLabel={<a href=''>...</a>}
+            breakClassName={ 'break-me' }
+            pageNum={ pageNum }
+            initialSelected={ currentPage }
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            containerClassName={'pagination'}
+            subContainerClassName={'pages pagination'}
+            activeClassName={'active'}
+          />
+          <LocationMap />
+        </PropertyList>
+
       </div>
     )
   }

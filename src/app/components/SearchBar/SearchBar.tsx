@@ -33,6 +33,7 @@ interface IProps extends InjectedTranslateProps {
   langCode: string
   categories: ICategory[]
   onSearch(query: ISearchQuery)
+  title?: string
 }
 
 const bedOptions: IOption[] = _.times(6, (i) => ({
@@ -97,10 +98,9 @@ class SearchBar extends React.Component<IProps, void> {
     const selectedMinBed = _.findIndex(bedOptions, {value: query.minBed})
     const maxBedOptions = bedOptions.slice( selectedMinBed < 0 ? 0 : selectedMinBed, bedOptions.length )
 
-
     return (
       <div className={'container'}>
-        <Block title='I want to'>
+        <Block title={ this.props.title }>
           <div className={ s.container } >
             <form action='' onSubmit={ this.handleSubmit }>
               <Row>

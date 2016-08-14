@@ -15,9 +15,4 @@ function Banner(props) {
   )
 }
 
-// Button.propTypes = {
-//   text: React.PropTypes.string.isRequired,
-// }
-
 export default Banner
-

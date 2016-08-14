@@ -8,6 +8,7 @@ import PageView from './PageView'
 import BreakView from './BreakView'
 import { Link } from 'react-router'
 
+const s = require('./Pagination.less')
 
 export default class PaginationBoxView extends Component {
   static propTypes = {
@@ -196,7 +197,7 @@ export default class PaginationBoxView extends Component {
                                    {[disabled]: this.props.initialSelected === this.props.pageNum - 1})
 
     return (
-      <ul className={this.props.containerClassName}>
+      <ul className={classNames(this.props.containerClassName, s.container)}>
         <li className={previousClasses}>
           <Link className={this.props.previousLinkClassName} to={ this.props.navigateUrl + '?page=' + (this.props.initialSelected - 1) }>
             {this.props.previousLabel}

@@ -7,6 +7,7 @@ import App from './containers/View/App'
 import Home from './containers/View/Home'
 import About from './containers/View/About'
 import Contact from './containers/View/Contact'
+import Properties from './containers/View/Properties'
 import PropertyDetail from './containers/View/PropertyDetail'
 
 import Login from './containers/Login/Login'
@@ -36,6 +37,7 @@ export default (
         <IndexRoute component={ Home }/>
         <Route path='about' component={ About }/>
         <Route path='contact' component={ Contact }/>
+        <Route path='properties' component={ Properties }/>
         <Route path='properties/:id' component={ PropertyDetail }/>
         <Route path='counter' component={ Counter } />
         <Route path='stars' component={ Stars } />
