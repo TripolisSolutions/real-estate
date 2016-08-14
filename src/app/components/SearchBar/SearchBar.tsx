@@ -146,6 +146,7 @@ class SearchBar extends React.Component<IProps, void> {
                 </Col>
                 <Col md={ 1 }>
                   <Input
+                    type='number'
                     defaultValue={ query.minPrice }
                     placeholder={ t('search_min_price') }
                     onChange={ _.debounce((value) => this.updateForm('q', value), 200) }
@@ -153,6 +154,7 @@ class SearchBar extends React.Component<IProps, void> {
                 </Col>
                 <Col md={ 1 }>
                   <Input
+                    type='number'
                     defaultValue={ query.maxPrice }
                     placeholder={ t('search_max_price') }
                     onChange={ _.debounce((value) => this.updateForm('q', value), 200) }

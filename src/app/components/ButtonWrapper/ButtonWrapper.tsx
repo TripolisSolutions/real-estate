@@ -13,6 +13,7 @@ function ButtonWrapper(props) {
     bsSize='large'
     className={ classnames(s.container, props.active ? s.active : '') }
     type={ props.type }
+    disabled={ props.disabled }
     onClick={ onClick }>
       { props.children }
     </BootstrapButton>
