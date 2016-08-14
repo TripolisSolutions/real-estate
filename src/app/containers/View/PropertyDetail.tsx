@@ -26,6 +26,8 @@ class PropertyDetail extends React.Component<any, IPropertyDetailState> {
     }
   }
 
+
+
   private handleClickContact = (e) => {
     this.setState(
       update(this.state, {
@@ -36,10 +38,16 @@ class PropertyDetail extends React.Component<any, IPropertyDetailState> {
     )
   }
 
+
   public render() {
+    let images = [
+      'http://www.uum.org.my/wp-content/uploads/2016/05/s-ac2562875c06eae6cf546b0c0cf10b6f47311b47.jpg',
+      'http://ghk.h-cdn.co/assets/cm/15/11/54ff82282ac26-living-room-green-window-de.jpg',
+      'http://www.beeyoutifullife.com/wp-content/uploads/2014/12/mid-century-modern-rugs-Living-Room-Modern-with-none-.jpg',
+    ]
     return (
       <div>
-        <Slider />
+        <Slider title={ 'Nice to meet you'} images={ images }/>
         <div className={ 'container' } >
           <Block>
             <Row>
