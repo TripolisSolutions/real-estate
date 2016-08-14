@@ -178,7 +178,7 @@ export function triggerFetchProperties(page: number): Redux.Dispatch {
       .then(res => {
         if (res.ok) {
           return res.json()
-            .then(res => dispatch(propertiesSuccess(res.docs)));
+            .then(res => dispatch(propertiesSuccess(res.docs || [], res.total)))
         } else {
           return res.json()
             .then(res => dispatch(propertiesFailure(res)));
@@ -196,10 +196,13 @@ export function propertiesRequest() {
 }
 
 /** Action Creator */
-export function propertiesSuccess(items: IProperty[]): IAction<IProperty[]> {
+export function propertiesSuccess(items: IProperty[], total: number) {
   return {
     type: PROPERTIES_SUCCESS,
-    payload: items,
+    payload: {
+      docs: items,
+      total: total,
+    },
   };
 }
 
