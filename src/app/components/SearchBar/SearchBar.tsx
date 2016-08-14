@@ -59,6 +59,23 @@ class SearchBar extends React.Component<IProps, void> {
     categories: [],
   }
 
+  private form: ISearchQuery
+
+  constructor(props) {
+    super(props)
+
+    this.form = props.query
+  }
+
+  private updateForm = (key, value) => {
+    this.form[key] = value
+  }
+
+  private handleSubmit = (event) => {
+    event.preventDefault()
+    this.props.onSearch(this.form)
+  }
+
   public render() {
     const props = this.props
     const { t, query } = props
@@ -85,60 +102,83 @@ class SearchBar extends React.Component<IProps, void> {
       <div className={'container'}>
         <Block title='I want to'>
           <div className={ s.container } >
-            <Row>
-              <Col md={ 2 }>
-                <Dropdown defaultValue={ query.salesType || 'buy' } options={salesTypes} />
-              </Col>
-              <Col md={ 8 }>
-                <Input defaultValue={ query.q } placeholder={ t('search_by_name') }/>
-              </Col>
-            </Row>
-            <Row className={s.second}>
-              <Col md={ 2 }>
-                <Dropdown
-                  placeHolder={ t('search_all_categories') }
-                  defaultValue={ query.category }
-                  options={ categoriesOptions }
-                />
-              </Col>
-              <Col md={ 1 }>
-                <Dropdown
-                  placeHolder={ t('search_min_bed') }
-                  defaultValue={ query.minBed }
-                  options={ minBedOptions }
-                />
-              </Col>
-              <Col md={ 1 }>
-                <Dropdown
-                  placeHolder={ t('search_max_bed') }
-                  defaultValue={ query.maxBed }
-                  options={ maxBedOptions }
-                />
-              </Col>
-              <Col md={ 1 }>
-                <Input defaultValue={ query.minPrice } placeholder={ t('search_min_price') }/>
-              </Col>
-              <Col md={ 1 }>
-                <Input defaultValue={ query.maxPrice } placeholder={ t('search_max_price') }/>
-              </Col>
-              <Col md={ 1 }>
-                <Dropdown
-                  placeHolder={ t('search_district') }
-                  defaultValue={ query.district }
-                  options={ districts }
-                />
-              </Col>
-              <Col md={ 1 }>
-                <Dropdown
-                  placeHolder={ t('search_size') }
-                  defaultValue={ query.size }
-                  options={ sizes }
-                />
-              </Col>
-            </Row>
-            <div className={ s.button }>
-              <Button text='More Info' />
-            </div>
+            <form action='' onSubmit={ this.handleSubmit }>
+              <Row>
+                <Col md={ 2 }>
+                  <Dropdown
+                    defaultValue={ query.salesType || 'buy' }
+                    options={salesTypes}
+                    onChange={ (value) => this.updateForm('salesType', value) }
+                  />
+                </Col>
+                <Col md={ 8 }>
+                  <Input
+                    defaultValue={ query.q }
+                    placeholder={ t('search_by_name') }
+                    onChange={ _.debounce((value) => this.updateForm('q', value), 200) }
+                  />
+                </Col>
+              </Row>
+              <Row className={s.second}>
+                <Col md={ 2 }>
+                  <Dropdown
+                    placeHolder={ t('search_all_categories') }
+                    defaultValue={ query.category }
+                    options={ categoriesOptions }
+                    onChange={ (value) => this.updateForm('category', value) }
+                  />
+                </Col>
+                <Col md={ 1 }>
+                  <Dropdown
+                    placeHolder={ t('search_min_bed') }
+                    defaultValue={ query.minBed }
+                    options={ minBedOptions }
+                    onChange={ (value) => this.updateForm('category', value) }
+                  />
+                </Col>
+                <Col md={ 1 }>
+                  <Dropdown
+                    placeHolder={ t('search_max_bed') }
+                    defaultValue={ query.maxBed }
+                    options={ maxBedOptions }
+                    onChange={ (value) => this.updateForm('category', value) }
+                  />
+                </Col>
+                <Col md={ 1 }>
+                  <Input
+                    defaultValue={ query.minPrice }
+                    placeholder={ t('search_min_price') }
+                    onChange={ _.debounce((value) => this.updateForm('q', value), 200) }
+                  />
+                </Col>
+                <Col md={ 1 }>
+                  <Input
+                    defaultValue={ query.maxPrice }
+                    placeholder={ t('search_max_price') }
+                    onChange={ _.debounce((value) => this.updateForm('q', value), 200) }
+                  />
+                </Col>
+                <Col md={ 1 }>
+                  <Dropdown
+                    placeHolder={ t('search_district') }
+                    defaultValue={ query.district }
+                    options={ districts }
+                    onChange={ (value) => this.updateForm('category', value) }
+                  />
+                </Col>
+                <Col md={ 1 }>
+                  <Dropdown
+                    placeHolder={ t('search_size') }
+                    defaultValue={ query.size }
+                    options={ sizes }
+                    onChange={ (value) => this.updateForm('category', value) }
+                  />
+                </Col>
+              </Row>
+              <div className={ s.button }>
+                <Button type='submit' text='More Info' />
+              </div>
+            </form>
           </div>
         </Block>
       </div>

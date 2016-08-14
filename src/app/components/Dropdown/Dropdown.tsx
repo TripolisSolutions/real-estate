@@ -7,6 +7,7 @@ interface IProps {
   defaultValue?: string
   placeHolder?: string
   options: IOption[]
+  onChange(value: string)
 }
 
 function Dropdown(props: IProps) {
@@ -33,4 +34,3 @@ function Dropdown(props: IProps) {
 }
 
 export default Dropdown
-

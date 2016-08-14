@@ -63,7 +63,6 @@ export const rentalPeriodOptions = [
   },
 ]
 
-
 export const districtOptions = [
   {
     value: 'district-1',

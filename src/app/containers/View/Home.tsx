@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { translate, InjectedTranslateProps } from 'react-i18next'
+import { browserHistory } from 'react-router'
 
 const { connect } = require('react-redux');
 const { asyncConnect } = require('redux-connect');
@@ -31,8 +32,11 @@ interface IProps extends IState, InjectedTranslateProps {
 )
 class Home extends React.Component<IProps, void> {
 
-  private handleSearch = (searchObject: ISearchQuery) => {
-
+  private handleSearch = (search: ISearchQuery) => {
+    browserHistory.push({
+      pathname: '/properties',
+      query: search,
+    })
   }
 
   public render() {

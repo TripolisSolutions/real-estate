@@ -39,8 +39,6 @@ interface IProps extends InjectedTranslateProps, React.Props<StepBasicInfo> {
   onChange(data: IFormData)
 }
 
-
-
 function formatDate(d: Date) {
   const day = ('0' + d.getDate()).slice(-2)
   const month = ('0' + (d.getMonth() + 1)).slice(-2)

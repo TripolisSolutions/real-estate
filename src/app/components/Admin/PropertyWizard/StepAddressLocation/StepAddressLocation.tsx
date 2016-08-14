@@ -2,7 +2,6 @@ import * as update from 'react/lib/update'
 import * as React from 'react'
 import * as log from 'loglevel'
 import * as _ from 'lodash'
-import { IOption } from 'formsy-react-components'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 import {
   Grid, Row, Col,
@@ -19,7 +18,6 @@ import LocationMap from '../../../LocationMap/LocationMap'
 import { translatedOptions } from '../../../../helpers/options'
 
 const s = require('./StepAddressLocation.less')
-
 
 interface IProps extends InjectedTranslateProps {
   langCode: string
