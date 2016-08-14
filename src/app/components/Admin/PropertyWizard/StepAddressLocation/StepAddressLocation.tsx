@@ -2,6 +2,7 @@ import * as update from 'react/lib/update'
 import * as React from 'react'
 import * as log from 'loglevel'
 import * as _ from 'lodash'
+import { IOption } from 'formsy-react-components'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 import {
   Grid, Row, Col,
@@ -10,23 +11,35 @@ import withReducer from 'recompose/withReducer'
 const fitBounds = require('google-map-react/utils').fitBounds
 
 import { Form } from 'formsy-react'
-const { Input, Checkbox } = require('formsy-react-components')
+const { Input, Checkbox, Select } = require('formsy-react-components')
 
 import { ICircleMarker, IMapViewport } from '../../../../redux/modules/properties/properties.model'
 import LocationMap from '../../../LocationMap/LocationMap'
 
+import districtOptions from './districts'
+
 const s = require('./StepAddressLocation.less')
+
+function translateOptions(options, t): IOption[] {
+  return options.map((item) => {
+    return {
+      value: item.value,
+      label: t(item.translationKey),
+    }
+  })
+}
 
 interface IProps extends InjectedTranslateProps {
   langCode: string
   addressVN: string
   addressEN: string
   addressVisible: boolean
+  district: string
   mapViewport?: IMapViewport
   mapMarker?: ICircleMarker
   googleMapAPIKey: string
   onVisiblityChange(visible: boolean)
-  onAddressChange(addressVN: string, addressEN: string)
+  onAddressChange(addressVN: string, addressEN: string, district: string)
   onMapDataChange(viewport: IMapViewport, marker: ICircleMarker)
   onNext()
 }
@@ -187,6 +200,13 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
       marker = props.state.mapMarker
     }
 
+    const emptyOption = {
+      value: '',
+      label: '-----',
+    }
+    const districts = translateOptions(districtOptions, t)
+    districts.unshift(emptyOption)
+
     return (
       <div className={ s.container }>
         <Grid>
@@ -196,7 +216,7 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
                 className='horizontal'
                 onChange={ _.debounce((data) => {
                   props.dispatch({type: 'UPDATE_ADDRESS', payload: data})
-                  props.onAddressChange(data.address_in_vietnamese, data.address_in_english)
+                  props.onAddressChange(data.address_in_vietnamese, data.address_in_english, data.district)
                 }, 200)}
               >
                 <fieldset>
@@ -228,6 +248,12 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
                       onChange={ (name, visible) => {
                         props.onVisiblityChange(visible)
                       } }
+                  />
+                  <Select
+                    name='district'
+                    value={ props.district }
+                    label={ t('district') }
+                    options={ districts }
                   />
                 </fieldset>
               </Form>

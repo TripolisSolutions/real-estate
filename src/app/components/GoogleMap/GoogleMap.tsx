@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { SFC } from 'react'
-import * as log from 'loglevel'
+// import * as log from 'loglevel'
 import * as _ from 'lodash'
 import mapStyles from './locationMapStyles'
 

@@ -44,6 +44,7 @@ interface IState {
   addressVisible: boolean
   addressVN: string
   addressEN: string
+  district: string
 }
 
 const reducer = (state: IState, action) => {
@@ -108,6 +109,12 @@ const reducer = (state: IState, action) => {
           $set: action.payload,
         },
       })
+    case 'ADDRESS_DISTRICT':
+      return update(state, {
+        district: {
+          $set: action.payload,
+        },
+      })
     default:
       return state
   }
@@ -119,6 +126,7 @@ const enhance = withReducer<IState, any, IProps>('state', 'dispatch', reducer, {
   addressVisible: false,
   addressVN: '',
   addressEN: '',
+  district: '',
 })
 
 interface IInternalProps extends IProps {
@@ -198,6 +206,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
     // if (!props.state.addressEN && prop.address && translateText(prop.address.name, 'en')) {
     props.state.addressEN = translateText((prop.address || {} as any).name, 'en')
     // }
+    props.state.district = (prop.address || {} as any).district || ''
   }
 
   public render() {
@@ -303,6 +312,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
             langCode={ this.props.langCode }
             addressVN={ state.addressVN || '' }
             addressEN={ state.addressEN || '' }
+            district={ state.district || '' }
             mapViewport={ state.mapViewport }
             mapMarker={ state.mapMarker }
             addressVisible={ state.addressVisible }
@@ -312,7 +322,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
                 payload: visible,
               })
             }}
-            onAddressChange={ (vn: string, en: string) => {
+            onAddressChange={ (vn: string, en: string, district: string) => {
               dispatch({
                 type: 'ADDRESS_VN',
                 payload: vn,
@@ -320,6 +330,10 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
               dispatch({
                 type: 'ADDRESS_EN',
                 payload: en,
+              })
+              dispatch({
+                type: 'ADDRESS_DISTRICT',
+                payload: district,
               })
             }}
             onMapDataChange={ (viewport: IMapViewport, marker: ICircleMarker) => {
@@ -380,6 +394,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
                   text: state.addressEN,
                 },
               ],
+              district: state.district,
               visible: state.addressVisible,
             }
 
