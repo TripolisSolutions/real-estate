@@ -4,10 +4,15 @@
 
 .container {
   border-bottom: 1px solid fade(@color-main, 50%);  
-  padding: @margin*5 0 @margin*6;
+  padding: @margin 0 @margin*6;
 
   &.no_border {
     border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  &.up_title {
+    padding: @margin*2 0 @margin*6;
   }
 
   h1::first-letter {

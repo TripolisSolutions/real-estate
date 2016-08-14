@@ -94,64 +94,48 @@ class PropertyDetail extends React.Component<IProps, {
         <div className={ 'container' } >
           <Block>
             <Row>
-              <Col md={2}>
+              <Col md={2} className={ s.created }>
                 <label>{ t('created_date') } { formatDate(property.c_at) }</label>
               </Col>
               <Col md={10}>
-                <Row>
-                  <Col md={1}>
-                    <Option
-                      icon='bed'
-                      text={ t('detail_beds') }
-                      value={ property.bedRoomCount }
-                    />
-                  </Col>
-                  <Col md={2}>
-                    <Option
-                      icon='arrows-alt'
-                      text={ t('detail_size') }
-                      value={ size }
-                    />
-                  </Col>
-                  <Col md={2}>
-                    <Option
-                      icon='map-marker'
-                      text={ t('district') }
-                      value={ property.address.district ? t(property.address.district) : null }
-                    />
-                  </Col>
-                  <Col md={2}>
-                    <Option
-                      icon='usd'
-                      text={ t('detail_price') }
-                      value={ price ? formatCurrency(price, currency) : null }
-                    />
-                  </Col>
-                  <Col md={2}>
-                    <Option
-                      icon='clock-o'
-                      text={ t('detail_available_until') }
-                      value={ property.availableUntil ? formatDate(property.availableUntil) : null }
-                    />
-                  </Col>
-                  <Col md={3}>
-                    <Option
-                      icon='arrow-circle-o-right'
-                      text={ t('detail_facing_direction') }
-                      value={ property.facingDirection }
-                    />
-                  </Col>
+                <Row className={ s.icons }>
+                  <Option
+                    icon='bed'
+                    text={ t('detail_beds') }
+                    value={ property.bedRoomCount }
+                  />
+                  <Option
+                    icon='arrows-alt'
+                    text={ t('detail_size') }
+                    value={ size }
+                  />
+                  <Option
+                    icon='map-signs'
+                    text={ t('district') }
+                    value={ property.address.district ? t(property.address.district) : null }
+                  />
+                  <Option
+                    icon='clock-o'
+                    text={ t('detail_available_until') }
+                    value={ property.availableUntil ? formatDate(property.availableUntil) : null }
+                  />
+                  <Option
+                    icon='hourglass-start'
+                    text={ t('detail_facing_direction') }
+                    value={ property.facingDirection }
+                  />
+                  <Option
+                    icon='usd'
+                    value={ price ? formatCurrency(price, currency) : null }
+                  />
+                  <Option
+                    icon='map-marker'
+                    value={ property.address.name[1].text } />
                 </Row>
               </Col>
             </Row>
-            <Row>
-              <Col md={2}></Col>
-              <Col md={9}>
-                <Option icon='hourglass-start' text='Day for rent' value='4' />
-              </Col>
-            </Row>
           </Block>
-          <Block>
+          <Block upTitle={ true }>
             <Info
               btnText={ this.state.toggleBtn ? 'Close' : 'Contact Us'}
               onClick={ this.handleClickContact }

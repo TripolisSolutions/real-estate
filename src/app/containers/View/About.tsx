@@ -31,7 +31,7 @@ class About extends React.Component<any, any> {
             </div>
           </Block>
         </div>
-        <LocationMap />
+        <LocationMap title={ 'We are here' }/>
       </div>
     );
   }

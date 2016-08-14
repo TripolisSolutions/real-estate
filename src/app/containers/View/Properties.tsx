@@ -87,9 +87,8 @@ class Home extends React.Component<IProps, void> {
             subContainerClassName={'pages pagination'}
             activeClassName={'active'}
           />
-          <LocationMap />
         </PropertyList>
-
+        <LocationMap title={ 'We are here' }/>
       </div>
     )
   }

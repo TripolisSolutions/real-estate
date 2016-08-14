@@ -6,7 +6,7 @@ const s = require('./Option.less')
 
 interface IProps extends InjectedTranslateProps {
   icon: string
-  text: string
+  text?: string
   value: string | number
 }
 
@@ -16,8 +16,12 @@ function Option(props: IProps) {
       <div className={ s.icon }>
         <Icon icon={ props.icon } />
       </div>
-      <span>{ props.text }: </span>
-      <span> { props.value || props.t('unknown') } </span>
+      {
+        props.text ? (
+          <span>{ props.text }: </span>
+        ) : undefined
+      }
+      <span className={ s.value }> { props.value || props.t('unknown') } </span>
     </div>
   )
 }

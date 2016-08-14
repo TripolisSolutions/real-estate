@@ -6,7 +6,8 @@ const s = require('./Block.less')
 
 const Block: SFC<any> = function Block(props) {
   return (
-    <div className={ classnames(s.container, props.noBorder ? s.no_border : undefined ) }>
+    <div className={ classnames(s.container, props.noBorder ? s.no_border : undefined,
+                                props.upTitle ? s.up_title : undefined ) }>
       {
         props.title || props.title === '' ? (
           <div className={ s.title }>
@@ -24,6 +25,7 @@ Block.propTypes = {
   title: React.PropTypes.string,
   noBorder: React.PropTypes.bool,
   bigger: React.PropTypes.bool,
+  upTitle: React.PropTypes.bool,
 }
 
 export default Block
