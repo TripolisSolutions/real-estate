@@ -49,6 +49,10 @@ const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
           zoom={ props.zoom }
           center={{ lat: props.lat, lng: props.lng }}
           onClick={ function({latLng}) {
+            if (!props.onClick) {
+              return
+            }
+
             const bounds = this.getBounds();
 
             const center = bounds.getCenter();
@@ -64,6 +68,9 @@ const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
           onBoundsChanged={ _.debounce(function() {
             const center = this.getCenter()
             const zoom = this.getZoom()
+            if (!props.onViewportChange) {
+              return
+            }
             props.onViewportChange({center: { lat: center.lat(), lng: center.lng() }, zoom})
           }, 200) }
           defaultOptions={{
