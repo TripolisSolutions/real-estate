@@ -50,6 +50,8 @@ class Html extends React.Component<IHtmlProps, {}> {
           {head.base.toComponent()}
           {head.title.toComponent()}
           {head.meta.toComponent()}
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'></link>
+          <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css'></link>
           {head.link.toComponent()}
           {head.script.toComponent()}
 

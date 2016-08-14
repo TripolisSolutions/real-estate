@@ -177,9 +177,8 @@ export function triggerFetchProperties(page: number): Redux.Dispatch {
     return fetch(urljoin(rootUrl, 'properties?page=' + page))
       .then(res => {
         if (res.ok) {
-          log.debug('propertiesSuccess')
           return res.json()
-            .then(res => dispatch(propertiesSuccess(res)));
+            .then(res => dispatch(propertiesSuccess(res.docs)));
         } else {
           return res.json()
             .then(res => dispatch(propertiesFailure(res)));
