@@ -1,5 +1,5 @@
 module.exports = {
-  'switch_language': 'Tieng Viet',
+  'switch_language': 'Tiếng Việt',
   'contact_us': 'Contact US',
   'view_page': 'View in page',
 
@@ -67,6 +67,13 @@ module.exports = {
 
   'contact_request_error_title': 'Unexpected error happened while sending your message',
   'contact_request_error_body': 'Please try hit the send button again, or refresh browser!',
+
+  'menu_home': 'Home',
+  'menu_about_us': 'About Us',
+  'menu_properties_list': 'Properties',
+  'menu_contact_us': 'Contact Us',
+
+  'switch_currency_label': 'Currency: ',
 
   'home_slogan': 'A New Life Has Begun',
   'search_bar_heading': 'Search',
