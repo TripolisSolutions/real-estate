@@ -61,26 +61,27 @@ class Home extends React.Component<IProps, void> {
         <PropertyList
           langCode={ this.props.i18nData.currentLangCode }
           properties={ properties }
-        ></PropertyList>
-        <ReactPaginate
-          previousLabel={
-            t('previous')
-          }
-          nextLabel={
-            t('next')
-          }
-          navigateUrl='/properties'
-          breakLabel={<a href=''>...</a>}
-          breakClassName={ 'break-me' }
-          pageNum={ pageNum }
-          initialSelected={ currentPage }
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
-        />
-        <LocationMap />
+        >
+           <ReactPaginate
+            previousLabel={
+              t('<')
+            }
+            nextLabel={
+              t('>')
+            }
+            navigateUrl='/properties'
+            breakLabel={<a href=''>...</a>}
+            breakClassName={ 'break-me' }
+            pageNum={ pageNum }
+            initialSelected={ currentPage }
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            containerClassName={'pagination'}
+            subContainerClassName={'pages pagination'}
+            activeClassName={'active'}
+          />
+          <LocationMap />
+        </PropertyList>
       </div>
     )
   }

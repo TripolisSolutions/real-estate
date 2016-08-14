@@ -16,6 +16,8 @@ import Info from '../../components/Info/Info'
 import LocationMap from '../../components/LocationMap/LocationMap'
 import Banner from '../../components/Banner/Banner'
 
+const banner = require('./images/p5.png')
+
 interface IProps extends IState, InjectedTranslateProps {
 }
 
@@ -45,7 +47,7 @@ class Home extends React.Component<IProps, void> {
 
     return (
       <div>
-        <Banner slogan={ 'A New Life Has Begun' } image={ 'http://www.uum.org.my/wp-content/uploads/2016/05/s-ac2562875c06eae6cf546b0c0cf10b6f47311b47.jpg' } />
+        <Banner slogan={ 'A New Life Has Begun' } image={ banner } />
         <SearchBar
           langCode={ this.props.i18nData.currentLangCode }
           categories={ this.props.categoriesData.categories }

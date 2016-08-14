@@ -29,6 +29,7 @@ class PropertyList extends React.Component<IProps, any> {
               ))
             }
           </Row>
+          { this.props.children }
         </Block>
       </div>
     )

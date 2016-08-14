@@ -1,0 +1,22 @@
+@import '../../styles/variables';
+
+.container {
+  display: flex;
+  justify-content: flex-end;
+
+  > li a, > :global(.disabled) a {
+    border: none;
+    color: fade(@color-main, 50%);
+  }
+
+  :global(.disabled){
+    pointer-events: none;
+  }
+
+  :global(li) a, :global(li) a:hover, :global(li) a:focus,
+  :global(.active) a, :global(.active) a:hover, :global(.active) a:focus {
+    color: @color-main;
+    background: transparent;
+    cursor: pointer;
+  }
+}
