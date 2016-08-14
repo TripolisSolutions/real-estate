@@ -26,6 +26,12 @@ class ContactInput extends React.Component<IProps, void> {
 
   private form: IContactForm
 
+  constructor(props) {
+    super(props)
+
+    this.form = {} as IContactForm
+  }
+
   private updateForm = (key, value) => {
     this.form[key] = value
   }

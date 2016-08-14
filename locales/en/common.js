@@ -57,5 +57,14 @@ module.exports = {
   'update_the_property': 'Update the property data',
   'update_the_property_desc': 'The property will be updated by data from all previous steps',
 
-  'property_delete_confirm': 'Are you sure you want to delete this property?'
+  'property_delete_confirm': 'Are you sure you want to delete this property?',
+
+  'contact_request_form_validate_warn_title': 'Form data inputs are not valid',
+  'contact_request_form_validate_warn_body': 'Please fill-in at least email address and message!',
+
+  'contact_request_success_title': 'Your message has been sent successfully',
+  'contact_request_success_body': 'We will response your message at earliest time possible!',
+
+  'contact_request_error_title': 'Unexpected error happened while sending your message',
+  'contact_request_error_body': 'Please try hit the send button again, or refresh browser!',
 }

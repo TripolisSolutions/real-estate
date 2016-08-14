@@ -33,6 +33,14 @@ class ContactForm extends React.Component<IProps, IState> {
   private sendContactRequest = (form: IContactForm) => {
     const { t } = this.props
 
+    if (!form.email || !form.message) {
+      this.refs.toast.warning(
+        t('contact_request_form_validate_warn_body'),
+        t('contact_request_form_validate_warn_title')
+      )
+      return
+    }
+
     this.setState({
       isFetching: true,
     })
@@ -50,8 +58,8 @@ class ContactForm extends React.Component<IProps, IState> {
           return res.json()
             .then(res => {
               this.refs.toast.success(
-                t('contact_request_success_title'),
-                t('contact_request_success_body')
+                t('contact_request_success_body'),
+                t('contact_request_success_title')
               )
 
               this.setState({
@@ -62,8 +70,8 @@ class ContactForm extends React.Component<IProps, IState> {
           return res.json()
             .then(res => {
               this.refs.toast.error(
-                t('contact_request_error_title'),
-                t('contact_request_error_body')
+                t('contact_request_error_body'),
+                t('contact_request_error_title')
               )
 
               this.setState({
@@ -74,8 +82,8 @@ class ContactForm extends React.Component<IProps, IState> {
       })
       .catch(err => {
         this.refs.toast.error(
-          t('contact_request_error_title'),
-          t('contact_request_error_body')
+          t('contact_request_error_body'),
+          t('contact_request_error_title')
         )
 
         this.setState({
