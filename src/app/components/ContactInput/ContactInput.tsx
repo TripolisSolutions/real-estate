@@ -7,7 +7,19 @@ import Button from '../Button/Button'
 
 const s = require('./ContactInput.less')
 
-function ContactInput(props) {
+export interface IContactForm {
+  name: string
+  gender: string
+  email: string
+  message: string
+}
+
+interface IProps {
+  lock: boolean
+  onSubmit(form: IContactForm)
+}
+
+function ContactInput(props: IProps) {
   return (
     <div>
       <Row>
