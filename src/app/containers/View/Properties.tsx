@@ -18,19 +18,20 @@ const ReactPaginate = require('../../components/Paginate/index')
 interface IProps extends IState, InjectedTranslateProps {
 }
 
+const perPage = 20
+
 @translate()
 @asyncConnect([{
   promise: ({ store: { dispatch }, location: { query } }) => {
     return Promise.all([
       dispatch(triggerFetchCategories()),
-      dispatch(triggerFetchProperties(parseInt(query.page, 10) || 0)),
+      dispatch(triggerFetchProperties(parseInt(query.page, 10) || 0, perPage)),
     ])
   },
 }])
 @connect(
   state => state
 )
-
 class Home extends React.Component<IProps, void> {
 
   private handleSearch = (search: ISearchQuery) => {
@@ -41,7 +42,13 @@ class Home extends React.Component<IProps, void> {
   }
 
   public render() {
-    const properties = this.props.propertiesData.properties.slice(0, 15)
+    const { t } = this.props
+    const properties = this.props.propertiesData.properties
+
+    const props = this.props as any
+    const location = props.location as any
+    const pageNum = Math.ceil(this.props.propertiesData.total / perPage)
+    const currentPage = parseInt(location.query.page, 10) || 0
 
     return (
       <div>
@@ -55,6 +62,24 @@ class Home extends React.Component<IProps, void> {
           langCode={ this.props.i18nData.currentLangCode }
           properties={ properties }
         ></PropertyList>
+        <ReactPaginate
+          previousLabel={
+            t('previous')
+          }
+          nextLabel={
+            t('next')
+          }
+          navigateUrl='/properties'
+          breakLabel={<a href=''>...</a>}
+          breakClassName={ 'break-me' }
+          pageNum={ pageNum }
+          initialSelected={ currentPage }
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          containerClassName={'pagination'}
+          subContainerClassName={'pages pagination'}
+          activeClassName={'active'}
+        />
         <LocationMap />
       </div>
     )

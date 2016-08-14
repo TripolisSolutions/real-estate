@@ -169,7 +169,7 @@ export function propertiesReducer(state = INITIAL_STATE, action: IAction<any>): 
 }
 
 /** Async Action Creator */
-export function triggerFetchProperties(page: number): Redux.Dispatch {
+export function triggerFetchProperties(page: number, limit: number = 20): Redux.Dispatch {
   return dispatch => {
     dispatch(propertiesRequest());
     log.debug('propertiesRequest')
