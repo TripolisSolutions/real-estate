@@ -12,13 +12,14 @@ const s = require('./PropertyList.less')
 interface IProps {
   langCode: string
   properties: IProperty[]
+  title?: string
 }
 
 class PropertyList extends React.Component<IProps, any> {
   public render() {
     return (
       <div className={'container'}>
-        <Block title='Recently properties'>
+        <Block title={ this.props.title }>
           <Row>
             {
               this.props.properties.map((prop) => (

@@ -22,6 +22,4 @@ function ButtonIcon(props) {
   )
 }
 
-
 export default ButtonIcon
-

@@ -9,12 +9,11 @@ import { triggerFetchCategories } from '../../redux/modules/categories/categorie
 import { triggerFetchProperties } from '../../redux/modules/properties/properties'
 import { IState } from '../../redux/reducers'
 
-import Block from '../../components/Block/Block'
 import PropertyList from '../../components/PropertyList/PropertyList'
 import SearchBar, { ISearchQuery } from '../../components/SearchBar/SearchBar'
-import Info from '../../components/Info/Info'
 import LocationMap from '../../components/LocationMap/LocationMap'
-import Banner from '../../components/Banner/Banner'
+
+const ReactPaginate = require('../../components/Paginate/index')
 
 interface IProps extends IState, InjectedTranslateProps {
 }
@@ -31,6 +30,7 @@ interface IProps extends IState, InjectedTranslateProps {
 @connect(
   state => state
 )
+
 class Home extends React.Component<IProps, void> {
 
   private handleSearch = (search: ISearchQuery) => {
@@ -41,31 +41,20 @@ class Home extends React.Component<IProps, void> {
   }
 
   public render() {
-    const properties = this.props.propertiesData.properties.slice(0, 6)
+    const properties = this.props.propertiesData.properties.slice(0, 15)
 
     return (
       <div>
-        <Banner slogan={ 'A New Life Has Begun' } image={ 'http://www.uum.org.my/wp-content/uploads/2016/05/s-ac2562875c06eae6cf546b0c0cf10b6f47311b47.jpg' } />
         <SearchBar
           langCode={ this.props.i18nData.currentLangCode }
           categories={ this.props.categoriesData.categories }
           onSearch={ this.handleSearch }
-          title={ 'I want to' }
+          title={'Avaiable property' }
         ></SearchBar>
         <PropertyList
           langCode={ this.props.i18nData.currentLangCode }
           properties={ properties }
-          title={ 'Recently properties' }
         ></PropertyList>
-        <div className={ 'container' }>
-          <Block>
-            <Info btnText={ 'More info' }>
-              <h1>
-                "We chose this site based on its reputation for building high quality homes while providing incredible customer service."
-              </h1>
-            </Info>
-          </Block>
-        </div>
         <LocationMap />
       </div>
     )
