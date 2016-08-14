@@ -25,7 +25,7 @@ const perPage = 20
   promise: ({ store: { dispatch }, location: { query } }) => {
     return Promise.all([
       dispatch(triggerFetchCategories()),
-      dispatch(triggerFetchProperties(parseInt(query.page, 10) || 0, perPage)),
+      dispatch(triggerFetchProperties(parseInt(query.page, 10) || 0, perPage, query)),
     ])
   },
 }])
@@ -58,7 +58,9 @@ class Home extends React.Component<IProps, void> {
     return (
       <div>
         <SearchBar
+          query={ location.query }
           langCode={ this.props.i18nData.currentLangCode }
+          currency={ this.props.i18nData.currentCurrency }
           categories={ this.props.categoriesData.categories }
           onSearch={ this.handleSearch }
           title={'Avaiable property' }

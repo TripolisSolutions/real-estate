@@ -55,6 +55,7 @@ class Home extends React.Component<IProps, void> {
         <Banner slogan={ 'A New Life Has Begun' } image={ banner } />
         <SearchBar
           langCode={ this.props.i18nData.currentLangCode }
+          currency={ this.props.i18nData.currentCurrency }
           categories={ this.props.categoriesData.categories }
           onSearch={ this.handleSearch }
           title={ 'I want to' }

@@ -13,7 +13,7 @@ interface IProps {
 function Dropdown(props: IProps) {
   return (
      <div className={ s.container } >
-        <select defaultValue={ props.defaultValue }>
+        <select defaultValue={ props.defaultValue } onChange={ (e) => props.onChange((e.target as any).value) }>
           {
             props.placeHolder ? (
               <option className={ s.option } value={ '' }>

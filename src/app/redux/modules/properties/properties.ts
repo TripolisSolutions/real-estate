@@ -9,6 +9,8 @@ import { IAction, IHandler } from '../../models'
 import { token } from '../../../helpers/auth'
 import { IProperty } from './properties.model'
 
+import { ISearchQuery } from '../../../components/SearchBar/SearchBar'
+
 const PROPERTIES_REQUEST = 'PROPERTIES_REQUEST'
 const PROPERTIES_SUCCESS = 'PROPERTIES_SUCCESS'
 const PROPERTIES_FAILURE = 'PROPERTIES_FAILURE'
@@ -168,13 +170,25 @@ export function propertiesReducer(state = INITIAL_STATE, action: IAction<any>): 
   return handler ? handler(state, action) : state
 }
 
+function toQueryString(obj) {
+  const parts = [];
+  for (const i in obj) {
+    if (obj.hasOwnProperty(i)) {
+      parts.push(encodeURIComponent(i) + '=' + encodeURIComponent(obj[i]));
+    }
+  }
+  return parts.join('&');
+}
+
 /** Async Action Creator */
-export function triggerFetchProperties(page: number, limit: number = 20): Redux.Dispatch {
+export function triggerFetchProperties(page: number, limit: number = 20, query?: ISearchQuery): Redux.Dispatch {
   return dispatch => {
     dispatch(propertiesRequest());
     log.debug('propertiesRequest')
 
-    return fetch(urljoin(rootUrl, 'properties?page=' + page))
+    return fetch(urljoin(rootUrl, 'properties?' + toQueryString(Object.assign({}, {
+      page, limit,
+    }, query))))
       .then(res => {
         if (res.ok) {
           return res.json()
