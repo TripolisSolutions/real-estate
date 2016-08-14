@@ -16,18 +16,10 @@ const { Input, Checkbox, Select } = require('formsy-react-components')
 import { ICircleMarker, IMapViewport } from '../../../../redux/modules/properties/properties.model'
 import LocationMap from '../../../LocationMap/LocationMap'
 
-import districtOptions from './districts'
+import { translatedOptions } from '../../../../helpers/options'
 
 const s = require('./StepAddressLocation.less')
 
-function translateOptions(options, t): IOption[] {
-  return options.map((item) => {
-    return {
-      value: item.value,
-      label: t(item.translationKey),
-    }
-  })
-}
 
 interface IProps extends InjectedTranslateProps {
   langCode: string
@@ -200,12 +192,7 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
       marker = props.state.mapMarker
     }
 
-    const emptyOption = {
-      value: '',
-      label: '-----',
-    }
-    const districts = translateOptions(districtOptions, t)
-    districts.unshift(emptyOption)
+    const districts = translatedOptions(t)
 
     return (
       <div className={ s.container }>

@@ -10,7 +10,7 @@ import { IState } from '../../redux/reducers'
 
 import Block from '../../components/Block/Block'
 import PropertyList from '../../components/PropertyList/PropertyList'
-import SearchBar from '../../components/SearchBar/SearchBar'
+import SearchBar, { ISearchQuery } from '../../components/SearchBar/SearchBar'
 import Info from '../../components/Info/Info'
 import LocationMap from '../../components/LocationMap/LocationMap'
 
@@ -31,12 +31,20 @@ interface IProps extends IState, InjectedTranslateProps {
 )
 class Home extends React.Component<IProps, void> {
 
+  private handleSearch = (searchObject: ISearchQuery) => {
+
+  }
+
   public render() {
     const properties = this.props.propertiesData.properties.slice(0, 6)
 
     return (
       <div>
-        <SearchBar></SearchBar>
+        <SearchBar
+          langCode={ this.props.i18nData.currentLangCode }
+          categories={ this.props.categoriesData.categories }
+          onSearch={ this.handleSearch }
+        ></SearchBar>
         <PropertyList
           langCode={ this.props.i18nData.currentLangCode }
           properties={ properties }
