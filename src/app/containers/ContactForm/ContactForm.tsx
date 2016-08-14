@@ -55,29 +55,23 @@ class ContactForm extends React.Component<IProps, IState> {
     })
       .then(res => {
         if (res.ok) {
-          return res.json()
-            .then(res => {
-              this.refs.toast.success(
-                t('contact_request_success_body'),
-                t('contact_request_success_title')
-              )
+          this.refs.toast.success(
+            t('contact_request_success_body'),
+            t('contact_request_success_title')
+          )
 
-              this.setState({
-                isFetching: false,
-              })
-            })
+          this.setState({
+            isFetching: false,
+          })
         } else {
-          return res.json()
-            .then(res => {
-              this.refs.toast.error(
-                t('contact_request_error_body'),
-                t('contact_request_error_title')
-              )
+          this.refs.toast.error(
+            t('contact_request_error_body'),
+            t('contact_request_error_title')
+          )
 
-              this.setState({
-                isFetching: false,
-              })
-            })
+          this.setState({
+            isFetching: false,
+          })
         }
       })
       .catch(err => {

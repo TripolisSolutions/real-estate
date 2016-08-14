@@ -60,6 +60,10 @@ import * as urljoin from 'url-join'
 
 log.setLevel(nconf.get('SETTINGS_LOG_LEVEL'))
 
+// email
+const nodemailer = require('nodemailer')
+const transporter = nodemailer.createTransport(nconf.get('SETTINGS_EMAIL_TRANSPORT'))
+
 const app = express();
 
 app.use(compression());
@@ -189,7 +193,42 @@ app.post('/auth/sign_in', (req, res) => {
         username: body.email,
         token: token,
       })
+  } else {
+    res.status(401).send('invalid username & password')
   }
+})
+
+app.post('/contacts', (req, res) => {
+  const body = req.body
+  log.info('contact body: ', body)
+
+  const subject = nconf.get('SETTINGS_EMAIL_CONTACT_SUBJECT')
+    .replace(/\{\{email\}\}/g, body.email)
+    .replace(/\{\{name\}\}/g, body.name)
+    .replace(/\{\{gender\}\}/g, body.gender)
+    .replace(/\{\{message\}\}/g, body.message)
+  const content = nconf.get('SETTINGS_EMAIL_CONTACT_CONTENT')
+    .replace(/\{\{email\}\}/g, body.email)
+    .replace(/\{\{name\}\}/g, body.name)
+    .replace(/\{\{gender\}\}/g, body.gender)
+    .replace(/\{\{message\}\}/g, body.message)
+
+  const mailOptions = {
+    from: nconf.get('SETTINGS_EMAIL_SENDER'), // sender address
+    to: nconf.get('SETTINGS_EMAIL_RECIEVER'), // list of receivers
+    subject: subject, // Subject line
+    html: content, // html body
+  }
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      log.error('error while send email: ', error)
+      res.status(500).send('error while send email')
+      return
+    }
+    res.status(200).send('success')
+  })
 })
 
 const vi = require('../locales/vi/common')

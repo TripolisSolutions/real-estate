@@ -75,7 +75,8 @@ class ContactInput extends React.Component<IProps, void> {
           </Row>
           <Row>
             <Col md={2} className={ s.btn }>
-              <Button type='submit' text={ t('contact_send') } disabled={ this.props.lock }/>
+              <Button type='submit'
+                text={ this.props.lock ? t('contact_sending') : t('contact_send') } disabled={ this.props.lock }/>
             </Col>
           </Row>
         </form>
