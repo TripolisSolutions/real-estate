@@ -68,12 +68,8 @@ module.exports = {
   'contact_request_error_title': 'Unexpected error happened while sending your message',
   'contact_request_error_body': 'Please try hit the send button again, or refresh browser!',
 
-
-  'created_date': 'Created date',
-  'detail_beds': 'Beds',
-  'detail_size': 'Sqaure',
-  'district': 'District',
-  'detail_price': 'detail_price',
-  'detail_available_until': 'Available',
-  'detail_facing_direction': 'Day for rent',
+  'home_slogan': 'A New Life Has Begun',
+  'search_bar_heading': 'Search',
+  'home_lastest_properties': 'Latest properties',
+  'home_message': '"We chose this site based on its reputation for building high quality homes while providing incredible customer service."',  
 }
