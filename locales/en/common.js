@@ -75,10 +75,20 @@ module.exports = {
 
   'switch_currency_label': 'Currency: ',
 
+  'footer_phone_info': `
+    <strong>English speaker:</strong>
+    <p>Dean Walkerden (+84) 981 688 075</p>
+    <strong>French-English-Vietnamese speaker:</strong>
+    <p>Sonia-Phuong Tran (+84) 981 688 076</p>
+  `,
+  'footer_copyright': 'Copy &copy; 2016 by YOUR SIDE',
+
   'home_slogan': 'A New Life Has Begun',
   'search_bar_heading': 'Search',
   'home_lastest_properties': 'Latest properties',
-  'home_message': '"We chose this site based on its reputation for building high quality homes while providing incredible customer service."',  
+  'home_message': '"We chose this site based on its reputation for building high quality homes while providing incredible customer service."',
+  'home_message_btn': 'More Info',
+
   'search_by_name': 'Enter your keywords here...',
   'search_all_categories': 'All property types',
   'search_min_bed': 'Min beds',

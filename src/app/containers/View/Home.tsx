@@ -70,7 +70,9 @@ class Home extends React.Component<IProps, void> {
         ></PropertyList>
         <div className={ 'container' }>
           <Block>
-            <Info btnText={ 'More info' }>
+            <Info btnText={ t('home_message_btn') } onClick={() => {
+              browserHistory.push('/about')
+            }} >
               <h1>
                 {
                   t('home_message')
