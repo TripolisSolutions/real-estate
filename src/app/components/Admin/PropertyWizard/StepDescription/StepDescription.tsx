@@ -29,7 +29,7 @@ class StepDescription extends React.Component<IProps, void> {
     return (
       <Grid>
         <Row>
-          <Col xs={12}>
+          <Col xs={12} className={ s.editor }>
             <ReactQuill theme='snow'
               className={ s.editor }
               value={ this.props.initialValue }
