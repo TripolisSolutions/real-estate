@@ -4,7 +4,9 @@ import ButtonWrapper from '../ButtonWrapper/ButtonWrapper'
 
 function Button(props) {
   function onClick() {
-    props.onClick()
+    if (props.onClick) {
+      props.onClick()
+    }
   }
   return (
     <ButtonWrapper type={ props.type } onClick={ onClick } active={ props.active } disabled={ props.disabled }>

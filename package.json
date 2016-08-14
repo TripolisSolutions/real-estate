@@ -165,6 +165,7 @@
     "mv": "^2.1.1",
     "nconf": "^0.8.4",
     "node-uuid": "^1.4.7",
+    "nodemailer": "^2.5.0",
     "react": "^15.0.1",
     "react-addons-create-fragment": "^15.3.0",
     "react-bootstrap": "^0.30.2",

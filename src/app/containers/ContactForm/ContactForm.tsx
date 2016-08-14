@@ -33,6 +33,14 @@ class ContactForm extends React.Component<IProps, IState> {
   private sendContactRequest = (form: IContactForm) => {
     const { t } = this.props
 
+    if (!form.email || !form.message) {
+      this.refs.toast.warning(
+        t('contact_request_form_validate_warn_body'),
+        t('contact_request_form_validate_warn_title')
+      )
+      return
+    }
+
     this.setState({
       isFetching: true,
     })
@@ -47,35 +55,29 @@ class ContactForm extends React.Component<IProps, IState> {
     })
       .then(res => {
         if (res.ok) {
-          return res.json()
-            .then(res => {
-              this.refs.toast.success(
-                t('contact_request_success_title'),
-                t('contact_request_success_body')
-              )
+          this.refs.toast.success(
+            t('contact_request_success_body'),
+            t('contact_request_success_title')
+          )
 
-              this.setState({
-                isFetching: false,
-              })
-            })
+          this.setState({
+            isFetching: false,
+          })
         } else {
-          return res.json()
-            .then(res => {
-              this.refs.toast.error(
-                t('contact_request_error_title'),
-                t('contact_request_error_body')
-              )
+          this.refs.toast.error(
+            t('contact_request_error_body'),
+            t('contact_request_error_title')
+          )
 
-              this.setState({
-                isFetching: false,
-              })
-            })
+          this.setState({
+            isFetching: false,
+          })
         }
       })
       .catch(err => {
         this.refs.toast.error(
-          t('contact_request_error_title'),
-          t('contact_request_error_body')
+          t('contact_request_error_body'),
+          t('contact_request_error_title')
         )
 
         this.setState({
