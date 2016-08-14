@@ -101,26 +101,28 @@ export class StepConfigCarouselImages extends React.Component<IInternalProps, vo
       <div>
         <Grid>
           <Row>
-            <Col xs={6} md={4}>
+            <Col md={4}>
               <div className={ c('well', s.imageHolder) } onClick={ () => props.dispatch({type: 'SHOW_MODAL'}) }>
                 { t('upload_image') }
               </div>
             </Col>
-            {
-              images.map( (image, i) => (
-                <Col key={ image.id } xs={6} md={4}>
-                  <Image src={
-                    urljoin(props.imageRootUrl, image.fileName)
-                  }/>
-                  <Button bsStyle='danger'
-                    onClick={ () => {
-                      props.dispatch({type: 'REMOVE_IMAGE', payload: i, images})
-                      props.onChange(props.state.images)
-                    }}
-                  >Remove</Button>
-                </Col>
-              ))
-            }
+            <Col md={8} className={ s.image }>
+              {
+                images.map( (image, i) => (
+                  <Col key={ image.id } md={4} >
+                    <Image src={
+                      urljoin(props.imageRootUrl, image.fileName)
+                    }/>
+                    <Button bsStyle='danger'
+                      onClick={ () => {
+                        props.dispatch({type: 'REMOVE_IMAGE', payload: i, images})
+                        props.onChange(props.state.images)
+                      }}
+                    >Remove</Button>
+                  </Col>
+                ))
+              }
+            </Col>
           </Row>
           <Row>
             <Col xs={12}>
