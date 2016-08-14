@@ -227,15 +227,19 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
                       this.lookup('en')
                     }
                   />
-                  <Checkbox
-                      name='address_visible'
-                      value={ props.addressVisible }
-                      label={ t('address_visible') }
-                      rowLabel=''
-                      onChange={ (name, visible) => {
-                        props.onVisiblityChange(visible)
-                      } }
-                  />
+                  {
+                    /*
+                    <Checkbox
+                        name='address_visible'
+                        value={ props.addressVisible }
+                        label={ t('address_visible') }
+                        rowLabel=''
+                        onChange={ (name, visible) => {
+                          props.onVisiblityChange(visible)
+                        } }
+                    />  
+                    */
+                  }
                   <Select
                     name='district'
                     value={ props.district }
