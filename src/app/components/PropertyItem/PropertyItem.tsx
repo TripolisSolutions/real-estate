@@ -15,6 +15,7 @@ interface IProps extends InjectedTranslateProps {
   currency: string
   id: string
   title: string
+  imageUrl: string
   bedRoomCount?: number
   size?: {
     width: number
@@ -36,7 +37,10 @@ function PropertyItem(props: IProps) {
     <Link to={`/properties/${ props.id }/${ sanitizeUrl(props.title) }`}>
       <div className={ s.container } >
         <div>
-          <img alt='property' src='http://ghk.h-cdn.co/assets/cm/15/11/54ff82282ac26-living-room-green-window-de.jpg' />
+          <img
+            alt='property'
+            src={ props.imageUrl ? props.imageUrl : 'http://ghk.h-cdn.co/assets/cm/15/11/54ff82282ac26-living-room-green-window-de.jpg' }
+          />
         </div>
         <div className={ s.info }>
           <h2> { props.title } </h2>

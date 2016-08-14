@@ -25,6 +25,7 @@ const startsWith = require('lodash/fp/startsWith')
 console.log('environment settings are: ',
   pickBy((value, key) => startsWith('SETTINGS_')(key) && key.indexOf('SECRET') === -1 )(nconf.get()))
 
+import * as _ from 'lodash'
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 
@@ -56,6 +57,7 @@ const favicon = require('serve-favicon');
 const proxy = require('http-proxy-middleware')
 const multer = require('multer')
 const mv = require('mv')
+const uuid = require('node-uuid')
 import * as urljoin from 'url-join'
 
 log.setLevel(nconf.get('SETTINGS_LOG_LEVEL'))
@@ -129,7 +131,9 @@ const thumbnailUpload = multer({
 app.post('/api/thumbnails/upload', thumbnailUpload.single('file'), (req, res) => {
   log.debug('req.file', req.file)
   log.debug('image width ', req.body.width, ' height ', req.body.height, ' params: ', req.params.width)
-  const destPath = path.join(__dirname, nconf.get('SETTINGS_UPLOADED_IMAGE_FOLDER'), req.file.originalname)
+  const filename = uuid.v1() + '_' + req.file.originalname
+
+  const destPath = path.join(__dirname, nconf.get('SETTINGS_UPLOADED_IMAGE_FOLDER'), filename)
   log.debug('moving file ', req.file.path, ' to ', destPath)
 
   mv(req.file.path, destPath, (err) => {
@@ -138,8 +142,6 @@ app.post('/api/thumbnails/upload', thumbnailUpload.single('file'), (req, res) =>
       res.status(500).send(err.message)
       return
     }
-
-  // moveFile(req.file.path, destPath).then(() => {
 
     const imagesUrl = urljoin(nconf.get('SETTINGS_REAL_ESTATE_API'), 'images')
     log.debug('saving the image to api: ', imagesUrl)
@@ -150,7 +152,7 @@ app.post('/api/thumbnails/upload', thumbnailUpload.single('file'), (req, res) =>
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        fileName: req.file.originalname,
+        fileName: filename,
         width: parseInt(req.body.width, 10),
         height: parseInt(req.body.height, 10),
       }),

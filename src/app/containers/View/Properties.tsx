@@ -50,6 +50,11 @@ class Home extends React.Component<IProps, void> {
     const pageNum = Math.ceil(this.props.propertiesData.total / perPage)
     const currentPage = parseInt(location.query.page, 10) || 0
 
+    let imageRootUrl
+    if (typeof window !== 'undefined') {
+      imageRootUrl = window.__CONFIG__.imageRootUrl
+    }
+
     return (
       <div>
         <SearchBar
@@ -59,6 +64,7 @@ class Home extends React.Component<IProps, void> {
           title={'Avaiable property' }
         ></SearchBar>
         <PropertyList
+          imageRootUrl={ imageRootUrl }
           currency={ this.props.i18nData.currentCurrency }
           langCode={ this.props.i18nData.currentLangCode }
           properties={ properties }
