@@ -183,7 +183,7 @@ class SearchBar extends React.Component<IProps, void> {
                 </Col>
               </Row>
               <div className={ s.button }>
-                <Button type='submit' text='More Info' />
+                <Button type='submit' text={ t('search_btn') } />
               </div>
             </form>
           </div>

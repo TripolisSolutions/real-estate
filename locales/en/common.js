@@ -79,4 +79,13 @@ module.exports = {
   'search_bar_heading': 'Search',
   'home_lastest_properties': 'Latest properties',
   'home_message': '"We chose this site based on its reputation for building high quality homes while providing incredible customer service."',  
+  'search_by_name': 'Enter your keywords here...',
+  'search_all_categories': 'All property types',
+  'search_min_bed': 'Min beds',
+  'search_max_bed': 'Max beds',
+  'search_min_price': 'Min price',
+  'search_max_price': 'Max price',
+  'search_district': 'District',
+  'search_size': 'Size',
+  'search_btn': 'Search',
 }
