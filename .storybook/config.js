@@ -6,6 +6,7 @@ function loadStories() {
   require('../src/app/components/ImageManager/ImageManager-stories')
   require('../src/app/components/ImageManager/ImageManagerModal-stories')
   require('../src/app/components/UploadImageModal/UploadImageContainer-stories')
+  require('../src/app/components/GoogleMap/GoogleMap-stories')
 }
 
 configure(loadStories, module);

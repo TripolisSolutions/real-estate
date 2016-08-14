@@ -17,9 +17,10 @@ import { salesTypeOptions, facingDirectionOptions, rentalPeriodOptions } from '.
 
 function translateOptions(options, t): IOption[] {
   return options.map((item) => {
-    return Object.assign({}, item, {
+    return {
+      value: item.value,
       label: t(item.translationKey),
-    })
+    }
   })
 }
 

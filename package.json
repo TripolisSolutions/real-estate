@@ -173,6 +173,7 @@
     "react-dom": "^15.0.1",
     "react-dropzone": "^3.5.3",
     "react-fontawesome": "^1.1.0",
+    "react-google-maps": "^4.11.0",
     "react-helmet": "^3.0.2",
     "react-i18next": "^1.6.3",
     "react-paginate": "^2.1.3",

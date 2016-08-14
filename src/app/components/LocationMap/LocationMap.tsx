@@ -64,8 +64,8 @@ const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
 // 10.7859378,106.5255811
 LocationMap.defaultProps = {
   googleMapAPIKey: '',
-  lat: 10.7859378,
-  lng: 106.5255811,
+  lat: 10.790996617593493,
+  lng: 106.64231083632808,
   zoom: 12,
   title: '',
 }
