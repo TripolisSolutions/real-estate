@@ -1,5 +1,5 @@
 module.exports = {
-  'switch_language': 'Tiếng Việt',
+  'switch_language': 'English',
 
   'contact_us': 'Liên hệ',
   'contact_name': 'Tên',
