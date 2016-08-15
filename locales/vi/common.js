@@ -78,6 +78,7 @@ module.exports = {
   'menu_about_us': 'Về chúng tôi',
   'menu_properties_list': 'Bất động sản',
   'menu_contact_us': 'Liên hệ',
+  'home_location_heading': 'Vị trí',
 
   'switch_currency_label': 'Tiền tệ: ',
 

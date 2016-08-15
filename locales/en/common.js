@@ -94,6 +94,7 @@ module.exports = {
   'home_lastest_properties': 'Latest properties',
   'home_message': '"We chose this site based on its reputation for building high quality homes while providing incredible customer service."',
   'home_message_btn': 'More Info',
+  'home_location_heading': 'We are here',
 
   'search_by_name': 'Enter your keywords here...',
   'search_all_categories': 'All property types',
