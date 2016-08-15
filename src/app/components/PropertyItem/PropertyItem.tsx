@@ -80,7 +80,7 @@ function PropertyItem(props: IProps) {
               <Option
                 icon='hourglass-start'
                 text={ t('detail_facing_direction') }
-                value={ props.facingDirection }
+                value={ t(props.facingDirection) }
               />
             </div>
             <div className={ s.option}>
