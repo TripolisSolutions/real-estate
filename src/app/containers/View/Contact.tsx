@@ -8,6 +8,8 @@ import Block from '../../components/Block/Block'
 import LocationMap from '../../components/LocationMap/LocationMap'
 import ContactForm from '../ContactForm/ContactForm'
 
+import configs from '../../configs'
+
 interface IProps extends InjectedTranslateProps {
 }
 
@@ -20,6 +22,8 @@ class Contact extends React.Component<IProps, IState> {
   public render() {
     const { props } = this
 
+    const { googleMapAPIKey } = configs()
+
     return (
       <div>
         <ToastContainer ref='toast'
@@ -30,7 +34,9 @@ class Contact extends React.Component<IProps, IState> {
             <ContactForm/>
           </Block>
         </div>
-        <LocationMap />
+        <LocationMap
+          googleMapAPIKey={ googleMapAPIKey }
+        />
       </div>
     )
   }

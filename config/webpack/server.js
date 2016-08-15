@@ -42,10 +42,6 @@ var config = {
   module: {
     loaders: [
       {
-        test: /\.(jpe?g|png|gif)$/i,
-        loader: 'url?limit=1000&name=images/[hash].[ext]'
-      },
-      {
         test: /\.json$/,
         loader: 'json-loader'
       },
@@ -99,10 +95,7 @@ var config = {
         test: /\.svg(\?.*)?$/,
         loader: 'url?limit=10000&mimetype=image/svg+xml&name=fonts/[hash].[ext]'
       },
-      {
-        test: /\.(jpe?g|png|gif)$/i,
-        loader: 'url?limit=1000&name=images/[hash].[ext]'
-      }
+      { test: /\.(png|jpg|gif)$/, loader: 'url?limit=8192' },
     ],
     // Shut off warnings about using pre-built javascript files
     // as Quill.js unfortunately ships one as its `main`.

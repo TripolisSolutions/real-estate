@@ -16,6 +16,8 @@ import Info from '../../components/Info/Info'
 import LocationMap from '../../components/LocationMap/LocationMap'
 import Banner from '../../components/Banner/Banner'
 
+import configs from '../../configs'
+
 const banner = require('./images/p5.png')
 
 interface IProps extends IState, InjectedTranslateProps {
@@ -46,10 +48,7 @@ class Home extends React.Component<IProps, void> {
     const { t } = this.props
     const properties = this.props.propertiesData.properties.slice(0, 6)
 
-    let imageRootUrl
-    if (typeof window !== 'undefined') {
-      imageRootUrl = window.__CONFIG__.imageRootUrl
-    }
+    const { imageRootUrl } = configs()
 
     return (
       <div>

@@ -9,6 +9,8 @@ import { IState } from '../../../redux/reducers'
 
 import PropertyWizard from '../../../components/Admin/PropertyWizard/PropertyWizard'
 
+import configs from '../../../configs'
+
 interface IProps extends IState {
   createNewProperty: Redux.ActionCreator
 }
@@ -30,21 +32,13 @@ interface IProps extends IState {
 class PropertiesNew extends React.Component<IProps, {}> {
 
   public render() {
-    let key
-    if (typeof window !== 'undefined') {
-      key = window.__CONFIG__.googleMapAPIKey
-    }
-
-    let imageRootUrl
-    if (typeof window !== 'undefined') {
-      imageRootUrl = window.__CONFIG__.imageRootUrl
-    }
+    const { imageRootUrl, googleMapAPIKey } = configs()
 
     return(
       <div>
         <PropertyWizard
           imageRootUrl={ imageRootUrl }
-          googleMapAPIKey={ key }
+          googleMapAPIKey={ googleMapAPIKey }
           categories={ this.props.categoriesData.categories }
           langCode={ this.props.i18nData.currentLangCode }
           onWizardDone={ this.props.createNewProperty }

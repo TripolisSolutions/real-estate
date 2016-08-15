@@ -15,6 +15,8 @@ import LocationMap from '../../components/LocationMap/LocationMap'
 
 const ReactPaginate = require('../../components/Paginate/index')
 
+import configs from '../../configs'
+
 interface IProps extends IState, InjectedTranslateProps {
 }
 
@@ -50,10 +52,7 @@ class Home extends React.Component<IProps, void> {
     const pageNum = Math.ceil(this.props.propertiesData.total / perPage)
     const currentPage = parseInt(location.query.page, 10) || 0
 
-    let imageRootUrl
-    if (typeof window !== 'undefined') {
-      imageRootUrl = window.__CONFIG__.imageRootUrl
-    }
+    const { imageRootUrl } = configs()
 
     return (
       <div>
