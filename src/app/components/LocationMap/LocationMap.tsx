@@ -21,6 +21,7 @@ interface IProps {
   onViewportChange?: Function
   onClick?: Function
   title?: string,
+  scrollwheel?: boolean
 }
 
 const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
@@ -38,6 +39,7 @@ const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
           circleMarker={ props.circleMarker }
           onViewportChange={ props.onViewportChange }
           onClick={ props.onClick }
+          scrollwheel={ props.scrollwheel }
         />
       </div>
     </Block>

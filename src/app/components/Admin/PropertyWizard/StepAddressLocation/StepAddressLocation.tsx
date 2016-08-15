@@ -258,6 +258,7 @@ export class StepAddressLocation extends React.Component<IInternalProps, void> {
                 lng={ lng }
                 zoom={ zoom }
                 circleMarker={ marker }
+                scrollwheel={ true }
                 onViewportChange={ ({center, zoom}) => {
                   const viewport = {
                     lat: center.lat,
