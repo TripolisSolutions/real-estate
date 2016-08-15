@@ -63,7 +63,7 @@ class Home extends React.Component<IProps, void> {
           currency={ this.props.i18nData.currentCurrency }
           categories={ this.props.categoriesData.categories }
           onSearch={ this.handleSearch }
-          title={'Avaiable property' }
+          title={ t('properties_list_heading') }
         ></SearchBar>
         <PropertyList
           imageRootUrl={ imageRootUrl }

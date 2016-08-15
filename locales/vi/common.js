@@ -180,4 +180,6 @@ module.exports = {
 
   'admin_menu_properties_list': 'Danh sách',
   'admin_menu_new_property': 'Tạo mới',
+
+  'properties_list_heading': 'Danh sách bất động sản',
 }

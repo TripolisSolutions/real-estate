@@ -180,4 +180,6 @@ module.exports = {
 
   'admin_menu_properties_list': 'Properties List',
   'admin_menu_new_property': 'New Property',
+
+  'properties_list_heading': 'Avaiable properties',
 }
