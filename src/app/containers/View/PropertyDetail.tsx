@@ -126,11 +126,9 @@ class PropertyDetail extends React.Component<IProps, {
                   />
                   <Option
                     icon='usd'
+                    text={ t('detail_price') }
                     value={ price ? formatCurrency(price, currency) : null }
                   />
-                  <Option
-                    icon='map-marker'
-                    value={ property.address.name[1].text } />
                 </Row>
               </Col>
             </Row>

@@ -18,7 +18,7 @@ function Option(props: IProps) {
       </div>
       {
         props.text ? (
-          <span>{ props.text }: </span>
+          <span>{ props.text }:&nbsp;</span>
         ) : undefined
       }
       <span> { props.value || props.t('unknown') } </span>
