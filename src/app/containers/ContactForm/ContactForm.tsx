@@ -41,6 +41,8 @@ class ContactForm extends React.Component<IProps, IState> {
       return
     }
 
+    form.link = window.location.href
+
     this.setState({
       isFetching: true,
     })

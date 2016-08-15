@@ -15,6 +15,7 @@ export interface IContactForm {
   gender: string
   email: string
   message: string
+  link: string
 }
 
 interface IProps extends InjectedTranslateProps {
