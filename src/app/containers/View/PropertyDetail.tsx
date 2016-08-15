@@ -122,7 +122,7 @@ class PropertyDetail extends React.Component<IProps, {
                   <Option
                     icon='hourglass-start'
                     text={ t('detail_facing_direction') }
-                    value={ property.facingDirection }
+                    value={ t(property.facingDirection) }
                   />
                   <Option
                     icon='usd'
