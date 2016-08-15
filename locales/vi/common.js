@@ -13,7 +13,7 @@ module.exports = {
   'step_description_vietnamese': 'Mô tả bằng tiếng Việt',
   'step_description_english': 'Mô tả bằng tiếng Anh',
   'step_select_thumbnail': 'Đăng ảnh bìa',
-  'step_config_carousel_images': 'Upload gallery images',
+  'step_config_carousel_images': 'Đăng thêm ảnh',
   'step_address_location': 'Địa chỉ',
   'step_done': 'Hoàn thành đăng tin',
 
@@ -25,9 +25,9 @@ module.exports = {
   'price_in_vnd': 'Giá VND',
   'price_in_usd': 'Giá USD',
   'category': 'Danh mục',
-  'sale_type': 'Sales type',
-  'rental_period': 'Rental period',
-  'rental_period_value': 'Number',
+  'sale_type': 'Hình thức kinh doanh',
+  'rental_period': 'Thời gian thuê',
+  'rental_period_value': 'Thời gian',
   'rental_period_unit': 'Period',
   'available_until': 'Ngày có nhà',
   'facing_direction': 'Hướng',
@@ -46,10 +46,10 @@ module.exports = {
   'south-west': 'Tây Nam',
   'west': 'Tây',
   'north-west': 'Tây Bắc',
-  'days': 'Day(s)',
-  'months': 'Month(s)',
-  'quarters': 'Quarter(s)',
-  'years': 'Year(s)',
+  'days': 'Ngày',
+  'months': 'Tháng',
+  'quarters': 'Quý',
+  'years': 'Năm',
 
   'upload_image': 'Đăng ảnh',
 
@@ -58,12 +58,12 @@ module.exports = {
   'address_visible': 'Hiển thị địa chỉ cho người dùng',
 
   'create_the_property': 'Đăng tin',
-  'create_the_property_desc': 'The property will be created by data from all the previous steps',
+  'create_the_property_desc': 'Thông tin được tổng hợp từ các bước trước',
 
   'update_the_property': 'Cập nhật tin',
-  'update_the_property_desc': 'The property will be updated by data from all previous steps',
+  'update_the_property_desc': 'Thông tin được cập nhật từ các bước trước',
 
-  'property_delete_confirm': 'ABạn có chắc muốn xóa tin này?',
+  'property_delete_confirm': 'Bạn có chắc muốn xóa tin này?',
 
   'contact_request_form_validate_warn_title': 'Thông tin nhập không đúng',
   'contact_request_form_validate_warn_body': 'Nhập địa chỉ email và nội dung tin nhắn!',
@@ -154,7 +154,7 @@ module.exports = {
 
   'detail_size': 'Diện tích',
   'detail_beds': 'Phòng ngủ',
-  'district': 'Quận',
+  'district': 'Quận/Huyện',
   'detail_price': 'Giá',
   'detail_available_until': 'Ngày có nhà',
   'detail_facing_direction': 'Hướng',
@@ -169,7 +169,7 @@ module.exports = {
   'link': 'Liên kết',
   'property_name': 'Tin đăng',
   'created_date': 'Ngày tạo',
-  'commands': 'Commands',
+  'commands': 'Thao tác',
   'view_page': 'Xem chi tiết',
 
   'previous': 'Quay lại',
