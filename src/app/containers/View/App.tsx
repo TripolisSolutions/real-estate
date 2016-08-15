@@ -30,12 +30,12 @@ function App(props: IProps) {
           label: t('menu_home'),
         },
         {
-          url: '/about',
-          label: t('menu_about_us'),
-        },
-        {
           url: '/properties',
           label: t('menu_properties_list'),
+        },
+        {
+          url: '/about',
+          label: t('menu_about_us'),
         },
         {
           url: '/contact',

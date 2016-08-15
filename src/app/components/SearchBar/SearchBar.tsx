@@ -116,7 +116,7 @@ class SearchBar extends React.Component<IProps, void> {
                     onChange={ (value) => this.updateForm('salesType', value) }
                   />
                 </Col>
-                <Col md={ 8 }>
+                <Col md={ 8 } >
                   <Input
                     defaultValue={ query.q }
                     placeholder={ t('search_by_name') }
