@@ -176,5 +176,8 @@ module.exports = {
   'next': 'Bước tiếp theo',
 
   'close_contact_form': 'Đóng',
-  'property_location': 'Vị trí'
+  'property_location': 'Vị trí',
+
+  'admin_menu_properties_list': 'Danh sách',
+  'admin_menu_new_property': 'Tạo mới',
 }

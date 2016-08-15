@@ -176,5 +176,8 @@ module.exports = {
   'next': 'Next',
 
   'close_contact_form': 'Close',
-  'property_location': 'Property Location'
+  'property_location': 'Property Location',
+
+  'admin_menu_properties_list': 'Properties List',
+  'admin_menu_new_property': 'New Property',
 }
