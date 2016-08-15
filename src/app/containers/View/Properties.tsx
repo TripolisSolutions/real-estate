@@ -91,7 +91,7 @@ class Home extends React.Component<IProps, void> {
             activeClassName={'active'}
           />
         </PropertyList>
-        <LocationMap title={ t('we_are_here') }/>
+        <LocationMap title={ t('home_location_heading') }/>
       </div>
     )
   }
