@@ -10,6 +10,7 @@ import * as fs from 'fs'
 import * as log from 'loglevel'
 import * as nconf from 'nconf'
 const path = require('path');
+import * as url from 'url'
 
 log.setLevel(0)
 
@@ -54,7 +55,7 @@ const bodyParser = require('body-parser')
 const compression = require('compression');
 const Chalk = require('chalk');
 const favicon = require('serve-favicon');
-const proxy = require('http-proxy-middleware')
+const proxy = require('express-http-proxy')
 const multer = require('multer')
 const mv = require('mv')
 const uuid = require('node-uuid')
@@ -175,12 +176,7 @@ app.post('/api/thumbnails/upload', thumbnailUpload.single('file'), (req, res) =>
   })
 })
 
-app.use('/api', proxy({
-  target: nconf.get('SETTINGS_REAL_ESTATE_API'),
-  pathRewrite: {
-    '^/api' : '',
-  },
-}))
+app.use('/api', proxy(nconf.get('SETTINGS_REAL_ESTATE_API')))
 
 app.use(bodyParser.json())
 
