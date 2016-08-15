@@ -34,7 +34,7 @@ class About extends React.Component<InjectedTranslateProps, any> {
             </div>
           </Block>
         </div>
-        <LocationMap title={ 'We are here' }/>
+        <LocationMap title={ t('home_location_heading') }/>
       </div>
     );
   }

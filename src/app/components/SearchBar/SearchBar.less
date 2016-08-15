@@ -3,17 +3,21 @@
 .container {
   position: relative;
 
-  :global .row {
-    margin: @margin;
-  } 
+  :global [class^="col-md-"] {
+    margin-bottom: @margin;
+  }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 992px), (min-width: 1200px) {
+  .container :global [class^="col-md-"] {
+    margin-bottom: 0;
+  }
+
   .second :global .col-md-1{
     width: 11.11%;
   }
 
-  .second :global .form-group{
+   .second :global .form-group {
     margin-bottom: 0;
   }
 
@@ -22,6 +26,13 @@
     right: 0;
     bottom: 0;
     height: 100%;
-    width: 190px;
+    width: 140px;
+  }
+}
+
+
+@media (min-width: 1200px) {
+  .button {
+    width: 170px;
   }
 }
