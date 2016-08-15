@@ -27,6 +27,7 @@ export interface ISearchQuery {
   district: string
   size: string
   currency: string
+  page?: number
 }
 
 interface IProps extends InjectedTranslateProps {
@@ -58,6 +59,7 @@ class SearchBar extends React.Component<IProps, void> {
       district: '',
       size: '',
       currency: 'VND',
+      page: 0,
     },
     langCode: 'vi',
     categories: [],
@@ -77,6 +79,7 @@ class SearchBar extends React.Component<IProps, void> {
 
   private handleSubmit = (event) => {
     event.preventDefault()
+    this.form.page = 0
     this.form.currency = this.props.currency
     this.form.lang = this.props.langCode
     this.props.onSearch(this.form)

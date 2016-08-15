@@ -193,17 +193,17 @@ export default class PaginationBoxView extends Component {
     let disabled = this.props.disabledClassName
 
     const previousClasses = classNames(this.props.previousClassName,
-                                       {[disabled]: this.props.initialSelected === 0})
+                                       {[disabled]: this.props.initialSelected <= 0})
 
     const nextClasses = classNames(this.props.nextClassName,
-                                   {[disabled]: this.props.initialSelected === this.props.pageNum - 1})
+                                   {[disabled]: this.props.initialSelected >= this.props.pageNum - 1})
 
     return (
       <ul className={classNames(this.props.containerClassName, s.container)}>
         <li className={previousClasses}>
           <Link className={this.props.previousLinkClassName} to={{
             pathname: this.props.navigateUrl,
-            query: Object.assign(this.props.query || {}, {
+            query: Object.assign({}, this.props.query || {}, {
               page: (this.props.initialSelected - 1),
             })
           }}>
