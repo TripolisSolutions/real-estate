@@ -59,6 +59,7 @@ const proxy = require('express-http-proxy')
 const multer = require('multer')
 const mv = require('mv')
 const uuid = require('node-uuid')
+const Jimp = require('jimp')
 import * as urljoin from 'url-join'
 
 log.setLevel(nconf.get('SETTINGS_LOG_LEVEL'))
@@ -126,10 +127,96 @@ app.use('/api', (req, res, next) => {
   next()
 })
 
+function thumbnailResize(src, dest, callback) {
+  Jimp.read(src, function (err, lenna) {
+    if (err) { callback(err) }
+    log.debug('dest', dest)
+    lenna.cover(360, 242)            // resize
+      .write(dest, callback); // save
+  })
+  // var image = new ImageResize(src);
+
+  // image.loaded().then(function(){
+  //     image.smartResizeDown({
+  //         width: 360,
+  //         height: 242
+  //     }).then(function () {
+  //         image.stream(function (err, stdout, stderr) {
+  //             var writeStream = fs.createWriteStream(dest);
+  //             stdout.pipe(writeStream);
+
+  //             writeStream.on('finish', () => {
+  //               callback()
+  //             })
+
+  //             writeStream.on('error', (error) => callback(error))
+  //         });
+  //     });
+  // });
+  // const inputImage = fs.createReadStream(src)
+  // const outputImage = fs.createWriteStream(dest);
+
+  // const stream = inputImage.pipe(resizer.contain({height: 242, width: 360})).pipe(outputImage)
+
+  // stream.on('finish', () => {
+  //   callback()
+  // })
+
+  // stream.on('error', (error) => callback(error))
+}
+
 const thumbnailUpload = multer({
   dest: '/tmp/',
 })
 app.post('/api/thumbnails/upload', thumbnailUpload.single('file'), (req, res) => {
+  log.debug('req.file', req.file)
+  log.debug('image width ', req.body.width, ' height ', req.body.height, ' params: ', req.params.width)
+  const filename = uuid.v1() + '_' + req.file.originalname
+  const thumbnailFilename = 'thumbnail_' + filename
+
+  const destPath = path.join(__dirname, nconf.get('SETTINGS_UPLOADED_IMAGE_FOLDER'), thumbnailFilename)
+  log.debug('moving file ', req.file.path, ' to ', destPath)
+
+  thumbnailResize(req.file.path, destPath, (err) => {
+    if (err) {
+      log.error(`error while move file from ${ req.file.path } to ${ destPath }: `, err)
+      res.status(500).send(err.message)
+      return
+    }
+
+    const imagesUrl = urljoin(nconf.get('SETTINGS_REAL_ESTATE_API'), 'images')
+    log.debug('saving the image to api: ', imagesUrl)
+    fetch(imagesUrl, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fileName: thumbnailFilename,
+        width: parseInt(req.body.width, 10),
+        height: parseInt(req.body.height, 10),
+      }),
+    }).then(resp => {
+      log.debug('resp ok: ', resp.ok)
+      if (resp.ok) {
+        return resp.json()
+          .then(resp => {
+            log.debug('resp json: ', resp)
+            res.status(200).send(resp)
+          })
+      } else {
+        log.error(`error while store image on api: `, resp)
+        res.status(500).send(resp)
+      }
+    }).catch((err) => {
+      log.error(`error while store image on api: `, err)
+      res.status(500).send(err.message)
+    })
+  })
+})
+
+app.post('/api/images/upload', thumbnailUpload.single('file'), (req, res) => {
   log.debug('req.file', req.file)
   log.debug('image width ', req.body.width, ' height ', req.body.height, ' params: ', req.params.width)
   const filename = uuid.v1() + '_' + req.file.originalname
