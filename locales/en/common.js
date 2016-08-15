@@ -30,7 +30,7 @@ module.exports = {
   'rental_period_value': 'Number',
   'rental_period_unit': 'Period',
   'available_until': 'Available until',
-  'facing_direction': 'Facing direction',
+  'facing_direction': 'Direction',
   'bed_room_count': 'Number of bed rooms',
   'size': 'Size',
   'size_width': 'Width',
@@ -157,7 +157,7 @@ module.exports = {
   'district': 'District',
   'detail_price': 'Price',
   'detail_available_until': 'Available',
-  'detail_facing_direction': 'Facing',
+  'detail_facing_direction': 'Direction',
 
   'login': 'Login',
   'username': 'Username',
