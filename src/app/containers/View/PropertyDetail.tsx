@@ -88,7 +88,7 @@ class PropertyDetail extends React.Component<IProps, {
       <div>
         {
           imageUrls.length > 0 ? (
-            <Slider title={ t('gallery') } images={ imageUrls }/>
+            <Slider title={ translateText(property.name, langCode) } images={ imageUrls }/>
           ) : undefined
         }
         <div className={ 'container' } >
@@ -137,7 +137,7 @@ class PropertyDetail extends React.Component<IProps, {
           </Block>
           <Block upTitle={ true }>
             <Info
-              btnText={ this.state.toggleBtn ? 'Close' : 'Contact Us'}
+              btnText={ this.state.toggleBtn ? t('close_contact_form') : t('contact_us')}
               onClick={ this.handleClickContact }
               active={ this.state.toggleBtn }
             >
@@ -155,7 +155,7 @@ class PropertyDetail extends React.Component<IProps, {
         {
           property.address && property.address.viewport && property.address.circleMarker ? (
             <LocationMap
-              title={ 'Property location' }
+              title={ t('property_location') }
               lat={ property.address.viewport.lat }
               lng={ property.address.viewport.lng }
               zoom={ property.address.viewport.zoom }

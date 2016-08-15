@@ -173,4 +173,7 @@ module.exports = {
 
   'previous': 'Previous',
   'next': 'Next',
+
+  'close_contact_form': 'Close',
+  'property_location': 'Property Location'
 }
