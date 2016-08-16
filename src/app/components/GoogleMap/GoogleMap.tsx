@@ -17,6 +17,7 @@ interface IProps extends React.Props<any> {
     lng: number
     radius: number
   },
+  scrollwheel?: boolean
   onViewportChange?: Function
   onClick?: Function
 }
@@ -74,6 +75,7 @@ const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
             props.onViewportChange({center: { lat: center.lat(), lng: center.lng() }, zoom})
           }, 200) }
           defaultOptions={{
+            scrollwheel: props.scrollwheel,
             styles: mapStyles,
           }}
         >
@@ -107,6 +109,7 @@ LocationMap.defaultProps = {
   lat: 10.81442195828899,
   lng: 106.6552734375,
   zoom: 12,
+  scrollwheel: false,
 }
 
 export default LocationMap

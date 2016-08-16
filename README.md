@@ -16,12 +16,6 @@ npm run dev
 
 ## Run production release
 
-Build the projects into the `/build` folder 
-
-```bash
-NODE_ENV=production npm run release
-```
-
 Run the server (at port 8999)
 
 ```bash

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as Helmet from 'react-helmet';
-import * as nconf from 'nconf'
+
+import configs, { IConfig } from '../../configs'
 
 interface IHtmlProps {
   manifest?: Object;
@@ -36,10 +37,7 @@ class Html extends React.Component<IHtmlProps, {}> {
       <script src={src} key={i}></script>
     );
 
-    const config = {
-      googleMapAPIKey: nconf.get('SETTINGS_GOOGLE_MAP_API_KEY'),
-      imageRootUrl: nconf.get('SETTINGS_IMAGE_ROOT_URL'),
-    }
+    const config: IConfig = configs()
 
     // tslint:disable-next-line:max-line-length
     const initialState = (<script dangerouslySetInnerHTML={{__html: `window.__INITIAL_STATE__=${JSON.stringify(store.getState())}; window.__CONFIG__=${ JSON.stringify(config) }`}} charSet='UTF-8' />);

@@ -205,11 +205,13 @@ app.post('/contacts', (req, res) => {
     .replace(/\{\{name\}\}/g, body.name)
     .replace(/\{\{gender\}\}/g, body.gender)
     .replace(/\{\{message\}\}/g, body.message)
+    .replace(/\{\{link\}\}/g, body.link)
   const content = nconf.get('SETTINGS_EMAIL_CONTACT_CONTENT')
     .replace(/\{\{email\}\}/g, body.email)
     .replace(/\{\{name\}\}/g, body.name)
     .replace(/\{\{gender\}\}/g, body.gender)
     .replace(/\{\{message\}\}/g, body.message)
+    .replace(/\{\{link\}\}/g, body.link)
 
   const mailOptions = {
     from: nconf.get('SETTINGS_EMAIL_SENDER'), // sender address

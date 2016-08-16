@@ -10,6 +10,8 @@ import { IState } from '../../../redux/reducers'
 
 import PropertyWizard from '../../../components/Admin/PropertyWizard/PropertyWizard'
 
+import configs from '../../../configs'
+
 // const s = require('./PropertiesList.less')
 
 interface IProps extends IState {
@@ -41,10 +43,7 @@ class PropertiesEdit extends React.Component<IProps, {}> {
       key = window.__CONFIG__.googleMapAPIKey
     }
 
-    let imageRootUrl
-    if (typeof window !== 'undefined') {
-      imageRootUrl = window.__CONFIG__.imageRootUrl
-    }
+    const { imageRootUrl } = configs()
 
     return(
       <div>

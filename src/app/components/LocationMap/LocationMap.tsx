@@ -4,6 +4,8 @@ import { SFC } from 'react'
 import Block from '../Block/Block'
 import GoogleMap from '../GoogleMap/GoogleMap'
 
+import configs from '../../configs'
+
 const s = require('./LocationMap.less')
 
 interface IProps {
@@ -19,28 +21,25 @@ interface IProps {
   onViewportChange?: Function
   onClick?: Function
   title?: string,
+  scrollwheel?: boolean
 }
 
 const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
 
-  let key
-  if (props.googleMapAPIKey) {
-    key = props.googleMapAPIKey
-  } else if (typeof window !== 'undefined') {
-    key = window.__CONFIG__.googleMapAPIKey
-  }
+  const { googleMapAPIKey } = configs()
 
   return (
     <Block title={ props.title } noBorder={ true }>
       <div className={ s.container }>
         <GoogleMap
-          googleMapAPIKey={ props.googleMapAPIKey }
+          googleMapAPIKey={ googleMapAPIKey }
           lat={ props.lat }
           lng={ props.lng }
           zoom={ props.zoom }
           circleMarker={ props.circleMarker }
           onViewportChange={ props.onViewportChange }
           onClick={ props.onClick }
+          scrollwheel={ props.scrollwheel }
         />
       </div>
     </Block>

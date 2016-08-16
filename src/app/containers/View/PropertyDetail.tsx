@@ -2,7 +2,7 @@ import * as update from 'react/lib/update'
 import * as React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { translate, InjectedTranslateProps } from 'react-i18next'
-import * as log from 'loglevel'
+// import * as log from 'loglevel'
 import * as urljoin from 'url-join'
 
 const { connect } = require('react-redux');
@@ -23,6 +23,8 @@ import Slider from '../../components/Slider/Slider'
 import ContactForm from '../ContactForm/ContactForm'
 
 import { translatePrice, translateText } from '../../redux/models'
+
+import configs from '../../configs'
 
 const s = require('./PropertyDetail.less')
 
@@ -66,10 +68,7 @@ class PropertyDetail extends React.Component<IProps, {
     const props = this.props
     const { t } = this.props
 
-    let imageRootUrl
-    if (typeof window !== 'undefined') {
-      imageRootUrl = window.__CONFIG__.imageRootUrl
-    }
+    const { imageRootUrl, googleMapAPIKey } = configs()
 
     const currency = props.i18nData.currentCurrency
     const langCode = props.i18nData.currentLangCode
@@ -153,6 +152,7 @@ class PropertyDetail extends React.Component<IProps, {
         {
           property.address && property.address.viewport && property.address.circleMarker ? (
             <LocationMap
+              googleMapAPIKey={ googleMapAPIKey }
               title={ t('property_location') }
               lat={ property.address.viewport.lat }
               lng={ property.address.viewport.lng }

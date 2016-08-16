@@ -21,7 +21,10 @@ import { configureStore } from './app/redux/store';
 import 'isomorphic-fetch';
 import routes from './app/routes';
 import i18n from './i18n'
+import * as ReactGA from 'react-ga'
 const cookie = require('react-cookie')
+
+import configs from './app/configs'
 
 const store: Redux.Store = configureStore(
   browserHistory,
@@ -47,12 +50,19 @@ store.subscribe(() => {
   }
 })
 
+ReactGA.initialize(configs().googleAnalyticsAPIKey)
+
+function logPageView() {
+  ReactGA.pageview(window.location.pathname);
+}
+
 const history = syncHistoryWithStore(browserHistory, store);
 
 ReactDOM.render(
   <I18nextProvider i18n={ i18n }>
     <Provider store={store} key='provider'>
       <Router
+        onUpdate={ logPageView }
         history={history}
         render={(props) =>
           <ReduxAsyncConnect {...props} />

@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as _ from 'lodash'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 // import * as log from 'loglevel'
 import {
@@ -32,8 +33,8 @@ class StepDescription extends React.Component<IProps, void> {
           <Col xs={12} className={ s.editor }>
             <ReactQuill theme='snow'
               className={ s.editor }
-              value={ this.props.initialValue }
-              onChange={this.props.onChange}
+              defaultValue={ this.props.initialValue }
+              onChange={_.debounce(this.props.onChange, 300) }
             />
           </Col>
         </Row>
