@@ -127,48 +127,20 @@ app.use('/api', (req, res, next) => {
   next()
 })
 
-function thumbnailResize(src, dest, callback) {
-  Jimp.read(src, function (err, lenna) {
-    if (err) { callback(err) }
-    log.debug('dest', dest)
-    lenna.cover(360, 242)            // resize
-      .write(dest, callback); // save
+function thumbnailResize(src, dest) {
+  return new Promise((resolve, reject) => {
+    Jimp.read(src, function (err, lenna) {
+      if (err) { reject(err) }
+      lenna.cover(360, 242)
+        .write(dest, resolve);
+    })
   })
-  // var image = new ImageResize(src);
-
-  // image.loaded().then(function(){
-  //     image.smartResizeDown({
-  //         width: 360,
-  //         height: 242
-  //     }).then(function () {
-  //         image.stream(function (err, stdout, stderr) {
-  //             var writeStream = fs.createWriteStream(dest);
-  //             stdout.pipe(writeStream);
-
-  //             writeStream.on('finish', () => {
-  //               callback()
-  //             })
-
-  //             writeStream.on('error', (error) => callback(error))
-  //         });
-  //     });
-  // });
-  // const inputImage = fs.createReadStream(src)
-  // const outputImage = fs.createWriteStream(dest);
-
-  // const stream = inputImage.pipe(resizer.contain({height: 242, width: 360})).pipe(outputImage)
-
-  // stream.on('finish', () => {
-  //   callback()
-  // })
-
-  // stream.on('error', (error) => callback(error))
 }
 
 const thumbnailUpload = multer({
   dest: '/tmp/',
 })
-app.post('/api/thumbnails/upload', thumbnailUpload.single('file'), (req, res) => {
+app.post('/api/thumbnails/upload', thumbnailUpload.single('file'), async (req, res) => {
   log.debug('req.file', req.file)
   log.debug('image width ', req.body.width, ' height ', req.body.height, ' params: ', req.params.width)
   const filename = uuid.v1() + '_' + req.file.originalname
@@ -177,16 +149,13 @@ app.post('/api/thumbnails/upload', thumbnailUpload.single('file'), (req, res) =>
   const destPath = path.join(__dirname, nconf.get('SETTINGS_UPLOADED_IMAGE_FOLDER'), thumbnailFilename)
   log.debug('moving file ', req.file.path, ' to ', destPath)
 
-  thumbnailResize(req.file.path, destPath, (err) => {
-    if (err) {
-      log.error(`error while move file from ${ req.file.path } to ${ destPath }: `, err)
-      res.status(500).send(err.message)
-      return
-    }
+  try {
+    await thumbnailResize(req.file.path, destPath)
 
     const imagesUrl = urljoin(nconf.get('SETTINGS_REAL_ESTATE_API'), 'images')
     log.debug('saving the image to api: ', imagesUrl)
-    fetch(imagesUrl, {
+
+    const resp = await fetch(imagesUrl, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -197,70 +166,90 @@ app.post('/api/thumbnails/upload', thumbnailUpload.single('file'), (req, res) =>
         width: parseInt(req.body.width, 10),
         height: parseInt(req.body.height, 10),
       }),
-    }).then(resp => {
-      log.debug('resp ok: ', resp.ok)
-      if (resp.ok) {
-        return resp.json()
-          .then(resp => {
-            log.debug('resp json: ', resp)
-            res.status(200).send(resp)
-          })
-      } else {
-        log.error(`error while store image on api: `, resp)
-        res.status(500).send(resp)
-      }
-    }).catch((err) => {
-      log.error(`error while store image on api: `, err)
-      res.status(500).send(err.message)
     })
-  })
-})
 
-app.post('/api/images/upload', thumbnailUpload.single('file'), (req, res) => {
-  log.debug('req.file', req.file)
-  log.debug('image width ', req.body.width, ' height ', req.body.height, ' params: ', req.params.width)
-  const filename = uuid.v1() + '_' + req.file.originalname
-
-  const destPath = path.join(__dirname, nconf.get('SETTINGS_UPLOADED_IMAGE_FOLDER'), filename)
-  log.debug('moving file ', req.file.path, ' to ', destPath)
-
-  mv(req.file.path, destPath, (err) => {
-    if (err) {
-      log.error(`error while move file from ${ req.file.path } to ${ destPath }: `, err)
-      res.status(500).send(err.message)
+    if (!resp.ok) {
+      log.error(`error while store image on api: `, resp)
+      res.status(500).send(resp)
       return
     }
 
-    const imagesUrl = urljoin(nconf.get('SETTINGS_REAL_ESTATE_API'), 'images')
-    log.debug('saving the image to api: ', imagesUrl)
-    fetch(imagesUrl, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        fileName: filename,
-        width: parseInt(req.body.width, 10),
-        height: parseInt(req.body.height, 10),
-      }),
-    }).then(resp => {
-      log.debug('resp ok: ', resp.ok)
-      if (resp.ok) {
-        return resp.json()
-          .then(resp => {
-            log.debug('resp json: ', resp)
-            res.status(200).send(resp)
-          })
-      } else {
-        log.error(`error while store image on api: `, resp)
-        res.status(500).send(resp)
-      }
-    }).catch((err) => {
-      log.error(`error while store image on api: `, err)
-      res.status(500).send(err.message)
+    const apiImage = await resp.json()
+
+    res.status(200).send(apiImage)
+  } catch (error) {
+    log.error(`error while store image on api: `, error)
+    res.status(500).send(error.message)
+  }
+})
+
+function galleryImageResize(src, dest) {
+  return new Promise((resolve, reject) => {
+    Jimp.read(src, function (err, lenna) {
+      if (err) { reject(err) }
+      lenna.cover(900, 500)
+        .write(dest, resolve);
     })
   })
+}
+
+app.post('/api/images/upload', thumbnailUpload.array('files'), async (req, res) => {
+  log.debug('req.files', req.files)
+
+  try {
+    const fileInfos = req.files.map((file) => {
+      const filename = uuid.v1() + '_' + file.originalname
+      const destPath = path.join(__dirname, nconf.get('SETTINGS_UPLOADED_IMAGE_FOLDER'), filename)
+      return {
+        originalPath: file.path,
+        filename,
+        destPath,
+      }
+    })
+
+    const resizeWorkers = fileInfos.map((fileInfo) => {
+      return galleryImageResize(fileInfo.originalPath, fileInfo.destPath)
+    })
+
+    await Promise.all(resizeWorkers)
+
+    const imagesUrl = urljoin(nconf.get('SETTINGS_REAL_ESTATE_API'), 'images')
+    log.debug('saving the image to api: ', imagesUrl)
+
+    const apiWorkers = fileInfos.map((fileInfo) => {
+      return fetch(imagesUrl, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fileName: fileInfo.filename,
+        }),
+      })
+    })
+
+    const resps: any[] = await Promise.all(apiWorkers)
+
+    const unsuccess = _.filter(resps, (resp) => !resp.ok)
+
+    if (unsuccess.length > 0) {
+      log.error(`error while store image on api: `, unsuccess)
+      res.status(500).send(unsuccess)
+      return
+    }
+
+    const jsonWorkers = resps.map((resp) => {
+      return resp.json()
+    })
+
+    const apiImages = await Promise.all(jsonWorkers)
+
+    res.status(200).send(apiImages)
+  } catch (error) {
+    log.error(`error while store image on api: `, error)
+    res.status(500).send(error.message)
+  }
 })
 
 app.use('/api', proxy(nconf.get('SETTINGS_REAL_ESTATE_API')))
