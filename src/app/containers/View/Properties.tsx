@@ -20,7 +20,7 @@ import configs from '../../configs'
 interface IProps extends IState, InjectedTranslateProps {
 }
 
-const perPage = 20
+const perPage = 12
 
 @translate()
 @asyncConnect([{
