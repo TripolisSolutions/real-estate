@@ -12,6 +12,8 @@ storiesOf('UploadImageContainer', module)
     return (
       <StorybookProvider>
         <UploadImageContainer
+          uploadImageUrl=''
+          multiple= {true }
           onImageUploaded={ (image) => action('image uploaded: ', image)() }
         />
       </StorybookProvider>

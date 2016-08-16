@@ -193,7 +193,18 @@ function galleryImageResize(src, dest) {
   })
 }
 
-app.post('/api/images/upload', thumbnailUpload.array('files'), async (req, res) => {
+function moveFile(src, dest) {
+  return new Promise((resolve, reject) => {
+    mv(src, dest, (err) => {
+      if (err) {
+        reject(err)
+      }
+      resolve()
+    })
+  })
+}
+
+app.post('/api/gallery/upload', thumbnailUpload.array('files[]'), async (req, res) => {
   log.debug('req.files', req.files)
 
   try {
@@ -208,7 +219,7 @@ app.post('/api/images/upload', thumbnailUpload.array('files'), async (req, res) 
     })
 
     const resizeWorkers = fileInfos.map((fileInfo) => {
-      return galleryImageResize(fileInfo.originalPath, fileInfo.destPath)
+      return moveFile(fileInfo.originalPath, fileInfo.destPath)
     })
 
     await Promise.all(resizeWorkers)

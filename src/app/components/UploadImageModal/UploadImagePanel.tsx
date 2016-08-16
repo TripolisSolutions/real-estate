@@ -9,6 +9,7 @@ const s = require('./UploadImagePanel.less')
 export interface IProps extends InjectedTranslateProps, React.Props<any> {
   onFilesDrop(files: File[])
   isUploading: boolean
+  multiple: boolean
 }
 
 export class UploadImagePanel extends React.Component<IProps, void> {
@@ -26,7 +27,10 @@ export class UploadImagePanel extends React.Component<IProps, void> {
     const { t } = this.props
 
     return (
-      <Dropzone ref='dropzone' onDrop={this.onFileDrop} accept='image/*' className={ s.dropzone }>
+      <Dropzone
+        ref='dropzone'
+        onDrop={this.onFileDrop} accept='image/*' className={ s.dropzone } multiple={ this.props.multiple }
+      >
         <div className='row'>
           <div className={'col-lg-3 col-md-4 col-xs-6 ' + s.thumb }>
             {
