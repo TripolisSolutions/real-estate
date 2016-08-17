@@ -26,6 +26,8 @@ export class ImageManagerModal extends React.Component<IProps, void> {
         </Modal.Header>
         <Modal.Body>
           <UploadImagePanel
+            uploadImageUrl={ this.props.uploadImageUrl }
+            multiple={ this.props.multiple }
             onImageUploaded={ this.props.onImageUploaded }
           />
         </Modal.Body>

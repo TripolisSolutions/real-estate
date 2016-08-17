@@ -49,10 +49,10 @@ const reducer = (state: IState, action) => {
           $splice: [[action.payload, 1]],
         },
       })
-    case 'IMAGE_UPLOADED':
+    case 'IMAGES_UPLOADED':
       return update(state, {
         images: {
-          $push: [action.payload],
+          $push: action.payload,
         },
         showModel: {
           $set: false,
@@ -136,10 +136,12 @@ export class StepConfigCarouselImages extends React.Component<IInternalProps, vo
         </Grid>
         <UploadImageModal
           show={ props.state.showModel }
-          onImageUploaded={ (image) => {
-            props.onChange(props.state.images.concat([image]))
+          uploadImageUrl='/api/gallery/upload'
+          multiple={ true }
+          onImageUploaded={ (images) => {
+            props.onChange(props.state.images.concat(images))
 
-            props.dispatch({type: 'IMAGE_UPLOADED', payload: image})
+            props.dispatch({type: 'IMAGES_UPLOADED', payload: images})
           }}
           onHideClicked={ () => props.dispatch({type: 'HIDE_MODAL'}) }
         />

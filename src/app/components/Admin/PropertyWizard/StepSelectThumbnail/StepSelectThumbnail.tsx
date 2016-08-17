@@ -80,11 +80,11 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
     props.dispatch({type: 'HIDE_MODAL'})
   }
 
-  const onImageUploaded = (image: IImage) => {
-    log.debug('uploaded image: ', image)
-    props.dispatch({type: 'IMAGE_UPLOADED', payload: image})
+  const onImageUploaded = (images: IImage[]) => {
+    log.debug('uploaded image: ', images)
+    props.dispatch({type: 'IMAGE_UPLOADED', payload: images[0]})
 
-    props.onImageUploaded(image)
+    props.onImageUploaded(images[0])
   }
 
   const { t } = props
@@ -123,6 +123,8 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
         </Row>
       </Grid>
       <UploadImageModal
+        uploadImageUrl='/api/thumbnails/upload'
+        multiple={ false }
         show={ props.state.showModel }
         onImageUploaded={ onImageUploaded }
         onHideClicked={ hideUploadImageModal }

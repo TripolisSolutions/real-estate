@@ -37,7 +37,9 @@ function getDimension(imgUrl) {
 }
 
 export interface IProps {
-  onImageUploaded(image: IImage)
+  uploadImageUrl: string
+  multiple: boolean
+  onImageUploaded(images: IImage[])
 }
 
 interface IState {
@@ -74,50 +76,58 @@ const enhance = withReducer<IState, any, IProps>('state', 'dispatch', reducer, {
 })
 
 const UploadImagePanelContainer: SFC<IProps> = (props: IInternalProps) => {
-  const onFileDrop = (files: File[]) => {
+  const onFilesDrop = (files: File[]) => {
     if (files.length < 1) {
       return
     }
 
-    const file = files[0]
-
     props.dispatch({
       type: 'UPLOAD',
-      payload: file,
     })
 
-    getDimension(window.URL.createObjectURL(file)).then((dimension: IImageDimension) => {
-      const data = new FormData()
+    // const dimensions = Promise.all(files.map((file) => getDimension(window.URL.createObjectURL(file))))
+
+    const data = new FormData()
+
+    if (props.multiple) {
+      files.map((file) => {
+        data.append('files[]', file)
+      })
+    } else {
+      const file = files[0]
       data.append('file', file)
-      data.append('width', dimension.width)
-      data.append('height', dimension.height)
+    }
 
-      fetch('/api/thumbnails/upload', {
-        method: 'POST',
-        headers: {
-          'x-access-token': token(),
-        },
-        body: data,
-      })
-      .then((res) => res.json())
-      .then((res) => {
-        props.dispatch({
-          type: 'UPLOAD_SUCCESS',
-          payload: res,
-        })
-        props.onImageUploaded(res)
-      })
-      .catch((error) => props.dispatch({
-        type: 'UPLOAD_FAILURE',
-        payload: file,
-        error: error,
-      }))
+    fetch(props.uploadImageUrl, {
+      method: 'POST',
+      headers: {
+        'x-access-token': token(),
+      },
+      body: data,
     })
+    .then((res) => res.json())
+    .then((res) => {
+      props.dispatch({
+        type: 'UPLOAD_SUCCESS',
+        payload: res,
+      })
+
+      if (props.multiple) {
+        props.onImageUploaded(res)
+      } else {
+        props.onImageUploaded([res])
+      }
+    })
+    .catch((error) => props.dispatch({
+      type: 'UPLOAD_FAILURE',
+      error: error,
+    }))
   }
 
   return (
     <UploadImagePanel
-      onFilesDrop={ onFileDrop }
+      multiple={ props.multiple }
+      onFilesDrop={ onFilesDrop }
       isUploading={ props.isUploading }
     />
   )
