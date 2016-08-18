@@ -161,8 +161,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
       }
 
       if (prop.size) {
-        props.state.basicInfoFormData.size_width = prop.size.width
-        props.state.basicInfoFormData.size_length = prop.size.length
+        props.state.basicInfoFormData.size_area = prop.size.area
       }
     } else {
       props.state.basicInfoFormData = {

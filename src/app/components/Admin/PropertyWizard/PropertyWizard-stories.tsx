@@ -105,8 +105,7 @@ storiesOf('PropertyWizard', module)
       facingDirection: 'west',
       bedRoomCount: 4,
       size: {
-        width: 200,
-        length: 50,
+        area: 200,
       },
 
       desc: [

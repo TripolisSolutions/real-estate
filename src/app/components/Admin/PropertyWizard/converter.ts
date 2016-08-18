@@ -43,8 +43,7 @@ export function bindBasicInfoToProperty(cat: IProperty, data: IBasicInfoFormData
   cat.bedRoomCount = parseInt(data.bed_room_count as any, 10)
 
   cat.size = {
-    width: parseInt(data.size_width as any, 10),
-    length: parseInt(data.size_length as any, 10),
+    area: parseInt(data.size_area as any, 10),
   }
 
   return cat

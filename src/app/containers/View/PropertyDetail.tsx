@@ -80,8 +80,8 @@ class PropertyDetail extends React.Component<IProps, {
     })
 
     const price = translatePrice(property.price, currency)
-    const size = property.size && property.size.length !== 0
-      ? `${ property.size.width } X ${ property.size.length } ` : null
+    const size = property.size && property.size.area !== 0
+      ? property.size.area : null
 
     return (
       <div>

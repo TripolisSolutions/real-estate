@@ -36,7 +36,7 @@ class PropertyList extends React.Component<IProps, any> {
                       prop.thumbnailImage ? urljoin(this.props.imageRootUrl, prop.thumbnailImage.fileName) : null
                     }
                     bedRoomCount={ prop.bedRoomCount }
-                    size={ prop.size }
+                    size_area={ prop.size.area }
                     district={ prop.address.district }
                     price={ prop.price }
                     available={ prop.availableUntil }

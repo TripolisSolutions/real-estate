@@ -28,8 +28,7 @@ export interface IFormData {
   available_until?: Date
   facing_direction?: string
   bed_room_count?: number
-  size_width?: number
-  size_length?: number
+  size_area?: number
 }
 
 interface IProps extends InjectedTranslateProps, React.Props<StepBasicInfo> {
@@ -203,22 +202,13 @@ class StepBasicInfo extends React.Component<IProps, void> {
               label={ t('bed_room_count') }
               placeholder={ t('bed_room_count') }
             />
-            <Row layout='horizontal' label={ t('size') }>
-              <Input
-                labelClassName='hidden'
-                name='size_width'
-                value={ stringValueOf(formData.size_width) }
-                type='number'
-                placeholder={ t('size_width') }
-              />
-              <Input
-                labelClassName='hidden'
-                name='size_length'
-                value={ stringValueOf(formData.size_length) }
-                type='number'
-                placeholder={ t('size_length') }
-              />
-            </Row>
+            <Input
+              name='size_area'
+              value={ stringValueOf(formData.size_area) }
+              type='number'
+              label={ t('size_area') }
+              placeholder={ t('size_area') }
+            />
           </fieldset>
           <fieldset>
             <Row layout='horizontal'>

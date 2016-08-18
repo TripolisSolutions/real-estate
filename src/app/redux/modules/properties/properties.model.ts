@@ -24,8 +24,6 @@ export interface IProperty {
   salesType?: string
   availableUntil?: Date
   size?: {
-    width: number
-    length: number
     area?: number
   }
   address?: {
