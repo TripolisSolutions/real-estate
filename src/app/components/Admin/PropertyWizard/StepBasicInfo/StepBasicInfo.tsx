@@ -8,7 +8,7 @@ import { emptyOption, translatedOptions } from '../../../../helpers/options'
 
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
-const { Input, Row, Select } = FRC
+const { Input, Row, Select, Checkbox } = FRC
 
 const s = require('./Form.less')
 
@@ -22,6 +22,7 @@ export interface IFormData {
   price_in_usd?: number
   category?: string
   sale_type?: string
+  rental_period_negotiable?: boolean
   rental_period_value?: number
   rental_period_unit?: string
   available_until?: Date
@@ -76,6 +77,9 @@ class StepBasicInfo extends React.Component<IProps, void> {
   }
 
   public onChange = _.debounce((data) => {
+    if (_.isString(data.rental_period_negotiable)) {
+      data.rental_period_negotiable = data.rental_period_negotiable === 'true'
+    }
     this.props.onChange(data)
   }, 200)
 
@@ -154,9 +158,16 @@ class StepBasicInfo extends React.Component<IProps, void> {
             {
               formData.sale_type === 'rent' ? (
                 <Row layout='horizontal' label={ t('rental_period') }>
+                  <Checkbox
+                    labelClassName='hidden'
+                    name='rental_period_negotiable'
+                    value={ formData.rental_period_negotiable }
+                    label={ t('rental_period_negotiable') }
+                  />
                   <Input
                     labelClassName='hidden'
                     name='rental_period_value'
+                    disabled={ formData.rental_period_negotiable }
                     value={ stringValueOf(formData.rental_period_value) }
                     type='number'
                     placeholder={ t('rental_period_value') }
@@ -164,6 +175,7 @@ class StepBasicInfo extends React.Component<IProps, void> {
                   <Select
                     labelClassName='hidden'
                     name='rental_period_unit'
+                    disabled={ formData.rental_period_negotiable }
                     value={ formData.rental_period_unit }
                     placeholder={ t('rental_period_unit') }
                     options={rentalPeriods}

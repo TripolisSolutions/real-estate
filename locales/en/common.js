@@ -27,6 +27,7 @@ module.exports = {
   'category': 'Category',
   'sale_type': 'Sales type',
   'rental_period': 'Rental period',
+  'rental_period_negotiable': 'Negotiable',
   'rental_period_value': 'Number',
   'rental_period_unit': 'Period',
   'available_until': 'Available until',

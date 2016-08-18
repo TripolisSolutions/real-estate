@@ -97,6 +97,7 @@ storiesOf('PropertyWizard', module)
       categoryID: '2',
       salesType: 'rent',
       rentalPeriod: {
+        negotiable: false,
         digits: 2,
         unit: 'months',
       },

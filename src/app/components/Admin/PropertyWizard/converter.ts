@@ -31,6 +31,7 @@ export function bindBasicInfoToProperty(cat: IProperty, data: IBasicInfoFormData
   cat.salesType = data.sale_type
 
   cat.rentalPeriod = {
+    negotiable: data.rental_period_negotiable,
     digits: parseInt(data.rental_period_value as any, 10),
     unit: data.rental_period_unit,
   }

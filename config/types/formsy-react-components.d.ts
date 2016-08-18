@@ -3,28 +3,36 @@ declare module 'formsy-react-components' {
 
   interface IElementProps {
     name: string
-    value?: string
     defaultValue?: string
     label?: string
     placeholder?: string
     type?: string
     labelClassName?: string
+    disabled?: boolean
     addonAfter?: __React.ReactElement<any>
   }
 
-  export class Checkbox extends __React.Component<IElementProps, {}>{
+  interface IInputProps extends IElementProps {
+    value?: string
+  }
+
+  interface ICheckboxProps extends IElementProps {
+    value?: boolean
+  }
+
+  export class Checkbox extends __React.Component<ICheckboxProps, {}>{
     render(): __React.DOMElement<any, any>
   }
 
-  export class CheckboxGroup extends __React.Component<IElementProps, {}>{
+  export class CheckboxGroup extends __React.Component<ICheckboxProps, {}>{
     render(): __React.DOMElement<any, any>
   }
 
-  export class Input extends __React.Component<IElementProps, {}>{
+  export class Input extends __React.Component<IInputProps, {}>{
     render(): __React.DOMElement<any, any>
   }
 
-  export class RadioGroup extends __React.Component<IElementProps, {}>{
+  export class RadioGroup extends __React.Component<IInputProps, {}>{
     render(): __React.DOMElement<any, any>
   }
 
@@ -42,7 +50,7 @@ declare module 'formsy-react-components' {
     label: string
   }
 
-  interface ISelectProps extends IElementProps {
+  interface ISelectProps extends IInputProps {
     options: IOption[]
   }
 

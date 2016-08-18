@@ -39,6 +39,7 @@ export interface IProperty {
   bedRoomCount?: number
   facingDirection?: string
   rentalPeriod?: {
+    negotiable: boolean
     digits: number
     unit: string
   }

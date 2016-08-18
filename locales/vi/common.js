@@ -27,6 +27,7 @@ module.exports = {
   'category': 'Danh mục',
   'sale_type': 'Hình thức kinh doanh',
   'rental_period': 'Thời gian thuê',
+  'rental_period_negotiable': 'Thương lượng',
   'rental_period_value': 'Thời gian',
   'rental_period_unit': 'Period',
   'available_until': 'Ngày có nhà',
