@@ -97,6 +97,7 @@ storiesOf('PropertyWizard', module)
       categoryID: '2',
       salesType: 'rent',
       rentalPeriod: {
+        negotiable: false,
         digits: 2,
         unit: 'months',
       },
@@ -104,8 +105,7 @@ storiesOf('PropertyWizard', module)
       facingDirection: 'west',
       bedRoomCount: 4,
       size: {
-        width: 200,
-        length: 50,
+        area: 200,
       },
 
       desc: [

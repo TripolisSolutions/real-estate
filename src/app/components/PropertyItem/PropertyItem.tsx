@@ -17,10 +17,7 @@ interface IProps extends InjectedTranslateProps {
   title: string
   imageUrl: string
   bedRoomCount?: number
-  size?: {
-    width: number
-    length: number
-  }
+  size_area?: number
   district?: string
   price?: ITranslatablePrice[]
   available?: string | Date
@@ -31,7 +28,7 @@ function PropertyItem(props: IProps) {
   const t = props.t
 
   const price = translatePrice(props.price, props.currency)
-  const size = props.size && props.size.length !== 0 ? `${ props.size.width } X ${ props.size.length } ` : null
+  const size = props.size_area !== 0 ? props.size_area : null
 
   return (
     <Link to={`/properties/${ props.id }/${ sanitizeUrl(props.title) }`}>

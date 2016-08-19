@@ -24,8 +24,6 @@ export interface IProperty {
   salesType?: string
   availableUntil?: Date
   size?: {
-    width: number
-    length: number
     area?: number
   }
   address?: {
@@ -39,6 +37,7 @@ export interface IProperty {
   bedRoomCount?: number
   facingDirection?: string
   rentalPeriod?: {
+    negotiable: boolean
     digits: number
     unit: string
   }

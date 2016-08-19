@@ -155,13 +155,13 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
       }
 
       if (prop.rentalPeriod) {
+        props.state.basicInfoFormData.rental_period_negotiable = prop.rentalPeriod.negotiable
         props.state.basicInfoFormData.rental_period_value = prop.rentalPeriod.digits
         props.state.basicInfoFormData.rental_period_unit = prop.rentalPeriod.unit
       }
 
       if (prop.size) {
-        props.state.basicInfoFormData.size_width = prop.size.width
-        props.state.basicInfoFormData.size_length = prop.size.length
+        props.state.basicInfoFormData.size_area = prop.size.area
       }
     } else {
       props.state.basicInfoFormData = {
