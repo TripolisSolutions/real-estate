@@ -6,6 +6,7 @@ import { translate, InjectedTranslateProps } from 'react-i18next'
 
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
+import LanguageSelectModal from '../../components/LanguageSelectModal/LanguageSelectModal'
 
 import { switchLanguage, switchCurrency } from '../../redux/modules/i18n/i18n'
 import { IState } from '../../redux/reducers'
@@ -50,6 +51,7 @@ function App(props: IProps) {
         { props.children }
       </div>
       <Footer />
+      <LanguageSelectModal show={ true } />
     </div>
   )
 }
