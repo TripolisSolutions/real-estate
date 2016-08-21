@@ -3,11 +3,13 @@ import * as React from 'react'
 import * as log from 'loglevel'
 import * as urljoin from 'url-join'
 import * as c from 'classnames'
+import * as _ from 'lodash'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 import {
   Grid, Row, Col, Image, Button,
 } from 'react-bootstrap'
 import withReducer from 'recompose/withReducer'
+const { Sortable } = require('react-sortable')
 
 const s = require('./StepConfigCarouselImages.less')
 
@@ -26,7 +28,19 @@ interface IProps extends InjectedTranslateProps {
 interface IState {
   images?: IImage[]
   showModel: boolean
+  draggingIndex?: number
 }
+
+const ListItem = React.createClass({
+  displayName: 'SortableListItem',
+  render: function() {
+    return (
+      <div {...this.props} className='list-item'>{this.props.children}</div>
+    )
+  },
+})
+
+const SortableListItem = Sortable(ListItem)
 
 const reducer = (state: IState, action) => {
   log.debug('action: ', action)
@@ -62,6 +76,21 @@ const reducer = (state: IState, action) => {
       return update(state, {
         images: {
           $set: action.payload,
+        },
+      })
+    case 'SORT_IMAGES_INDEX':
+      return update(state, {
+        draggingIndex: {
+          $set: action.payload.draggingIndex,
+        },
+      })
+    case 'SORT_IMAGES':
+      return update(state, {
+        images: {
+          $set: action.payload.images,
+        },
+        draggingIndex: {
+          $set: action.payload.draggingIndex,
         },
       })
     default:
@@ -104,21 +133,43 @@ export class StepConfigCarouselImages extends React.Component<IInternalProps, vo
             <Col md={8} className={ s.image }>
               {
                 images.map( (image, i) => (
-                  <Col key={ image.id } md={4} >
-                    <Image src={
-                      urljoin(props.imageRootUrl, image.fileName)
-                    }/>
-                    <Button bsStyle='danger'
-                      onClick={ () => {
-                        props.onChange(update(props.state, {
-                          images: {
-                            $splice: [[i, 1]],
-                          },
-                        }).images)
-                        props.dispatch({type: 'REMOVE_IMAGE', payload: i})
-                      }}
-                    >Remove</Button>
-                  </Col>
+                  <SortableListItem
+                    key={ image.id }
+                    updateState={ ({draggingIndex, items}) => {
+                      if (!items) {
+                        props.dispatch({type: 'SORT_IMAGES_INDEX', payload: {
+                          draggingIndex,
+                        }})
+                        return
+                      }
+
+                      const images = _.compact(items) as IImage[]
+                      props.onChange(images)
+                      props.dispatch({type: 'SORT_IMAGES', payload: {
+                        images, draggingIndex,
+                      }})
+                    }}
+                    items={images}
+                    draggingIndex={this.props.state.draggingIndex}
+                    sortId={ i }
+                    outline='list'
+                  >
+                    <Col md={12} >
+                      <Image src={
+                        urljoin(props.imageRootUrl, image.fileName)
+                      }/>
+                      <Button bsStyle='danger'
+                        onClick={ () => {
+                          props.onChange(update(props.state, {
+                            images: {
+                              $splice: [[i, 1]],
+                            },
+                          }).images)
+                          props.dispatch({type: 'REMOVE_IMAGE', payload: i})
+                        }}
+                      >Remove</Button>
+                    </Col>
+                  </SortableListItem>
                 ))
               }
             </Col>

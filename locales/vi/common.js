@@ -13,6 +13,7 @@ module.exports = {
   'step_description_vietnamese': 'Mô tả bằng tiếng Việt',
   'step_description_english': 'Mô tả bằng tiếng Anh',
   'step_select_thumbnail': 'Đăng ảnh bìa',
+  'step_contact_info': 'Người liên hệ',
   'step_config_carousel_images': 'Đăng thêm ảnh',
   'step_address_location': 'Địa chỉ',
   'step_done': 'Hoàn thành đăng tin',
@@ -34,8 +35,12 @@ module.exports = {
   'facing_direction': 'Hướng',
   'bed_room_count': 'Số lượng phòng ngủ',
   'size': 'Diện tích',
+  'size_area': 'Diện tích (m2)',
   'size_width': 'Chiều rộng',
   'size_length': 'Chiều dài',
+
+  'owner_name': 'Liên hệ',
+  'owner_phone': 'Số điện thoại',
 
   'buy': 'Bán',
   'rent': 'Cho thuê',

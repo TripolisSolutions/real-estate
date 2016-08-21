@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 import { browserHistory } from 'react-router'
+import * as Helmet from 'react-helmet'
 
 const { connect } = require('react-redux');
 const { asyncConnect } = require('redux-connect');
@@ -52,6 +53,7 @@ class Home extends React.Component<IProps, void> {
 
     return (
       <div>
+        <Helmet title={ t('home_slogan') }/>
         <Banner slogan={ t('home_slogan') } image={ banner } />
         <SearchBar
           langCode={ this.props.i18nData.currentLangCode }

@@ -13,6 +13,7 @@ module.exports = {
   'step_description_vietnamese': 'Description in Vietnamese',
   'step_description_english': 'Description in English',
   'step_select_thumbnail': 'Upload main image',
+  'step_contact_info': 'Owner contact info',
   'step_config_carousel_images': 'Upload gallery images',
   'step_address_location': 'Address',
   'step_done': 'Done',
@@ -34,8 +35,12 @@ module.exports = {
   'facing_direction': 'Direction',
   'bed_room_count': 'Number of bed rooms',
   'size': 'Size',
+  'size_area': 'Size (m2)',
   'size_width': 'Width',
   'size_length': 'Length',
+
+  'owner_name': 'Owner name',
+  'owner_phone': 'Phone number',
 
   'buy': 'Buy',
   'rent': 'Rent',

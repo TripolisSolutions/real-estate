@@ -183,6 +183,62 @@ app.post('/api/thumbnails/upload', thumbnailUpload.single('file'), async (req, r
   }
 })
 
+function avatarResize(src, dest) {
+  return new Promise((resolve, reject) => {
+    Jimp.read(src, function (err, lenna) {
+      if (err) { reject(err) }
+      lenna.cover(120, 120)
+        .write(dest, resolve);
+    })
+  })
+}
+
+const avatarUpload = multer({
+  dest: '/tmp/',
+})
+app.post('/api/avatar/upload', avatarUpload.single('file'), async (req, res) => {
+  log.debug('req.file', req.file)
+  log.debug('image width ', req.body.width, ' height ', req.body.height, ' params: ', req.params.width)
+  const filename = uuid.v1() + '_' + req.file.originalname
+  const avatarFilename = 'avatar_' + filename
+
+  const destPath = path.join(__dirname, nconf.get('SETTINGS_UPLOADED_IMAGE_FOLDER'), avatarFilename)
+  log.debug('moving file ', req.file.path, ' to ', destPath)
+
+  try {
+    await avatarResize(req.file.path, destPath)
+
+    const imagesUrl = urljoin(nconf.get('SETTINGS_REAL_ESTATE_API'), 'images')
+    log.debug('saving the image to api: ', imagesUrl)
+
+    const resp = await fetch(imagesUrl, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        fileName: avatarFilename,
+        width: parseInt(req.body.width, 10),
+        height: parseInt(req.body.height, 10),
+      }),
+    })
+
+    if (!resp.ok) {
+      log.error(`error while store image on api: `, resp)
+      res.status(500).send(resp)
+      return
+    }
+
+    const apiImage = await resp.json()
+
+    res.status(200).send(apiImage)
+  } catch (error) {
+    log.error(`error while store image on api: `, error)
+    res.status(500).send(error.message)
+  }
+})
+
 function galleryImageResize(src, dest) {
   return new Promise((resolve, reject) => {
     Jimp.read(src, function (err, lenna) {

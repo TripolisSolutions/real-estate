@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { translate, InjectedTranslateProps } from 'react-i18next'
+import * as Helmet from 'react-helmet'
 
 import LocationMap from '../../components/LocationMap/LocationMap'
 import Block from '../../components/Block/Block'
@@ -14,6 +15,7 @@ class About extends React.Component<InjectedTranslateProps, any> {
 
     return (
       <div>
+        <Helmet title={ t('about_us_heading') }/>
         <div className={ 'container' } >
           <Block title={ t('about_us_heading') } bigger ={ true }>
             <Row className={ s.img } >

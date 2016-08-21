@@ -5,7 +5,7 @@ import { storiesOf, action } from '@kadira/storybook'
 import '../../../helpers/storyCommonResource'
 import i18n, { StorybookProvider } from '../../../helpers/storyTranslationHelper'
 import PropertyWizard from './PropertyWizard'
-import { IProperty } from '../../../redux/modules/properties/properties.model'
+import { IProperty, IContactInfo } from '../../../redux/modules/properties/properties.model'
 
 log.setLevel(0)
 
@@ -38,6 +38,16 @@ const categories = [
   },
 ]
 
+const contactInfo: IContactInfo = {
+  phone: '(+84) 981 688 076',
+  ownerName: 'Sonia-Phuong Tran',
+  ownerAvatar: {
+    id: '1',
+    url: 'http://lorempixel.com/120/120/',
+    fileName: '',
+  },
+}
+
 storiesOf('PropertyWizard', module)
   .add('default vietnamese', () => {
     i18n.changeLanguage('vi')
@@ -47,6 +57,7 @@ storiesOf('PropertyWizard', module)
         <PropertyWizard
           imageRootUrl={ 'http://localhost:8999/public/images' }
           googleMapAPIKey='AIzaSyDHU5dwOcUU7uO3fvvM_5ZQd-83tLykEpA'
+          defaultContactInfo={ contactInfo }
           langCode={ 'vi' }
           categories={ categories }
           onWizardDone={ (property) => action('wizard done', property)() }
@@ -62,6 +73,7 @@ storiesOf('PropertyWizard', module)
         <PropertyWizard
           imageRootUrl={ 'http://localhost:8999/public/images' }
           googleMapAPIKey='AIzaSyDHU5dwOcUU7uO3fvvM_5ZQd-83tLykEpA'
+          defaultContactInfo={ contactInfo }
           langCode={ 'en' }
           categories={ categories }
           onWizardDone={ (property) => action('wizard done', property)() }
@@ -165,6 +177,7 @@ storiesOf('PropertyWizard', module)
         <PropertyWizard
           imageRootUrl={ 'http://localhost:8999/public/images' }
           property={ property }
+          defaultContactInfo={ contactInfo }
           googleMapAPIKey='AIzaSyDHU5dwOcUU7uO3fvvM_5ZQd-83tLykEpA'
           langCode={ 'en' }
           categories={ categories }

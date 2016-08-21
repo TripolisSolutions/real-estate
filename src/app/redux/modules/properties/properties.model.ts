@@ -20,6 +20,8 @@ export interface IProperty {
   galleryImages?: IImage[]
   desc?: ITranslatableText[]
 
+  contactInfos?: IContactInfo[]
+
   categoryID?: string
   salesType?: string
   availableUntil?: Date
@@ -48,4 +50,10 @@ export interface IProperty {
 
   c_at?: string
   u_at?: string
+}
+
+export interface IContactInfo {
+  phone: string
+  ownerName: string
+  ownerAvatar: IImage
 }
