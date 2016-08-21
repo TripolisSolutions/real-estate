@@ -8,12 +8,13 @@ import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
 import LanguageSelectModal from '../../components/LanguageSelectModal/LanguageSelectModal'
 
-import { switchLanguage, switchCurrency } from '../../redux/modules/i18n/i18n'
+import { switchLanguage, switchCurrency, selectLangCode } from '../../redux/modules/i18n/i18n'
 import { IState } from '../../redux/reducers'
 
 interface IProps extends IState, React.Props<any>, InjectedTranslateProps {
   switchLanguage: Redux.ActionCreator
   switchCurrency: Redux.ActionCreator
+  selectLangCode: Redux.ActionCreator
 }
 
 /**
@@ -21,6 +22,7 @@ interface IProps extends IState, React.Props<any>, InjectedTranslateProps {
  */
 function App(props: IProps) {
   const { t } = props
+
 
   return (
     <div>
@@ -51,7 +53,7 @@ function App(props: IProps) {
         { props.children }
       </div>
       <Footer />
-      <LanguageSelectModal show={ true } />
+      <LanguageSelectModal show={ !props.i18nData.savedInCookie } selectLang={ props.selectLangCode }/>
     </div>
   )
 }
@@ -59,6 +61,7 @@ function App(props: IProps) {
 export default translate()(connect(
   state => state,
   dispatch => ({
+    selectLangCode: (langCode) => dispatch(selectLangCode(langCode)),
     switchLanguage: () => dispatch(switchLanguage()),
     switchCurrency: () => dispatch(switchCurrency()),
   })

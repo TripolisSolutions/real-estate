@@ -1,12 +1,12 @@
 import * as React from 'react'
 import * as c from 'classnames'
-import * as Dropzone from 'react-dropzone'
 
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
 const s = require('./LanguageSelectPanel.less')
 
 export interface IProps extends InjectedTranslateProps, React.Props<any> {
+  selectLang(langCode: string)
 }
 
 export class LanguageSelectPanel extends React.Component<IProps, void> {
@@ -23,11 +23,11 @@ export class LanguageSelectPanel extends React.Component<IProps, void> {
         </div>
         <div className='panel__flaps'>
           <div className='flap outer flap--left'></div>
-          <a className='flap flap__btn'>
+          <a className='flap flap__btn' onClick={ () => this.props.selectLang('vi') }>
             <img src='https://lipis.github.io/flag-icon-css/flags/4x3/vn.svg'/>
             Vietnamese
           </a>
-          <a className='flap flap__btn'>
+          <a className='flap flap__btn' onClick={ () => this.props.selectLang('en') }>
             <img src='http://icons.iconarchive.com/icons/icons-land/vista-flags/256/English-Language-Flag-1-icon.png'/>
             English
           </a>

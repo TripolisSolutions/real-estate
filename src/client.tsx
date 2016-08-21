@@ -17,7 +17,7 @@ import { I18nextProvider } from 'react-i18next';
 const { Router, browserHistory } = require('react-router');
 import { syncHistoryWithStore } from 'react-router-redux';
 const { ReduxAsyncConnect } = require('redux-connect');
-import { configureStore } from './app/redux/store';
+import { configureStore } from './app/redux/store'
 import 'isomorphic-fetch';
 import routes from './app/routes';
 import i18n from './i18n'

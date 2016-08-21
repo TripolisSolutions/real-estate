@@ -20,22 +20,15 @@ export class LanguageSelectModal extends React.Component<IProps, void> {
   public render() {
     const { t } = this.props
 
-    function onHideClicked() {
-      
-    }
-
     return (
       <div className={ s.modalContainer }>
-        <Modal show={ this.props.show } onHide={ onHideClicked }
+        <Modal show={ this.props.show } onHide={ () => {} }
           animation={ false }
           backdrop={ true }
           enforceFocus={ true }
-          dialogComponent={
-            <div></div>
-          }
           dialogClassName={ s.dialog }
         >
-          <LanguageSelectPanel/>
+          <LanguageSelectPanel selectLang={ this.props.selectLang }/>
         </Modal>
       </div>
     )

@@ -12,6 +12,7 @@ storiesOf('LanguageSelectPanel', module)
     return (
       <StorybookProvider>
         <LanguageSelectPanel
+          selectLang={ (langCode) => action('selectLang')(langCode) }
         />
       </StorybookProvider>
     )
