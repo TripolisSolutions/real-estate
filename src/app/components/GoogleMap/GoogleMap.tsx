@@ -59,7 +59,7 @@ const LocationMap: SFC<IProps> = function LocationMap(props: IProps) {
             const center = bounds.getCenter();
             const ne = bounds.getNorthEast();
 
-            const radius = window.google.maps.geometry.spherical.computeDistanceBetween(center, ne) / 6
+            const radius = window.google.maps.geometry.spherical.computeDistanceBetween(center, ne) / 5
 
             props.onClick({
               lat:latLng.lat(),

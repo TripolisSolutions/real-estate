@@ -9,13 +9,14 @@ import Multistep, { IStep } from './ReactMultistep/ReactMultistep'
 import './ReactMultistep/prog-tracker.less'
 
 import { ICategory } from '../../../redux/modules/categories/categories.model'
-import { IProperty, IMapViewport, ICircleMarker } from '../../../redux/modules/properties/properties.model'
+import { IProperty,
+  IContactInfo, IMapViewport, ICircleMarker } from '../../../redux/modules/properties/properties.model'
 import { translatePrice, translateText } from '../../../redux/models'
 
 import StepBasicInfo from './StepBasicInfo/StepBasicInfo'
 import { IFormData as IBasicInfoFormData } from './StepBasicInfo/StepBasicInfo'
 import { IImage } from '../../../redux/modules/images/images.model'
-
+import StepContactInfo from './StepContactInfo/StepContactInfo'
 import StepSelectThumbnail from './StepSelectThumbnail/StepSelectThumbnail'
 import StepDescription from './StepDescription/StepDescription'
 import StepConfigCarouselImages from './StepConfigCarouselImages/StepConfigCarouselImages'
@@ -28,6 +29,7 @@ interface IProps extends InjectedTranslateProps, React.Props<any> {
   langCode: string
   imageRootUrl: string
   property?: IProperty
+  defaultContactInfo: IContactInfo
   googleMapAPIKey: string
   categories: ICategory[]
   onWizardDone(cat: ICategory)
@@ -35,6 +37,9 @@ interface IProps extends InjectedTranslateProps, React.Props<any> {
 
 interface IState {
   basicInfoFormData?: IBasicInfoFormData
+  phone: string
+  ownerAvatar?: IImage
+  ownerName: string
   thumbnailImage?: IImage
   galleryImages?: IImage[]
   descVN: string
@@ -106,12 +111,29 @@ const reducer = (state: IState, action) => {
           $set: action.payload.district,
         },
       })
+    case 'CONTACT_INFO':
+      return update(state, {
+        ownerName: {
+          $set: action.payload.ownerName,
+        },
+        phone: {
+          $set: action.payload.ownerPhone,
+        },
+      })
+    case 'OWNER_AVATAR':
+      return update(state, {
+        ownerAvatar: {
+          $set: action.payload,
+        },
+      })
     default:
       return state
   }
 }
 
 const enhance = withReducer<IState, any, IProps>('state', 'dispatch', reducer, {
+  phone: '',
+  ownerName: '',
   descVN: '',
   descEN: '',
   addressVisible: false,
@@ -136,6 +158,10 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
     super(props)
 
     const prop = props.property || {} as IProperty
+
+    props.state.phone = props.defaultContactInfo.phone
+    props.state.ownerAvatar = props.defaultContactInfo.ownerAvatar
+    props.state.ownerName = props.defaultContactInfo.ownerName
 
     if (props.property) {
       const prop = this.props.property
@@ -162,6 +188,12 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
 
       if (prop.size) {
         props.state.basicInfoFormData.size_area = prop.size.area
+      }
+
+      if (prop.contactInfos && prop.contactInfos.length > 0) {
+        props.state.phone = prop.contactInfos[0].phone
+        props.state.ownerAvatar = prop.contactInfos[0].ownerAvatar
+        props.state.ownerName = prop.contactInfos[0].ownerName
       }
     } else {
       props.state.basicInfoFormData = {
@@ -258,6 +290,36 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
         />,
       },
       {
+        name: t('step_contact_info'),
+        component: (
+          <StepContactInfo
+            langCode={ this.props.langCode }
+            imageRootUrl={ this.props.imageRootUrl }
+            image={ state.ownerAvatar }
+            owner_name={ state.ownerName }
+            owner_phone={ state.phone }
+            onImageUploaded={ (image) => {
+              dispatch({
+                type: 'OWNER_AVATAR',
+                payload: image,
+              })
+            }}
+            onInfoChange={ (ownerName: string, ownerPhone: string) => {
+              dispatch({
+                type: 'CONTACT_INFO',
+                payload: {
+                  ownerName,
+                  ownerPhone,
+                },
+              })
+            }}
+            onNext={ () => {
+              this.refs.multistep.next()
+            } }
+          />
+        ),
+      },
+      {
         name: t('step_select_thumbnail'),
         component: (
           <StepSelectThumbnail
@@ -350,6 +412,14 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
               log.info('galleryImages: ', state.galleryImages)
               outProperty.galleryImages = state.galleryImages
             }
+
+            outProperty.contactInfos = [
+              {
+                phone: state.phone,
+                ownerAvatar: state.ownerAvatar,
+                ownerName: state.ownerName,
+              },
+            ]
 
             outProperty.desc = [
               {

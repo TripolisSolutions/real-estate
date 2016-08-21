@@ -5,6 +5,7 @@ const { asyncConnect } = require('redux-connect');
 
 import { triggerFetchCategories } from '../../../redux/modules/categories/categories'
 import { createNewProperty } from '../../../redux/modules/properties/properties'
+import { triggerFetchDefaultContactInfo } from '../../../redux/modules/defaultContactInfo/defaultContactInfo'
 import { IState } from '../../../redux/reducers'
 
 import PropertyWizard from '../../../components/Admin/PropertyWizard/PropertyWizard'
@@ -17,7 +18,10 @@ interface IProps extends IState {
 
 @asyncConnect([{
   promise: ({ store: { dispatch } }) => {
-    return dispatch(triggerFetchCategories())
+    return Promise.all([
+      dispatch(triggerFetchCategories()),
+      dispatch(triggerFetchDefaultContactInfo()),
+    ])
   },
 }])
 @connect(
@@ -40,6 +44,7 @@ class PropertiesNew extends React.Component<IProps, {}> {
           imageRootUrl={ imageRootUrl }
           googleMapAPIKey={ googleMapAPIKey }
           categories={ this.props.categoriesData.categories }
+          defaultContactInfo={ this.props.defaultContactInfoData.defaultContactInfo }
           langCode={ this.props.i18nData.currentLangCode }
           onWizardDone={ this.props.createNewProperty }
         />

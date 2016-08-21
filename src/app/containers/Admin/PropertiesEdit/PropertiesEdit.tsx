@@ -5,6 +5,7 @@ const { asyncConnect } = require('redux-connect');
 
 import { triggerFetchCategories } from '../../../redux/modules/categories/categories'
 import { triggerFetchProperty } from '../../../redux/modules/properties/properties'
+import { triggerFetchDefaultContactInfo } from '../../../redux/modules/defaultContactInfo/defaultContactInfo'
 import { updateProperty } from '../../../redux/modules/properties/properties'
 import { IState } from '../../../redux/reducers'
 
@@ -23,6 +24,7 @@ interface IProps extends IState {
     return Promise.all([
       dispatch(triggerFetchCategories()),
       dispatch(triggerFetchProperty(id)),
+      dispatch(triggerFetchDefaultContactInfo()),
     ])
   },
 }])
@@ -52,6 +54,7 @@ class PropertiesEdit extends React.Component<IProps, {}> {
           googleMapAPIKey={ key }
           property={ this.props.propertiesData.property }
           categories={ this.props.categoriesData.categories }
+          defaultContactInfo={ this.props.defaultContactInfoData.defaultContactInfo }
           langCode={ this.props.i18nData.currentLangCode }
           onWizardDone={ (property) => this.props.updateProperty(this.props.propertiesData.property.id, property) }
         />
