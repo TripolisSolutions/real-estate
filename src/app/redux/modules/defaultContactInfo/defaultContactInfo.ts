@@ -54,10 +54,6 @@ export function defaultContactInfoReducer(state = INITIAL_STATE, action: IAction
 /** Async Action Creator */
 export function triggerFetchDefaultContactInfo() {
   return (dispatch, getState: () => any) => {
-    if (getState().defaultContactInfoData.defaultContactInfo) {
-      return
-    }
-
     dispatch(defaultContactInfoRequest());
 
     const url = urljoin(rootUrl, 'contact_info/defaults')

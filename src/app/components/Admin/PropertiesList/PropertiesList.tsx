@@ -7,9 +7,10 @@ import { ITranslatableText, translateText } from '../../../redux/models'
 
 import sanitizeUrl from '../../../helpers/sanitizeUrl'
 
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { ButtonToolbar, Button } from 'react-bootstrap'
 import { IndexLink } from 'react-router'
+
+const s = require('./PropertiesList.less')
 
 const ReactPaginate = require('../../Paginate/index')
 
@@ -57,10 +58,14 @@ function createCommandsFormatter(currentLangCode: string, t, onDeleteClicked) {
       <ButtonToolbar>
         <IndexLink to={ `/admin/properties/${ id }/${ sanitizedName }` }>
           <Button bsStyle='primary'>
+            <span className='glyphicon glyphicon-edit'></span>&nbsp;
             { t('edit') }
           </Button>
         </IndexLink>
-        <Button bsStyle='danger' onClick={ () => onDeleteClicked(id) }>{ t('delete') }</Button>
+        <Button bsStyle='danger' onClick={ () => onDeleteClicked(id) }>
+          <span className='glyphicon glyphicon-remove'></span>&nbsp;
+          { t('delete') }
+        </Button>
       </ButtonToolbar>
     )
   }
@@ -73,48 +78,62 @@ const PropertiesList = (props: IProps) => {
     <div>
       { props.isFetching ? '' : (
         <div>
-          <BootstrapTable data={ props.properties }
-            headerStyle={{
-              marginBottom: -20,
-            }}
-          >
-            <TableHeaderColumn dataField='name' dataFormat={
-              createTranslateFormatter(props.langCode)
-            } dataSort={true}>
-              { t('property_name') }
-            </TableHeaderColumn>
-            <TableHeaderColumn dataField='c_at' dataSort={true} dataFormat={ dateFormatter } width='170'>
-              { t('created_date') }
-            </TableHeaderColumn>
-            <TableHeaderColumn dataField='id' isKey={true}
-              dataFormat={ createCommandsFormatter(props.langCode, t, props.onDeleteClicked) } width='170'
-            >
-              { t('commands') }
-            </TableHeaderColumn>
-            <TableHeaderColumn dataField='id'
-              dataFormat={ createLinkFormatter(props.langCode, t) } width='150'
-            >
-              { t('view_page') }
-            </TableHeaderColumn>
-          </BootstrapTable>
-          <ReactPaginate
-            previousLabel={
-              t('previous')
-            }
-            nextLabel={
-              t('next')
-            }
-            navigateUrl='/admin'
-            breakLabel={<a href=''>...</a>}
-            breakClassName={ 'break-me' }
-            pageNum={ props.pageNum }
-            initialSelected={ props.currentPage }
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            containerClassName={'pagination'}
-            subContainerClassName={'pages pagination'}
-            activeClassName={'active'}
-          />
+          <div className='row col-md-12 custyle'>
+            <ReactPaginate
+              previousLabel='<'
+              nextLabel='>'
+              navigateUrl='/admin'
+              breakLabel={<a href=''>...</a>}
+              breakClassName={ 'break-me' }
+              pageNum={ props.pageNum }
+              initialSelected={ props.currentPage }
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+            />
+            <table className={'table table-striped ' + s.custab}>
+              <thead>
+                  <tr>
+                      <th>{ t('property_name') }</th>
+                      <th width='170'>{ t('created_date') }</th>
+                      <th className='text-center' width='170'>{ t('commands') }</th>
+                      <th className='text-center' width='150'>{ t('view_page') }</th>
+                  </tr>
+              </thead>
+              <tbody>
+                {
+                  props.properties.map( (prop) => (
+                    <tr key={ prop.id }>
+                        <td>{ createTranslateFormatter(props.langCode)(prop.name) }</td>
+                        <td>{ dateFormatter(prop.c_at, prop) }</td>
+                        <td className='text-center'>
+                          { createCommandsFormatter(props.langCode, t, props.onDeleteClicked)(prop.id, prop) }
+                        </td>
+                        <td className='text-center'>
+                          { createLinkFormatter(props.langCode, t)(prop.id, prop) }
+                        </td>
+                    </tr>
+                  ))
+                }
+                </tbody>
+            </table>
+            <ReactPaginate
+              previousLabel='<'
+              nextLabel='>'
+              navigateUrl='/admin'
+              breakLabel={<a href=''>...</a>}
+              breakClassName={ 'break-me' }
+              pageNum={ props.pageNum }
+              initialSelected={ props.currentPage }
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+            />
+          </div>
         </div>
       ) }
     </div>
