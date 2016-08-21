@@ -1,7 +1,6 @@
 import * as React from 'react'
 
 import {
-  Button,
   Modal,
 } from 'react-bootstrap'
 
@@ -18,8 +17,6 @@ interface IProps extends IUploadImagePanelProps, InjectedTranslateProps, React.P
 export class LanguageSelectModal extends React.Component<IProps, void> {
 
   public render() {
-    const { t } = this.props
-
     return (
       <div className={ s.modalContainer }>
         <Modal show={ this.props.show } onHide={ () => {} }

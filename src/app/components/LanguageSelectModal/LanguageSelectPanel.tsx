@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as c from 'classnames'
+const cookie = require('react-cookie')
 
 import { translate, InjectedTranslateProps } from 'react-i18next'
 
@@ -10,6 +11,11 @@ export interface IProps extends InjectedTranslateProps, React.Props<any> {
 }
 
 export class LanguageSelectPanel extends React.Component<IProps, void> {
+
+  public componentDidMount() {
+    // So that if visiter hasn't pick a language, immediate refresh would show popup language select againg
+    cookie.remove('i18next')
+  }
 
   public render() {
     const { t } = this.props
