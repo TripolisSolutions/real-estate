@@ -170,6 +170,8 @@ module.exports = {
   'password': 'Password',
   'login_error': 'Please double check your username & password!',
 
+  'logout': 'Logout',
+
   'delete': 'Delete',
   'edit': 'Edit',
   'link': 'Link',
