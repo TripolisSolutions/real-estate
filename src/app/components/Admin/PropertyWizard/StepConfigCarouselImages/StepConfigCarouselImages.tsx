@@ -37,19 +37,6 @@ const ListItem = React.createClass({
     return (
       <div {...this.props} className='list-item'>{this.props.children}</div>
     )
-    // const image = this.props.image
-    // return (
-    //   <Col key={ image.id } md={4} >
-    //     <Image src={
-    //       urljoin(this.props.imageRootUrl, image.fileName)
-    //     }/>
-    //     <Button bsStyle='danger'
-    //       onClick={ () => {
-    //         this.props.onRemoveClick()
-    //       }}
-    //     >Remove</Button>
-    //   </Col>
-    // )
   },
 })
 
