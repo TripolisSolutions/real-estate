@@ -469,6 +469,17 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
               setTimeout(() => {
                 const gmap = document.getElementById('realestateGMap')
                 window.google.maps.event.trigger(gmap, 'resize')
+
+                // hack to move the viewport to correct position after resize
+                const viewport = state.mapViewport
+                const marker = state.mapMarker
+
+                setTimeout( () => {
+                  dispatch({
+                    type: 'MAP_CHANGE',
+                    payload: { viewport, marker },
+                  })
+                }, 100)
               }, 100)
             }
           }}
