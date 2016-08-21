@@ -2,6 +2,7 @@ import * as update from 'react/lib/update'
 import * as React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { translate, InjectedTranslateProps } from 'react-i18next'
+import * as Helmet from 'react-helmet'
 // import * as log from 'loglevel'
 import * as urljoin from 'url-join'
 
@@ -75,6 +76,8 @@ class PropertyDetail extends React.Component<IProps, {
 
     const property = this.props.propertiesData.property
 
+    const title = translateText(property.name, langCode)
+
     const imageUrls = property.galleryImages.map((image) => {
       return urljoin(imageRootUrl, image.fileName)
     })
@@ -85,9 +88,10 @@ class PropertyDetail extends React.Component<IProps, {
 
     return (
       <div>
+        <Helmet title={ title }/>
         {
           imageUrls.length > 0 ? (
-            <Slider title={ translateText(property.name, langCode) } images={ imageUrls }/>
+            <Slider title={ title } images={ imageUrls }/>
           ) : undefined
         }
         <div className={ 'container' } >

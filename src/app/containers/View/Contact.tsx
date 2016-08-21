@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { translate, InjectedTranslateProps } from 'react-i18next'
+import * as Helmet from 'react-helmet'
 
 const ReactToastr = require('react-toastr')
 const { ToastContainer } = ReactToastr
@@ -26,6 +27,7 @@ class Contact extends React.Component<IProps, IState> {
 
     return (
       <div>
+        <Helmet title={ props.t('contact_us') }/>
         <ToastContainer ref='toast'
           toastMessageFactory={ToastMessageFactory}
           className='toast-top-right' />
