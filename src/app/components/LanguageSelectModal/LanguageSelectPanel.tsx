@@ -31,7 +31,7 @@ export class LanguageSelectPanel extends React.Component<IProps, void> {
           <div className='flap outer flap--left'></div>
           <a className='flap flap__btn' onClick={ () => this.props.selectLang('vi') }>
             <img src='https://lipis.github.io/flag-icon-css/flags/4x3/vn.svg'/>
-            Vietnamese
+            Tiếng Việt
           </a>
           <a className='flap flap__btn' onClick={ () => this.props.selectLang('en') }>
             <img src='http://icons.iconarchive.com/icons/icons-land/vista-flags/256/English-Language-Flag-1-icon.png'/>
