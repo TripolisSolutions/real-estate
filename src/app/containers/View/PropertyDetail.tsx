@@ -1,5 +1,6 @@
 import * as update from 'react/lib/update'
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import { Col, Row } from 'react-bootstrap'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 import * as Helmet from 'react-helmet'
@@ -53,6 +54,10 @@ class PropertyDetail extends React.Component<IProps, {
     this.state = {
       toggleBtn: false,
     }
+  }
+
+  private componentDidUpdate() {
+     window.scrollTo(0, 0)
   }
 
   private handleClickContact = (e) => {

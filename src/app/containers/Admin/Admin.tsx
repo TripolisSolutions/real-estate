@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import { translate } from 'react-i18next'
+import { browserHistory } from 'react-router'
 
 import Header from '../../components/Header/Header'
 
@@ -31,6 +32,10 @@ function Admin(props) {
         currentCurrency={ props.i18nData.currentCurrency }
         onSwitchLanguageClicked={ props.switchLanguage }
         onSwitchCurrencyClicked={ props.switchCurrency }
+        onLogoutClick={ () => {
+          localStorage.removeItem('jwt')
+          browserHistory.push('/login')
+        } }
       />
       <div>
         { props.children }

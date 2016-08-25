@@ -17,6 +17,7 @@ interface IProps extends InjectedTranslateProps {
   items: IMenuItem[]
   onSwitchLanguageClicked: () => void
   onSwitchCurrencyClicked: () => void
+  onLogoutClick?: () => void
 }
 
 function Header(props: IProps) {
@@ -70,6 +71,21 @@ function Header(props: IProps) {
               <p>{ props.t('switch_currency_label') } { props.currentCurrency }</p>
             </a>
           </li>
+          {
+            props.onLogoutClick ? (
+              <li>
+                <a
+                  href='/logout'
+                  onClick={ (e) => {
+                    e.nativeEvent.preventDefault()
+                    props.onLogoutClick()
+                  }}
+                >
+                  <p>{ props.t('logout') }</p>
+                </a>
+              </li>
+            ) : undefined
+          }
         </ul>
       </div>
     </BootstrapNavbar.Collapse>

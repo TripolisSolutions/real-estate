@@ -1,6 +1,18 @@
 import * as i18n from 'i18next'
 import * as log from 'loglevel'
+const Cookies = require('cookies')
 const Chalk = require('chalk');
+
+const customDetector = {
+  name: 'customDetector',
+
+  lookup: function(req, res, options) {
+    const cookies = new Cookies(req, res);
+    const found = !!cookies.get(options.lookupCookie)
+    req.foundLangOnCookie = found
+    return null
+  },
+}
 
 let loadLocales
 
@@ -39,7 +51,10 @@ i18n
   )
 
 if (!process.env.BROWSER) {
-  i18n.use(require('i18next-express-middleware').LanguageDetector)
+  const middleware = require('i18next-express-middleware')
+  const lngDetector = new middleware.LanguageDetector()
+  lngDetector.addDetector(customDetector)
+  i18n.use(lngDetector)
 }
 
 i18n.init({
@@ -57,6 +72,7 @@ i18n.init({
     },
 
     detection: {
+      order: ['customDetector', 'cookie'],
       caches: ['cookie'],
     },
   }, (error) => {

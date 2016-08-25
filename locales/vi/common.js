@@ -170,6 +170,8 @@ module.exports = {
   'password': 'Mật khẩu',
   'login_error': 'Kiểm tra lại tên đăng nhập và mật khẩu!',
 
+  'logout': 'Đăng xuất',
+
   'delete': 'Xóa',
   'edit': 'Sửa',
   'link': 'Liên kết',

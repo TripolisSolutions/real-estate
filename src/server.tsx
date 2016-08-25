@@ -380,13 +380,13 @@ const en = require('../locales/en/common')
 app.get('*', (req, res) => {
   const location = req.url;
   const memoryHistory = createMemoryHistory(req.originalUrl);
-
   const langCode = simplifyLocale(req.language)
 
   req.i18n.changeLanguage(langCode)
 
   const store = configureStore(memoryHistory, {
     i18nData: {
+      savedInCookie: req.foundLangOnCookie,
       currentCurrency: 'VND',
       currentLangCode: langCode,
       locales: {
