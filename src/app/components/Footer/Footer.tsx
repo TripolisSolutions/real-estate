@@ -31,7 +31,9 @@ function Footer(props: InjectedTranslateProps) {
         <div className={ s.right }>
           <Row className={ s.share }>
             <div className={ s.button } >
-              <ButtonIcon icon='facebook'/>
+              <a href='https://www.facebook.com/sonia.tran.716' target='_blank'>
+                <ButtonIcon icon='facebook'/>
+              </a>
             </div>
             <div className={ s.button } >
               <ButtonIcon icon='facebook' text='share'/>
