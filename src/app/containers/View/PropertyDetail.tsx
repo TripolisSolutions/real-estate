@@ -139,14 +139,21 @@ class PropertyDetail extends React.Component<IProps, {
                   />
                   <div className={ s.defaultOption }>
                     <Row>
-                      <Col  md={ 2 }>
-                        <Image src="http://lorempixel.com/120/120/" circle />
-                      </Col>  
-                        (+84) 981 688 076
-                      <Col  md={ 2 }>
-                        <Image src="http://lorempixel.com/120/120/" circle />
-                      </Col>
-                        (+84) 981 688 076
+                      {
+                        props.propertiesData.property.contactInfos.map((info, i) => (
+                          <div key={ i }>
+                            <Col  md={ 2 }>
+                              <Image src={
+                                info.ownerAvatar.fileName ?
+                                  urljoin(imageRootUrl, info.ownerAvatar.fileName) :
+                                  info.ownerAvatar.url
+                              } circle />
+                            </Col>
+                              { info.ownerName }
+                              { info.phone }
+                          </div>
+                        ))
+                      }
                     </Row>
                   </div>
                 </Row>
