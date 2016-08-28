@@ -141,16 +141,18 @@ class PropertyDetail extends React.Component<IProps, {
                     <Row>
                       {
                         props.propertiesData.property.contactInfos.map((info, i) => (
-                          <div key={ i }>
-                            <Col  md={ 2 }>
+                          <div key={ i } className={ s.contact }>
+                            <Col  md={ 4 }>
                               <Image src={
                                 info.ownerAvatar.fileName ?
                                   urljoin(imageRootUrl, info.ownerAvatar.fileName) :
                                   info.ownerAvatar.url
                               } circle />
                             </Col>
-                              { info.ownerName }
-                              { info.phone }
+                            <div className={ s.info} >
+                              <strong>{ info.ownerName }</strong>
+                              <p>{ info.phone }</p>
+                            </div>
                           </div>
                         ))
                       }
