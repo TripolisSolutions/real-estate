@@ -29,7 +29,7 @@ interface IProps extends InjectedTranslateProps, React.Props<any> {
   langCode: string
   imageRootUrl: string
   property?: IProperty
-  defaultContactInfo: IContactInfo
+  defaultContactInfo: IContactInfo[]
   googleMapAPIKey: string
   categories: ICategory[]
   onWizardDone(cat: ICategory)
@@ -37,9 +37,7 @@ interface IProps extends InjectedTranslateProps, React.Props<any> {
 
 interface IState {
   basicInfoFormData?: IBasicInfoFormData
-  phone: string
-  ownerAvatar?: IImage
-  ownerName: string
+  contactInfos: IContactInfo[]
   thumbnailImage?: IImage
   galleryImages?: IImage[]
   descVN: string
@@ -113,17 +111,25 @@ const reducer = (state: IState, action) => {
       })
     case 'CONTACT_INFO':
       return update(state, {
-        ownerName: {
-          $set: action.payload.ownerName,
-        },
-        phone: {
-          $set: action.payload.ownerPhone,
+        contactInfos: {
+          [action.payload.i]: {
+            ownerName: {
+              $set: action.payload.ownerName,
+            },
+            phone: {
+              $set: action.payload.ownerPhone,
+            },
+          },
         },
       })
     case 'OWNER_AVATAR':
       return update(state, {
-        ownerAvatar: {
-          $set: action.payload,
+        contactInfos: {
+          [action.payload.i]: {
+            ownerAvatar: {
+              $set: action.payload.image,
+            },
+          },
         },
       })
     default:
@@ -132,8 +138,7 @@ const reducer = (state: IState, action) => {
 }
 
 const enhance = withReducer<IState, any, IProps>('state', 'dispatch', reducer, {
-  phone: '',
-  ownerName: '',
+  contactInfos: [],
   descVN: '',
   descEN: '',
   addressVisible: false,
@@ -159,9 +164,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
 
     const prop = props.property || {} as IProperty
 
-    props.state.phone = props.defaultContactInfo.phone
-    props.state.ownerAvatar = props.defaultContactInfo.ownerAvatar
-    props.state.ownerName = props.defaultContactInfo.ownerName
+    props.state.contactInfos = props.defaultContactInfo
 
     if (props.property) {
       const prop = this.props.property
@@ -190,10 +193,8 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
         props.state.basicInfoFormData.size_area = prop.size.area
       }
 
-      if (prop.contactInfos && prop.contactInfos.length > 0) {
-        props.state.phone = prop.contactInfos[0].phone
-        props.state.ownerAvatar = prop.contactInfos[0].ownerAvatar
-        props.state.ownerName = prop.contactInfos[0].ownerName
+      if (prop.contactInfos && prop.contactInfos.length === 2) {
+        props.state.contactInfos = prop.contactInfos
       }
     } else {
       props.state.basicInfoFormData = {
@@ -295,21 +296,41 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
           <StepContactInfo
             langCode={ this.props.langCode }
             imageRootUrl={ this.props.imageRootUrl }
-            image={ state.ownerAvatar }
-            owner_name={ state.ownerName }
-            owner_phone={ state.phone }
-            onImageUploaded={ (image) => {
+            image1={ state.contactInfos[0].ownerAvatar }
+            owner_name1={ state.contactInfos[0].ownerName }
+            owner_phone1={ state.contactInfos[0].phone }
+            image2={ state.contactInfos[1].ownerAvatar }
+            owner_name2={ state.contactInfos[1].ownerName }
+            owner_phone2={ state.contactInfos[1].phone }
+            onImage1Uploaded={ (image) => {
               dispatch({
                 type: 'OWNER_AVATAR',
-                payload: image,
+                payload: { image, i: 0 },
               })
             }}
-            onInfoChange={ (ownerName: string, ownerPhone: string) => {
+            onInfo1Change={ (ownerName: string, ownerPhone: string) => {
               dispatch({
                 type: 'CONTACT_INFO',
                 payload: {
                   ownerName,
                   ownerPhone,
+                  i: 0,
+                },
+              })
+            }}
+            onImage2Uploaded={ (image) => {
+              dispatch({
+                type: 'OWNER_AVATAR',
+                payload: { image, i: 1 },
+              })
+            }}
+            onInfo2Change={ (ownerName: string, ownerPhone: string) => {
+              dispatch({
+                type: 'CONTACT_INFO',
+                payload: {
+                  ownerName,
+                  ownerPhone,
+                  i: 1,
                 },
               })
             }}
@@ -413,13 +434,7 @@ export class PropertyWizard extends React.Component<IInternalProps, void> {
               outProperty.galleryImages = state.galleryImages
             }
 
-            outProperty.contactInfos = [
-              {
-                phone: state.phone,
-                ownerAvatar: state.ownerAvatar,
-                ownerName: state.ownerName,
-              },
-            ]
+            outProperty.contactInfos = state.contactInfos
 
             outProperty.desc = [
               {

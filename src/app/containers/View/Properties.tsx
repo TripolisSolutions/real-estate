@@ -13,6 +13,7 @@ import { IState } from '../../redux/reducers'
 import PropertyList from '../../components/PropertyList/PropertyList'
 import SearchBar, { ISearchQuery } from '../../components/SearchBar/SearchBar'
 import LocationMap from '../../components/LocationMap/LocationMap'
+import Empty from '../../components/Empty/Empty'
 
 const ReactPaginate = require('../../components/Paginate/index')
 
@@ -66,32 +67,36 @@ class Home extends React.Component<IProps, void> {
           onSearch={ this.handleSearch }
           title={ t('properties_list_heading') }
         ></SearchBar>
-        <PropertyList
-          imageRootUrl={ imageRootUrl }
-          currency={ this.props.i18nData.currentCurrency }
-          langCode={ this.props.i18nData.currentLangCode }
-          properties={ properties }
-        >
-          <ReactPaginate
-            previousLabel={
-              '<'
-            }
-            nextLabel={
-              '>'
-            }
-            query={ location.query }
-            navigateUrl='/properties'
-            breakLabel={<a href=''>...</a>}
-            breakClassName={ 'break-me' }
-            pageNum={ pageNum }
-            initialSelected={ currentPage }
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            containerClassName={'pagination'}
-            subContainerClassName={'pages pagination'}
-            activeClassName={'active'}
-          />
-        </PropertyList>
+        {
+          properties.length > 0 ? (
+             <PropertyList
+              imageRootUrl={ imageRootUrl }
+              currency={ this.props.i18nData.currentCurrency }
+              langCode={ this.props.i18nData.currentLangCode }
+              properties={ properties }
+            >
+              <ReactPaginate
+                previousLabel={
+                  '<'
+                }
+                nextLabel={
+                  '>'
+                }
+                query={ location.query }
+                navigateUrl='/properties'
+                breakLabel={<a href=''>...</a>}
+                breakClassName={ 'break-me' }
+                pageNum={ pageNum }
+                initialSelected={ currentPage }
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                containerClassName={'pagination'}
+                subContainerClassName={'pages pagination'}
+                activeClassName={'active'}
+              />
+            </PropertyList>
+          ) : <Empty text={ t('not_found') } />
+        }
         <LocationMap title={ t('home_location_heading') }/>
       </div>
     )

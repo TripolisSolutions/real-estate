@@ -11,11 +11,12 @@ const DEFAULT_CONTACT_INFO_SUCCESS = 'DEFAULT_CONTACT_INFO_SUCCESS'
 const DEFAULT_CONTACT_INFO_FAILURE = 'DEFAULT_CONTACT_INFO_FAILURE'
 
 export interface IState {
-  defaultContactInfo?: IContactInfo,
+  defaultContactInfo: IContactInfo[],
   isFetching: boolean
 }
 
 const INITIAL_STATE: IState = {
+  defaultContactInfo: [],
   isFetching: false,
 }
 
@@ -37,7 +38,7 @@ const ACTION_HANDLERS = {
   [DEFAULT_CONTACT_INFO_SUCCESS]: (state: IState, action: IAction<IContactInfo[]>): IState => {
     return update(state, {
       defaultContactInfo: {
-        $set: action.payload[0],
+        $set: action.payload,
       },
       isFetching: {
         $set: false,

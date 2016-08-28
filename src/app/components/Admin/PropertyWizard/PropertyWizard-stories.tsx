@@ -38,15 +38,26 @@ const categories = [
   },
 ]
 
-const contactInfo: IContactInfo = {
-  phone: '(+84) 981 688 076',
-  ownerName: 'Sonia-Phuong Tran',
-  ownerAvatar: {
-    id: '1',
-    url: 'http://lorempixel.com/120/120/',
-    fileName: '',
+const contactInfo: IContactInfo[] = [
+  {
+    phone: '(+84) 981 688 076',
+    ownerName: 'Sonia-Phuong Tran',
+    ownerAvatar: {
+      id: '1',
+      url: 'http://lorempixel.com/120/120/',
+      fileName: '',
+    },
   },
-}
+  {
+    phone: '(+84) 981 688 076',
+    ownerName: 'Sonia-Phuong Tran',
+    ownerAvatar: {
+      id: '1',
+      url: 'http://lorempixel.com/120/120/',
+      fileName: '',
+    },
+  },
+]
 
 storiesOf('PropertyWizard', module)
   .add('default vietnamese', () => {

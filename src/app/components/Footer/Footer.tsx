@@ -31,16 +31,12 @@ function Footer(props: InjectedTranslateProps) {
         <div className={ s.right }>
           <Row className={ s.share }>
             <div className={ s.button } >
-              <ButtonIcon icon='facebook'/>
+              <a href='https://www.facebook.com/sonia.tran.716' target='_blank'>
+                <ButtonIcon icon='facebook'/>
+              </a>
             </div>
             <div className={ s.button } >
               <ButtonIcon icon='facebook' text='share'/>
-            </div>
-            <div className={ s.button } >
-              <ButtonIcon icon='twitter'/>
-            </div>
-            <div className={ s.button } >
-              <ButtonIcon icon='twitter' text='tweet'/>
             </div>
           </Row>
           <p dangerouslySetInnerHTML={{__html: t('footer_copyright')}}></p>

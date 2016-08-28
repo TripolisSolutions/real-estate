@@ -37,10 +37,6 @@ function App(props: IProps) {
           label: t('menu_properties_list'),
         },
         {
-          url: '/about',
-          label: t('menu_about_us'),
-        },
-        {
           url: '/contact',
           label: t('menu_contact_us'),
         },

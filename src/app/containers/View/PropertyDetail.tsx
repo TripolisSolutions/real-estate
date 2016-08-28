@@ -1,7 +1,7 @@
 import * as update from 'react/lib/update'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { Col, Row } from 'react-bootstrap'
+import { Col, Row, Image } from 'react-bootstrap'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 import * as Helmet from 'react-helmet'
 // import * as log from 'loglevel'
@@ -137,6 +137,27 @@ class PropertyDetail extends React.Component<IProps, {
                     text={ t('detail_price') }
                     value={ price ? formatCurrency(price, currency) : null }
                   />
+                  <div className={ s.defaultOption }>
+                    <Row>
+                      {
+                        props.propertiesData.property.contactInfos.map((info, i) => (
+                          <div key={ i } className={ s.contact }>
+                            <Col  md={ 4 }>
+                              <Image src={
+                                info.ownerAvatar.fileName ?
+                                  urljoin(imageRootUrl, info.ownerAvatar.fileName) :
+                                  info.ownerAvatar.url
+                              } circle />
+                            </Col>
+                            <div className={ s.info} >
+                              <strong>{ info.ownerName }</strong>
+                              <p>{ info.phone }</p>
+                            </div>
+                          </div>
+                        ))
+                      }
+                    </Row>
+                  </div>
                 </Row>
               </Col>
             </Row>

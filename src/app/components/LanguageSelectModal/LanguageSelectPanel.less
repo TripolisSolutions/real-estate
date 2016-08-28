@@ -30,32 +30,16 @@
 
 :global {
   .panel__content {
-    padding-bottom: 4em;
     background: @panel-bg;
     border-top-left-radius: @border-radius;
     border-top-right-radius: @border-radius;
-    color: #5a5a5a;
-    text-align: center;
+    color: @color-main;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    h4 {
-      padding: 1.5em 0;
-      border-bottom: 2px solid #ededed;
-      color: @purple;
-      font-size: 1.15em;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-    h2 {
-      padding: .5em 1.5em;
-      font-size: 3em;
-      font-weight: 300;
-    }
-    p {
-      margin: auto;
-      width: 55%;
-      font-size: 1.15em;
-      font-weight: 300;
-      line-height: 1.4;
+    h1 {
+      margin: @margin*2 0;
     }
   }
 
@@ -63,68 +47,35 @@
     display: flex;
     perspective: 1000px;
     transform-style: preserve-3d;
-  }
-    .flap {
-      height: 100px;
-      background: @purple;
-    }
-      .flap__btn {
-        width: 220px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        background: @btn-bg;
-        color: white;
-        cursor: pointer;
-        font-size: 2.25em;
-        text-decoration: none;
-        z-index: 1;
-        transition: .2s ease;
-        transform: translate3d(0,0,0);
-        transform-origin: top center;
-        
-        &:hover,
-        &:focus {
-          background: @purple;
-          text-decoration: none;
-          color: white;
-          outline: none;
-          transform: rotateX(-25deg) translate3d(0,0,0);
-        }
-        
-        > img {
-          width: 30px;
-          padding-left: 5px;
-        }
-      }
-      .outer { width: 106px; }
-      .flap--left {
-        border-bottom-left-radius: @border-radius;
-        transform-origin: top right;
-      }
-      .flap--right {
-        border-bottom-right-radius: @border-radius;
-        transform-origin: top left;
-      }
-    .is--open {
-      .outer {
-        animation: swing 1.5s .2s ease;
-      }
-      .flap__btn:first-of-type {
-        animation: swing 1.5s .3s ease;
-      }
-      .flap__btn:last-of-type {
-        animation: swing 1.5s .4s ease;
-      }
-    }
 
-  @keyframes swing {
-    10%  { transform: rotateX(25deg);   }
-    50%  { transform: rotateX(-15deg);  }
-    75%  { transform: rotateX(5deg);    }
-    90%  { transform: rotateX(-2.5deg); }
-    100% { transform: rotateX(0deg);    }
+    background: @btn-bg;
+
+    padding: 15px;
+  } 
+}
+
+.btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    color: @color-white;
+    margin-top: 0;
+  }
+  :global .col-md-5 {
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.5s 0s ease-in-out;
   }
 
+  :global .col-md-5:hover {
+    opacity: 1;
+    transition: opacity 0.5s 0s ease-in-out;
+  }
+
+  img{
+    width: 100%;
+  }
 }

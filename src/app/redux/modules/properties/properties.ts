@@ -293,7 +293,6 @@ export function createNewProperty(property: IProperty): Redux.Dispatch {
             .then(res => dispatch(createNewPropertyFailure(res)));
         }
       })
-      .catch(err => dispatch(createNewPropertyFailure(err)));
   };
 }
 
@@ -344,7 +343,6 @@ export function updateProperty(id: string, property: IProperty): Redux.Dispatch 
             .then(res => dispatch(updatePropertyFailure(res)));
         }
       })
-      .catch(err => dispatch(updatePropertyFailure(err)));
   };
 }
 

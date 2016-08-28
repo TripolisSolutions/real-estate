@@ -1,5 +1,8 @@
 import * as React from 'react'
 import * as c from 'classnames'
+
+import { Col } from 'react-bootstrap'
+
 const cookie = require('react-cookie')
 
 import { translate, InjectedTranslateProps } from 'react-i18next'
@@ -23,21 +26,27 @@ export class LanguageSelectPanel extends React.Component<IProps, void> {
     return (
       <div className={ c(s.panel, s.isOpen) }>
         <div className='panel__content'>
-          <h4></h4>
-          <h1>Bạn muốn chọn ngôn ngữ nào?</h1>
-          <h1>What is your prefered language?</h1>
+          <h1>
+            Language - Ngôn ngữ
+          </h1>
         </div>
         <div className='panel__flaps'>
-          <div className='flap outer flap--left'></div>
-          <a className='flap flap__btn' onClick={ () => this.props.selectLang('vi') }>
-            <img src='https://lipis.github.io/flag-icon-css/flags/4x3/vn.svg'/>
-            Tiếng Việt
-          </a>
-          <a className='flap flap__btn' onClick={ () => this.props.selectLang('en') }>
-            <img src='http://icons.iconarchive.com/icons/icons-land/vista-flags/256/English-Language-Flag-1-icon.png'/>
-            English
-          </a>
-          <div className='flap outer flap--right'></div>
+          <div className={ s.btn }>
+            <h2> English </h2>
+            <Col md={ 5 }>
+              <a onClick={ () => this.props.selectLang('en') }>
+                <img src='https://lipis.github.io/flag-icon-css/flags/4x3/us.svg'/>
+              </a>
+            </Col>
+          </div>
+          <div className={ s.btn }>
+            <h2> Tiếng việt </h2>
+            <Col md={ 5 }>
+              <a onClick={ () => this.props.selectLang('vi') }>
+                <img src='https://lipis.github.io/flag-icon-css/flags/4x3/vn.svg'/>
+              </a>
+            </Col>
+          </div>
         </div>
       </div>
     )
