@@ -28,8 +28,10 @@ interface IProps extends IState {
   state => state,
   dispatch => ({
     createNewProperty: (property) => {
-      dispatch(createNewProperty(property))
-      browserHistory.push('/admin')
+      dispatch(createNewProperty(property)).then(
+        () => browserHistory.push('/admin'),
+        (error) => window.alert('Error: ' + error.message)
+      )
     },
   })
 )
