@@ -1,7 +1,7 @@
 import * as update from 'react/lib/update'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { Col, Row } from 'react-bootstrap'
+import { Col, Row, Image } from 'react-bootstrap'
 import { translate, InjectedTranslateProps } from 'react-i18next'
 import * as Helmet from 'react-helmet'
 // import * as log from 'loglevel'
@@ -137,6 +137,18 @@ class PropertyDetail extends React.Component<IProps, {
                     text={ t('detail_price') }
                     value={ price ? formatCurrency(price, currency) : null }
                   />
+                  <div className={ s.defaultOption }>
+                    <Row>
+                      <Col  md={ 2 }>
+                        <Image src="http://lorempixel.com/120/120/" circle />
+                      </Col>  
+                        (+84) 981 688 076
+                      <Col  md={ 2 }>
+                        <Image src="http://lorempixel.com/120/120/" circle />
+                      </Col>
+                        (+84) 981 688 076
+                    </Row>
+                  </div>
                 </Row>
               </Col>
             </Row>

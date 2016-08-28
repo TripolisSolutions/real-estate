@@ -96,7 +96,7 @@ module.exports = {
   `,
   'footer_copyright': 'Copy &copy; 2016 by YOUR SIDE',
 
-  'home_slogan': 'Một cuộc sống mới bắt đầu',
+  'home_slogan': 'Cám ơn các bạn đã ghé thăm',
   'search_bar_heading': 'Tìm kiếm bất động sản',
   'home_lastest_properties': 'Bất động sản mới nhất',
   'home_message': '"Chúng tôi lựa chon trang web này dựa trên uy tín về chất lượng cũng như dịch vụ khách hàng tốt"',
@@ -190,4 +190,6 @@ module.exports = {
   'admin_menu_new_property': 'Tạo mới',
 
   'properties_list_heading': 'Danh sách bất động sản',
+
+  'not_found': 'Không có kết quả'
 }

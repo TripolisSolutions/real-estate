@@ -36,12 +36,6 @@ function Footer(props: InjectedTranslateProps) {
             <div className={ s.button } >
               <ButtonIcon icon='facebook' text='share'/>
             </div>
-            <div className={ s.button } >
-              <ButtonIcon icon='twitter'/>
-            </div>
-            <div className={ s.button } >
-              <ButtonIcon icon='twitter' text='tweet'/>
-            </div>
           </Row>
           <p dangerouslySetInnerHTML={{__html: t('footer_copyright')}}></p>
         </div>
