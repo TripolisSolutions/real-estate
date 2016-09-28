@@ -19,7 +19,7 @@ import Banner from '../../components/Banner/Banner'
 
 import configs from '../../configs'
 
-const banner = require('./images/p5.png')
+const banner = require('./images/main_picture.jpg')
 
 interface IProps extends IState, InjectedTranslateProps {
 }
