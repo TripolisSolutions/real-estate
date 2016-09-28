@@ -95,7 +95,7 @@ module.exports = {
   `,
   'footer_copyright': 'Copy &copy; 2016 by YOUR SIDE',
 
-  'home_slogan': 'Thank you for your visit',
+  'home_slogan': 'Thank you for your visiting',
   'search_bar_heading': 'Search',
   'home_lastest_properties': 'Latest properties',
   'home_message': '"We chose this site based on its reputation for building high quality homes while providing incredible customer service."',
