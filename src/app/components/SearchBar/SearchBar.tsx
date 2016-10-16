@@ -39,9 +39,9 @@ interface IProps extends InjectedTranslateProps {
   title?: string
 }
 
-const bedOptions: IOption[] = _.times(6, (i) => ({
+const bedOptions: IOption[] = _.times(5, (i) => ({
   value: i + 1 + '',
-  label: i + 1 + '',
+  label: i + 1 + '+',
 }))
 
 class SearchBar extends React.Component<IProps, void> {
@@ -142,14 +142,6 @@ class SearchBar extends React.Component<IProps, void> {
                     defaultValue={ query.minBed }
                     options={ minBedOptions }
                     onChange={ (value) => this.updateForm('minBed', value) }
-                  />
-                </Col>
-                <Col md={ 1 }>
-                  <Dropdown
-                    placeHolder={ t('search_max_bed') }
-                    defaultValue={ query.maxBed }
-                    options={ maxBedOptions }
-                    onChange={ (value) => this.updateForm('maxBed', value) }
                   />
                 </Col>
                 <Col md={ 1 }>

@@ -113,14 +113,14 @@ const StepBasicInfo: SFC<IProps> = (props: IInternalProps) => {
               <fieldset>
                 <Input
                   name='owner_name'
-                  defaultValue={ props.owner_name }
+                  value={ props.owner_name }
                   label={ t('owner_name') }
                   type='text'
                   placeholder={ t('owner_name') }
                 />
                 <Input
                   name='owner_phone'
-                  defaultValue={ props.owner_phone }
+                  value={ props.owner_phone }
                   label={ t('owner_phone') }
                   type='text'
                   placeholder={ t('owner_phone') }
