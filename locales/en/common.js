@@ -104,7 +104,7 @@ module.exports = {
 
   'search_by_name': 'Enter your keywords here...',
   'search_all_categories': 'All property types',
-  'search_min_bed': 'Min beds',
+  'search_min_bed': 'Beds',
   'search_max_bed': 'Max beds',
   'search_min_price': 'Min price',
   'search_max_price': 'Max price',
