@@ -42,7 +42,7 @@ module.exports = {
   'owner_name': 'Owner name',
   'owner_phone': 'Phone number',
 
-  'buy': 'Buy',
+  'buy': 'Sale',
   'rent': 'Rent',
   'north': 'North',
   'north-east': 'North East',
