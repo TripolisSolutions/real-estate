@@ -90,9 +90,9 @@ module.exports = {
 
   'footer_phone_info': `
     <strong>English speaker:</strong>
-    <p>Dean Walkerden (+84) 981 688 075</p>
+    <p>Dean Walkerden (+84) 928 74 8188</p>
     <strong>French-English-Vietnamese speaker:</strong>
-    <p>Sonia-Phuong Tran (+84) 981 688 076</p>
+    <p>Sonia-Phuong Tran (+84) 923 00 2818</p>
   `,
   'footer_copyright': 'Copy &copy; 2016 by YOUR SIDE',
 
